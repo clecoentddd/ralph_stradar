@@ -1,0 +1,125 @@
+{
+  "id": "3458764658129990735",
+  "status": "Created",
+  "title": "slice: Order List",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764658127666070",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Order List",
+      "title": "Order List",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "OrderList",
+          "type": "Custom",
+          "generated": true,
+          "cardinality": "List",
+          "idAttribute": false
+        },
+        {
+          "name": "projetId",
+          "type": "String",
+          "mapping": "Project Récupéré",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658162372826",
+          "type": "OUTBOUND",
+          "title": "Order List",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764655236170093",
+          "type": "OUTBOUND",
+          "title": "processor boond API Factures",
+          "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764658126104375",
+          "type": "INBOUND",
+          "title": "Orders Retrevived",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764658162372826",
+      "tags": [],
+      "groupId": "3458764658162372841",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Order List",
+      "title": "Order List",
+      "fields": [],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658127666070",
+          "type": "INBOUND",
+          "title": "Order List",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "session client"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "3458764657562237639",
+  "status": "Created",
+  "title": "slice: read-model",
+  "context": "AxonPlus",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764657562064546",
+      "tags": [],
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: read-model",
+      "title": "CustomersToVerifyToDo",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "List",
+          "idAttribute": true
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657562237039",
+          "type": "OUTBOUND",
+          "title": "automation",
+          "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764657562064283",
+          "type": "INBOUND",
+          "title": "customerVerified",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764657562063999",
+          "type": "INBOUND",
+          "title": "customerCreated",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "todoList": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "customer"
+  ]
+}

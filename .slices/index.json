@@ -1,0 +1,308 @@
+{
+  "slices": [
+    {
+      "id": "3458764657562237570",
+      "slice": "slice: Customercreate",
+      "index": 1,
+      "context": "AxonPlus",
+      "folder": "customercreate",
+      "status": "Created"
+    },
+    {
+      "id": "3458764657562237639",
+      "slice": "slice: Customers to verify ToDo List",
+      "index": 3,
+      "context": "AxonPlus",
+      "folder": "customerstoverifytodolist",
+      "status": "Created"
+    },
+    {
+      "id": "3458764657563447698",
+      "slice": "slice: API Customer Verification",
+      "index": 5,
+      "context": "AxonPlus",
+      "folder": "apicustomerverification",
+      "status": "Created"
+    },
+    {
+      "id": "3458764657562237779",
+      "slice": "slice: Customerverify",
+      "index": 7,
+      "context": "AxonPlus",
+      "folder": "customerverify",
+      "status": "Created"
+    },
+    {
+      "id": "3458764657563298067",
+      "slice": "slice: customers verified list",
+      "index": 9,
+      "context": "AxonPlus",
+      "folder": "customersverifiedlist",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655198052687",
+      "slice": "slice: Admin Connection",
+      "index": 1,
+      "context": "Portail Client Simplifié",
+      "folder": "adminconnection",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655198348135",
+      "slice": "slice: Admin Connecté",
+      "index": 3,
+      "context": "Portail Client Simplifié",
+      "folder": "adminconnecté",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655198348005",
+      "slice": "slice: Entreprise A Retrouver API",
+      "index": 5,
+      "context": "Portail Client Simplifié",
+      "folder": "entreprisearetrouverapi",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655199619442",
+      "slice": "slice: Liste des entreprises",
+      "index": 7,
+      "context": "Portail Client Simplifié",
+      "folder": "listedesentreprises",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656374310228",
+      "slice": "slice: Créer Compte",
+      "index": 9,
+      "context": "Portail Client Simplifié",
+      "folder": "créercompte",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655205663463",
+      "slice": "slice: invitation à envoyer",
+      "index": 11,
+      "context": "Portail Client Simplifié",
+      "folder": "invitationàenvoyer",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655206204163",
+      "slice": "slice: processor SMTP",
+      "index": 13,
+      "context": "Portail Client Simplifié",
+      "folder": "processorsmtp",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656374310479",
+      "slice": "slice: Liste des comptes clients",
+      "index": 15,
+      "context": "Portail Client Simplifié",
+      "folder": "listedescomptesclients",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655208333450",
+      "slice": "slice: Client Connection Compte",
+      "index": 17,
+      "context": "Portail Client Simplifié",
+      "folder": "clientconnectioncompte",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656374310882",
+      "slice": "slice: client connecté",
+      "index": 19,
+      "context": "Portail Client Simplifié",
+      "folder": "clientconnecté",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656374594058",
+      "slice": "slice: Marquer Client Authentifié",
+      "index": 21,
+      "context": "Portail Client Simplifié",
+      "folder": "marquerclientauthentifié",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656374594643",
+      "slice": "slice: Initier Session Client",
+      "index": 25,
+      "context": "Portail Client Simplifié",
+      "folder": "initiersessionclient",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655215718820",
+      "slice": "slice: projet à récupérer",
+      "index": 27,
+      "context": "Portail Client Simplifié",
+      "folder": "projetàrécupérer",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655215886148",
+      "slice": "slice: Projet Requête API boond",
+      "index": 29,
+      "context": "Portail Client Simplifié",
+      "folder": "projetrequêteapiboond",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655236655350",
+      "slice": "slice: facture A récupérer",
+      "index": 29,
+      "context": "Portail Client Simplifié",
+      "folder": "facturearécupérer",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655237142390",
+      "slice": "slice: Reconciliation Liste des Projets",
+      "index": 31,
+      "context": "Portail Client Simplifié",
+      "folder": "reconciliationlistedesprojets",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656943385978",
+      "slice": "slice: reconciliation Liste des Factures",
+      "index": 47,
+      "context": "Portail Client Simplifié",
+      "folder": "reconciliationlistedesfactures",
+      "status": "Created"
+    },
+    {
+      "id": "3458764656374594778",
+      "slice": "slice: Sessions à initier",
+      "index": 23,
+      "context": "Portail Client Simplifié",
+      "folder": "sessionsàinitier",
+      "status": "Created"
+    },
+    {
+      "id": "3458764655236861413",
+      "slice": "slice: Requête Facture API Boond",
+      "index": 45,
+      "context": "Portail Client Simplifié",
+      "folder": "requêtefactureapiboond",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658127666841",
+      "slice": "slice: Project Details Requested",
+      "index": 33,
+      "context": "Portail Client Simplifié",
+      "folder": "projectdetailsrequested",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658129180075",
+      "slice": "slice: Projectdetailsretreived",
+      "index": 37,
+      "context": "Portail Client Simplifié",
+      "folder": "projectdetailsretreived",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658129990217",
+      "slice": "slice: projectdetailsretreived",
+      "index": 39,
+      "context": "Portail Client Simplifié",
+      "folder": "projectdetailsretreived",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658129990558",
+      "slice": "slice: Retrevive Order",
+      "index": 41,
+      "context": "Portail Client Simplifié",
+      "folder": "retreviveorder",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658129990735",
+      "slice": "slice: Order List",
+      "index": 43,
+      "context": "Portail Client Simplifié",
+      "folder": "orderlist",
+      "status": "Created"
+    },
+    {
+      "id": "3458764659734675972",
+      "slice": "slice: Admin Connection",
+      "index": 3,
+      "context": "Socraft Client Portal v3",
+      "folder": "adminconnection",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659734822171",
+      "slice": "slice: Admin Connected",
+      "index": 5,
+      "context": "Socraft Client Portal v3",
+      "folder": "adminconnected",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659734822169",
+      "slice": "slice: Request Company List Update",
+      "index": 11,
+      "context": "Socraft Client Portal v3",
+      "folder": "requestcompanylistupdate",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659734822170",
+      "slice": "slice: CompanyListToFetch",
+      "index": 13,
+      "context": "Socraft Client Portal v3",
+      "folder": "companylisttofetch",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659734822850",
+      "slice": "slice: Adapter Boond Companies Data",
+      "index": 15,
+      "context": "Socraft Client Portal v3",
+      "folder": "adapterboondcompaniesdata",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659734822852",
+      "slice": "slice: Fetch Companies List From Boond",
+      "index": 17,
+      "context": "Socraft Client Portal v3",
+      "folder": "fetchcompanieslistfromboond",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659734822851",
+      "slice": "slice: Company List Look Up",
+      "index": 1,
+      "context": "Socraft Client Portal v3",
+      "folder": "companylistlookup",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659756306798",
+      "slice": "slice: InitializeSettings",
+      "index": 7,
+      "context": "Socraft Client Portal v3",
+      "folder": "initializesettings",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659756306797",
+      "slice": "slice: SettingsView",
+      "index": 9,
+      "context": "Socraft Client Portal v3",
+      "folder": "settingsview",
+      "status": "Informational"
+    }
+  ]
+}

@@ -13,11 +13,11 @@ const {
     _readmodelTitle,
     _sliceTitle
 } = require("../../common/util/naming")
-const {variableAssignments, processSourceMapping} = require("../../common/util/variables");
-const {idField, uniqBy} = require("../../common/util/util");
-const {idType} = require("../../common/util/generator");
-const {analyzeSpecs} = require("../../common/util/specs");
-const {fileExistsByGlob} = require("../../common/util/files");
+const { variableAssignments, processSourceMapping } = require("../../common/util/variables");
+const { idField, uniqBy } = require("../../common/util/util");
+const { idType, typeMapping } = require("../../common/util/generator");
+const { analyzeSpecs } = require("../../common/util/specs");
+const { fileExistsByGlob } = require("../../common/util/files");
 
 
 let config = {}
@@ -60,9 +60,17 @@ module.exports = class extends Generator {
 
     _writeAggregates(aggregate) {
         var fields = aggregate?.fields?.filter(it => it.name !== "aggregateId").filter(it => !it.idAttribute)
-        var idFields = idField(aggregate)
-        var idFieldType = idType(aggregate)
 
+        // Derive ID field from commands associated with selected slices
+        var commands = config.slices
+            .filter(slice => this.answers.aggregate_slices?.includes(slice.title))
+            .flatMap(it => it.commands)
+            .filter(it => it.aggregateDependencies?.includes(aggregate.title));
+        var commandIdField = commands.map(cmd => cmd.fields?.find(f => f.idAttribute)).find(f => f);
+        var idFieldName = commandIdField?.name || idField(aggregate)
+        var idFieldType = commandIdField ? typeMapping(commandIdField.type, commandIdField.cardinality, commandIdField.optional) : idType(aggregate)
+
+        console.log(`[aggregate] Using ID field: ${idFieldName} (type: ${idFieldType})`)
 
         const fileExists = fileExistsByGlob(
             `./src/main/kotlin/${this.givenAnswers.rootPackageName.split(".").join("/")}/domain`,
@@ -82,17 +90,17 @@ module.exports = class extends Generator {
                     //aggregate Id is rendered anyways. for this case just filter it
                     fields
                 ),
-                _idField: idFields,
+                _idField: idFieldName,
                 _idType: idFieldType,
                 _typeImports: typeImports(fields),
-                _commandHandlers: this._renderCommandHandlers(aggregate),
+                _commandHandlers: this._renderCommandHandlers(aggregate, idFieldName),
                 _elementImports: this._generateImports(aggregate, this.givenAnswers.rootPackageName, config.codeGen?.contextPackage)
 
             }
         )
     }
 
-    _renderCommandHandlers(aggregate) {
+    _renderCommandHandlers(aggregate, idFieldName) {
 
 
         var commands = config.slices
@@ -108,12 +116,16 @@ module.exports = class extends Generator {
             var slice = config.slices.find(it => it.title === command.slice)
             var specs = slice?.specifications?.map(spec => analyzeSpecs(spec))
 
+            // Add @CreationPolicy when command creates aggregate OR when ID is generated
+            var generatedIdField = command.fields?.find(f => f.idAttribute && f.generated)
+            var needsCreationPolicy = command.createsAggregate || generatedIdField
+
             return `
             ${specs.length > 0 ? `/*
 //AI-TODO: 
         ${specs.join("\n")}
         */` : ``}
-    ${command.createsAggregate ? "@CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)" : ""}
+    ${needsCreationPolicy ? "@CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)" : ""}
         @CommandHandler
         fun handle(command: ${_commandTitle(command.title)}) {
            ${events.map(event => {
@@ -123,12 +135,16 @@ module.exports = class extends Generator {
             }).join("\n")}
         }
         
-        ${events.map(event => `
+        ${events.map(event => {
+                var eventIdField = event.fields?.find(f => f.idAttribute) || event.fields?.find(f => f.name === idFieldName) || event.fields?.[0];
+                return `
         @EventSourcingHandler
         fun on(event: ${_eventTitle(event.title)}){
         // handle event
+            ${idFieldName} = event.${eventIdField?.name}
             ${variableAssignments(aggregate.fields, "event", event, ",\n", "=")}
-        }`).join("\n")}
+        }`
+            }).join("\n")}
         `
         })
 
@@ -157,7 +173,7 @@ module.exports = class extends Generator {
 
 class VariablesGenerator {
 
-//(: {name, type, example, mapping}
+    //(: {name, type, example, mapping}
     static generateVariables(fields) {
         return fields?.map((variable) => {
             if (variable.cardinality?.toLowerCase() === "list") {
@@ -193,41 +209,7 @@ class VariablesGenerator {
     }
 }
 
-const typeMapping = (fieldType, fieldCardinality, optional) => {
-    var fieldType;
-    switch (fieldType?.toLowerCase()) {
-        case "string":
-            fieldType = optional ? "String?" : "String";
-            break
-        case "double":
-            fieldType = optional ? "Double?" : "Double";
-            break
-        case "long":
-            fieldType = optional ? "Long?" : "Long";
-            break
-        case "boolean":
-            fieldType = optional ? "Boolean?" : "Boolean";
-            break
-        case "date":
-            fieldType = optional ? "LocalDate?" : "LocalDate";
-            break
-        case "datetime":
-            fieldType = optional ? "LocalDateTime?" : "LocalDateTime";
-            break
-        case "uuid":
-            fieldType = optional ? "UUID?" : "UUID";
-            break
-        default:
-            fieldType = optional ? "String?" : "String";
-            break
-    }
-    if (fieldCardinality?.toLowerCase() === "list") {
-        return `List<${fieldType}>`
-    } else {
-        return fieldType
-    }
-
-}
+// typeMapping is imported from ../../common/util/generator
 
 const typeImports = (fields) => {
     var imports = fields?.map((field) => {

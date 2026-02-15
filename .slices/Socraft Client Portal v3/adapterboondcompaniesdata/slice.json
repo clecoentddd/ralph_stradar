@@ -1,0 +1,67 @@
+{
+  "id": "3458764659734822850",
+  "status": "Informational",
+  "title": "slice: Adapter Boond Companies Data",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764659734822864",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Adapter Boond Companies Data",
+      "title": "Boond Companies Data",
+      "fields": [
+        {
+          "name": "ListOfCompanies",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyName",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": true
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764659734822854",
+          "type": "OUTBOUND",
+          "title": "processor Fetch Boond Companies List",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

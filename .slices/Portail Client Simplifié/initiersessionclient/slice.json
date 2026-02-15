@@ -1,0 +1,234 @@
+{
+  "id": "3458764656374594643",
+  "status": "Created",
+  "title": "slice: Initier Session Client",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764656370764928",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Initier Session Client",
+      "title": "Initier Session Client",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "compteId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "mapping": "entrepriseListe",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764656370764392",
+          "type": "OUTBOUND",
+          "title": "Session Client Initiée",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764656370935757",
+          "type": "INBOUND",
+          "title": "Session Processor",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764656370764392",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Initier Session Client",
+      "title": "Session Client Initiée",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "compteId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "mapping": "entrepriseListe",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655209807863",
+          "type": "OUTBOUND",
+          "title": "Sessions à initier",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764655215127325",
+          "type": "OUTBOUND",
+          "title": "projet à récupérer",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764656370764928",
+          "type": "INBOUND",
+          "title": "Initier Session Client",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764656370935757",
+      "tags": [],
+      "groupId": "3458764656370935762",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Initier Session Client",
+      "title": "Session Processor",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "compteId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764656370764928",
+          "type": "OUTBOUND",
+          "title": "Initier Session Client",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764655209807863",
+          "type": "INBOUND",
+          "title": "Sessions à initier",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "session client"
+  ]
+}

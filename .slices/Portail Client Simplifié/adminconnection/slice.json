@@ -1,0 +1,166 @@
+{
+  "id": "3458764655198052687",
+  "status": "Created",
+  "title": "slice: Admin Connection",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764655197109765",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connection",
+      "title": "Connecter Admin",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655196916717",
+          "type": "OUTBOUND",
+          "title": "Admin Connecté",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764655197109773",
+          "type": "INBOUND",
+          "title": "Admin Connection",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764655196916717",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connection",
+      "title": "Admin Connecté",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655197836364",
+          "type": "OUTBOUND",
+          "title": "Admin Connection",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764655197109765",
+          "type": "INBOUND",
+          "title": "Connecter Admin",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764655197109773",
+      "tags": [],
+      "groupId": "3458764655197109778",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connection",
+      "title": "Admin Connection",
+      "fields": [
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655197109765",
+          "type": "OUTBOUND",
+          "title": "Connecter Admin",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "connection admin"
+  ]
+}

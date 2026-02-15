@@ -1,0 +1,194 @@
+{
+  "id": "3458764657562237570",
+  "status": "Created",
+  "title": "slice: Customercreate",
+  "context": "AxonPlus",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764657562237397",
+      "tags": [],
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: Customercreate",
+      "title": "Create Customer",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657562063999",
+          "type": "OUTBOUND",
+          "title": "customerCreated",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764657562237400",
+          "type": "INBOUND",
+          "title": "Create Customer",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764657562063999",
+      "tags": [],
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: Customercreate",
+      "title": "customerCreated",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657562064546",
+          "type": "OUTBOUND",
+          "title": "CustomersToVerifyToDo",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764657562237397",
+          "type": "INBOUND",
+          "title": "Create Customer",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764657562237400",
+      "tags": [],
+      "groupId": "3458764657562237402",
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: Customercreate",
+      "title": "Create Customer",
+      "fields": [
+        {
+          "name": "name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657562237397",
+          "type": "OUTBOUND",
+          "title": "Create Customer",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "customer"
+  ]
+}

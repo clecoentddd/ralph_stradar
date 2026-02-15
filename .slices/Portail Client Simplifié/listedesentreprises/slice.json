@@ -1,0 +1,209 @@
+{
+  "id": "3458764655199619442",
+  "status": "Created",
+  "title": "slice: Liste des entreprises",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764655199619288",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Liste des entreprises",
+      "title": "Liste des entreprises depuis Boond",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseListe",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "entrerpiseId",
+              "type": "UUID",
+              "cardinality": "Single"
+            },
+            {
+              "name": "entrepriseNom",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655201670792",
+          "type": "OUTBOUND",
+          "title": "Création Compte Client",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764655199619302",
+          "type": "OUTBOUND",
+          "title": "Liste des entreprises",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764655197655535",
+          "type": "INBOUND",
+          "title": "Entreprise retrouvée",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764655199619302",
+      "tags": [],
+      "groupId": "3458764655199619305",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Liste des entreprises",
+      "title": "Liste des entreprises",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseListe",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "entrerpiseId",
+              "type": "UUID",
+              "cardinality": "Single"
+            },
+            {
+              "name": "entrepriseNom",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655199619288",
+          "type": "INBOUND",
+          "title": "Liste des entreprises depuis Boond",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
+    {
+      "id": "3458764655201670792",
+      "tags": [],
+      "groupId": "3458764655201670799",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Liste des entreprises",
+      "title": "Création Compte Client",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "mapping": "entrepriseListe",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764656367065742",
+          "type": "OUTBOUND",
+          "title": "Créer Compte",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764655199619288",
+          "type": "INBOUND",
+          "title": "Liste des entreprises depuis Boond",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "connection admin"
+  ]
+}

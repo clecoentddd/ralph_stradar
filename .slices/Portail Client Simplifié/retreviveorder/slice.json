@@ -1,0 +1,222 @@
+{
+  "id": "3458764658129990558",
+  "status": "Created",
+  "title": "slice: Retrevive Order",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764658126104909",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Retrevive Order",
+      "title": "Retrevive Order",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "OrderList",
+          "type": "Custom",
+          "generated": true,
+          "cardinality": "List",
+          "idAttribute": false
+        },
+        {
+          "name": "projetId",
+          "type": "String",
+          "mapping": "Project Récupéré",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658126104375",
+          "type": "OUTBOUND",
+          "title": "Orders Retrevived",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764658159816380",
+          "type": "INBOUND",
+          "title": "automation order processor",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764658126104375",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Retrevive Order",
+      "title": "Orders Retrevived",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "OrderList",
+          "type": "Custom",
+          "generated": true,
+          "cardinality": "List",
+          "idAttribute": false
+        },
+        {
+          "name": "projetId",
+          "type": "String",
+          "mapping": "Project Récupéré",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658127666070",
+          "type": "OUTBOUND",
+          "title": "Order List",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658126104909",
+          "type": "INBOUND",
+          "title": "Retrevive Order",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764658159816380",
+      "tags": [],
+      "groupId": "3458764658159816399",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Retrevive Order",
+      "title": "automation order processor",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "OrderList",
+          "type": "Custom",
+          "generated": true,
+          "cardinality": "List",
+          "idAttribute": false
+        },
+        {
+          "name": "projetId",
+          "type": "String",
+          "mapping": "Project Récupéré",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658126104909",
+          "type": "OUTBOUND",
+          "title": "Retrevive Order",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764658122058624",
+          "type": "INBOUND",
+          "title": "projectdetailsretreived",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "session client"
+  ]
+}

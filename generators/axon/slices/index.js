@@ -5,7 +5,7 @@
 
 var Generator = require('yeoman-generator');
 var slugify = require('slugify')
-const {answers} = require("../app");
+const { answers } = require("../app");
 const {
     _eventTitle,
     _commandTitle,
@@ -15,12 +15,12 @@ const {
     _aggregateTitle,
     _restResourceTitle
 } = require("./../../../generators/common/util/naming");
-const {variableAssignments, processSourceMapping} = require("../../common/util/variables");
-const {ClassesGenerator, typeMapping, typeImports, idType} = require("../../common/util/generator");
-const {_sliceSpecificClassTitle, _packageName, _packageFolderName} = require("../../common/util/naming");
-const {camelCaseToUnderscores, idField} = require("../../common/util/util");
-const {analyzeSpecs} = require("../../common/util/specs");
-const {buildLink} = require("../../common/util/config");
+const { variableAssignments, processSourceMapping } = require("../../common/util/variables");
+const { ClassesGenerator, typeMapping, typeImports, idType } = require("../../common/util/generator");
+const { _sliceSpecificClassTitle, _packageName, _packageFolderName } = require("../../common/util/naming");
+const { camelCaseToUnderscores, idField } = require("../../common/util/util");
+const { analyzeSpecs } = require("../../common/util/specs");
+const { buildLink } = require("../../common/util/config");
 
 
 let config = {}
@@ -63,6 +63,17 @@ module.exports = class extends Generator {
                 message: 'Which event triggers the Automation?',
                 when: (input) => input.slice.length === 1 && (this._findTriggerEvents(input)?.length > 0),
                 choices: (items) => this._findTriggerEvents(items)
+            },
+            {
+                type: 'confirm',
+                name: 'generateAggregateId',
+                message: 'Should the Aggregate ID be auto-generated (UUID)?',
+                default: true,
+                when: (input) => {
+                    var selectedSlices = config.slices.filter(s => input.slice?.includes(s.title))
+                    return selectedSlices.some(s => s.sliceType === 'STATE_CHANGE' &&
+                        s.commands?.some(cmd => cmd.fields?.some(f => f.idAttribute && f.generated)))
+                }
             }])
 
     }
@@ -109,7 +120,7 @@ module.exports = class extends Generator {
         this._writeReadModels(sliceName)
         this._writeRestControllers(sliceName)
         this.composeWith(require.resolve('../specifications'), {
-            answers: {...this.answers, ...this.givenAnswers, slice: sliceName},
+            answers: { ...this.answers, ...this.givenAnswers, slice: sliceName },
             appName: this.answers.appName ?? this.appName
         });
         this._writeProcessors(sliceName)
@@ -596,8 +607,17 @@ fun on(event: ${_eventTitle(it.title)}) {
         var slice = this._findSlice(sliceName)
         var title = _slicePackage(slice.title).toLowerCase()
 
+        var generateId = this.answers.generateAggregateId === true
 
         slice.commands?.filter((command) => command.title).forEach((command) => {
+            var generatedIdField = command.fields?.find(f => f.idAttribute && f.generated)
+            var shouldGenerateId = generateId && generatedIdField
+
+            // When generating ID: exclude it from payload fields
+            var payloadFields = shouldGenerateId
+                ? command.fields.filter(f => !(f.idAttribute && f.generated))
+                : command.fields
+
             this.fs.copyTpl(
                 this.templatePath(`src/components/RestResource.kt.tpl`),
                 this.destinationPath(`./src/main/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/internal/${_restResourceTitle(command.title)}.kt`),
@@ -614,9 +634,9 @@ fun on(event: ${_eventTitle(it.title)}) {
                     ), _commandTitle(command.title), VariablesGenerator.generateInvocation(
                         command.fields
                     ), command.apiEndpoint),
-                    _payload: ClassesGenerator.generateDataClass(_sliceSpecificClassTitle(sliceName, "Payload"), command.fields),
+                    _payload: ClassesGenerator.generateDataClass(_sliceSpecificClassTitle(sliceName, "Payload"), payloadFields),
                     _endpoint: this._generatePostRestCall(slice.title, command,
-                        variableAssignments(command.fields, "payload", command, ",\n", "="), command.apiEndpoint),
+                        variableAssignments(command.fields, "payload", command, ",\n", "="), command.apiEndpoint, shouldGenerateId),
                     link: boardlLink(config.boardId, command.id),
                 }
             )
@@ -642,12 +662,30 @@ fun on(event: ${_eventTitle(it.title)}) {
     `
     }
 
-    _generatePostRestCall(slice, command, variableAssignments, endpoint) {
+    _generatePostRestCall(slice, command, variableAssignments, endpoint, shouldGenerateId) {
         let commandTitle = _commandTitle(command.title)
+        if (shouldGenerateId) {
+            var generatedIdField = command.fields?.find(f => f.idAttribute && f.generated)
+            // Build assignments: generated ID gets UUID.randomUUID(), rest come from payload
+            var nonIdFields = command.fields?.filter(f => !(f.idAttribute && f.generated)) || []
+            var idAssignment = `${generatedIdField.name}=UUID.randomUUID()`
+            var otherAssignments = nonIdFields.map(f => `${f.name}=payload.${f.name}`).join(",\n\t\t\t")
+            var allAssignments = otherAssignments ? `${idAssignment},\n\t\t\t${otherAssignments}` : idAssignment
+            return `
+       @CrossOrigin
+       @PostMapping(${endpoint ? `"${endpoint}"`
+                    : `"/${_sliceTitle(slice)}"`})
+    fun processCommand(
+        @RequestBody payload: ${_sliceSpecificClassTitle(slice, "Payload")}
+    ):CompletableFuture<Any> {
+         return commandGateway.send(${commandTitle}(${allAssignments}))
+        }
+       `
+        }
         return `
        @CrossOrigin
        @PostMapping(${endpoint ? `"${endpoint}/{id}"`
-            : `"/${_sliceTitle(slice)}/{id}"`})
+                : `"/${_sliceTitle(slice)}/{id}"`})
     fun processCommand(
         @PathVariable("id") ${idField(command)}: ${idType(command)},
         @RequestBody payload: ${_sliceSpecificClassTitle(slice, "Payload")}
@@ -797,7 +835,7 @@ fun on(event: ${_eventTitle(it.title)}) {
 
 class ConstructorGenerator {
 
-//(: {name, type, example, mapping}
+    //(: {name, type, example, mapping}
     static generateConstructorVariables(fields, overrides) {
         return `${fields?.map((field) => (overrides?.includes(field.name) ? "override " : "") + "var " + field.name + ":" + typeMapping(field.type, field.cardinality, field.optional)).filter(it => it).join(",\n\t") ?? ""}`
     }

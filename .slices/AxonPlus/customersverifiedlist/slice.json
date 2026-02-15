@@ -1,0 +1,167 @@
+{
+  "id": "3458764657563298067",
+  "status": "Created",
+  "title": "slice: customers verified list",
+  "context": "AxonPlus",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764657563298012",
+      "tags": [],
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: customers verified list",
+      "title": "verified customers",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "CustomerDetails",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Name",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Address",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Permit",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657563298035",
+          "type": "OUTBOUND",
+          "title": "List of verified customers",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764657562064283",
+          "type": "INBOUND",
+          "title": "customerVerified",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764657563298035",
+      "tags": [],
+      "groupId": "3458764657563298037",
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: customers verified list",
+      "title": "List of verified customers",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "CustomerDetails",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Name",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Address",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Permit",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657563298012",
+          "type": "INBOUND",
+          "title": "verified customers",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "customer"
+  ]
+}

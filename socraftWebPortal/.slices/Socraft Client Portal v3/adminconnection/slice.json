@@ -1,0 +1,239 @@
+{
+  "id": "3458764659734675972",
+  "status": "Done",
+  "title": "slice: Admin Connection",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764659734675975",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connection",
+      "title": "To connect",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Account",
+      "aggregateDependencies": [
+        "Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659734675973",
+          "type": "OUTBOUND",
+          "title": "Admin Connected",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764659734675977",
+          "type": "INBOUND",
+          "title": "Admin Connection",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764659734675973",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connection",
+      "title": "Admin Connected",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Account",
+      "aggregateDependencies": [
+        "Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659734822173",
+          "type": "OUTBOUND",
+          "title": "Admin Connected",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764659734675975",
+          "type": "INBOUND",
+          "title": "To connect",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764659734675977",
+      "tags": [],
+      "groupId": "3458764659734675982",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connection",
+      "title": "Admin Connection",
+      "fields": [
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "Account",
+      "aggregateDependencies": [
+        "Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659734675975",
+          "type": "OUTBOUND",
+          "title": "To connect",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764659756708369",
+      "sliceName": "<p>slice: Admin Connection</p>",
+      "title": "spec: Admin Connection Ensure Non Null Values",
+      "given": [],
+      "when": [
+        {
+          "title": "To connect",
+          "tags": [],
+          "examples": [],
+          "id": "3458764659756708370",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
+            },
+            {
+              "name": "email",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "test@test.com"
+            }
+          ],
+          "linkedId": "3458764659734675975"
+        }
+      ],
+      "then": [
+        {
+          "title": "Admin Connected",
+          "tags": [],
+          "examples": [],
+          "id": "3458764659756708374",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
+            },
+            {
+              "name": "email",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "test@test"
+            }
+          ],
+          "linkedId": "3458764659734675973"
+        }
+      ],
+      "comments": [
+        {
+          "description": "Ensure non null values"
+        }
+      ],
+      "linkedId": "3458764659734675972"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "Account"
+  ]
+}

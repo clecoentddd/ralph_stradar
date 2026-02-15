@@ -1,0 +1,78 @@
+{
+  "id": "3458764655198348135",
+  "status": "Created",
+  "title": "slice: Admin Connecté",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764655197836364",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connecté",
+      "title": "Admin Connection",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "connection admin",
+      "aggregateDependencies": [
+        "connection admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764655197836357",
+          "type": "OUTBOUND",
+          "title": "processor Entreprise Boond API",
+          "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764655197655535",
+          "type": "INBOUND",
+          "title": "Entreprise retrouvée",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764655196916717",
+          "type": "INBOUND",
+          "title": "Admin Connecté",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "connection admin"
+  ]
+}

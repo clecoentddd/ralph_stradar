@@ -1,0 +1,94 @@
+{
+  "id": "3458764656374594778",
+  "status": "Created",
+  "title": "slice: Sessions à initier",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764655209807863",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Sessions à initier",
+      "title": "Sessions à initier",
+      "fields": [
+        {
+          "name": "compteId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "authenticationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client",
+        "compte client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764656370935757",
+          "type": "OUTBOUND",
+          "title": "Session Processor",
+          "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764656370764392",
+          "type": "INBOUND",
+          "title": "Session Client Initiée",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764655209448179",
+          "type": "INBOUND",
+          "title": "Client Authentifié",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "session client",
+    "compte client"
+  ]
+}

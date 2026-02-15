@@ -1,0 +1,159 @@
+{
+  "id": "3458764659734822169",
+  "status": "Done",
+  "title": "slice: Request Company List Update",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764659734822177",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Request Company List Update",
+      "title": "Request Company List Update",
+      "fields": [
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659734822172",
+          "type": "OUTBOUND",
+          "title": "Company List Update Requested",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764659734822179",
+          "type": "INBOUND",
+          "title": "List of companies",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764659734822172",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Request Company List Update",
+      "title": "Company List Update Requested",
+      "fields": [
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659735379611",
+          "type": "OUTBOUND",
+          "title": "CompanyListToFetch",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764659734822177",
+          "type": "INBOUND",
+          "title": "Request Company List Update",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764659734822179",
+      "tags": [],
+      "groupId": "3458764659734822195",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Request Company List Update",
+      "title": "List of companies",
+      "fields": [
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659734822177",
+          "type": "OUTBOUND",
+          "title": "Request Company List Update",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764659756306810",
+          "type": "INBOUND",
+          "title": "Settings",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Settings"
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "id": "3458764659734822171",
+  "status": "Done",
+  "title": "slice: Admin Connected",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764659734822173",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connected",
+      "title": "Admin Connected",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "Account",
+      "aggregateDependencies": [
+        "Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659756306802",
+          "type": "OUTBOUND",
+          "title": "Settings",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764659734675973",
+          "type": "INBOUND",
+          "title": "Admin Connected",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764659756306802",
+      "tags": [],
+      "groupId": "3458764659756306813",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connected",
+      "title": "Settings",
+      "fields": [
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "Account",
+      "aggregateDependencies": [
+        "Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659756306800",
+          "type": "OUTBOUND",
+          "title": "Create Settings",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764659734822173",
+          "type": "INBOUND",
+          "title": "Admin Connected",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Account"
+  ]
+}

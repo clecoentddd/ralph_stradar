@@ -1,0 +1,263 @@
+{
+  "id": "3458764657562237779",
+  "status": "Created",
+  "title": "slice: Customerverify",
+  "context": "AxonPlus",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764657562064545",
+      "tags": [],
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: Customerverify",
+      "title": "Verify Customer",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "CustomerDetails",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Name",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Address",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Permit",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657562064283",
+          "type": "OUTBOUND",
+          "title": "customerVerified",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764657562237039",
+          "type": "INBOUND",
+          "title": "automation",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764657562064283",
+      "tags": [],
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: Customerverify",
+      "title": "customerVerified",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "CustomerDetails",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Name",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Address",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Permit",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657563298012",
+          "type": "OUTBOUND",
+          "title": "verified customers",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764657562064546",
+          "type": "OUTBOUND",
+          "title": "CustomersToVerifyToDo",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764657562064545",
+          "type": "INBOUND",
+          "title": "Verify Customer",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764657562237039",
+      "tags": [],
+      "groupId": "3458764657562237047",
+      "domain": "CodeGen",
+      "elementContext": "INTERNAL",
+      "modelContext": "AxonPlus",
+      "context": "INTERNAL",
+      "slice": "slice: Customerverify",
+      "title": "automation",
+      "fields": [
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "CustomerDetails",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Name",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Address",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Permit",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "IDNumber",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "customer",
+      "aggregateDependencies": [
+        "customer"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764657562064545",
+          "type": "OUTBOUND",
+          "title": "Verify Customer",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764657562401310",
+          "type": "INBOUND",
+          "title": "API Customer Verification",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764657562064546",
+          "type": "INBOUND",
+          "title": "CustomersToVerifyToDo",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "customer"
+  ]
+}

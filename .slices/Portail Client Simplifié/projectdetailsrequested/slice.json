@@ -1,0 +1,243 @@
+{
+  "id": "3458764658127666841",
+  "status": "Created",
+  "title": "slice: Project Details Requested",
+  "context": "Portail Client Simplifié",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764658121597361",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Project Details Requested",
+      "title": "Request Project Details",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "projetId",
+          "type": "UUID",
+          "mapping": "ProjetListe",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658121479070",
+          "type": "OUTBOUND",
+          "title": "Project Details Requested",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764655236655044",
+          "type": "INBOUND",
+          "title": "Project List",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764658121479070",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Project Details Requested",
+      "title": "Project Details Requested",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "projetId",
+          "type": "String",
+          "mapping": "Project Récupéré",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658121766356",
+          "type": "OUTBOUND",
+          "title": "Project Details to fetch",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658121597361",
+          "type": "INBOUND",
+          "title": "Request Project Details",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764655236655044",
+      "tags": [],
+      "groupId": "3458764655236655049",
+      "elementContext": "INTERNAL",
+      "modelContext": "Portail Client Simplifié",
+      "context": "INTERNAL",
+      "slice": "slice: Project Details Requested",
+      "title": "Project List",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "compteId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "entrepriseId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "projetListe",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "projetId",
+              "type": "UUID",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projetNom",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projetDescription",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "DateDébut",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "DateFin",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Status",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "AccountManager",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "session client",
+      "aggregateDependencies": [
+        "session client"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658121597361",
+          "type": "OUTBOUND",
+          "title": "Request Project Details",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764655236655032",
+          "type": "INBOUND",
+          "title": "reconciliation projet",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "session client"
+  ]
+}
