@@ -1,33 +1,43 @@
-## Nebulit GmbH - Eventmodeling Template
+yo @dilgerma/nebulit - select axon
 
-### Setup
+docker:
 
-Slices sind im _root_ Package (wie im Generator angegeben) als Packages definiert.
+docker run -ti -p 3001:3000 -v "$($PWD.Path):/workspace" -e HOST_WORKSPACE="$($PWD.Path)" --name codegen --rm nebulit/codegen
 
-### Todos nach der initialen Generierung
+to call gen again: docker exec -it codegen bash
 
-Im Code sind TODOs definiert für die Stellen die angepasst werden müssen.
-Der Generator trifft bestimmte Grundannahmen (aggregateIds sind UUIDs beispielsweise).
 
-Wird von diesen Annahmen abgewichen kompiliert der Code ggf. nicht sofort sondern muss leicht
-angepasst werden.
+PRE-BUILD CHANGES:
 
-Ihre Code Richtlinien sind natürlich führend, daher ist es erwartungskonform dass Code
-nicht sofort kompiliert (es sollten aber wirklich nur kleine Anpassungen notwendig sein).
+1. Update backend/pom.xml:
+   - Change Kotlin JVM target from 17 to 21 to match java.version property
+   - Location: <jvmTarget>21</jvmTarget> in kotlin-maven-plugin configuration
 
-### Start der Applikation
+2. Update backend/src/main/resources/application.yml:
+   - Add: baseline-on-migrate: true under spring.flyway
+   - Change database port from 5432 to 5442 in both datasource.url and flyway.url
 
-Zum Start des Services kann die Klasse _ApplicationStarter_ verwendet werden in _src/test/kotlin_.
-Warum in _test_?
+3. Start PostgreSQL:
+   - docker-compose up -d
 
-Diese Klasse startet die komplette Umgebung (inkl. Postgres und ggf. Kafka über TestContainers)
 
-### Package Struktur
+MVN:
+./mvnw clean compile
 
-Events sind im Package "events"
+pom.xml selection problem:
+./mvnw spotless:apply - to  mvn spotless:apply
 
-Aggregates liegen im Package "domain"
+run the app:
+./mvnw spring-boot:run
 
-Slices haben jeweils ein isoliertes Package <sliceName>
 
-Package "common" enthält einige Interfaces für die generelle Struktur.
+FRONT-END:
+
+https://github.com/Nebulit-GmbH/eventsourcing-workshop-ui.git
+
+# Clone to temp location
+git clone <frontend-repo-url> temp-frontend
+# Copy files
+Copy-Item -Recurse temp-frontend/* ./frontend/
+Remove-Item -Recurse temp-frontend
+
