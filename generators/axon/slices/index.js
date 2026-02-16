@@ -16,7 +16,7 @@ const {
     _restResourceTitle
 } = require("./../../../generators/common/util/naming");
 const { variableAssignments, processSourceMapping } = require("../../common/util/variables");
-const { ClassesGenerator, typeMapping, typeImports, idType } = require("../../common/util/generator");
+const { ClassesGenerator, typeMapping, typeImports, idType, customItemTypeName } = require("../../common/util/generator");
 const { _sliceSpecificClassTitle, _packageName, _packageFolderName } = require("../../common/util/naming");
 const { camelCaseToUnderscores, idField } = require("../../common/util/util");
 const { analyzeSpecs } = require("../../common/util/specs");
@@ -115,6 +115,7 @@ module.exports = class extends Generator {
         var sliceName = slice
         this._writeReadme(sliceName)
         this._writeSliceDescription(sliceName)
+        this._writeCustomItemClasses(sliceName)
         this._writeCommands(sliceName);
         this._writeEvents(sliceName)
         this._writeReadModels(sliceName)
@@ -190,7 +191,7 @@ module.exports = class extends Generator {
                         idField(command) ?? "aggregateId"
                     ),
                     link: boardlLink(config.boardId, command.id),
-                    _typeImports: typeImports(command.fields)
+                    _typeImports: typeImports(command.fields, [], this.givenAnswers.rootPackageName)
 
                 }
             )
@@ -224,7 +225,7 @@ module.exports = class extends Generator {
                             event.fields
                         ),
                         //for now take first aggregate
-                        _typeImports: typeImports(event.fields),
+                        _typeImports: typeImports(event.fields, [], this.givenAnswers.rootPackageName),
                         link: boardlLink(config.boardId, event.id),
 
                     }
@@ -628,7 +629,7 @@ fun on(event: ${_eventTitle(it.title)}) {
                     _name: title,
                     _command: _commandTitle(command.title),
                     _controller: _restResourceTitle(command.title),
-                    _typeImports: typeImports(command.fields),
+                    _typeImports: typeImports(command.fields, [], this.givenAnswers.rootPackageName),
                     _debugendpoint: this._generateDebugPostRestCall(title, VariablesGenerator.generateRestParamInvocation(
                         command.fields
                     ), _commandTitle(command.title), VariablesGenerator.generateInvocation(
@@ -761,7 +762,7 @@ fun on(event: ${_eventTitle(it.title)}) {
                         _slice: title,
                         _readModelSlice: _sliceTitle(readModel.slice),
                         _readModel: _readmodelTitle(readModel.title),
-                        _typeImports: typeImports(readModel.fields),
+                        _typeImports: typeImports(readModel.fields, [], this.givenAnswers.rootPackageName),
                         _rootPackageName: this.givenAnswers.rootPackageName,
                         _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
                         _name: _processorTitle(processor.title),
@@ -826,6 +827,60 @@ fun on(event: ${_eventTitle(it.title)}) {
         }).join("\n")
     }
 
+    _writeCustomItemClasses(sliceName) {
+        var slice = this._findSlice(sliceName)
+        if (!slice) return
+
+        // Collect all Custom list fields with subfields from commands, events, and readmodels
+        var allFields = [
+            ...(slice.commands?.flatMap(c => c.fields || []) || []),
+            ...(slice.events?.flatMap(e => e.fields || []) || []),
+            ...(slice.readmodels?.flatMap(r => r.fields || []) || [])
+        ]
+
+        var customListFields = allFields.filter(f =>
+            f.type === "Custom" && f.cardinality === "List" && f.subfields?.length > 0
+        )
+
+        // Deduplicate by field name
+        var seen = new Set()
+        customListFields.forEach(field => {
+            if (seen.has(field.name)) return
+            seen.add(field.name)
+
+            var itemName = customItemTypeName(field.name)
+            console.log(`[custom-item] Generating data class ${itemName} for field ${field.name}`)
+
+            // Generate constructor fields from subfields
+            var itemFields = field.subfields.map(sf => {
+                var defaultVal = this._defaultValueForType(sf.type)
+                return `val ${sf.name}: ${typeMapping(sf.type, sf.cardinality, sf.optional)} = ${defaultVal}`
+            }).join(",\n\t")
+
+            this.fs.copyTpl(
+                this.templatePath(`src/components/CustomItem.kt.tpl`),
+                this.destinationPath(`./src/main/kotlin/${this.givenAnswers.rootPackageName.split(".").join("/")}/common/${itemName}.kt`),
+                {
+                    _packageName: this.givenAnswers.rootPackageName,
+                    _name: itemName,
+                    _fields: itemFields
+                }
+            )
+        })
+    }
+
+    _defaultValueForType(type) {
+        switch (type?.toLowerCase()) {
+            case "string": return '""'
+            case "long": return "0"
+            case "int": return "0"
+            case "double": return "0.0"
+            case "boolean": return "false"
+            case "uuid": return 'UUID.randomUUID()'
+            default: return '""'
+        }
+    }
+
     _findSlice(sliceName) {
         return config.slices.find((item) => item.title === sliceName)
     }
@@ -837,11 +892,11 @@ class ConstructorGenerator {
 
     //(: {name, type, example, mapping}
     static generateConstructorVariables(fields, overrides) {
-        return `${fields?.map((field) => (overrides?.includes(field.name) ? "override " : "") + "var " + field.name + ":" + typeMapping(field.type, field.cardinality, field.optional)).filter(it => it).join(",\n\t") ?? ""}`
+        return `${fields?.map((field) => (overrides?.includes(field.name) ? "override " : "") + "var " + field.name + ":" + typeMapping(field.type, field.cardinality, field.optional, false, field)).filter(it => it).join(",\n\t") ?? ""}`
     }
 
     static generateCommandConstructorVariables(fields, overrides) {
-        return `${fields?.map((field) => (field.idAttribute ? "@TargetAggregateIdentifier " : "") + (overrides?.includes(field.name) ? "override " : "") + "var " + field.name + ":" + typeMapping(field.type, field.cardinality, field.optional)).filter(it => it).join(",\n\t") ?? ""}`
+        return `${fields?.map((field) => (field.idAttribute ? "@TargetAggregateIdentifier " : "") + (overrides?.includes(field.name) ? "override " : "") + "var " + field.name + ":" + typeMapping(field.type, field.cardinality, field.optional, false, field)).filter(it => it).join(",\n\t") ?? ""}`
     }
 }
 
@@ -850,9 +905,9 @@ class VariablesGenerator {
     static generateLiveReportVariables(fields, identifier) {
         return fields?.map((variable) => {
             if (variable.cardinality?.toLowerCase() === "list") {
-                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, true)} = mutableListOf();`;
+                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, true, variable)} = mutableListOf();`;
             } else {
-                return `\t${variable.name == identifier ? "@AggregateIdentifier " : ""}var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}${variable.optional ? "" : "?"} = null;`;
+                return `\t${variable.name == identifier ? "@AggregateIdentifier " : ""}var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}${variable.optional ? "" : "?"} = null;`;
             }
         }).join("\n")
     }
@@ -867,9 +922,9 @@ class VariablesGenerator {
                     name = "${slice}_${camelCaseToUnderscores(variable.name)}",
                     joinColumns = [JoinColumn(name = "aggregateId")]
                  )
-                \tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, variable.mutable)} = mutableListOf();`;
+                \tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, variable.mutable, variable)} = mutableListOf();`;
             } else {
-                return `\t${variable.idAttribute ? "@Id " : ""} @Column(name="${slugify(variable.name)}") var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}${variable.optional ? "" : "?"} = null;`;
+                return `\t${variable.idAttribute ? "@Id " : ""} @Column(name="${slugify(variable.name)}") var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}${variable.optional ? "" : "?"} = null;`;
             }
         }).join("\n")
     }
@@ -880,9 +935,9 @@ class VariablesGenerator {
         }
         return fields?.map((variable) => {
             if (variable.cardinality?.toLowerCase() === "list") {
-                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, mutable)} = ${mutable ? "mutableListOf()" : "emptyList()"};`;
+                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, mutable, variable)} = ${mutable ? "mutableListOf()" : "emptyList()"};`;
             } else {
-                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}? = null;`;
+                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}? = null;`;
             }
         }).join("\n")
     }
@@ -898,11 +953,11 @@ class VariablesGenerator {
     static generateRestParamInvocation(fields) {
         return fields?.map((variable) => {
             if (variable.type?.toLowerCase() === "date") {
-                return `@DateTimeFormat(pattern = "dd.MM.yyyy") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `@DateTimeFormat(pattern = "dd.MM.yyyy") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             } else if (variable.type?.toLowerCase() === "datetime") {
-                return `@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `@DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             } else {
-                return `@RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `@RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             }
 
         }).filter((it) => it !== "").join(",\n\t") ?? ""

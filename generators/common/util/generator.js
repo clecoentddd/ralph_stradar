@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  */
 
-const {generators} = require("../../app");
+const { generators } = require("../../app");
 
 class ClassesGenerator {
 
@@ -15,14 +15,14 @@ class ClassesGenerator {
 
         return fields?.map((variable) => {
             if (variable.cardinality?.toLowerCase() === "list") {
-                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             } else {
                 if (variable.type?.toLowerCase() === "date") {
-                    return `\t@JsonFormat(pattern = "dd.MM.yyyy") var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                    return `\t@JsonFormat(pattern = "dd.MM.yyyy") var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
                 } else if (variable.type?.toLowerCase() === "datetime") {
-                    return `\t@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss") var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                    return `\t@JsonFormat(pattern = "dd.MM.yyyy HH:mm:ss") var ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
                 } else {
-                    return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                    return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
 
                 }
             }
@@ -37,67 +37,85 @@ function idType(element) {
     return idField ? typeMapping(idField.type, idField.cardinality, idField.optional, idField.mutable) : "java.util.UUID"
 }
 
-const typeMapping = (fieldType, fieldCardinality, optional, mutable) => {
-    var fieldType;
-    switch (fieldType?.toLowerCase()) {
-        case "string":
-            fieldType = optional ? "String?" : "String";
-            break
-        case "double":
-            fieldType = optional ? "Double?" : "Double";
-            break
-        case "int":
-            fieldType = optional ? "Int?" : "Int";
-            break
-        case "long":
-            fieldType = optional ? "Long?" : "Long";
-            break
-        case "boolean":
-            fieldType = optional ? "Boolean?" : "Boolean";
-            break
-        case "date":
-            fieldType = optional ? "LocalDate?" : "LocalDate";
-            break
-        case "datetime":
-            fieldType = optional ? "LocalDateTime?" : "LocalDateTime";
-            break
-        case "uuid":
-            fieldType = optional ? "UUID?" : "UUID";
-            break
-        default:
-            fieldType = optional ? "String?" : "String";
-            break
+const customItemTypeName = (fieldName) => {
+    return `${fieldName}Item`
+}
+
+const typeMapping = (fieldType, fieldCardinality, optional, mutable, field) => {
+    var resolvedType;
+    // Handle Custom type with subfields → generate item class name
+    if (fieldType?.toLowerCase() === "custom" && field?.subfields?.length > 0) {
+        resolvedType = customItemTypeName(field.name)
+    } else {
+        switch (fieldType?.toLowerCase()) {
+            case "string":
+                resolvedType = optional ? "String?" : "String";
+                break
+            case "double":
+                resolvedType = optional ? "Double?" : "Double";
+                break
+            case "int":
+                resolvedType = optional ? "Int?" : "Int";
+                break
+            case "long":
+                resolvedType = optional ? "Long?" : "Long";
+                break
+            case "boolean":
+                resolvedType = optional ? "Boolean?" : "Boolean";
+                break
+            case "date":
+                resolvedType = optional ? "LocalDate?" : "LocalDate";
+                break
+            case "datetime":
+                resolvedType = optional ? "LocalDateTime?" : "LocalDateTime";
+                break
+            case "uuid":
+                resolvedType = optional ? "UUID?" : "UUID";
+                break
+            default:
+                resolvedType = optional ? "String?" : "String";
+                break
+        }
     }
     if (fieldCardinality?.toLowerCase() === "list") {
-        return mutable ? `MutableList<${fieldType}>` : `List<${fieldType}>`
+        return mutable ? `MutableList<${resolvedType}>` : `List<${resolvedType}>`
     } else {
-        return fieldType
+        return resolvedType
     }
 
 }
 
-const typeImports = (fields, additionalImports) => {
+const typeImports = (fields, additionalImports, rootPackageName) => {
     if (!fields || fields.length === 0) {
         return []
     }
     var imports = fields?.map((field) => {
+        var result = []
         switch (field.type?.toLowerCase()) {
             case "date":
-                return ["import java.time.LocalDate", "import org.springframework.format.annotation.DateTimeFormat", "import com.fasterxml.jackson.annotation.JsonFormat"]
+                result = ["import java.time.LocalDate", "import org.springframework.format.annotation.DateTimeFormat", "import com.fasterxml.jackson.annotation.JsonFormat"]
+                break
             case "datetime":
-                return ["import java.time.LocalDateTime", "import org.springframework.format.annotation.DateTimeFormat", "import com.fasterxml.jackson.annotation.JsonFormat"]
+                result = ["import java.time.LocalDateTime", "import org.springframework.format.annotation.DateTimeFormat", "import com.fasterxml.jackson.annotation.JsonFormat"]
+                break
             case "uuid":
-                return ["import java.util.UUID"]
+                result = ["import java.util.UUID"]
+                break
+            case "custom":
+                if (field.subfields?.length > 0 && rootPackageName) {
+                    result = [`import ${rootPackageName}.common.${customItemTypeName(field.name)}`]
+                }
+                break
         }
         switch (field.cardinality?.toLowerCase()) {
             case "list":
-                return ["import kotlin.collections.List"]
-            default:
-                return []
+                result.push("import kotlin.collections.List")
+                break
         }
+        return result
     }).concat(additionalImports)
     return Array.from([...new Set(imports?.flat() ?? [])]).flat().join(";\n")
 
 }
 
-module.exports = {ClassesGenerator, typeMapping, typeImports, idType}
+module.exports = { ClassesGenerator, typeMapping, typeImports, idType, customItemTypeName }

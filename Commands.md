@@ -30,6 +30,12 @@ run the app:
 ./mvnw spring-boot:run
 
 
+FLYWAY in application.yml to generate the tables:
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
 FRONT-END:
 
 https://github.com/Nebulit-GmbH/eventsourcing-workshop-ui.git

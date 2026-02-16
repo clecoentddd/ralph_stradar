@@ -15,7 +15,7 @@ const {
 } = require("../../common/util/naming")
 const { variableAssignments, processSourceMapping } = require("../../common/util/variables");
 const { idField, uniqBy } = require("../../common/util/util");
-const { idType, typeMapping } = require("../../common/util/generator");
+const { idType, typeMapping, customItemTypeName } = require("../../common/util/generator");
 const { analyzeSpecs } = require("../../common/util/specs");
 const { fileExistsByGlob } = require("../../common/util/files");
 
@@ -177,9 +177,9 @@ class VariablesGenerator {
     static generateVariables(fields) {
         return fields?.map((variable) => {
             if (variable.cardinality?.toLowerCase() === "list") {
-                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)} = emptyList();`;
+                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)} = emptyList();`;
             } else {
-                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}? = null;`;
+                return `\tvar ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}? = null;`;
             }
         }).join("\n")
     }
@@ -196,13 +196,13 @@ class VariablesGenerator {
         return fields?.map((variable) => {
             if (variable.type?.toLowerCase() === "date") {
 
-                return `@DateTimeFormat(pattern = "dd.MM.yyyy") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `@DateTimeFormat(pattern = "dd.MM.yyyy") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             } else if (variable.type?.toLowerCase() === "datetime") {
 
-                return `@DateTimeFormat(pattern = "dd.MM.yyyy HH:MM:SS") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `@DateTimeFormat(pattern = "dd.MM.yyyy HH:MM:SS") @RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             }
             {
-                return `@RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional)}`;
+                return `@RequestParam ${variable.name}:${typeMapping(variable.type, variable.cardinality, variable.optional, false, variable)}`;
             }
 
         }).filter((it) => it !== "").join(",")
@@ -211,24 +211,31 @@ class VariablesGenerator {
 
 // typeMapping is imported from ../../common/util/generator
 
-const typeImports = (fields) => {
+const typeImports = (fields, rootPackageName) => {
     var imports = fields?.map((field) => {
+        var result = []
         switch (field.type?.toLowerCase()) {
             case "date":
-                return ["import java.time.LocalDate", "import org.springframework.format.annotation.DateTimeFormat"]
+                result = ["import java.time.LocalDate", "import org.springframework.format.annotation.DateTimeFormat"]
+                break
             case "datetime":
-                return ["import java.time.LocalDateTime", "import org.springframework.format.annotation.DateTimeFormat"]
+                result = ["import java.time.LocalDateTime", "import org.springframework.format.annotation.DateTimeFormat"]
+                break
             case "uuid":
-                return ["import java.util.UUID"]
-            default:
-                return []
+                result = ["import java.util.UUID"]
+                break
+            case "custom":
+                if (field.subfields?.length > 0 && rootPackageName) {
+                    result = [`import ${rootPackageName}.common.${customItemTypeName(field.name)}`]
+                }
+                break
         }
         switch (field.cardinality?.toLowerCase()) {
-            case "LIST":
-                return ["java.util.List"]
-            default:
-                return []
+            case "list":
+                result.push("import kotlin.collections.List")
+                break
         }
+        return result
     })
     return imports?.flat().join(";\n")
 
