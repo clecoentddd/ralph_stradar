@@ -15,7 +15,7 @@ module.exports = class extends Generator {
 
     constructor(args, opts) {
         super(args, opts);
-        this.argument('appname', {type: String, required: false});
+        this.argument('appname', { type: String, required: false });
         config = require(this.env.cwd + "/config.json");
     }
 
@@ -32,12 +32,12 @@ module.exports = class extends Generator {
             message: 'Root Package?',
             when: () => !config?.codeGen?.rootPackage,
         },
-            {
-                type: 'list',
-                name: 'generatorType',
-                message: 'What should be generated?',
-                choices: ['Skeleton', 'slices', "aggregates"]
-            }]);
+        {
+            type: 'list',
+            name: 'generatorType',
+            message: 'What should be generated?',
+            choices: ['Skeleton', 'slices', 'aggregates', 'adapters']
+        }]);
     }
 
     setDefaults() {
@@ -62,6 +62,12 @@ module.exports = class extends Generator {
         } else if (this.answers.generatorType === 'aggregates') {
             this.log('starting aggregates generation')
             this.composeWith(require.resolve('../aggregates'), {
+                answers: this.answers,
+                appName: this.answers.appName ?? this.appName
+            });
+        } else if (this.answers.generatorType === 'adapters') {
+            this.log('starting adapters generation')
+            this.composeWith(require.resolve('../adapters'), {
                 answers: this.answers,
                 appName: this.answers.appName ?? this.appName
             });

@@ -36,6 +36,44 @@ module.exports = class extends Generator {
     }
 
     async prompting() {
+        // If slice is pre-set (e.g. from adapters generator), skip the slice selection prompt
+        if (this.givenAnswers?.slice) {
+            this.answers = await this.prompt([
+                {
+                    type: 'checkbox',
+                    name: 'liveReportModels',
+                    message: 'Which ReadModels should read directly from the Eventstream?',
+                    when: (input) => {
+                        var sliceTitle = this.givenAnswers.slice[0]
+                        return this.givenAnswers.slice.length == 1
+                            && config.slices.find((slice) => slice.title === sliceTitle)?.readmodels?.length > 0
+                            && !config.slices.find((slice) => slice.title === sliceTitle)?.readmodels[0]?.listElement
+                    },
+                    choices: (items) => config.slices.filter((slice) => slice.title === this.givenAnswers.slice[0]).flatMap((slice) => slice.readmodels).map(item => item.title)
+                },
+                {
+                    type: 'checkbox',
+                    name: 'processTriggers',
+                    message: 'Which event triggers the Automation?',
+                    when: (input) => this.givenAnswers.slice.length === 1 && (this._findTriggerEvents({ slice: this.givenAnswers.slice })?.length > 0),
+                    choices: (items) => this._findTriggerEvents({ slice: this.givenAnswers.slice })
+                },
+                {
+                    type: 'confirm',
+                    name: 'generateAggregateId',
+                    message: 'Should the Aggregate ID be auto-generated (UUID)?',
+                    default: true,
+                    when: (input) => {
+                        var selectedSlices = config.slices.filter(s => this.givenAnswers.slice?.includes(s.title))
+                        return selectedSlices.some(s => s.sliceType === 'STATE_CHANGE' &&
+                            s.commands?.some(cmd => cmd.fields?.some(f => f.idAttribute && f.generated)))
+                    }
+                }])
+            // Merge pre-set slice into answers
+            this.answers.slice = this.givenAnswers.slice
+            return
+        }
+
         this.answers = await this.prompt([
             {
                 type: 'checkbox',
@@ -754,14 +792,72 @@ fun on(event: ${_eventTitle(it.title)}) {
 
             var events = config.slices.flatMap(it => it.events).filter(it => eventsDeps.includes(it?.id));
 
-            if (readModel) {
+            // When adapter mode is active, respect the includeReadModel flag
+            var useReadModel = readModel && !(this.givenAnswers?.adapterInfo && this.givenAnswers.adapterInfo.includeReadModel === false)
+
+            // Compute enriched template variables for adapter mode
+            var adapterVars = {}
+            if (this.givenAnswers?.adapterInfo && command) {
+                var triggerEvents = (this.answers.processTriggers || []).map(e => _eventTitle(e))
+                var featureName = _processorTitle(processor.title).replace('Processor', '')
+
+                // Find collection field (Custom type with List cardinality)
+                var collectionField = command.fields?.find(f => f.type === 'Custom' && f.cardinality === 'List')
+                var idFields = command.fields?.filter(f => f.idAttribute && f.type !== 'Custom') || []
+
+                var valueObjectType = collectionField ? customItemTypeName(collectionField.name) : null
+                var subfieldMapping = collectionField?.subfields?.map(sf =>
+                    `                    ${sf.name} = item.${sf.name}`
+                ).join(',\n') || ''
+
+                // Build command constructor args: id fields + collection field
+                var cmdArgs = []
+                idFields.forEach(f => {
+                    cmdArgs.push(`                    ${f.name} = event.${f.name}`)
+                })
+                if (collectionField) {
+                    cmdArgs.push(`                    ${collectionField.name} = mappedPayload`)
+                }
+                var commandConstructorArgs = cmdArgs.join(',\n')
+
+                // Custom item type imports
+                var customItemImports = collectionField
+                    ? `import ${this.givenAnswers.rootPackageName}.common.${customItemTypeName(collectionField.name)}\nimport kotlin.collections.List`
+                    : ''
+
+                adapterVars = {
+                    _triggerEvents: triggerEvents,
+                    _featureName: featureName,
+                    _collectionField: collectionField,
+                    _valueObjectType: valueObjectType,
+                    _subfieldMapping: subfieldMapping,
+                    _commandConstructorArgs: commandConstructorArgs,
+                    _customItemImports: customItemImports,
+                }
+            } else {
+                adapterVars = {
+                    _triggerEvents: [],
+                    _featureName: '',
+                    _collectionField: null,
+                    _valueObjectType: '',
+                    _subfieldMapping: '',
+                    _commandConstructorArgs: '',
+                    _customItemImports: '',
+                }
+            }
+
+            if (useReadModel) {
+                var processorTemplate = this.givenAnswers?.adapterInfo
+                    ? `src/components/StatelessProcessorWithAdapter.kt.tpl`
+                    : `src/components/StatelessProcessor.kt.tpl`
                 this.fs.copyTpl(
-                    this.templatePath(`src/components/StatelessProcessor.kt.tpl`),
+                    this.templatePath(processorTemplate),
                     this.destinationPath(`./src/main/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/internal/${_processorTitle(processor.title)}.kt`),
                     {
                         _slice: title,
                         _readModelSlice: _sliceTitle(readModel.slice),
                         _readModel: _readmodelTitle(readModel.title),
+                        _adapterName: this.givenAnswers?.adapterInfo?.adapterName,
                         _typeImports: typeImports(readModel.fields, [], this.givenAnswers.rootPackageName),
                         _rootPackageName: this.givenAnswers.rootPackageName,
                         _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
@@ -773,22 +869,26 @@ fun on(event: ${_eventTitle(it.title)}) {
                         _triggers: this._renderStatelessProcessorTriggers(readModel, this.answers.processTriggers || [], events, command),
                         _command: command ? _commandTitle(command.title) : "",
                         link: boardlLink(config.boardId, processor.id),
-
+                        ...adapterVars,
                     })
             } else {
+                var standaloneTemplate = this.givenAnswers?.adapterInfo
+                    ? `src/components/StatelessStandaloneProcessorWithAdapter.kt.tpl`
+                    : `src/components/StatelessStandaloneProcessor.kt.tpl`
                 this.fs.copyTpl(
-                    this.templatePath(`src/components/StatelessStandaloneProcessor.kt.tpl`),
+                    this.templatePath(standaloneTemplate),
                     this.destinationPath(`./src/main/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/internal/${_processorTitle(processor.title)}.kt`),
                     {
                         _slice: title,
+                        _adapterName: this.givenAnswers?.adapterInfo?.adapterName,
                         _rootPackageName: this.givenAnswers.rootPackageName,
                         _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
                         _name: _processorTitle(processor.title),
                         _eventsImports: this._eventsImports(this.answers.processTriggers),
-                        _triggers: this._renderStatelessProcessorTriggers(readModel, this.answers.processTriggers || [], events, command),
+                        _triggers: this._renderStatelessProcessorTriggers(null, this.answers.processTriggers || [], events, command),
                         _command: command ? _commandTitle(command.title) : "",
                         link: boardlLink(config.boardId, processor.id),
-
+                        ...adapterVars,
                     })
             }
         })
@@ -822,8 +922,7 @@ fun on(event: ${_eventTitle(it.title)}) {
                     /*commandGateway.send<${_commandTitle(command.title)}>(
                         ${_commandTitle(command.title)}(
                     )*/
-                }
-            }`
+                }`
         }).join("\n")
     }
 
