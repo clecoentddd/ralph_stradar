@@ -1,0 +1,198 @@
+{
+  "data": [
+    {
+      "id": 50009,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-009",
+        "title": "App Mobile iOS/Android - Design",
+        "state": 40,
+        "orderDate": "2024-01-25",
+        "startDate": "2024-02-01",
+        "endDate": "2024-04-30",
+        "informations": {
+          "totalExcludingTaxes": 66666.67,
+          "totalIncludingTaxes": 80000.00,
+          "totalVat": 13333.33
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12347,
+            "reference": "PRJ-2024-003"
+          }
+        }
+      }
+    },
+    {
+      "id": 50010,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-010",
+        "title": "App Mobile iOS/Android - Développement",
+        "state": 20,
+        "orderDate": "2024-04-10",
+        "startDate": "2024-05-01",
+        "endDate": "2024-08-31",
+        "informations": {
+          "totalExcludingTaxes": 133333.33,
+          "totalIncludingTaxes": 160000.00,
+          "totalVat": 26666.67
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12347,
+            "reference": "PRJ-2024-003"
+          }
+        }
+      }
+    },
+    {
+      "id": 50011,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-011",
+        "title": "Identité Visuelle",
+        "state": 70,
+        "orderDate": "2023-10-10",
+        "startDate": "2023-10-15",
+        "endDate": "2024-01-31",
+        "informations": {
+          "totalExcludingTaxes": 42000.00,
+          "totalIncludingTaxes": 50400.00,
+          "totalVat": 8400.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12351,
+            "reference": "PRJ-2024-007"
+          }
+        }
+      }
+    },
+    {
+      "id": 50012,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-012",
+        "title": "Campagne Marketing Digital",
+        "state": 35,
+        "orderDate": "2024-01-05",
+        "startDate": "2024-01-10",
+        "endDate": "2024-06-30",
+        "informations": {
+          "totalExcludingTaxes": 68000.00,
+          "totalIncludingTaxes": 81600.00,
+          "totalVat": 13600.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12352,
+            "reference": "PRJ-2024-008"
+          }
+        }
+      }
+    },
+    {
+      "id": 50013,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-013",
+        "title": "Plateforme E-learning - Phase 1",
+        "state": 25,
+        "orderDate": "2024-02-20",
+        "startDate": "2024-03-01",
+        "endDate": "2024-06-30",
+        "informations": {
+          "totalExcludingTaxes": 110000.00,
+          "totalIncludingTaxes": 132000.00,
+          "totalVat": 22000.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12353,
+            "reference": "PRJ-2024-009"
+          }
+        }
+      }
+    },
+    {
+      "id": 50014,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-014",
+        "title": "Plateforme E-learning - Phase 2",
+        "state": 10,
+        "orderDate": "2024-05-15",
+        "startDate": "2024-07-01",
+        "endDate": "2024-10-31",
+        "informations": {
+          "totalExcludingTaxes": 110000.00,
+          "totalIncludingTaxes": 132000.00,
+          "totalVat": 22000.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12353,
+            "reference": "PRJ-2024-009"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "count": 6,
+    "pagination": {
+      "page": 1,
+      "perPage": 100,
+      "total": 6
+    }
+  }
+}

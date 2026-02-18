@@ -14,7 +14,7 @@
       "modelContext": "Socraft Client Portal v3",
       "context": "INTERNAL",
       "slice": "slice: Adapter Boond Companies Data",
-      "title": "Boond Companies Data",
+      "title": "FetchBoondAPICompanyList",
       "fields": [
         {
           "name": "ListOfCompanies",
@@ -44,7 +44,7 @@
         {
           "id": "3458764659734822854",
           "type": "OUTBOUND",
-          "title": "processor Fetch Boond Companies List",
+          "title": "Fetch Companies List",
           "elementType": "AUTOMATION"
         }
       ],

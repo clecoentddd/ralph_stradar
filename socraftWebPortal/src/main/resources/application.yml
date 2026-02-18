@@ -4,7 +4,7 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres-so
@@ -25,6 +25,14 @@ axon:
     general: jackson
   axonserver:
     enabled: false
+
+administration:
+  api:
+    base-url: http://localhost:8089/api/v1
+    token: Bearer mock_token_123
+
+wiremock:
+  port: 8089
 
 #axoniq:
 #  console:

@@ -1,0 +1,271 @@
+{
+    "data": [
+        {
+            "id": 80009,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-009",
+                "title": "E-commerce Shopify - Acompte 40%",
+                "state": 50,
+                "invoiceDate": "2023-11-15",
+                "dueDate": "2023-12-15",
+                "amount": 30000.00,
+                "informations": {
+                    "totalExcludingTaxes": 30000.00,
+                    "totalIncludingTaxes": 36000.00,
+                    "totalVat": 6000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12346,
+                        "reference": "PRJ-2024-002"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50005,
+                        "reference": "CMD-2024-005"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80010,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-010",
+                "title": "E-commerce Shopify - Acompte 40%",
+                "state": 50,
+                "invoiceDate": "2024-01-20",
+                "dueDate": "2024-02-20",
+                "amount": 30000.00,
+                "informations": {
+                    "totalExcludingTaxes": 30000.00,
+                    "totalIncludingTaxes": 36000.00,
+                    "totalVat": 6000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12346,
+                        "reference": "PRJ-2024-002"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50005,
+                        "reference": "CMD-2024-005"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80011,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-011",
+                "title": "E-commerce Shopify - Solde 20%",
+                "state": 50,
+                "invoiceDate": "2024-03-10",
+                "dueDate": "2024-04-10",
+                "amount": 15000.00,
+                "informations": {
+                    "totalExcludingTaxes": 15000.00,
+                    "totalIncludingTaxes": 18000.00,
+                    "totalVat": 3000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12346,
+                        "reference": "PRJ-2024-002"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50005,
+                        "reference": "CMD-2024-005"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80012,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-012",
+                "title": "Audit RGPD - Paiement unique",
+                "state": 60,
+                "invoiceDate": "2024-02-25",
+                "dueDate": "2024-03-25",
+                "amount": 55000.00,
+                "informations": {
+                    "totalExcludingTaxes": 55000.00,
+                    "totalIncludingTaxes": 66000.00,
+                    "totalVat": 11000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12349,
+                        "reference": "PRJ-2024-005"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50006,
+                        "reference": "CMD-2024-006"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80013,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-013",
+                "title": "Portail Client Phase 1 - Acompte 50%",
+                "state": 40,
+                "invoiceDate": "2024-03-01",
+                "dueDate": "2024-04-01",
+                "amount": 23750.00,
+                "informations": {
+                    "totalExcludingTaxes": 23750.00,
+                    "totalIncludingTaxes": 28500.00,
+                    "totalVat": 4750.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12350,
+                        "reference": "PRJ-2024-006"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50007,
+                        "reference": "CMD-2024-007"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80014,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-014",
+                "title": "Portail Client Phase 1 - Solde 50%",
+                "state": 30,
+                "invoiceDate": "2024-05-10",
+                "dueDate": "2024-06-10",
+                "amount": 23750.00,
+                "informations": {
+                    "totalExcludingTaxes": 23750.00,
+                    "totalIncludingTaxes": 28500.00,
+                    "totalVat": 4750.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12350,
+                        "reference": "PRJ-2024-006"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50007,
+                        "reference": "CMD-2024-007"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80015,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-015",
+                "title": "Portail Client Phase 2",
+                "state": 10,
+                "invoiceDate": "2024-07-25",
+                "dueDate": "2024-08-25",
+                "amount": 47500.00,
+                "informations": {
+                    "totalExcludingTaxes": 47500.00,
+                    "totalIncludingTaxes": 57000.00,
+                    "totalVat": 9500.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 790,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12350,
+                        "reference": "PRJ-2024-006"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50008,
+                        "reference": "CMD-2024-008"
+                    }
+                }
+            }
+        }
+    ],
+    "meta": {
+        "count": 7,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 7
+        }
+    }
+}

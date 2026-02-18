@@ -1,8 +1,3 @@
-package Administration.common
-
-import java.util.UUID
-import mu.KotlinLogging
-import org.springframework.stereotype.Component
+package administration.common
 
 interface ReadModel
-

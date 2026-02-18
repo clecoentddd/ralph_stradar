@@ -1,3 +1,3 @@
-package Administration.common
+package administration.common
 
 interface Event

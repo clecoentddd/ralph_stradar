@@ -1,0 +1,136 @@
+{
+    "data": [
+        {
+            "id": 50001,
+            "typeResource": "orders",
+            "attributes": {
+                "reference": "CMD-2024-001",
+                "title": "Commande CRM Salesforce - Phase 1",
+                "state": 30,
+                "orderDate": "2024-01-10",
+                "startDate": "2024-01-15",
+                "endDate": "2024-03-31",
+                "informations": {
+                    "totalExcludingTaxes": 60000.00,
+                    "totalIncludingTaxes": 72000.00,
+                    "totalVat": 12000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                }
+            }
+        },
+        {
+            "id": 50002,
+            "typeResource": "orders",
+            "attributes": {
+                "reference": "CMD-2024-002",
+                "title": "Commande CRM Salesforce - Phase 2",
+                "state": 20,
+                "orderDate": "2024-03-01",
+                "startDate": "2024-04-01",
+                "endDate": "2024-06-30",
+                "informations": {
+                    "totalExcludingTaxes": 60000.00,
+                    "totalIncludingTaxes": 72000.00,
+                    "totalVat": 12000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                }
+            }
+        },
+        {
+            "id": 50003,
+            "typeResource": "orders",
+            "attributes": {
+                "reference": "CMD-2024-003",
+                "title": "Infrastructure AWS - Setup",
+                "state": 40,
+                "orderDate": "2024-02-20",
+                "startDate": "2024-03-01",
+                "endDate": "2024-05-31",
+                "informations": {
+                    "totalExcludingTaxes": 75000.00,
+                    "totalIncludingTaxes": 90000.00,
+                    "totalVat": 15000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12348,
+                        "reference": "PRJ-2024-004"
+                    }
+                }
+            }
+        },
+        {
+            "id": 50004,
+            "typeResource": "orders",
+            "attributes": {
+                "reference": "CMD-2024-004",
+                "title": "Infrastructure AWS - Migration",
+                "state": 10,
+                "orderDate": "2024-05-15",
+                "startDate": "2024-06-01",
+                "endDate": "2024-09-30",
+                "informations": {
+                    "totalExcludingTaxes": 75000.00,
+                    "totalIncludingTaxes": 90000.00,
+                    "totalVat": 15000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12348,
+                        "reference": "PRJ-2024-004"
+                    }
+                }
+            }
+        }
+    ],
+    "meta": {
+        "count": 4,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 4
+        }
+    }
+}

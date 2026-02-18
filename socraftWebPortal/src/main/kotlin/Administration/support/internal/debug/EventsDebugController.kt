@@ -1,4 +1,4 @@
-package Administration.support.internal .debug
+package administration.support.internal.debug
 
 import org.axonframework.eventhandling.DomainEventMessage
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class EventsDebugController(val eventStorageEngine: EventStorageEngine) {
 
-    @CrossOrigin
-    @GetMapping("/internal/debug/events/{aggregateId}")
-    fun resolveEvents(@PathVariable("aggregateId") aggregateId: String): List<DomainEventMessage<*>> {
-        return eventStorageEngine.readEvents(aggregateId.toString()).asSequence().toList()
-    }
+  @CrossOrigin
+  @GetMapping("/internal/debug/events/{aggregateId}")
+  fun resolveEvents(@PathVariable("aggregateId") aggregateId: String): List<DomainEventMessage<*>> {
+    return eventStorageEngine.readEvents(aggregateId.toString()).asSequence().toList()
+  }
 }

@@ -1,0 +1,136 @@
+package administration.domain
+
+import administration.common.CommandException
+import administration.common.ListOfCompaniesItem
+import administration.common.SettingsConstants
+import administration.domain.commands.fetchcompanieslist.MarkListOfCompaniesFetchedCommand
+import administration.domain.commands.fetchinvoicestatemappinglist.MarkListOfInvoiceStateFetchedCommand
+import administration.domain.commands.initializesettings.CreateSettingsCommand
+import administration.domain.commands.requestcompanylistupdate.RequestCompanyListUpdateCommand
+import administration.domain.commands.requestinvoicestatemappingupdate.RequestInvoiceStateMappingUpdateCommand
+import administration.events.CompanyListUpdateRequestedEvent
+import administration.events.InvoiceStateMappingFetchedEvent
+import administration.events.InvoiceStateMappingUpdateRequestedEvent
+import administration.events.ListOfCompaniesFetchedEvent
+import administration.events.SettingsCreatedEvent
+import java.util.UUID
+import mu.KotlinLogging
+import org.axonframework.commandhandling.CommandHandler
+import org.axonframework.eventsourcing.EventSourcingHandler
+import org.axonframework.modelling.command.AggregateCreationPolicy
+import org.axonframework.modelling.command.AggregateIdentifier
+import org.axonframework.modelling.command.AggregateLifecycle
+import org.axonframework.modelling.command.CreationPolicy
+import org.axonframework.spring.stereotype.Aggregate
+
+@Aggregate
+class SettingsAggregate() {
+
+  private val logger = KotlinLogging.logger {}
+
+  @AggregateIdentifier private lateinit var settingsId: UUID
+
+  var listOfCompanies: List<ListOfCompaniesItem> = emptyList()
+  var connectionId: UUID? = null
+  var state: String = "INCOMPLETE"
+
+  /** CommandHandler for creating the aggregate */
+  @CommandHandler
+  @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
+  fun handle(command: CreateSettingsCommand) {
+
+    if (::settingsId.isInitialized) {
+      // Aggregate already exists
+      if (command.settingsId != settingsId) {
+        throw CommandException("Cannot create SettingsAggregate with a different settingsId")
+      }
+      logger.info { "SettingsAggregate already exists, ignoring duplicate creation" }
+      return
+    }
+
+    require(command.settingsId == SettingsConstants.SETTINGS_ID) {
+      "Invalid settingsId. Expected SETTINGS_ID."
+    }
+
+    AggregateLifecycle.apply(
+            SettingsCreatedEvent(
+                    settingsId = SettingsConstants.SETTINGS_ID,
+                    connectionId = command.connectionId
+            )
+    )
+  }
+
+  @CommandHandler
+  fun handle(command: RequestCompanyListUpdateCommand) {
+    AggregateLifecycle.apply(
+            CompanyListUpdateRequestedEvent(
+                    settingsId = command.settingsId,
+                    connectionId = command.connectionId
+            )
+    )
+  }
+
+  @EventSourcingHandler
+  fun on(event: SettingsCreatedEvent) {
+    this.settingsId = event.settingsId
+  }
+
+  // Mark Companies Fetched
+  @CommandHandler
+  fun handle(command: MarkListOfCompaniesFetchedCommand) {
+
+    AggregateLifecycle.apply(
+            ListOfCompaniesFetchedEvent(
+                    settingsId = command.settingsId,
+                    connectionId = command.connectionId,
+                    listOfCompanies = command.listOfCompanies
+            )
+    )
+  }
+
+  @EventSourcingHandler
+  fun on(event: ListOfCompaniesFetchedEvent) {
+    // handle event
+    listOfCompanies = event.listOfCompanies
+  }
+
+  // Request Invoice State Mapping Update
+  @CommandHandler
+  fun handle(command: RequestInvoiceStateMappingUpdateCommand) {
+    AggregateLifecycle.apply(
+            InvoiceStateMappingUpdateRequestedEvent(
+                    settingsId = command.settingsId,
+                    connectionId = command.connectionId
+            )
+    )
+  }
+
+  @EventSourcingHandler
+  fun on(event: InvoiceStateMappingUpdateRequestedEvent) {
+    // handle event
+    settingsId = event.settingsId
+  }
+
+  // Mark Invoice State Mapping Fetched
+  @CommandHandler
+  fun handle(command: MarkListOfInvoiceStateFetchedCommand) {
+
+    AggregateLifecycle.apply(
+            InvoiceStateMappingFetchedEvent(
+                    settingsId = command.settingsId,
+                    connectionId = command.connectionId,
+                    listOfInvoiceStates = command.listOfInvoiceStates
+            )
+    )
+  }
+
+  @EventSourcingHandler
+  fun on(event: InvoiceStateMappingFetchedEvent) {
+    // handle event
+    settingsId = event.settingsId
+  }
+
+  companion object {
+    private val logger = KotlinLogging.logger {}
+  }
+}

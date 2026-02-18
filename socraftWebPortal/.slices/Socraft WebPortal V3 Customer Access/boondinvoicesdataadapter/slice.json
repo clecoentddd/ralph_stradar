@@ -1,0 +1,129 @@
+{
+  "id": "3458764660086962394",
+  "status": "Done",
+  "title": "slice: Boond Invoices Data Adapter",
+  "context": "Socraft WebPortal V3 Customer Access",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764660086962407",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Boond Invoices Data Adapter",
+      "title": "FetchBoondAPIInvoiceList",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "invoiceList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "invoiceId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "orderId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "reference",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "state",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "creationDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "dueDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "paymentDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalExcludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalIncludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalVat",
+              "type": "Double",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764660086962408",
+          "type": "OUTBOUND",
+          "title": "Fetch Invoice List",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

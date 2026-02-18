@@ -1,0 +1,405 @@
+{
+  "id": "3458764660086962396",
+  "status": "Done",
+  "title": "slice: Fetch Invoices",
+  "context": "Socraft WebPortal V3 Customer Access",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764660086962410",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Invoices",
+      "title": "Mark Invoices Fetched",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "invoiceList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "invoiceId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "orderId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "reference",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "state",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "creationDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "dueDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "paymentDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalExcludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalIncludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalVat",
+              "type": "Double",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Company",
+      "aggregateDependencies": [
+        "Company"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660086962397",
+          "type": "OUTBOUND",
+          "title": "Invoices Fetched",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764660086962408",
+          "type": "INBOUND",
+          "title": "Fetch Invoice List",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764660086962397",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Invoices",
+      "title": "Invoices Fetched",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "invoiceList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "invoiceId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "orderId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "reference",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "state",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "creationDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "dueDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "paymentDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalExcludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalIncludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalVat",
+              "type": "Double",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Company",
+      "aggregateDependencies": [
+        "Company"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660086962398",
+          "type": "OUTBOUND",
+          "title": "Invoice List",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764660086962410",
+          "type": "INBOUND",
+          "title": "Mark Invoices Fetched",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764660086962408",
+      "tags": [],
+      "groupId": "3458764660086962418",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Invoices",
+      "title": "Fetch Invoice List",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "invoiceList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "invoiceId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "orderId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "reference",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "state",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "creationDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "dueDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "paymentDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalExcludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalIncludingTaxes",
+              "type": "Double",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalVat",
+              "type": "Double",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "Company",
+      "aggregateDependencies": [
+        "Company"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660086962410",
+          "type": "OUTBOUND",
+          "title": "Mark Invoices Fetched",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764660086962407",
+          "type": "INBOUND",
+          "title": "FetchBoondAPIInvoiceList",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764660085256087",
+          "type": "INBOUND",
+          "title": "List of Orders",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Company"
+  ]
+}

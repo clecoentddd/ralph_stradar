@@ -1,0 +1,243 @@
+{
+  "id": "3458764659954713519",
+  "status": "Done",
+  "title": "slice: Fetch Invoice State Mapping List",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764659954713538",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Invoice State Mapping List",
+      "title": "Mark List of Invoice State Fetched",
+      "fields": [
+        {
+          "name": "ListOfInvoiceStates",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "code",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "label",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": true
+        },
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "example": "\"00000000-0000-0000-0000-000000000001\"",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659954713525",
+          "type": "OUTBOUND",
+          "title": "Invoice State Mapping Fetched",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764659954713536",
+          "type": "INBOUND",
+          "title": "Fetch Invoice State Mapping",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764659954713525",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Invoice State Mapping List",
+      "title": "Invoice State Mapping Fetched",
+      "fields": [
+        {
+          "name": "ListOfInvoiceStates",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "code",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "label",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": true
+        },
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "example": "\"00000000-0000-0000-0000-000000000001\"",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659954713541",
+          "type": "OUTBOUND",
+          "title": "InvoiceStateMappingLookUp",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764659954713538",
+          "type": "INBOUND",
+          "title": "Mark List of Invoice State Fetched",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764659954713536",
+      "tags": [],
+      "groupId": "3458764659954713562",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Invoice State Mapping List",
+      "title": "Fetch Invoice State Mapping",
+      "fields": [
+        {
+          "name": "ListOfInvoiceStates",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "code",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "label",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": true
+        },
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "example": "\"00000000-0000-0000-0000-000000000001\"",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659954713538",
+          "type": "OUTBOUND",
+          "title": "Mark List of Invoice State Fetched",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764659954713548",
+          "type": "INBOUND",
+          "title": "Invoice State Mapping To Fetch",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764659954713546",
+          "type": "INBOUND",
+          "title": "FetchBoondAPIInvoiceStateMapping",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Settings"
+  ]
+}

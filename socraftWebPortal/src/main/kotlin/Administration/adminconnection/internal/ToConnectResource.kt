@@ -1,21 +1,17 @@
-package Administration.adminconnection.internal
+package administration.adminconnection.internal
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RestController
+import administration.domain.commands.adminconnection.ToConnectCommand
+import java.util.UUID
+import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
-import Administration.domain.commands.adminconnection.ToConnectCommand
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
-import java.util.UUID;
-
-import java.util.concurrent.CompletableFuture
-
-
-data class AdminConnectionPayload(	var email:String)
+data class AdminConnectionPayload(var email: String)
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764659734675975
@@ -23,27 +19,21 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465973467
 @RestController
 class ToConnectResource(private var commandGateway: CommandGateway) {
 
-    var logger = KotlinLogging.logger {}
+  var logger = KotlinLogging.logger {}
 
-    
-    @CrossOrigin
-    @PostMapping("/debug/adminconnection")
-    fun processDebugCommand(@RequestParam connectionId:UUID,
-	@RequestParam email:String):CompletableFuture<Any> {
-        return commandGateway.send(ToConnectCommand(connectionId,
-	email))
-    }
-    
+  @CrossOrigin
+  @PostMapping("/debug/adminconnection")
+  fun processDebugCommand(
+      @RequestParam connectionId: UUID,
+      @RequestParam email: String
+  ): CompletableFuture<Any> {
+    return commandGateway.send(ToConnectCommand(connectionId, email))
+  }
 
-    
-       @CrossOrigin
-       @PostMapping("/adminconnection")
-    fun processCommand(
-        @RequestBody payload: AdminConnectionPayload
-    ):CompletableFuture<Any> {
-         return commandGateway.send(ToConnectCommand(connectionId=UUID.randomUUID(),
-			email=payload.email))
-        }
-       
-
+  @CrossOrigin
+  @PostMapping("/adminconnection")
+  fun processCommand(@RequestBody payload: AdminConnectionPayload): CompletableFuture<Any> {
+    return commandGateway.send(
+        ToConnectCommand(connectionId = UUID.randomUUID(), email = payload.email))
+  }
 }

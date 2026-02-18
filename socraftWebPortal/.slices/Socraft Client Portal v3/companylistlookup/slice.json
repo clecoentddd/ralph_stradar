@@ -19,9 +19,17 @@
         {
           "name": "settingsId",
           "type": "UUID",
+          "example": "\"00000000-0000-0000-0000-000000000001\"",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
         },
         {
           "name": "ListOfCompanies",
@@ -85,9 +93,17 @@
         {
           "name": "settingsId",
           "type": "UUID",
+          "example": "\"00000000-0000-0000-0000-000000000001\"",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
         },
         {
           "name": "ListOfCompanies",

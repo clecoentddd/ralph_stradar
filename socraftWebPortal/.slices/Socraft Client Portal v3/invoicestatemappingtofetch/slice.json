@@ -1,0 +1,74 @@
+{
+  "id": "3458764659954713520",
+  "status": "Informational",
+  "title": "slice: Invoice State Mapping To Fetch",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764659954713548",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Invoice State Mapping To Fetch",
+      "title": "Invoice State Mapping To Fetch",
+      "fields": [
+        {
+          "name": "settingsId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "Settings",
+      "aggregateDependencies": [
+        "Settings"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659954713536",
+          "type": "OUTBOUND",
+          "title": "Fetch Invoice State Mapping",
+          "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764659954713522",
+          "type": "INBOUND",
+          "title": "Invoice State Mapping Update Requested",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Settings"
+  ]
+}

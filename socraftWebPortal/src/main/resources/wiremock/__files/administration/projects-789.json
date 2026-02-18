@@ -1,0 +1,124 @@
+{
+    "data": [
+        {
+            "id": 12345,
+            "typeResource": "projects",
+            "attributes": {
+                "reference": "PRJ-2024-001",
+                "title": "Migration CRM Salesforce",
+                "state": 30,
+                "startDate": "2024-01-15",
+                "forecastEndDate": "2024-06-30",
+                "endDate": null,
+                "description": "Migration complète du CRM legacy vers Salesforce",
+                "settings": {
+                    "profit": 50000.00,
+                    "revenue": 120000.00,
+                    "purchases": 30000.00,
+                    "margin": 40000.00,
+                    "marginRate": 33.33
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "manager": {
+                    "data": {
+                        "id": "U456",
+                        "typeResource": "users"
+                    }
+                },
+                "typeProject": {
+                    "data": {
+                        "id": 5,
+                        "typeResource": "typesProject"
+                    }
+                },
+                "contact": {
+                    "data": {
+                        "id": 456,
+                        "typeResource": "contacts"
+                    }
+                }
+            }
+        },
+        {
+            "id": 12348,
+            "typeResource": "projects",
+            "attributes": {
+                "reference": "PRJ-2024-004",
+                "title": "Infrastructure Cloud AWS",
+                "state": 40,
+                "startDate": "2024-03-01",
+                "forecastEndDate": "2024-09-30",
+                "endDate": null,
+                "description": "Migration infrastructure on-premise vers AWS avec architecture microservices",
+                "settings": {
+                    "profit": 65000.00,
+                    "revenue": 150000.00,
+                    "purchases": 35000.00,
+                    "margin": 50000.00,
+                    "marginRate": 33.33
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "manager": {
+                    "data": {
+                        "id": "U789",
+                        "typeResource": "users"
+                    }
+                },
+                "typeProject": {
+                    "data": {
+                        "id": 5,
+                        "typeResource": "typesProject"
+                    }
+                },
+                "contact": {
+                    "data": {
+                        "id": 456,
+                        "typeResource": "contacts"
+                    }
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "id": "U456",
+            "typeResource": "users",
+            "attributes": {
+                "firstName": "Jean",
+                "lastName": "Dupont",
+                "email": "jean.dupont@company.com"
+            }
+        },
+        {
+            "id": "U789",
+            "typeResource": "users",
+            "attributes": {
+                "firstName": "Marie",
+                "lastName": "Martin",
+                "email": "marie.martin@company.com"
+            }
+        }
+    ],
+    "meta": {
+        "count": 2,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 2
+        }
+    }
+}

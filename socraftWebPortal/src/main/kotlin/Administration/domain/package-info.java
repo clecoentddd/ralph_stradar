@@ -1,1 +1,1 @@
-package Administration.domain;
+package administration.domain;

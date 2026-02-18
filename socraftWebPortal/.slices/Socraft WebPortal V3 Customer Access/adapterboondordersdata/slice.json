@@ -1,0 +1,99 @@
+{
+  "id": "3458764660085256075",
+  "status": "Done",
+  "title": "slice: Adapter Boond Orders Data",
+  "context": "Socraft WebPortal V3 Customer Access",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764660085256085",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Adapter Boond Orders Data",
+      "title": "FetchBoondAPIOrderList",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "orderList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "reference",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "state",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "orderDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "startDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "endDate",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "totalVat",
+              "type": "Double",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764660085256079",
+          "type": "OUTBOUND",
+          "title": "Fetch Boond Order List",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

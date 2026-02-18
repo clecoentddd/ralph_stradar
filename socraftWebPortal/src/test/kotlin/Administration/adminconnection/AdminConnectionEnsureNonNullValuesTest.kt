@@ -1,10 +1,10 @@
-package Administration.adminconnection
+package administration.adminconnection
 
-import Administration.common.Event
-import Administration.common.support.RandomData
-import Administration.domain.AccountAggregate
-import Administration.domain.commands.adminconnection.ToConnectCommand
-import Administration.events.AdminConnectedEvent
+import administration.common.Event
+import administration.common.support.RandomData
+import administration.domain.AccountAggregate
+import administration.domain.commands.adminconnection.ToConnectCommand
+import administration.events.AdminConnectedEvent
 import java.util.UUID
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
@@ -35,24 +35,23 @@ class AdminConnectionEnsureNonNullValuesTest {
 
     // WHEN
     val command =
-            ToConnectCommand(
-                    connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8"),
-                    email = "test@test.com"
-            )
+        ToConnectCommand(
+            connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8"),
+            email = "test@test.com")
 
     // THEN
     val expectedEvents = mutableListOf<Event>()
 
     expectedEvents.add(
-            RandomData.newInstance<AdminConnectedEvent> {
-              this.connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
-              this.email = "test@test.com"
-            }
-    )
+        RandomData.newInstance<AdminConnectedEvent> {
+          this.connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
+          this.email = "test@test.com"
+        })
 
-    fixture.given(events)
-            .`when`(command)
-            .expectSuccessfulHandlerExecution()
-            .expectEvents(*expectedEvents.toTypedArray())
+    fixture
+        .given(events)
+        .`when`(command)
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(*expectedEvents.toTypedArray())
   }
 }

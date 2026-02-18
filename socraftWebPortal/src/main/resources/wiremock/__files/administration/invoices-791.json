@@ -1,0 +1,493 @@
+{
+    "data": [
+        {
+            "id": 80016,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-016",
+                "title": "App Mobile Design - Acompte 30%",
+                "state": 50,
+                "invoiceDate": "2024-02-15",
+                "dueDate": "2024-03-15",
+                "amount": 20000.00,
+                "informations": {
+                    "totalExcludingTaxes": 20000.00,
+                    "totalIncludingTaxes": 24000.00,
+                    "totalVat": 4000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12347,
+                        "reference": "PRJ-2024-003"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50009,
+                        "reference": "CMD-2024-009"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80017,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-017",
+                "title": "App Mobile Design - Acompte 40%",
+                "state": 50,
+                "invoiceDate": "2024-03-30",
+                "dueDate": "2024-04-30",
+                "amount": 26666.67,
+                "informations": {
+                    "totalExcludingTaxes": 26666.67,
+                    "totalIncludingTaxes": 32000.00,
+                    "totalVat": 5333.33
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12347,
+                        "reference": "PRJ-2024-003"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50009,
+                        "reference": "CMD-2024-009"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80018,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-018",
+                "title": "App Mobile Design - Solde 30%",
+                "state": 40,
+                "invoiceDate": "2024-04-25",
+                "dueDate": "2024-05-25",
+                "amount": 20000.00,
+                "informations": {
+                    "totalExcludingTaxes": 20000.00,
+                    "totalIncludingTaxes": 24000.00,
+                    "totalVat": 4000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12347,
+                        "reference": "PRJ-2024-003"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50009,
+                        "reference": "CMD-2024-009"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80019,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-019",
+                "title": "App Mobile Développement - Acompte",
+                "state": 30,
+                "invoiceDate": "2024-05-20",
+                "dueDate": "2024-06-20",
+                "amount": 66666.67,
+                "informations": {
+                    "totalExcludingTaxes": 66666.67,
+                    "totalIncludingTaxes": 80000.00,
+                    "totalVat": 13333.33
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12347,
+                        "reference": "PRJ-2024-003"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50010,
+                        "reference": "CMD-2024-010"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80020,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-020",
+                "title": "App Mobile Développement - Solde",
+                "state": 20,
+                "invoiceDate": "2024-08-15",
+                "dueDate": "2024-09-15",
+                "amount": 66666.66,
+                "informations": {
+                    "totalExcludingTaxes": 66666.66,
+                    "totalIncludingTaxes": 80000.00,
+                    "totalVat": 13333.34
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12347,
+                        "reference": "PRJ-2024-003"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50010,
+                        "reference": "CMD-2024-010"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80021,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-021",
+                "title": "Identité Visuelle - Acompte 50%",
+                "state": 60,
+                "invoiceDate": "2023-11-01",
+                "dueDate": "2023-12-01",
+                "amount": 21000.00,
+                "informations": {
+                    "totalExcludingTaxes": 21000.00,
+                    "totalIncludingTaxes": 25200.00,
+                    "totalVat": 4200.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12351,
+                        "reference": "PRJ-2024-007"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50011,
+                        "reference": "CMD-2024-011"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80022,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-022",
+                "title": "Identité Visuelle - Solde 50%",
+                "state": 60,
+                "invoiceDate": "2024-01-25",
+                "dueDate": "2024-02-25",
+                "amount": 21000.00,
+                "informations": {
+                    "totalExcludingTaxes": 21000.00,
+                    "totalIncludingTaxes": 25200.00,
+                    "totalVat": 4200.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12351,
+                        "reference": "PRJ-2024-007"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50011,
+                        "reference": "CMD-2024-011"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80023,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-023",
+                "title": "Campagne Marketing - Mensuel Jan-Fév",
+                "state": 50,
+                "invoiceDate": "2024-03-01",
+                "dueDate": "2024-04-01",
+                "amount": 22666.67,
+                "informations": {
+                    "totalExcludingTaxes": 22666.67,
+                    "totalIncludingTaxes": 27200.00,
+                    "totalVat": 4533.33
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12352,
+                        "reference": "PRJ-2024-008"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50012,
+                        "reference": "CMD-2024-012"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80024,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-024",
+                "title": "Campagne Marketing - Mensuel Mar-Avr",
+                "state": 40,
+                "invoiceDate": "2024-05-01",
+                "dueDate": "2024-06-01",
+                "amount": 22666.67,
+                "informations": {
+                    "totalExcludingTaxes": 22666.67,
+                    "totalIncludingTaxes": 27200.00,
+                    "totalVat": 4533.33
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12352,
+                        "reference": "PRJ-2024-008"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50012,
+                        "reference": "CMD-2024-012"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80025,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-025",
+                "title": "Campagne Marketing - Mensuel Mai-Juin",
+                "state": 20,
+                "invoiceDate": "2024-07-01",
+                "dueDate": "2024-08-01",
+                "amount": 22666.66,
+                "informations": {
+                    "totalExcludingTaxes": 22666.66,
+                    "totalIncludingTaxes": 27200.00,
+                    "totalVat": 4533.34
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12352,
+                        "reference": "PRJ-2024-008"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50012,
+                        "reference": "CMD-2024-012"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80026,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-026",
+                "title": "E-learning Phase 1 - Acompte 40%",
+                "state": 40,
+                "invoiceDate": "2024-03-20",
+                "dueDate": "2024-04-20",
+                "amount": 44000.00,
+                "informations": {
+                    "totalExcludingTaxes": 44000.00,
+                    "totalIncludingTaxes": 52800.00,
+                    "totalVat": 8800.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12353,
+                        "reference": "PRJ-2024-009"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50013,
+                        "reference": "CMD-2024-013"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80027,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-027",
+                "title": "E-learning Phase 1 - Solde 60%",
+                "state": 30,
+                "invoiceDate": "2024-06-25",
+                "dueDate": "2024-07-25",
+                "amount": 66000.00,
+                "informations": {
+                    "totalExcludingTaxes": 66000.00,
+                    "totalIncludingTaxes": 79200.00,
+                    "totalVat": 13200.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12353,
+                        "reference": "PRJ-2024-009"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50013,
+                        "reference": "CMD-2024-013"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80028,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-028",
+                "title": "E-learning Phase 2",
+                "state": 10,
+                "invoiceDate": "2024-10-25",
+                "dueDate": "2024-11-25",
+                "amount": 110000.00,
+                "informations": {
+                    "totalExcludingTaxes": 110000.00,
+                    "totalIncludingTaxes": 132000.00,
+                    "totalVat": 22000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12353,
+                        "reference": "PRJ-2024-009"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50014,
+                        "reference": "CMD-2024-014"
+                    }
+                }
+            }
+        }
+    ],
+    "meta": {
+        "count": 13,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 13
+        }
+    }
+}

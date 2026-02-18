@@ -1,0 +1,216 @@
+{
+    "data": [
+        {
+            "id": 12347,
+            "typeResource": "projects",
+            "attributes": {
+                "reference": "PRJ-2024-003",
+                "title": "Application Mobile iOS/Android",
+                "state": 20,
+                "startDate": "2024-02-01",
+                "forecastEndDate": "2024-08-31",
+                "endDate": null,
+                "description": "Développement application mobile cross-platform avec React Native",
+                "settings": {
+                    "profit": 80000.00,
+                    "revenue": 200000.00,
+                    "purchases": 50000.00,
+                    "margin": 70000.00,
+                    "marginRate": 35.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "manager": {
+                    "data": {
+                        "id": "U567",
+                        "typeResource": "users"
+                    }
+                },
+                "typeProject": {
+                    "data": {
+                        "id": 8,
+                        "typeResource": "typesProject"
+                    }
+                },
+                "contact": {
+                    "data": {
+                        "id": 458,
+                        "typeResource": "contacts"
+                    }
+                }
+            }
+        },
+        {
+            "id": 12351,
+            "typeResource": "projects",
+            "attributes": {
+                "reference": "PRJ-2024-007",
+                "title": "Identité Visuelle Corporate",
+                "state": 70,
+                "startDate": "2023-10-15",
+                "forecastEndDate": "2024-01-31",
+                "endDate": "2024-01-28",
+                "description": "Refonte complète identité visuelle : logo, charte graphique, supports",
+                "settings": {
+                    "profit": 18000.00,
+                    "revenue": 42000.00,
+                    "purchases": 12000.00,
+                    "margin": 12000.00,
+                    "marginRate": 28.57
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "manager": {
+                    "data": {
+                        "id": "U345",
+                        "typeResource": "users"
+                    }
+                },
+                "typeProject": {
+                    "data": {
+                        "id": 2,
+                        "typeResource": "typesProject"
+                    }
+                },
+                "contact": {
+                    "data": {
+                        "id": 458,
+                        "typeResource": "contacts"
+                    }
+                }
+            }
+        },
+        {
+            "id": 12352,
+            "typeResource": "projects",
+            "attributes": {
+                "reference": "PRJ-2024-008",
+                "title": "Campagne Marketing Digital",
+                "state": 35,
+                "startDate": "2024-01-10",
+                "forecastEndDate": "2024-06-30",
+                "endDate": null,
+                "description": "Campagne marketing digital multi-canaux avec SEO/SEA et social media",
+                "settings": {
+                    "profit": 32000.00,
+                    "revenue": 68000.00,
+                    "purchases": 18000.00,
+                    "margin": 18000.00,
+                    "marginRate": 26.47
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "manager": {
+                    "data": {
+                        "id": "U345",
+                        "typeResource": "users"
+                    }
+                },
+                "typeProject": {
+                    "data": {
+                        "id": 4,
+                        "typeResource": "typesProject"
+                    }
+                },
+                "contact": {
+                    "data": {
+                        "id": 458,
+                        "typeResource": "contacts"
+                    }
+                }
+            }
+        },
+        {
+            "id": 12353,
+            "typeResource": "projects",
+            "attributes": {
+                "reference": "PRJ-2024-009",
+                "title": "Plateforme E-learning",
+                "state": 15,
+                "startDate": "2024-03-01",
+                "forecastEndDate": "2024-10-31",
+                "endDate": null,
+                "description": "Développement plateforme e-learning avec système de certification",
+                "settings": {
+                    "profit": 95000.00,
+                    "revenue": 220000.00,
+                    "purchases": 60000.00,
+                    "margin": 65000.00,
+                    "marginRate": 29.55
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 791,
+                        "typeResource": "companies"
+                    }
+                },
+                "manager": {
+                    "data": {
+                        "id": "U567",
+                        "typeResource": "users"
+                    }
+                },
+                "typeProject": {
+                    "data": {
+                        "id": 8,
+                        "typeResource": "typesProject"
+                    }
+                },
+                "contact": {
+                    "data": {
+                        "id": 458,
+                        "typeResource": "contacts"
+                    }
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "id": "U345",
+            "typeResource": "users",
+            "attributes": {
+                "firstName": "Thomas",
+                "lastName": "Moreau",
+                "email": "thomas.moreau@company.com"
+            }
+        },
+        {
+            "id": "U567",
+            "typeResource": "users",
+            "attributes": {
+                "firstName": "Julie",
+                "lastName": "Simon",
+                "email": "julie.simon@company.com"
+            }
+        }
+    ],
+    "meta": {
+        "count": 4,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 4
+        }
+    }
+}

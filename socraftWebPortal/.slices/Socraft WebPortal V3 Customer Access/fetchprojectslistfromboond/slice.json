@@ -1,0 +1,315 @@
+{
+  "id": "3458764660044053418",
+  "status": "Done",
+  "title": "slice: Fetch Projects List From Boond",
+  "context": "Socraft WebPortal V3 Customer Access",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764660044053423",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Projects List From Boond",
+      "title": "Mark List Of Projects Fetched",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "projectList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectName",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectDescription",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Startate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "EndDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Status",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "AccountManager",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Company",
+      "aggregateDependencies": [
+        "Company"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660044053419",
+          "type": "OUTBOUND",
+          "title": "List of Projects Fetched",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764660044053421",
+          "type": "INBOUND",
+          "title": "Fetch Boond Project List",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764660044053419",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Projects List From Boond",
+      "title": "List of Projects Fetched",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "projectList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectName",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectDescription",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Startate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "EndDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Status",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "AccountManager",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Company",
+      "aggregateDependencies": [
+        "Company"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660065978340",
+          "type": "OUTBOUND",
+          "title": "list of projects",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764660044053423",
+          "type": "INBOUND",
+          "title": "Mark List Of Projects Fetched",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764660044053421",
+      "tags": [],
+      "groupId": "3458764660044053429",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Projects List From Boond",
+      "title": "Fetch Boond Project List",
+      "fields": [
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "projectList",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "projectId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectName",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "projectDescription",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Startate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "EndDate",
+              "type": "Date",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Status",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "AccountManager",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "Company",
+      "aggregateDependencies": [
+        "Company"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660044053423",
+          "type": "OUTBOUND",
+          "title": "Mark List Of Projects Fetched",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764660044211995",
+          "type": "INBOUND",
+          "title": "Projects To Fetch",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764660044053426",
+          "type": "INBOUND",
+          "title": "FetchBoondAPIProjectList",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Company"
+  ]
+}

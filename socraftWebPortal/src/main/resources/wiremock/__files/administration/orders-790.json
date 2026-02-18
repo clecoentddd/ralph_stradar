@@ -1,0 +1,136 @@
+{
+  "data": [
+    {
+      "id": 50005,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-005",
+        "title": "E-commerce Shopify - Développement",
+        "state": 50,
+        "orderDate": "2023-10-25",
+        "startDate": "2023-11-01",
+        "endDate": "2024-03-31",
+        "informations": {
+          "totalExcludingTaxes": 75000.00,
+          "totalIncludingTaxes": 90000.00,
+          "totalVat": 15000.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 790,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12346,
+            "reference": "PRJ-2024-002"
+          }
+        }
+      }
+    },
+    {
+      "id": 50006,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-006",
+        "title": "Audit RGPD",
+        "state": 60,
+        "orderDate": "2023-11-20",
+        "startDate": "2023-12-01",
+        "endDate": "2024-02-28",
+        "informations": {
+          "totalExcludingTaxes": 55000.00,
+          "totalIncludingTaxes": 66000.00,
+          "totalVat": 11000.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 790,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12349,
+            "reference": "PRJ-2024-005"
+          }
+        }
+      }
+    },
+    {
+      "id": 50007,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-007",
+        "title": "Portail Client B2B - Phase 1",
+        "state": 30,
+        "orderDate": "2024-02-05",
+        "startDate": "2024-02-15",
+        "endDate": "2024-05-15",
+        "informations": {
+          "totalExcludingTaxes": 47500.00,
+          "totalIncludingTaxes": 57000.00,
+          "totalVat": 9500.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 790,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12350,
+            "reference": "PRJ-2024-006"
+          }
+        }
+      }
+    },
+    {
+      "id": 50008,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "CMD-2024-008",
+        "title": "Portail Client B2B - Phase 2",
+        "state": 10,
+        "orderDate": "2024-04-20",
+        "startDate": "2024-05-16",
+        "endDate": "2024-07-31",
+        "informations": {
+          "totalExcludingTaxes": 47500.00,
+          "totalIncludingTaxes": 57000.00,
+          "totalVat": 9500.00
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 790,
+            "typeResource": "companies"
+          }
+        },
+        "project": {
+          "data": {
+            "id": 12350,
+            "reference": "PRJ-2024-006"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "count": 4,
+    "pagination": {
+      "page": 1,
+      "perPage": 100,
+      "total": 4
+    }
+  }
+}

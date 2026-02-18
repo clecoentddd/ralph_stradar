@@ -57,7 +57,7 @@
         {
           "id": "3458764659734822854",
           "type": "INBOUND",
-          "title": "processor Fetch Boond Companies List",
+          "title": "Fetch Companies List",
           "elementType": "AUTOMATION"
         }
       ],
@@ -147,7 +147,7 @@
       "modelContext": "Socraft Client Portal v3",
       "context": "INTERNAL",
       "slice": "slice: Fetch Companies List From Boond",
-      "title": "processor Fetch Boond Companies List",
+      "title": "Fetch Companies List",
       "fields": [
         {
           "name": "settingsId",

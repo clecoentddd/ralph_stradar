@@ -1,0 +1,316 @@
+{
+    "data": [
+        {
+            "id": 80001,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-001",
+                "title": "CRM Salesforce Phase 1 - Acompte",
+                "state": 50,
+                "invoiceDate": "2024-01-20",
+                "dueDate": "2024-02-20",
+                "performedDate": "",
+                "amount": 30000.00,
+                "informations": {
+                    "totalExcludingTaxes": 30000.00,
+                    "totalIncludingTaxes": 36000.00,
+                    "totalVat": 6000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50001,
+                        "reference": "CMD-2024-001"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80002,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-002",
+                "title": "CRM Salesforce Phase 1 - Solde",
+                "state": 40,
+                "invoiceDate": "2024-03-25",
+                "dueDate": "2024-04-25",
+                "performedDate": "",
+                "amount": 30000.00,
+                "informations": {
+                    "totalExcludingTaxes": 30000.00,
+                    "totalIncludingTaxes": 36000.00,
+                    "totalVat": 6000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50001,
+                        "reference": "CMD-2024-001"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80003,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-003",
+                "title": "CRM Salesforce Phase 2 - Acompte 30%",
+                "state": 30,
+                "invoiceDate": "2024-04-10",
+                "dueDate": "2024-05-10",
+                "performedDate": "2024-05-09",
+                "amount": 18000.00,
+                "informations": {
+                    "totalExcludingTaxes": 18000.00,
+                    "totalIncludingTaxes": 21600.00,
+                    "totalVat": 3600.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50002,
+                        "reference": "CMD-2024-002"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80004,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-004",
+                "title": "CRM Salesforce Phase 2 - Acompte 30%",
+                "state": 20,
+                "invoiceDate": "2024-05-15",
+                "dueDate": "2024-06-15",
+                "performedDate": "2024-06-14",
+                "amount": 18000.00,
+                "informations": {
+                    "totalExcludingTaxes": 18000.00,
+                    "totalIncludingTaxes": 21600.00,
+                    "totalVat": 3600.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50002,
+                        "reference": "CMD-2024-002"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80005,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-005",
+                "title": "CRM Salesforce Phase 2 - Solde 40%",
+                "state": 10,
+                "invoiceDate": "2024-06-20",
+                "dueDate": "2024-07-20",
+                "performedDate": "2024-06-20",
+                "amount": 24000.00,
+                "informations": {
+                    "totalExcludingTaxes": 24000.00,
+                    "totalIncludingTaxes": 28800.00,
+                    "totalVat": 4800.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12345,
+                        "reference": "PRJ-2024-001"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50002,
+                        "reference": "CMD-2024-002"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80006,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-006",
+                "title": "Infrastructure AWS Setup - Acompte",
+                "state": 50,
+                "invoiceDate": "2024-03-15",
+                "dueDate": "2024-04-15",
+                "performedDate": "",
+                "amount": 37500.00,
+                "informations": {
+                    "totalExcludingTaxes": 37500.00,
+                    "totalIncludingTaxes": 45000.00,
+                    "totalVat": 7500.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12348,
+                        "reference": "PRJ-2024-004"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50003,
+                        "reference": "CMD-2024-003"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80007,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-007",
+                "title": "Infrastructure AWS Setup - Solde",
+                "state": 40,
+                "invoiceDate": "2024-05-25",
+                "dueDate": "2024-06-25",
+                "performedDate": "",
+                "amount": 37500.00,
+                "informations": {
+                    "totalExcludingTaxes": 37500.00,
+                    "totalIncludingTaxes": 45000.00,
+                    "totalVat": 7500.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12348,
+                        "reference": "PRJ-2024-004"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50003,
+                        "reference": "CMD-2024-003"
+                    }
+                }
+            }
+        },
+        {
+            "id": 80008,
+            "typeResource": "invoices",
+            "attributes": {
+                "reference": "FACT-2024-008",
+                "title": "Infrastructure AWS Migration",
+                "state": 10,
+                "invoiceDate": "2024-06-10",
+                "dueDate": "2024-07-10",
+                "performedDate": "",
+                "amount": 75000.00,
+                "informations": {
+                    "totalExcludingTaxes": 75000.00,
+                    "totalIncludingTaxes": 90000.00,
+                    "totalVat": 15000.00
+                }
+            },
+            "relationships": {
+                "company": {
+                    "data": {
+                        "id": 789,
+                        "typeResource": "companies"
+                    }
+                },
+                "project": {
+                    "data": {
+                        "id": 12348,
+                        "reference": "PRJ-2024-004"
+                    }
+                },
+                "order": {
+                    "data": {
+                        "id": 50004,
+                        "reference": "CMD-2024-004"
+                    }
+                }
+            }
+        }
+    ],
+    "meta": {
+        "count": 8,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 8
+        }
+    }
+}

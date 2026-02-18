@@ -32,9 +32,9 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "Account",
+      "aggregate": "Admin Account",
       "aggregateDependencies": [
-        "Account"
+        "Admin Account"
       ],
       "dependencies": [
         {
@@ -85,9 +85,9 @@
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "Account",
+      "aggregate": "Admin Account",
       "aggregateDependencies": [
-        "Account"
+        "Admin Account"
       ],
       "dependencies": [
         {
@@ -134,9 +134,9 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "Account",
+      "aggregate": "Admin Account",
       "aggregateDependencies": [
-        "Account"
+        "Admin Account"
       ],
       "dependencies": [
         {
@@ -218,7 +218,7 @@
               "type": "String",
               "subfields": [],
               "cardinality": "Single",
-              "example": "test@test"
+              "example": "test@test.com"
             }
           ],
           "linkedId": "3458764659734675973"
@@ -234,6 +234,6 @@
   ],
   "actors": [],
   "aggregates": [
-    "Account"
+    "Admin Account"
   ]
 }

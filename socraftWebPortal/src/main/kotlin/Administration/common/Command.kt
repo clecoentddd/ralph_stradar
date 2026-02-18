@@ -1,4 +1,4 @@
-package Administration.common
+package administration.common
 
 import java.util.*
 

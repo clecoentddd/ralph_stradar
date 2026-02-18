@@ -1,0 +1,73 @@
+{
+  "id": "3458764660044212289",
+  "status": "Informational",
+  "title": "slice: projects to fetch",
+  "context": "Socraft WebPortal V3 Customer Access",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764660044211995",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft WebPortal V3 Customer Access",
+      "context": "INTERNAL",
+      "slice": "slice: projects to fetch",
+      "title": "Projects To Fetch",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "companyId",
+          "type": "Long",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "Client Account",
+      "aggregateDependencies": [
+        "Client Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660044053421",
+          "type": "OUTBOUND",
+          "title": "Fetch Boond Project List",
+          "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764660036569902",
+          "type": "INBOUND",
+          "title": "Customer Connected",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Client Account"
+  ]
+}

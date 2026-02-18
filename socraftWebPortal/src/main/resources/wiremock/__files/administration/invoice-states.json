@@ -1,0 +1,32 @@
+{
+    "data": [
+        {
+            "code": 10,
+            "label": "Brouillon"
+        },
+        {
+            "code": 20,
+            "label": "En attente"
+        },
+        {
+            "code": 30,
+            "label": "Envoyée"
+        },
+        {
+            "code": 40,
+            "label": "Partiellement payée"
+        },
+        {
+            "code": 50,
+            "label": "Payée"
+        },
+        {
+            "code": 60,
+            "label": "En retard"
+        },
+        {
+            "code": 70,
+            "label": "Annulée"
+        }
+    ]
+}

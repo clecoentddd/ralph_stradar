@@ -1,0 +1,67 @@
+{
+  "id": "3458764659954713524",
+  "status": "Informational",
+  "title": "slice: Adapter Boond Invoice State Mapping Data",
+  "context": "Socraft Client Portal v3",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764659954713546",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Portal v3",
+      "context": "INTERNAL",
+      "slice": "slice: Adapter Boond Invoice State Mapping Data",
+      "title": "FetchBoondAPIInvoiceStateMapping",
+      "fields": [
+        {
+          "name": "ListOfInvoiceStates",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "code",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "label",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": true
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764659954713536",
+          "type": "OUTBOUND",
+          "title": "Fetch Invoice State Mapping",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}
