@@ -24,16 +24,21 @@ class ToConnectResource(private var commandGateway: CommandGateway) {
   @CrossOrigin
   @PostMapping("/debug/adminconnection")
   fun processDebugCommand(
-      @RequestParam connectionId: UUID,
-      @RequestParam email: String
+          @RequestParam connectionId: UUID,
+          @RequestParam email: String
   ): CompletableFuture<Any> {
     return commandGateway.send(ToConnectCommand(connectionId, email))
   }
 
   @CrossOrigin
   @PostMapping("/adminconnection")
-  fun processCommand(@RequestBody payload: AdminConnectionPayload): CompletableFuture<Any> {
-    return commandGateway.send(
-        ToConnectCommand(connectionId = UUID.randomUUID(), email = payload.email))
+  fun processCommand(
+          @RequestBody payload: AdminConnectionPayload
+  ): CompletableFuture<Map<String, Any>> {
+    val connectionId = UUID.randomUUID()
+    return commandGateway.send<Any>(
+                    ToConnectCommand(connectionId = connectionId, email = payload.email)
+            )
+            .thenApply { mapOf("connectionId" to connectionId) }
   }
 }

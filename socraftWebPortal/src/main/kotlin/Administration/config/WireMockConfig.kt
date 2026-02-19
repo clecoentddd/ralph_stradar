@@ -153,7 +153,7 @@ class WireMockConfig(
                                         WireMock.aResponse()
                                                 .withStatus(200)
                                                 .withHeader("Content-Type", "application/json")
-                                                .withBodyFile(" /orders-789.json")
+                                                .withBodyFile("administration/orders-789.json")
                                 )
                 )
 

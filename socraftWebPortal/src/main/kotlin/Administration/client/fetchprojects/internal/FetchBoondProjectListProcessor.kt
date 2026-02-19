@@ -4,7 +4,7 @@ import administration.client.domain.commands.fetchprojects.MarkListOfProjectsFet
 import administration.client.fetchprojects.internal.adapter.FetchBoondAPIProjectList
 import administration.common.ListOfProjectsItem
 import administration.common.Processor
-import administration.events.CustomerConnectedEvent
+import administration.events.ClientConnectedEvent
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.eventhandling.EventHandler
@@ -23,13 +23,13 @@ class FetchBoondProjectListProcessor(
 
     // ---------- TRIGGER EVENT ----------
     @EventHandler
-    fun on(event: CustomerConnectedEvent) {
-        logger.info { "CustomerConnectedEvent received: $event" }
+    fun on(event: ClientConnectedEvent) {
+        logger.info { "ClientConnectedEvent received: $event" }
         fetchAndDispatch(event)
     }
 
     // ---------- SHARED FLOW ----------
-    private fun fetchAndDispatch(event: CustomerConnectedEvent) {
+    private fun fetchAndDispatch(event: ClientConnectedEvent) {
 
         logger.info { "Fetching FetchBoondProjectList..." }
 

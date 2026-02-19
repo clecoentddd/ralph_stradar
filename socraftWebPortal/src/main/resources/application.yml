@@ -34,6 +34,10 @@ administration:
 wiremock:
   port: 8089
 
+springdoc:
+  api-docs:
+    version: openapi_3_0
+
 #axoniq:
 #  console:
 #    application-name: Awesome-Microservice

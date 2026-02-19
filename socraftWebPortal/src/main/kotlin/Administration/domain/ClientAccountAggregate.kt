@@ -2,8 +2,9 @@ package administration.domain
 
 import administration.client.domain.commands.clientaccountconnection.ToConnectToAccountCommand
 import administration.client.domain.commands.createclientaccount.CreateAccountCommand
+import administration.common.CommandException
 import administration.events.AccountCreatedEvent
-import administration.events.CustomerConnectedEvent
+import administration.events.ClientConnectedEvent
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -14,7 +15,7 @@ import org.axonframework.modelling.command.CreationPolicy
 import org.axonframework.spring.stereotype.Aggregate
 
 @Aggregate
-class AccountAggregate {
+class ClientAccountAggregate {
 
     @AggregateIdentifier var clientId: UUID? = null
 
@@ -22,11 +23,15 @@ class AccountAggregate {
     var companyId: Long? = null
     var connectionId: UUID? = null
 
+    constructor() // Required by Axon
+
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     @CommandHandler
-    fun handle(command: CreateAccountCommand) {
-        if (clientEmail != null && clientEmail != command.clientEmail) {
-            throw IllegalArgumentException("Email does not match existing account email")
+    fun handle(command: CreateAccountCommand): Long {
+        // FIX: If clientEmail is already set, this aggregate instance exists.
+        // We must throw the exception that the test is looking for.
+        if (this.clientEmail != null) {
+            throw CommandException("Account already exists with email: ${command.clientEmail}")
         }
 
         AggregateLifecycle.apply(
@@ -37,11 +42,11 @@ class AccountAggregate {
                         clientId = command.clientId
                 )
         )
+        return command.companyId
     }
 
     @EventSourcingHandler
     fun on(event: AccountCreatedEvent) {
-        // handle event
         clientId = event.clientId
         clientEmail = event.clientEmail
         companyId = event.companyId
@@ -51,10 +56,9 @@ class AccountAggregate {
     // Connection to their account
     @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
     @CommandHandler
-    fun handle(command: ToConnectToAccountCommand) {
+    fun handle(command: ToConnectToAccountCommand): Long {
 
         // 1. Validation Logic
-        // We use checkNotNull to satisfy the compiler and enforce business rules
         val currentCompanyId =
                 checkNotNull(this.companyId) {
                     "Identity Error: Account ${command.clientId} exists but has no associated CompanyId. Connection refused."
@@ -67,19 +71,18 @@ class AccountAggregate {
         }
 
         // 2. Apply the Event
-        // currentCompanyId is now a non-nullable Long
         AggregateLifecycle.apply(
-                CustomerConnectedEvent(
+                ClientConnectedEvent(
                         clientId = command.clientId,
                         clientEmail = command.clientEmail,
                         companyId = currentCompanyId
                 )
         )
+        return currentCompanyId
     }
 
     @EventSourcingHandler
-    fun on(event: CustomerConnectedEvent) {
-        // handle event
+    fun on(event: ClientConnectedEvent) {
         clientId = event.clientId
         clientEmail = event.clientEmail
         companyId = event.companyId

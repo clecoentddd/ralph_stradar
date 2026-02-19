@@ -1,9 +1,10 @@
 package administration.client.clientaccountlist.internal
 
-import administration.client.clientaccountlist.ClientAccountListReadModel
+import administration.client.clientaccountlist.ClientAccountListReadModelEntity
 import administration.client.clientaccountlist.ClientAccountListReadModelQuery
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
+import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,10 +20,10 @@ class ClientAccountListResource(private var queryGateway: QueryGateway) {
 
      @CrossOrigin
      @GetMapping("/clientaccountlist")
-     fun findReadModel(): CompletableFuture<ClientAccountListReadModel> {
+     fun findReadModel(): CompletableFuture<List<ClientAccountListReadModelEntity>> {
           return queryGateway.query(
                   ClientAccountListReadModelQuery(),
-                  ClientAccountListReadModel::class.java
+                  ResponseTypes.multipleInstancesOf(ClientAccountListReadModelEntity::class.java)
           )
      }
 }

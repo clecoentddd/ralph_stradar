@@ -236,7 +236,140 @@
     }
   ],
   "tables": [],
-  "specifications": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764660360225825",
+      "sliceName": "<p>slice: Fetch Companies List</p>",
+      "title": "spec: Fetch Companies List - Boond Data Check",
+      "given": [
+        {
+          "title": "Settings Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660360225831",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "settingsId",
+              "type": "UUID",
+              "example": "00000000-0000-0000-0000-000000000001",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
+            }
+          ],
+          "linkedId": "3458764659756306799"
+        },
+        {
+          "title": "Company List Update Requested",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660360225837",
+          "index": 1,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "settingsId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "00000000-0000-0000-0000-000000000001"
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
+            }
+          ],
+          "linkedId": "3458764659734822172"
+        }
+      ],
+      "when": [],
+      "then": [
+        {
+          "title": "List of Companies Fetched",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660360225827",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "settingsId",
+              "type": "UUID",
+              "example": "00000000-0000-0000-0000-000000000001",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
+            },
+            {
+              "name": "ListOfCompanies",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "example": [
+                {
+                  "companyId": 789,
+                  "companyName": "OSCIN SARL"
+                },
+                {
+                  "companyId": 790,
+                  "companyName": "Blanc SA"
+                },
+                {
+                  "companyId": 791,
+                  "companyName": "TechStart SAS"
+                }
+              ]
+            }
+          ],
+          "linkedId": "3458764659734822853"
+        }
+      ],
+      "comments": [
+        {
+          "description": "Data from boond mock should be fetched"
+        }
+      ],
+      "linkedId": "3458764659734822852"
+    }
+  ],
   "actors": [],
   "aggregates": [
     "Settings"

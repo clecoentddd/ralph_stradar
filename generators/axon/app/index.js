@@ -36,7 +36,7 @@ module.exports = class extends Generator {
             type: 'list',
             name: 'generatorType',
             message: 'What should be generated?',
-            choices: ['Skeleton', 'slices', 'aggregates', 'adapters']
+            choices: ['Skeleton', 'slices', 'aggregates', 'adapters', 'Tests']
         }]);
     }
 
@@ -68,6 +68,12 @@ module.exports = class extends Generator {
         } else if (this.answers.generatorType === 'adapters') {
             this.log('starting adapters generation')
             this.composeWith(require.resolve('../adapters'), {
+                answers: this.answers,
+                appName: this.answers.appName ?? this.appName
+            });
+        } else if (this.answers.generatorType === 'Tests') {
+            this.log('starting tests generation')
+            this.composeWith(require.resolve('../specifications'), {
                 answers: this.answers,
                 appName: this.answers.appName ?? this.appName
             });

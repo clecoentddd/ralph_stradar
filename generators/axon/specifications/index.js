@@ -5,7 +5,7 @@
 
 var Generator = require('yeoman-generator');
 var slugify = require('slugify')
-const {v4: uuidv4} = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const {
     _eventTitle,
     _readmodelTitle,
@@ -14,8 +14,8 @@ const {
     _packageName,
     _packageFolderName
 } = require("../../common/util/naming");
-const {lowercaseFirstCharacter, uniqBy, splitByCamelCase, idField} = require("../../common/util/util");
-const {idType} = require("../../common/util/generator");
+const { lowercaseFirstCharacter, uniqBy, splitByCamelCase, idField } = require("../../common/util/util");
+const { idType } = require("../../common/util/generator");
 
 
 function _sliceTitle(title) {
@@ -32,6 +32,37 @@ module.exports = class extends Generator {
         config = require(this.env.cwd + "/config.json");
     }
 
+    async prompting() {
+        if (this.givenAnswers.generatorType !== 'Tests') {
+            return;
+        }
+
+        const sliceChoices = config.slices.map(slice => ({ name: slice.title, value: slice.title }));
+
+        const sliceAnswer = await this.prompt([{
+            type: 'list',
+            name: 'slice',
+            message: 'Select Slice you want to generate the tests for',
+            choices: sliceChoices
+        }]);
+
+        const selectedSlice = config.slices.find(s => s.title === sliceAnswer.slice);
+        const specChoices = (selectedSlice.specifications || []).map(spec => ({
+            name: spec.title,
+            value: spec.id
+        }));
+
+        const specAnswer = await this.prompt([{
+            type: 'checkbox',
+            name: 'specifications',
+            message: 'Select tests to generate',
+            choices: specChoices
+        }]);
+
+        this.givenAnswers.slice = sliceAnswer.slice;
+        this.selectedSpecIds = specAnswer.specifications;
+    }
+
     writeSpecifications() {
         this._writeSpecifications();
     }
@@ -40,131 +71,133 @@ module.exports = class extends Generator {
         var slice = this._findSlice(this.givenAnswers.slice)
         var title = _sliceTitle(slice.title).toLowerCase()
 
-        slice.specifications?.filter(it => !it?.vertical).forEach((specification) => {
+        slice.specifications?.filter(it => !it?.vertical)
+            .filter(it => !this.selectedSpecIds || this.selectedSpecIds.includes(it.id))
+            .forEach((specification) => {
 
-            var given = specification.given.sort((a, b) => a.index - b.index)
-            var when = specification.when?.[0]
-            var then = specification.then.sort((a, b) => a.index - b.index)
-            var comment = specification?.comments?.map(it => it.description)?.join("\n")
+                var given = specification.given.sort((a, b) => a.index - b.index)
+                var when = specification.when?.[0]
+                var then = specification.then.sort((a, b) => a.index - b.index)
+                var comment = specification?.comments?.map(it => it.description)?.join("\n")
 
-            var allElements = given.concat(when).concat(then).filter(item => item);
-            var allFields = allElements.flatMap((item) => item.fields)
-            var _elementImports = generateImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, title, allElements)
-            var _typeImports = typeImports(allFields)
-            var aggregateId = uuidv4()
-            var defaults = {
-                "aggregateId": aggregateId
-            }
+                var allElements = given.concat(when).concat(then).filter(item => item);
+                var allFields = allElements.flatMap((item) => item.fields)
+                var _elementImports = generateImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, title, allElements)
+                var _typeImports = typeImports(allFields)
+                var aggregateId = uuidv4()
+                var defaults = {
+                    "aggregateId": aggregateId
+                }
 
-            var events = given?.map(it => {
-                return config.slices.flatMap(it => it.events).find(item => item.id === it.linkedId)
-            }).map(it => it);
+                var events = given?.map(it => {
+                    return config.slices.flatMap(it => it.events).find(item => item.id === it.linkedId)
+                }).map(it => it);
 
-            var commands = uniqBy(events.flatMap(it => it?.dependencies).filter(it => it?.type === "INBOUND")
-                .filter(it => it?.elementType === "COMMAND")
-                .map(it => config.slices.flatMap(item => item.commands).find(item => item.id === it.id)).filter(it => it), it => it.title);
+                var commands = uniqBy(events.flatMap(it => it?.dependencies).filter(it => it?.type === "INBOUND")
+                    .filter(it => it?.elementType === "COMMAND")
+                    .map(it => config.slices.flatMap(item => item.commands).find(item => item.id === it.id)).filter(it => it), it => it.title);
 
-            var _commandImports = this._commandImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, commands);
+                var _commandImports = this._commandImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, commands);
 
 
-            if (slice.processors?.length > 0) {
+                if (slice.processors?.length > 0) {
 
-                let specificationName = _specificationTitle(capitalizeFirstCharacter(slugify(specification.title, "")),)
+                    let specificationName = _specificationTitle(capitalizeFirstCharacter(slugify(specification.title, "")),)
 
-                var elementImports = generateImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, title, then)
+                    var elementImports = generateImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, title, then)
 
-                //for now only result events supported
-                this.fs.copyTpl(
-                    this.templatePath(`src/components/ProcessorSpecification.kt.tpl`),
-                    this.destinationPath(`./src/test/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/integration/${specificationName}.kt`),
-                    {
-                        _slice: title,
-                        _comment: comment,
-                        _rootPackageName: this.givenAnswers.rootPackageName,
-                        _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
-                        _name: specificationName,
-                        _testname: splitByCamelCase(specificationName),
-                        _elementImports: elementImports,
-                        _commandImports: _commandImports,
-                        _typeImports: _typeImports,
-                        _given: this._renderReadModelGiven(commands),
-                        _then: this._renderProcessorThen(then),
-                        // take first aggregate
-                        _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
-                        _aggregateId: aggregateId,
-                        link: boardlLink(config.boardId, specification.id)
+                    //for now only result events supported
+                    this.fs.copyTpl(
+                        this.templatePath(`src/components/ProcessorSpecification.kt.tpl`),
+                        this.destinationPath(`./src/test/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/integration/${specificationName}.kt`),
+                        {
+                            _slice: title,
+                            _comment: comment,
+                            _rootPackageName: this.givenAnswers.rootPackageName,
+                            _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
+                            _name: specificationName,
+                            _testname: splitByCamelCase(specificationName),
+                            _elementImports: elementImports,
+                            _commandImports: _commandImports,
+                            _typeImports: _typeImports,
+                            _given: this._renderReadModelGiven(commands),
+                            _then: this._renderProcessorThen(then),
+                            // take first aggregate
+                            _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
+                            _aggregateId: aggregateId,
+                            link: boardlLink(config.boardId, specification.id)
 
-                    }
-                );
-            }
+                        }
+                    );
+                }
 
-            if (then.some(it => it.type === "SPEC_READMODEL")) {
+                if (then.some(it => it.type === "SPEC_READMODEL")) {
 
-                let specificationName = _specificationTitle(capitalizeFirstCharacter(slugify(specification.title, "")), "ReadModel")
-                var readModel = then.find(it => it.type === "SPEC_READMODEL");
+                    let specificationName = _specificationTitle(capitalizeFirstCharacter(slugify(specification.title, "")), "ReadModel")
+                    var readModel = then.find(it => it.type === "SPEC_READMODEL");
 
-                var _queryImports = this._queryImports(title, this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, _readmodelTitle(readModel.title));
+                    var _queryImports = this._queryImports(title, this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, _readmodelTitle(readModel.title));
 
-                //for now only result events supported
-                this.fs.copyTpl(
-                    this.templatePath(`src/components/ReadModelSpecification.kt.tpl`),
-                    this.destinationPath(`./src/test/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/integration/${specificationName}.kt`),
-                    {
-                        _slice: title,
-                        _comment: comment,
-                        _rootPackageName: this.givenAnswers.rootPackageName,
-                        _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
-                        _name: specificationName,
-                        _testname: splitByCamelCase(specificationName),
-                        _elementImports: _elementImports,
-                        _commandImports: _commandImports,
-                        _queryImports: _queryImports,
-                        _typeImports: _typeImports,
-                        //_when: renderWhen(when, then, defaults),
-                        _given: this._renderReadModelGiven(commands),
-                        _then: this._renderReadModelThen(commands, then, defaults),
-                        // take first aggregate
-                        _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
-                        _aggregateId: aggregateId,
-                        link: boardlLink(config.boardId, specification.id)
+                    //for now only result events supported
+                    this.fs.copyTpl(
+                        this.templatePath(`src/components/ReadModelSpecification.kt.tpl`),
+                        this.destinationPath(`./src/test/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/integration/${specificationName}.kt`),
+                        {
+                            _slice: title,
+                            _comment: comment,
+                            _rootPackageName: this.givenAnswers.rootPackageName,
+                            _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
+                            _name: specificationName,
+                            _testname: splitByCamelCase(specificationName),
+                            _elementImports: _elementImports,
+                            _commandImports: _commandImports,
+                            _queryImports: _queryImports,
+                            _typeImports: _typeImports,
+                            //_when: renderWhen(when, then, defaults),
+                            _given: this._renderReadModelGiven(commands),
+                            _then: this._renderReadModelThen(commands, then, defaults),
+                            // take first aggregate
+                            _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
+                            _aggregateId: aggregateId,
+                            link: boardlLink(config.boardId, specification.id)
 
-                    }
-                );
-            } else if (when) {
-                // command test
-                let specificationName = _specificationTitle(capitalizeFirstCharacter(slugify(specification.title, "")), "")
-                let idAttribute = idField(when)
-                let idFieldType = idType(when)
+                        }
+                    );
+                } else if (when) {
+                    // command test
+                    let specificationName = _specificationTitle(capitalizeFirstCharacter(slugify(specification.title, "")), "")
+                    let idAttribute = idField(when)
+                    let idFieldType = idType(when)
 
-                var idFieldString = `var ${idAttribute}:${idFieldType} = RandomData.newInstance<${idFieldType}> {}`
+                    var idFieldString = `var ${idAttribute}:${idFieldType} = RandomData.newInstance<${idFieldType}> {}`
 
-                this.fs.copyTpl(
-                    this.templatePath(`src/components/Specification.kt.tpl`),
-                    this.destinationPath(`./src/test/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/${specificationName}.kt`),
-                    {
-                        _idAttribute: idFieldString,
-                        _slice: title,
-                        _comment: comment,
-                        _command: specification.command,
-                        _rootPackageName: this.givenAnswers.rootPackageName,
-                        _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
-                        _name: specificationName,
-                        _testname: splitByCamelCase(specificationName),
-                        _elementImports: _elementImports,
-                        _typeImports: _typeImports,
-                        _given: renderGiven(given, defaults),
-                        _when: renderWhen(when, then, defaults),
-                        _then: renderThen(when, then, defaults),
-                        _thenExpectations: renderThenExpectation(when, then, defaults),
-                        // take first aggregate
-                        _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
-                        _aggregateId: aggregateId,
-                        link: boardlLink(config.boardId, specification.id)
+                    this.fs.copyTpl(
+                        this.templatePath(`src/components/Specification.kt.tpl`),
+                        this.destinationPath(`./src/test/kotlin/${_packageFolderName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false)}/${title}/${specificationName}.kt`),
+                        {
+                            _idAttribute: idFieldString,
+                            _slice: title,
+                            _comment: comment,
+                            _command: specification.command,
+                            _rootPackageName: this.givenAnswers.rootPackageName,
+                            _packageName: _packageName(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, false),
+                            _name: specificationName,
+                            _testname: splitByCamelCase(specificationName),
+                            _elementImports: _elementImports,
+                            _typeImports: _typeImports,
+                            _given: renderGiven(given, defaults),
+                            _when: renderWhen(when, then, defaults),
+                            _then: renderThen(when, then, defaults),
+                            _thenExpectations: renderThenExpectation(when, then, defaults),
+                            // take first aggregate
+                            _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
+                            _aggregateId: aggregateId,
+                            link: boardlLink(config.boardId, specification.id)
 
-                    }
-                );
-            }
-        })
+                        }
+                    );
+                }
+            })
 
     }
 
@@ -182,7 +215,7 @@ module.exports = class extends Generator {
           awaitUntilAssserted {
            ${then.map(event => `streamAssertions.assertEvent(${idField(event)}.toString()) { it is ${_eventTitle(event.title)}}
            }`).join("\n")
-        }
+            }
         ` : ""
     }
 
@@ -386,7 +419,7 @@ function renderGiven(givenList, paramDefaults) {
     var givens = givenList.map((event) => {
         var idFieldValue = idField(event)
 
-        var defaults = idFieldValue ? {...paramDefaults, [idFieldValue]: idFieldValue} : paramDefaults
+        var defaults = idFieldValue ? { ...paramDefaults, [idFieldValue]: idFieldValue } : paramDefaults
 
         return `events.add(RandomData.newInstance<${_eventTitle(event.title)}> {
                         ${randomizedInvocationParamterList(event.fields, defaults, "\n", "this")}
@@ -427,18 +460,18 @@ function renderVariable(variableValue, variableType, variableName, defaults) {
 function randomizedInvocationParamterList(variables, defaults, separator = ",\n", assignmentPrefix) {
 
     return variables?.map((variable) => {
-            if (variable.example !== "") {
-                return `\t${variable.name} = ${renderVariable(variable.example, variable.type, variable.name, defaults)}`
-            } else if (variable.idAttribute) {
-                return `\t${assignmentPrefix ? `${assignmentPrefix}.` : ""}${variable.name} = ${variable.name}`
+        if (variable.example !== "") {
+            return `\t${variable.name} = ${renderVariable(variable.example, variable.type, variable.name, defaults)}`
+        } else if (variable.idAttribute) {
+            return `\t${assignmentPrefix ? `${assignmentPrefix}.` : ""}${variable.name} = ${variable.name}`
+        } else {
+            if (Object.keys(defaults).includes(variable.name)) {
+                return `\t${variable.name} = ${defaultValue(variable.type, variable.cardinality, variable.name, defaults)}`;
             } else {
-                if (Object.keys(defaults).includes(variable.name)) {
-                    return `\t${variable.name} = ${defaultValue(variable.type, variable.cardinality, variable.name, defaults)}`;
-                } else {
-                    return `\t${variable.name} = RandomData.newInstance {  }`;
-                }
+                return `\t${variable.name} = RandomData.newInstance {  }`;
             }
         }
+    }
     ).join(separator);
 
 }

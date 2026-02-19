@@ -209,7 +209,130 @@
   "screenLayouts": [],
   "processors": [],
   "tables": [],
-  "specifications": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764660313321041",
+      "sliceName": "slice: Create Client Account",
+      "title": "spec: Create Client Account - email must be unique",
+      "given": [
+        {
+          "title": "Account Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660313321045",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "clientId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "client@client.ch"
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "entreprise"
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764660029388824"
+        }
+      ],
+      "when": [
+        {
+          "title": "Create Account",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660313321043",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "clientId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "client@client.ch"
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "client@client.ch"
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "entreprise2"
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764660029388833"
+        }
+      ],
+      "then": [
+        {
+          "title": "Error Case",
+          "tags": [],
+          "examples": [
+            {
+              "message": "Email already in use"
+            }
+          ],
+          "id": "3458764660313321044",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "Email already exists"
+        }
+      ],
+      "linkedId": "3458764660029388823"
+    }
+  ],
   "actors": [],
   "aggregates": [
     "Client Account"

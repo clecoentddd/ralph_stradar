@@ -8,7 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 
 interface ClientAccountListReadModelRepository :
-        JpaRepository<ClientAccountListReadModelEntity, UUID>
+        JpaRepository<ClientAccountListReadModelEntity, UUID> {
+
+        // Added for uniqueness check via QueryHandler
+        fun findByClientEmail(clientEmail: String): ClientAccountListReadModelEntity?
+
+        // Added for "fail-fast" existence checks
+        fun existsByClientEmail(clientEmail: String): Boolean
+}
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660036569910

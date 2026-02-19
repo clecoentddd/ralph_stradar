@@ -11,9 +11,7 @@ data class AdminConnectedReadModelQuery(val connectionId: UUID)
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764659734822173
 */
 @Entity
-class AdminConnectedReadModelEntity {
+class AdminConnectedReadModel {
   @Id @Column(name = "connectionId") var connectionId: UUID? = null
   @Column(name = "email") var email: String? = null
 }
-
-data class AdminConnectedReadModel(val data: AdminConnectedReadModelEntity)

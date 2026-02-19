@@ -5,7 +5,7 @@ import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import java.util.UUID
 
-class ClientAccountListReadModelQuery()
+data class ClientAccountListReadModelQuery(val email: String? = null) // Nullable to allow "Get All"
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660036569910
@@ -17,5 +17,3 @@ class ClientAccountListReadModelEntity {
     @Column(name = "companyId") var companyId: Long? = null
     @Column(name = "connectionId") var connectionId: UUID? = null
 }
-
-data class ClientAccountListReadModel(val data: List<ClientAccountListReadModelEntity>)

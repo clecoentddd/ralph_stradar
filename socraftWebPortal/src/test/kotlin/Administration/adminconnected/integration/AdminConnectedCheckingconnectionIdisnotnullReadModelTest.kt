@@ -3,7 +3,6 @@ package administration.adminconnected.integration
 import administration.adminconnected.AdminConnectedReadModel
 import administration.adminconnected.AdminConnectedReadModelQuery
 import administration.common.support.BaseIntegrationTest
-import administration.common.support.RandomData
 import administration.common.support.awaitUntilAssserted
 import administration.domain.commands.adminconnection.ToConnectCommand
 import java.util.*
@@ -13,30 +12,37 @@ import org.axonframework.queryhandling.QueryGateway
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-/** Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764659794050479 */
 class AdminConnectedCheckingconnectionIdisnotnullReadModelTest : BaseIntegrationTest() {
 
-  @Autowired private lateinit var commandGateway: CommandGateway
-
-  @Autowired private lateinit var queryGateway: QueryGateway
+  @Autowired lateinit var commandGateway: CommandGateway
+  @Autowired lateinit var queryGateway: QueryGateway
 
   @Test
-  fun `Admin Connected Checkingconnection Idisnotnull Read Model Test`() {
+  fun `Admin Connected Read Model Test`() {
+    val connectionId = UUID.randomUUID()
+    val testEmail = "test@socraft.ch"
 
-    val connectionId = RandomData.newInstance<UUID> {}
+    // FIX: Call the constructor directly instead of using RandomData's setter block
+    val toConnectCommand = ToConnectCommand(connectionId = connectionId, email = "test@socraft.ch")
 
-    var toConnectCommand =
-        RandomData.newInstance<ToConnectCommand> { this.connectionId = connectionId }
-
+    // Now send the command
     commandGateway.sendAndWait<Any>(toConnectCommand)
 
     awaitUntilAssserted {
-      var readModel =
-          queryGateway.query(
-              AdminConnectedReadModelQuery(toConnectCommand.connectionId),
-              AdminConnectedReadModel::class.java)
-      // TODO add assertions
-      assertThat(readModel.get()).isNotNull
+      val result =
+              queryGateway
+                      .query(
+                              AdminConnectedReadModelQuery(connectionId),
+                              AdminConnectedReadModel::class.java
+                      )
+                      .join()
+
+      // 1. Assert the result itself is not null first
+      assertThat(result).isNotNull
+
+      // 2. Now it's safe to check the data inside
+      assertThat(result.connectionId).isEqualTo(connectionId)
+      assertThat(result.email).isEqualTo(testEmail)
     }
   }
 }

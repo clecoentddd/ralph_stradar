@@ -22,9 +22,11 @@ class AdminconnectedResource(private var queryGateway: QueryGateway) {
   @CrossOrigin
   @GetMapping("/adminconnected/{id}")
   fun findReadModel(
-      @PathVariable("id") connectionId: UUID
+          @PathVariable("id") connectionId: UUID
   ): CompletableFuture<AdminConnectedReadModel> {
     return queryGateway.query(
-        AdminConnectedReadModelQuery(connectionId), AdminConnectedReadModel::class.java)
+            AdminConnectedReadModelQuery(connectionId),
+            AdminConnectedReadModel::class.java
+    )
   }
 }

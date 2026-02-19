@@ -3,6 +3,7 @@ package administration.client.projectlistlookup.internal
 // repository
 import administration.client.projectlistlookup.ListOfProjectsReadModelEntity
 import administration.client.projectlistlookup.ListOfProjectsReadModelRepository // Import the
+import administration.companylistlookup.internal.CompanyListLookUpReadModelRepository
 import administration.events.ListOfProjectsFetchedEvent
 import java.time.Instant
 import org.axonframework.eventhandling.EventHandler
@@ -16,8 +17,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466006597
 
 @Component
 class ListOfProjectsReadModelProjector(
-        private val repository:
-                ListOfProjectsReadModelRepository // Fix: Inject Repository, not Entity
+        private val repository: ListOfProjectsReadModelRepository,
+        private val companyRepository: CompanyListLookUpReadModelRepository
 ) {
 
     @EventHandler
@@ -30,10 +31,16 @@ class ListOfProjectsReadModelProjector(
                     ListOfProjectsReadModelEntity().apply { this.companyId = event.companyId }
                 }
 
-        // 2. Update the state
+        // 2. Lookup the actual company name from the company list reference
+        val companyList = companyRepository.findAll().firstOrNull()
+        val actualCompanyName =
+                companyList?.listOfCompanies?.find { it.companyId == event.companyId }?.companyName
+                        ?: "Unknown Company"
+
+        // 3. Update the state
         entity.apply {
             this.clientId = event.clientId
-            this.companyName = "TO BE ADDED"
+            this.companyName = actualCompanyName
             // This line (38) will now resolve correctly
             this.projectList = event.projectList
             this.timestamp = axonTimestamp.toEpochMilli()

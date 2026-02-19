@@ -2,7 +2,7 @@ package administration.adminconnection
 
 import administration.common.Event
 import administration.common.support.RandomData
-import administration.domain.AccountAggregate
+import administration.domain.AdminAccountAggregate
 import administration.domain.commands.adminconnection.ToConnectCommand
 import administration.events.AdminConnectedEvent
 import java.util.UUID
@@ -18,11 +18,11 @@ import org.junit.jupiter.api.Test
  */
 class AdminConnectionEnsureNonNullValuesTest {
 
-  private lateinit var fixture: FixtureConfiguration<AccountAggregate>
+  private lateinit var fixture: FixtureConfiguration<AdminAccountAggregate>
 
   @BeforeEach
   fun setUp() {
-    fixture = AggregateTestFixture(AccountAggregate::class.java)
+    fixture = AggregateTestFixture(AdminAccountAggregate::class.java)
   }
 
   @Test
@@ -35,23 +35,24 @@ class AdminConnectionEnsureNonNullValuesTest {
 
     // WHEN
     val command =
-        ToConnectCommand(
-            connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8"),
-            email = "test@test.com")
+            ToConnectCommand(
+                    connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8"),
+                    email = "test@socraft.ch"
+            )
 
     // THEN
     val expectedEvents = mutableListOf<Event>()
 
     expectedEvents.add(
-        RandomData.newInstance<AdminConnectedEvent> {
-          this.connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
-          this.email = "test@test.com"
-        })
+            RandomData.newInstance<AdminConnectedEvent> {
+              this.connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
+              this.email = "test@socraft.ch"
+            }
+    )
 
-    fixture
-        .given(events)
-        .`when`(command)
-        .expectSuccessfulHandlerExecution()
-        .expectEvents(*expectedEvents.toTypedArray())
+    fixture.given(events)
+            .`when`(command)
+            .expectSuccessfulHandlerExecution()
+            .expectEvents(*expectedEvents.toTypedArray())
   }
 }
