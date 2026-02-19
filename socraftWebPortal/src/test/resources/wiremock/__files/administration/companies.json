@@ -1,0 +1,96 @@
+{
+    "data": [
+        {
+            "id": 789,
+            "typeResource": "companies",
+            "attributes": {
+                "reference": "COMP-001",
+                "name": "OSCIN SARL",
+                "typeCompany": 20,
+                "mainActivity": "Conseil en systèmes et logiciels informatiques",
+                "address": {
+                    "street": "15 rue de la Technologie",
+                    "postcode": "75008",
+                    "city": "Paris",
+                    "country": "France"
+                },
+                "contact": {
+                    "phone": "+33 1 42 68 53 00",
+                    "email": "contact@oscin.fr",
+                    "website": "https://www.oscin.fr"
+                },
+                "siret": "12345678900012",
+                "state": 30,
+                "creationDate": "2015-03-15",
+                "informations": {
+                    "revenue": 2500000.00,
+                    "employeesCount": 45
+                }
+            }
+        },
+        {
+            "id": 790,
+            "typeResource": "companies",
+            "attributes": {
+                "reference": "COMP-002",
+                "name": "Blanc SA",
+                "typeCompany": 30,
+                "mainActivity": "Commerce de gros",
+                "address": {
+                    "street": "89 avenue du Commerce",
+                    "postcode": "69003",
+                    "city": "Lyon",
+                    "country": "France"
+                },
+                "contact": {
+                    "phone": "+33 4 78 95 22 11",
+                    "email": "info@blanc-sa.fr",
+                    "website": "https://www.blanc-sa.fr"
+                },
+                "siret": "98765432100023",
+                "state": 30,
+                "creationDate": "2010-06-20",
+                "informations": {
+                    "revenue": 5800000.00,
+                    "employeesCount": 120
+                }
+            }
+        },
+        {
+            "id": 791,
+            "typeResource": "companies",
+            "attributes": {
+                "reference": "COMP-003",
+                "name": "TechStart SAS",
+                "typeCompany": 10,
+                "mainActivity": "Développement d'applications mobiles",
+                "address": {
+                    "street": "23 boulevard de l'Innovation",
+                    "postcode": "31000",
+                    "city": "Toulouse",
+                    "country": "France"
+                },
+                "contact": {
+                    "phone": "+33 5 61 12 34 56",
+                    "email": "hello@techstart.io",
+                    "website": "https://www.techstart.io"
+                },
+                "siret": "55566677788899",
+                "state": 30,
+                "creationDate": "2020-01-10",
+                "informations": {
+                    "revenue": 850000.00,
+                    "employeesCount": 18
+                }
+            }
+        }
+    ],
+    "meta": {
+        "count": 3,
+        "pagination": {
+            "page": 1,
+            "perPage": 100,
+            "total": 3
+        }
+    }
+}
