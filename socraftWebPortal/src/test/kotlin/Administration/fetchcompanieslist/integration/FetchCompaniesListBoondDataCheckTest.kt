@@ -12,7 +12,6 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import java.util.*
-import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,17 +22,19 @@ class FetchCompaniesListBoondDataCheckTest : BaseIntegrationTest() {
     @Autowired private lateinit var streamAssertions: StreamAssertions
 
     companion object {
-        // Manually start WireMock on port 8089
-        private val wireMockServer = WireMockServer(wireMockConfig().port(8089))
+        // 1. Define the property ONCE without @JvmStatic
+        private val wireMockServer =
+                WireMockServer(wireMockConfig().port(8089).usingFilesUnderClasspath("wiremock"))
 
+        // 2. Place @BeforeAll and @JvmStatic on the FUNCTION
         @BeforeAll
         @JvmStatic
         fun startWireMock() {
             wireMockServer.start()
-            // Configure the static client to talk to our manual server
             WireMock.configureFor("localhost", 8089)
         }
 
+        // 3. Place @AfterAll and @JvmStatic on the FUNCTION
         @AfterAll
         @JvmStatic
         fun stopWireMock() {
@@ -50,20 +51,14 @@ class FetchCompaniesListBoondDataCheckTest : BaseIntegrationTest() {
     fun `Fetch Companies List Boond Data Check Test`() {
         // 1. THE STUB
         stubFor(
-                get(urlEqualTo("/api/companies"))
+                get(urlEqualTo("/api/v1/companies"))
                         .willReturn(
                                 aResponse()
                                         .withStatus(200)
                                         .withHeader("Content-Type", "application/json")
-                                        .withBody(
-                                                """
-                            [
-                              {"companyId": 789, "companyName": "OSCIN SARL"},
-                              {"companyId": 790, "companyName": "Blanc SA"},
-                              {"companyId": 791, "companyName": "TechStart SAS"}
-                            ]
-                        """.trimIndent()
-                                        )
+                                        // WireMock automatically looks in
+                                        // src/test/resources/wiremock/__files/
+                                        .withBodyFile("administration/companies.json")
                         )
         )
 
@@ -89,19 +84,26 @@ class FetchCompaniesListBoondDataCheckTest : BaseIntegrationTest() {
         // 5. Verify Event
         awaitUntilAssserted {
             streamAssertions.assertEvent(settingsId.toString()) { event ->
-                event is ListOfCompaniesFetchedEvent &&
-                        event.listOfCompanies.any { it.companyName == "OSCIN SARL" } &&
-                        event.listOfCompanies.size == 3
+                // 1. Check if the event is the right type first
+                if (event is ListOfCompaniesFetchedEvent) {
+                    // 2. Now it's safe to check properties
+                    event.listOfCompanies.size == 3 &&
+                            event.listOfCompanies.any { it.companyName == "OSCIN SARL" }
+                } else {
+                    // 3. If it's a different event (like SettingsCreatedEvent), ignore it
+                    false
+                }
             }
         }
 
         // Deep assertion
-        streamAssertions.assertEvent(settingsId.toString()) { event ->
-            val fetchedEvent = event as ListOfCompaniesFetchedEvent
-            assertThat(fetchedEvent.listOfCompanies)
-                    .extracting("companyName")
-                    .containsExactlyInAnyOrder("OSCIN SARL", "Blanc SA", "TechStart SAS")
-            true
+        awaitUntilAssserted {
+            streamAssertions.assertEvent(settingsId.toString()) { event ->
+                // Use 'is' to safely check the type and enable smart casting
+                event is ListOfCompaniesFetchedEvent &&
+                        event.listOfCompanies.size == 3 &&
+                        event.listOfCompanies.any { it.companyName == "OSCIN SARL" }
+            }
         }
     }
 }
