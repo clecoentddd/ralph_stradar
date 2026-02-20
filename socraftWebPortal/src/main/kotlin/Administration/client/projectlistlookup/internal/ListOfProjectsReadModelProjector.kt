@@ -1,9 +1,9 @@
 package administration.client.projectlistlookup.internal
 
 // repository
+import administration.admin.companylistlookup.internal.CompanyListLookUpReadModelRepository
 import administration.client.projectlistlookup.ListOfProjectsReadModelEntity
 import administration.client.projectlistlookup.ListOfProjectsReadModelRepository // Import the
-import administration.companylistlookup.internal.CompanyListLookUpReadModelRepository
 import administration.events.ListOfProjectsFetchedEvent
 import java.time.Instant
 import org.axonframework.eventhandling.EventHandler

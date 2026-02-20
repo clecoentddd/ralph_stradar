@@ -8,12 +8,14 @@ import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660065978340
 */
 @RestController
+@RequestMapping("/client")
 class ProjectlistlookupResource(
         private val queryGateway: QueryGateway // val is preferred for injected dependencies
 ) {

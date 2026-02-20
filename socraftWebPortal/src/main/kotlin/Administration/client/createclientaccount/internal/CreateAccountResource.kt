@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
@@ -27,6 +28,7 @@ data class CreateClientAccountPayload(
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660029388833
 */
 @RestController
+@RequestMapping("/client")
 class CreateAccountResource(
         private val commandGateway: CommandGateway,
         private val queryGateway: QueryGateway // Added to check for existing email

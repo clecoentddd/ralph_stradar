@@ -1,11 +1,11 @@
 package administration.fetchcompanieslist.integration
 
+import administration.admin.domain.commands.initializesettings.CreateSettingsCommand
+import administration.admin.domain.commands.requestcompanylistupdate.RequestCompanyListUpdateCommand
 import administration.common.support.BaseIntegrationTest
 import administration.common.support.RandomData
 import administration.common.support.StreamAssertions
 import administration.common.support.awaitUntilAssserted
-import administration.domain.commands.initializesettings.CreateSettingsCommand
-import administration.domain.commands.requestcompanylistupdate.RequestCompanyListUpdateCommand
 import administration.events.ListOfCompaniesFetchedEvent
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock

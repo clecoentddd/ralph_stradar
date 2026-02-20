@@ -1,8 +1,8 @@
 package administration.adminconnection
 
+import administration.admin.domain.commands.adminconnection.ToConnectCommand
 import administration.common.CommandException
 import administration.domain.AdminAccountAggregate
-import administration.domain.commands.adminconnection.ToConnectCommand
 import java.util.UUID
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration

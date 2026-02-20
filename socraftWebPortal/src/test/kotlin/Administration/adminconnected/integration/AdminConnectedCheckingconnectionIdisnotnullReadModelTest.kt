@@ -1,10 +1,10 @@
-package administration.adminconnected.integration
+package administration.admin.adminconnected.integration
 
-import administration.adminconnected.AdminConnectedReadModel
-import administration.adminconnected.AdminConnectedReadModelQuery
+import administration.admin.adminconnected.AdminConnectedReadModel
+import administration.admin.adminconnected.AdminConnectedReadModelQuery
+import administration.admin.domain.commands.adminconnection.ToConnectCommand
 import administration.common.support.BaseIntegrationTest
 import administration.common.support.awaitUntilAssserted
-import administration.domain.commands.adminconnection.ToConnectCommand
 import java.util.*
 import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway

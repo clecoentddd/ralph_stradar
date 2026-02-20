@@ -1,7 +1,7 @@
 package administration.domain
 
+import administration.admin.domain.commands.adminconnection.ToConnectCommand
 import administration.common.CommandException
-import administration.domain.commands.adminconnection.ToConnectCommand
 import administration.events.AdminConnectedEvent
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler

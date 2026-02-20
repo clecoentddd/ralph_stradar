@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
@@ -24,6 +25,7 @@ data class FetchInvoicesPayload(
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660086962410
 */
 @RestController
+@RequestMapping("/client")
 class MarkInvoicesFetchedResource(private var commandGateway: CommandGateway) {
 
         var logger = KotlinLogging.logger {}

@@ -1,9 +1,9 @@
 package administration.adminconnection
 
+import administration.admin.domain.commands.adminconnection.ToConnectCommand
 import administration.common.Event
 import administration.common.support.RandomData
 import administration.domain.AdminAccountAggregate
-import administration.domain.commands.adminconnection.ToConnectCommand
 import administration.events.AdminConnectedEvent
 import java.util.UUID
 import org.axonframework.test.aggregate.AggregateTestFixture
