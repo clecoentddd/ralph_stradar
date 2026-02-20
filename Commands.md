@@ -18,7 +18,7 @@ PRE-BUILD CHANGES:
 3. Start PostgreSQL:
    - docker-compose up -d
 
-4. access DB: docker exec -it backend-postgres-1 psql -U postgres -d postgres-so-portal
+4. access DB: docker exec -it backend-postgres-1 psql -U postgres -d postgres-so
 
 MVN:
 ./mvnw clean compile
