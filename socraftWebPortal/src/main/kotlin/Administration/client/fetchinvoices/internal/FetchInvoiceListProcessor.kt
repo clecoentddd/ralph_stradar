@@ -14,44 +14,41 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008696
 */
 @Component
 class FetchInvoiceListProcessor(
-        private val commandGateway: CommandGateway,
-        private val adapter: FetchBoondAPIInvoiceList
+    private val commandGateway: CommandGateway,
+    private val adapter: FetchBoondAPIInvoiceList
 ) : Processor {
 
-    private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-    // ---------- TRIGGER EVENT ----------
-    @EventHandler
-    fun on(event: OrdersFetchedEvent) {
-        logger.info { "OrdersFetchedEvent received: $event" }
-        fetchAndDispatch(event)
+  // ---------- TRIGGER EVENT ----------
+  @EventHandler
+  fun on(event: OrdersFetchedEvent) {
+    logger.info { "OrdersFetchedEvent received: $event" }
+    fetchAndDispatch(event)
+  }
+
+  // ---------- SHARED FLOW ----------
+  private fun fetchAndDispatch(event: OrdersFetchedEvent) {
+
+    logger.info { "Fetching FetchInvoiceList..." }
+
+    // 1️⃣ Call external system
+    val adapterResult = adapter.fetch(event.companyId)
+
+    logger.info {
+      "Dispatching MarkInvoicesFetchedCommand with ${adapterResult.invoices.size} items"
     }
 
-    // ---------- SHARED FLOW ----------
-    private fun fetchAndDispatch(event: OrdersFetchedEvent) {
-
-        logger.info { "Fetching FetchInvoiceList..." }
-
-        // 1️⃣ Call external system
-        val adapterResult = adapter.fetch(event.companyId)
-
-        logger.info {
-            "Dispatching MarkInvoicesFetchedCommand with ${adapterResult.invoices.size} items"
+    // 3️⃣ Dispatch command
+    commandGateway
+        .send<Any>(
+            MarkInvoicesFetchedCommand(
+                companyId = event.companyId,
+                clientId = event.clientId,
+                invoiceList = adapterResult.invoices))
+        .exceptionally { throwable ->
+          logger.error(throwable) { "FAILED to process FetchInvoiceList: ${throwable.message}" }
+          null
         }
-
-        // 3️⃣ Dispatch command
-        commandGateway.send<Any>(
-                        MarkInvoicesFetchedCommand(
-                                companyId = event.companyId,
-                                clientId = event.clientId,
-                                invoiceList = adapterResult.invoices
-                        )
-                )
-                .exceptionally { throwable ->
-                    logger.error(throwable) {
-                        "FAILED to process FetchInvoiceList: ${throwable.message}"
-                    }
-                    null
-                }
-    }
+  }
 }

@@ -1,7 +1,7 @@
 package administration.events
 
 import administration.common.Event
-import administration.common.ListOfInvoiceStatesItem
+import administration.common.InvoiceState
 import java.util.UUID
 import kotlin.collections.List
 
@@ -11,5 +11,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465995471
 data class InvoiceStateMappingFetchedEvent(
         var settingsId: UUID,
         var connectionId: UUID,
-        var listOfInvoiceStates: List<ListOfInvoiceStatesItem>,
+        var listOfInvoiceStates: List<InvoiceState>,
 ) : Event

@@ -17,74 +17,68 @@ import org.axonframework.spring.stereotype.Aggregate
 @Aggregate
 class CompanyAggregate {
 
-    @AggregateIdentifier var companyId: Long? = null
+  @AggregateIdentifier var companyId: Long? = null
 
-    // Use CREATE_IF_MISSING so the first time a project list is fetched,
-    // the Company entity is born in your system.
-    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    @CommandHandler
-    fun handle(command: MarkListOfProjectsFetchedCommand) {
+  // Use CREATE_IF_MISSING so the first time a project list is fetched,
+  // the Company entity is born in your system.
+  @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
+  @CommandHandler
+  fun handle(command: MarkListOfProjectsFetchedCommand) {
 
-        // 1. Validate the External ID
-        // We reject 0 or null as they aren't valid unique identifiers for an external system.
-        require(command.companyId != null && command.companyId != 0L) {
-            "Invalid companyId: ${command.companyId}. Aggregate cannot be created or updated without a valid external ID."
-        }
-
-        // 2. Apply the event
-        AggregateLifecycle.apply(
-                ListOfProjectsFetchedEvent(
-                        clientId = command.clientId,
-                        companyId = command.companyId,
-                        projectList = command.projectList
-                )
-        )
+    // 1. Validate the External ID
+    // We reject 0 or null as they aren't valid unique identifiers for an external system.
+    require(command.companyId != null && command.companyId != 0L) {
+      "Invalid companyId: ${command.companyId}. Aggregate cannot be created or updated without a valid external ID."
     }
 
-    @EventSourcingHandler
-    fun on(event: ListOfProjectsFetchedEvent) {
+    // 2. Apply the event
+    AggregateLifecycle.apply(
+        ListOfProjectsFetchedEvent(
+            clientId = command.clientId,
+            companyId = command.companyId,
+            projectList = command.projectList))
+  }
 
-        this.companyId = event.companyId
-    }
+  @EventSourcingHandler
+  fun on(event: ListOfProjectsFetchedEvent) {
 
-    // Order List Fetched
-    @CommandHandler
-    fun handle(command: MarkOrdersFetchedCommand) {
+    this.companyId = event.companyId
+  }
 
-        AggregateLifecycle.apply(
-                OrdersFetchedEvent(
-                        companyId = command.companyId,
-                        clientId = command.clientId,
-                        orderList = command.orderList
-                )
-        )
-    }
+  // Order List Fetched
+  @CommandHandler
+  fun handle(command: MarkOrdersFetchedCommand) {
 
-    @EventSourcingHandler
-    fun on(event: OrdersFetchedEvent) {
-        // handle event
-        companyId = event.companyId
-    }
+    AggregateLifecycle.apply(
+        OrdersFetchedEvent(
+            companyId = command.companyId,
+            clientId = command.clientId,
+            orderList = command.orderList))
+  }
 
-    // Invoice List
-    @CommandHandler
-    fun handle(command: MarkInvoicesFetchedCommand) {
+  @EventSourcingHandler
+  fun on(event: OrdersFetchedEvent) {
+    // handle event
+    companyId = event.companyId
+  }
 
-        AggregateLifecycle.apply(
-                InvoicesFetchedEvent(
-                        companyId = command.companyId,
-                        clientId = command.clientId,
-                        invoiceList = command.invoiceList
-                )
-        )
-    }
+  // Invoice List
+  @CommandHandler
+  fun handle(command: MarkInvoicesFetchedCommand) {
 
-    @EventSourcingHandler
-    fun on(event: InvoicesFetchedEvent) {
-        // handle event
-        companyId = event.companyId
-    }
+    AggregateLifecycle.apply(
+        InvoicesFetchedEvent(
+            companyId = command.companyId,
+            clientId = command.clientId,
+            invoiceList = command.invoiceList))
+  }
 
-    // Default constructor required by Axon
-    constructor()
+  @EventSourcingHandler
+  fun on(event: InvoicesFetchedEvent) {
+    // handle event
+    companyId = event.companyId
+  }
+
+  // Default constructor required by Axon
+  constructor()
 }

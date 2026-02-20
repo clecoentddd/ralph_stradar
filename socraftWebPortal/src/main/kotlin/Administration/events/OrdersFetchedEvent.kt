@@ -1,7 +1,7 @@
 package administration.events
 
 import administration.common.Event
-import administration.common.ListOfOrdersItem
+import administration.common.OrderDetails
 import java.util.UUID
 import kotlin.collections.List
 
@@ -11,5 +11,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008525
 data class OrdersFetchedEvent(
         var companyId: Long,
         var clientId: UUID,
-        var orderList: List<ListOfOrdersItem>
+        var orderList: List<OrderDetails>
 ) : Event

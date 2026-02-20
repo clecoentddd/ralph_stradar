@@ -1,6 +1,9 @@
 # DataSource Configuration
 spring:
 
+  app:
+    frontend-url: http://localhost:8081
+
   jpa:
     show-sql: false
     hibernate:

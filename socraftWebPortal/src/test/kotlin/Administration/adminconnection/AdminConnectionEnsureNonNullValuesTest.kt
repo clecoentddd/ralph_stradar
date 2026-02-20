@@ -1,21 +1,19 @@
-package administration.adminconnection
+package administration.admin.adminconnection
 
 import administration.admin.domain.commands.adminconnection.ToConnectCommand
 import administration.common.Event
 import administration.common.support.RandomData
 import administration.domain.AdminAccountAggregate
 import administration.events.AdminConnectedEvent
+import administration.support.metadata.AdminSecurityHeaders // Added
 import java.util.UUID
+import org.axonframework.commandhandling.GenericCommandMessage // Added
+import org.axonframework.messaging.MetaData // Added
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-/**
- * Ensure non null values
- *
- * Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764659756708369
- */
 class AdminConnectionEnsureNonNullValuesTest {
 
   private lateinit var fixture: FixtureConfiguration<AdminAccountAggregate>
@@ -28,31 +26,33 @@ class AdminConnectionEnsureNonNullValuesTest {
   @Test
   fun `Admin Connection Ensure Non Null Values Test`() {
 
-    var connectionId: UUID = RandomData.newInstance<UUID> {}
+    val connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
 
     // GIVEN
     val events = mutableListOf<Event>()
 
     // WHEN
-    val command =
-            ToConnectCommand(
-                    connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8"),
-                    email = "test@socraft.ch"
-            )
+    val command = ToConnectCommand(connectionId = connectionId, email = "test@socraft.ch")
+
+    // Create metadata to satisfy the Interceptor
+    val metaData =
+            MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session-123")
+                    .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "MAIN_COMPANY_789")
+
+    // Wrap the command in a message that includes the metadata
+    val commandMessage =
+            GenericCommandMessage.asCommandMessage<ToConnectCommand>(command).withMetaData(metaData)
 
     // THEN
-    val expectedEvents = mutableListOf<Event>()
-
-    expectedEvents.add(
+    val expectedEvent =
             RandomData.newInstance<AdminConnectedEvent> {
-              this.connectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
+              this.connectionId = connectionId
               this.email = "test@socraft.ch"
             }
-    )
 
     fixture.given(events)
-            .`when`(command)
+            .`when`(commandMessage) // Pass the message instead of the raw command
             .expectSuccessfulHandlerExecution()
-            .expectEvents(*expectedEvents.toTypedArray())
+            .expectEvents(expectedEvent)
   }
 }

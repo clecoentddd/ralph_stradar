@@ -17,8 +17,8 @@ class InvoiceListReadModelQueryHandler(private val repository: InvoiceListReadMo
     // One DB round-trip is better than two.
     // We find the entity and map it directly to the wrapper if it exists.
     return repository
-            .findById(query.companyId)
-            .map { entity -> InvoiceListReadModel(entity) }
-            .orElse(null)
+        .findById(query.companyId)
+        .map { entity -> InvoiceListReadModel(entity) }
+        .orElse(null)
   }
 }

@@ -1,7 +1,7 @@
 package administration.client.domain.commands.fetchorders
 
 import administration.common.Command
-import administration.common.ListOfOrdersItem
+import administration.common.OrderDetails
 import java.util.UUID
 import kotlin.collections.List
 import org.axonframework.modelling.command.TargetAggregateIdentifier
@@ -12,5 +12,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008525
 data class MarkOrdersFetchedCommand(
         @TargetAggregateIdentifier var companyId: Long,
         var clientId: UUID,
-        var orderList: List<ListOfOrdersItem>
+        var orderList: List<OrderDetails>
 ) : Command

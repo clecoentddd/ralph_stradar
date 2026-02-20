@@ -17,24 +17,22 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466006597
 @RestController
 @RequestMapping("/client")
 class ProjectlistlookupResource(
-        private val queryGateway: QueryGateway // val is preferred for injected dependencies
+    private val queryGateway: QueryGateway // val is preferred for injected dependencies
 ) {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @GetMapping("/projectlistlookup/{id}")
-        fun findReadModel(
-                @PathVariable("id") companyId: Long
-        ): CompletableFuture<ListOfProjectsReadModelEntity> {
+  @CrossOrigin
+  @GetMapping("/projectlistlookup/{id}")
+  fun findReadModel(
+      @PathVariable("id") companyId: Long
+  ): CompletableFuture<ListOfProjectsReadModelEntity> {
 
-                logger.info { "Handling request for ProjectList lookup: companyId $companyId" }
+    logger.info { "Handling request for ProjectList lookup: companyId $companyId" }
 
-                // The second parameter tells Axon which QueryHandler to route to
-                // based on its return type.
-                return queryGateway.query(
-                        ListOfProjectsReadModelQuery(companyId),
-                        ListOfProjectsReadModelEntity::class.java
-                )
-        }
+    // The second parameter tells Axon which QueryHandler to route to
+    // based on its return type.
+    return queryGateway.query(
+        ListOfProjectsReadModelQuery(companyId), ListOfProjectsReadModelEntity::class.java)
+  }
 }

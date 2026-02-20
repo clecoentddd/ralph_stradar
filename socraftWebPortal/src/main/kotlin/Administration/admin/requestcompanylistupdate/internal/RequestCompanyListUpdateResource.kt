@@ -2,13 +2,16 @@ package administration.admin.requestcompanylistupdate.internal
 
 import administration.admin.domain.commands.requestcompanylistupdate.RequestCompanyListUpdateCommand
 import administration.common.SettingsConstants
+import administration.support.metadata.AdminSecurityHeaders
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -22,29 +25,32 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465973482
 @RequestMapping("/admin")
 class RequestCompanyListUpdateResource(private var commandGateway: CommandGateway) {
 
-        var logger = KotlinLogging.logger {}
+  var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @PostMapping("/debug/requestcompanylistupdate")
-        fun processDebugCommand(
-                @RequestParam connectionId: UUID,
-                @RequestParam settingsId: UUID
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        RequestCompanyListUpdateCommand(connectionId, settingsId)
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/debug/requestcompanylistupdate")
+  fun processDebugCommand(
+          @RequestParam connectionId: UUID,
+          @RequestParam settingsId: UUID
+  ): CompletableFuture<Any> {
+    return commandGateway.send(RequestCompanyListUpdateCommand(connectionId, settingsId))
+  }
 
-        @CrossOrigin
-        @PostMapping("/requestcompanylistupdate")
-        fun processCommand(
-                @RequestBody payload: RequestCompanyListUpdatePayload
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        RequestCompanyListUpdateCommand(
-                                settingsId = SettingsConstants.SETTINGS_ID,
-                                connectionId = payload.connectionId
-                        )
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/requestcompanylistupdate")
+  fun processCommand(
+          @RequestBody payload: RequestCompanyListUpdatePayload,
+          @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String
+  ): CompletableFuture<Any> {
+    return commandGateway.send(
+            RequestCompanyListUpdateCommand(
+                    settingsId = SettingsConstants.SETTINGS_ID,
+                    connectionId = payload.connectionId
+            ),
+            MetaData.with(
+                    AdminSecurityHeaders.SESSION_ID,
+                    sessionId
+            ) // Just pass it as the 2nd argument
+    )
+  }
 }

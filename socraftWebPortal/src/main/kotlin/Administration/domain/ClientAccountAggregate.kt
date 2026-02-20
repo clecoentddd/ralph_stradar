@@ -17,74 +17,69 @@ import org.axonframework.spring.stereotype.Aggregate
 @Aggregate
 class ClientAccountAggregate {
 
-    @AggregateIdentifier var clientId: UUID? = null
+  @AggregateIdentifier var clientId: UUID? = null
 
-    var clientEmail: String? = null
-    var companyId: Long? = null
-    var connectionId: UUID? = null
+  var clientEmail: String? = null
+  var companyId: Long? = null
+  var connectionId: UUID? = null
 
-    constructor() // Required by Axon
+  constructor() // Required by Axon
 
-    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    @CommandHandler
-    fun handle(command: CreateAccountCommand): Long {
-        // FIX: If clientEmail is already set, this aggregate instance exists.
-        // We must throw the exception that the test is looking for.
-        if (this.clientEmail != null) {
-            throw CommandException("Account already exists with email: ${command.clientEmail}")
+  @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
+  @CommandHandler
+  fun handle(command: CreateAccountCommand): Long {
+    // FIX: If clientEmail is already set, this aggregate instance exists.
+    // We must throw the exception that the test is looking for.
+    if (this.clientEmail != null) {
+      throw CommandException("Account already exists with email: ${command.clientEmail}")
+    }
+
+    AggregateLifecycle.apply(
+        AccountCreatedEvent(
+            clientEmail = command.clientEmail,
+            companyId = command.companyId,
+            connectionId = command.connectionId,
+            clientId = command.clientId))
+    return command.companyId
+  }
+
+  @EventSourcingHandler
+  fun on(event: AccountCreatedEvent) {
+    clientId = event.clientId
+    clientEmail = event.clientEmail
+    companyId = event.companyId
+    connectionId = event.connectionId
+  }
+
+  // Connection to their account
+  @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
+  @CommandHandler
+  fun handle(command: ToConnectToAccountCommand): Long {
+
+    // 1. Validation Logic
+    val currentCompanyId =
+        checkNotNull(this.companyId) {
+          "Identity Error: Account ${command.clientId} exists but has no associated CompanyId. Connection refused."
         }
 
-        AggregateLifecycle.apply(
-                AccountCreatedEvent(
-                        clientEmail = command.clientEmail,
-                        companyId = command.companyId,
-                        connectionId = command.connectionId,
-                        clientId = command.clientId
-                )
-        )
-        return command.companyId
+    if (this.clientEmail != command.clientEmail) {
+      throw IllegalArgumentException(
+          "Security Error: Email mismatch for account ${command.clientId}")
     }
 
-    @EventSourcingHandler
-    fun on(event: AccountCreatedEvent) {
-        clientId = event.clientId
-        clientEmail = event.clientEmail
-        companyId = event.companyId
-        connectionId = event.connectionId
-    }
+    // 2. Apply the Event
+    AggregateLifecycle.apply(
+        ClientConnectedEvent(
+            clientId = command.clientId,
+            clientEmail = command.clientEmail,
+            companyId = currentCompanyId))
+    return currentCompanyId
+  }
 
-    // Connection to their account
-    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    @CommandHandler
-    fun handle(command: ToConnectToAccountCommand): Long {
-
-        // 1. Validation Logic
-        val currentCompanyId =
-                checkNotNull(this.companyId) {
-                    "Identity Error: Account ${command.clientId} exists but has no associated CompanyId. Connection refused."
-                }
-
-        if (this.clientEmail != command.clientEmail) {
-            throw IllegalArgumentException(
-                    "Security Error: Email mismatch for account ${command.clientId}"
-            )
-        }
-
-        // 2. Apply the Event
-        AggregateLifecycle.apply(
-                ClientConnectedEvent(
-                        clientId = command.clientId,
-                        clientEmail = command.clientEmail,
-                        companyId = currentCompanyId
-                )
-        )
-        return currentCompanyId
-    }
-
-    @EventSourcingHandler
-    fun on(event: ClientConnectedEvent) {
-        clientId = event.clientId
-        clientEmail = event.clientEmail
-        companyId = event.companyId
-    }
+  @EventSourcingHandler
+  fun on(event: ClientConnectedEvent) {
+    clientId = event.clientId
+    clientEmail = event.clientEmail
+    companyId = event.companyId
+  }
 }

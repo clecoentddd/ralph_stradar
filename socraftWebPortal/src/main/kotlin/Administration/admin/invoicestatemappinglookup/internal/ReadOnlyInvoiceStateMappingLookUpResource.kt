@@ -18,14 +18,14 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465995471
 @RequestMapping("/admin")
 class InvoicestatemappinglookupResource(private val queryGateway: QueryGateway) {
 
-     private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-     @CrossOrigin
-     @GetMapping("/invoicestatemappinglookup")
-     fun findReadModel(): CompletableFuture<InvoiceStateMappingLookUpReadModelEntity> {
-          return queryGateway.query(
-                  InvoiceStateMappingLookUpReadModelQuery(SettingsConstants.SETTINGS_ID),
-                  InvoiceStateMappingLookUpReadModelEntity::class.java // Expect the entity back
-          )
-     }
+  @CrossOrigin
+  @GetMapping("/invoicestatemappinglookup")
+  fun findReadModel(): CompletableFuture<InvoiceStateMappingLookUpReadModelEntity> {
+    return queryGateway.query(
+        InvoiceStateMappingLookUpReadModelQuery(SettingsConstants.SETTINGS_ID),
+        InvoiceStateMappingLookUpReadModelEntity::class.java // Expect the entity back
+        )
+  }
 }

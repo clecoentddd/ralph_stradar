@@ -16,8 +16,8 @@ class ListOfOrdersReadModelQueryHandler(private val repository: ListOfOrdersRead
   fun handleQuery(query: ListOfOrdersReadModelQuery): ListOfOrdersReadModel? {
     // Optimized to perform only one DB query instead of existsById + findById
     return repository
-            .findById(query.companyId)
-            .map { entity -> ListOfOrdersReadModel(entity) }
-            .orElse(null)
+        .findById(query.companyId)
+        .map { entity -> ListOfOrdersReadModel(entity) }
+        .orElse(null)
   }
 }

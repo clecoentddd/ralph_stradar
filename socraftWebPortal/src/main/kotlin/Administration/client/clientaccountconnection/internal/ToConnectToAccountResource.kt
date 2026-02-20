@@ -22,28 +22,29 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466003656
 @RequestMapping("/client")
 class ToConnectToAccountResource(private var commandGateway: CommandGateway) {
 
-        var logger = KotlinLogging.logger {}
+  var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @PostMapping("/debug/clientaccountconnection")
-        fun processDebugCommand(
-                @RequestParam clientEmail: String,
-                @RequestParam clientId: UUID
-        ): CompletableFuture<Any> {
-                return commandGateway.send(ToConnectToAccountCommand(clientEmail, clientId))
-        }
+  @CrossOrigin
+  @PostMapping("/debug/clientaccountconnection")
+  fun processDebugCommand(
+          @RequestParam clientEmail: String,
+          @RequestParam clientId: UUID
+  ): CompletableFuture<Any> {
+    return commandGateway.send(ToConnectToAccountCommand(clientEmail, clientId))
+  }
 
-        @CrossOrigin
-        @PostMapping("/clientaccountconnection/{id}")
-        fun processCommand(
-                @PathVariable("id") clientId: UUID,
-                @RequestBody payload: ClientAccountConnectionPayload
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        ToConnectToAccountCommand(
-                                clientId = clientId,
-                                clientEmail = payload.clientEmail
-                        )
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/clientaccountconnection/{id}")
+  fun processCommand(
+          @PathVariable("id") clientId: UUID,
+          @RequestBody payload: ClientAccountConnectionPayload
+  ): CompletableFuture<Map<String, Any>> {
+    return commandGateway.send<Long>(
+                    ToConnectToAccountCommand(
+                            clientId = clientId,
+                            clientEmail = payload.clientEmail
+                    )
+            )
+            .thenApply { mapOf("companyId" to it) }
+  }
 }

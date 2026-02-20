@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 data class CreateClientAccountPayload(
-        var clientEmail: String,
-        var companyId: Long,
-        var connectionId: UUID
+    var clientEmail: String,
+    var companyId: Long,
+    var connectionId: UUID
 )
 
 /*
@@ -30,64 +30,55 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466002938
 @RestController
 @RequestMapping("/client")
 class CreateAccountResource(
-        private val commandGateway: CommandGateway,
-        private val queryGateway: QueryGateway // Added to check for existing email
+    private val commandGateway: CommandGateway,
+    private val queryGateway: QueryGateway // Added to check for existing email
 ) {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @PostMapping("/createclientaccount")
-        fun processCommand(
-                @RequestBody payload: CreateClientAccountPayload
-        ): CompletableFuture<Map<String, Any>> {
+  @CrossOrigin
+  @PostMapping("/createclientaccount")
+  fun processCommand(
+      @RequestBody payload: CreateClientAccountPayload
+  ): CompletableFuture<Map<String, Any>> {
 
-                // 1. Validation: Check if email already exists in the Read Model
-                val query = ClientAccountListReadModelQuery(email = payload.clientEmail)
+    // 1. Validation: Check if email already exists in the Read Model
+    val query = ClientAccountListReadModelQuery(email = payload.clientEmail)
 
-                val existingAccounts =
-                        queryGateway
-                                .query(
-                                        query,
-                                        ResponseTypes.multipleInstancesOf(
-                                                ClientAccountListReadModelEntity::class.java
-                                        )
-                                )
-                                .get() // Blocks to ensure we don't create a duplicate
+    val existingAccounts =
+        queryGateway
+            .query(
+                query,
+                ResponseTypes.multipleInstancesOf(ClientAccountListReadModelEntity::class.java))
+            .get() // Blocks to ensure we don't create a duplicate
 
-                if (existingAccounts.isNotEmpty()) {
-                        // This is the message the user WILL see now
-                        throw ResponseStatusException(
-                                HttpStatus.CONFLICT,
-                                "The email '${payload.clientEmail}' is already associated with an account. Please use a different email."
-                        )
-                }
+    if (existingAccounts.isNotEmpty()) {
+      // This is the message the user WILL see now
+      throw ResponseStatusException(
+          HttpStatus.CONFLICT,
+          "The email '${payload.clientEmail}' is already associated with an account. Please use a different email.")
+    }
 
-                // 2. Execution: Only happens if the list above was empty
-                val clientId = UUID.randomUUID()
-                return commandGateway.send<Long>(
-                                CreateAccountCommand(
-                                        clientId = clientId,
-                                        clientEmail = payload.clientEmail,
-                                        companyId = payload.companyId,
-                                        connectionId = payload.connectionId
-                                )
-                        )
-                        .thenApply { companyId ->
-                                mapOf("clientId" to clientId, "companyId" to companyId)
-                        }
-        }
+    // 2. Execution: Only happens if the list above was empty
+    val clientId = UUID.randomUUID()
+    return commandGateway
+        .send<Long>(
+            CreateAccountCommand(
+                clientId = clientId,
+                clientEmail = payload.clientEmail,
+                companyId = payload.companyId,
+                connectionId = payload.connectionId))
+        .thenApply { companyId -> mapOf("clientId" to clientId, "companyId" to companyId) }
+  }
 
-        @CrossOrigin
-        @PostMapping("/debug/createclientaccount")
-        fun processDebugCommand(
-                @RequestParam clientEmail: String,
-                @RequestParam companyId: Long,
-                @RequestParam connectionId: UUID,
-                @RequestParam clientId: UUID
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        CreateAccountCommand(clientId, clientEmail, companyId, connectionId)
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/debug/createclientaccount")
+  fun processDebugCommand(
+      @RequestParam clientEmail: String,
+      @RequestParam companyId: Long,
+      @RequestParam connectionId: UUID,
+      @RequestParam clientId: UUID
+  ): CompletableFuture<Any> {
+    return commandGateway.send(CreateAccountCommand(clientId, clientEmail, companyId, connectionId))
+  }
 }

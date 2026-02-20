@@ -1,7 +1,7 @@
 package administration.client.domain.commands.fetchinvoices
 
 import administration.common.Command
-import administration.common.ListOfInvoicesItem
+import administration.common.InvoiceDetails
 import java.util.UUID
 import kotlin.collections.List
 import org.axonframework.modelling.command.TargetAggregateIdentifier
@@ -12,5 +12,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008696
 data class MarkInvoicesFetchedCommand(
         @TargetAggregateIdentifier var companyId: Long,
         var clientId: UUID,
-        var invoiceList: List<ListOfInvoicesItem>
+        var invoiceList: List<InvoiceDetails>
 ) : Command

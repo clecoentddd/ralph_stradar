@@ -1,6 +1,6 @@
 package administration.client.fetchinvoices.internal.adapter
 
-import administration.common.ListOfInvoicesItem
+import administration.common.InvoiceDetails
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.*
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 
-data class InvoicesListInfo(val invoices: List<ListOfInvoicesItem>)
+data class InvoicesListInfo(val invoices: List<InvoiceDetails>)
 
 data class BoondInvoicesResponse(
         val data: List<BoondInvoiceData>,
@@ -29,10 +29,10 @@ data class BoondInvoiceAttributes(
         val paymentDate: String? = null,
         val performedDate: String? = null,
         val amount: Double? = null,
-        val informations: BoondListOfInvoicesItemrmations? = null
+        val informations: BoondInvoiceInformations? = null
 )
 
-data class BoondListOfInvoicesItemrmations(
+data class BoondInvoiceInformations(
         val totalExcludingTaxes: Double? = null,
         val totalIncludingTaxes: Double? = null,
         val totalVat: Double? = null
@@ -159,7 +159,7 @@ class FetchBoondAPIInvoiceList(
                                 filteredInvoices.map {
                                         logger.info("Mapping invoice ${it.attributes.reference}")
 
-                                        ListOfInvoicesItem(
+                                        InvoiceDetails(
                                                 invoiceId = it.id,
                                                 companyId = it.relationships.company?.data?.id ?: 0,
                                                 projectId = it.relationships.project?.data?.id ?: 0,

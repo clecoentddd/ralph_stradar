@@ -1,4 +1,4 @@
-package administration.client.createclientaccount
+package administration.admin.client.createclientaccount
 
 import administration.client.domain.commands.createclientaccount.CreateAccountCommand
 import administration.common.CommandException
@@ -19,45 +19,45 @@ import org.junit.jupiter.api.Test
  */
 class CreateClientAccountemailmustbeuniqueTest {
 
-        private lateinit var fixture: FixtureConfiguration<ClientAccountAggregate>
+  private lateinit var fixture: FixtureConfiguration<ClientAccountAggregate>
 
-        @BeforeEach
-        fun setUp() {
-                fixture = AggregateTestFixture(ClientAccountAggregate::class.java)
-        }
+  @BeforeEach
+  fun setUp() {
+    fixture = AggregateTestFixture(ClientAccountAggregate::class.java)
+  }
 
-        @Test
-        fun `Create Client Account email must be unique Test`() {
+  @Test
+  fun `Create Client Account email must be unique Test`() {
 
-                val clientId: UUID = RandomData.newInstance<UUID> {}
-                val duplicateEmail = "client@client.ch"
+    val clientId: UUID = RandomData.newInstance<UUID> {}
+    val duplicateEmail = "client@client.ch"
 
-                // GIVEN: This specific Aggregate ID already has this email in its history
-                val events = mutableListOf<Event>()
-                events.add(
-                        RandomData.newInstance<AccountCreatedEvent> {
-                                this.clientId = clientId
-                                this.clientEmail = duplicateEmail
-                                this.companyId = 799
-                                this.connectionId = RandomData.newInstance {}
-                        }
-                )
+    // GIVEN: This specific Aggregate ID already has this email in its history
+    val events = mutableListOf<Event>()
+    events.add(
+            RandomData.newInstance<AccountCreatedEvent> {
+              this.clientId = clientId
+              this.clientEmail = duplicateEmail
+              this.companyId = 799
+              this.connectionId = RandomData.newInstance {}
+            }
+    )
 
-                // WHEN: We try to send a command to the SAME ID with the SAME email
-                val command =
-                        CreateAccountCommand(
-                                clientId = clientId, // Use the SAME ID as above
-                                clientEmail = duplicateEmail,
-                                companyId = 789,
-                                connectionId = RandomData.newInstance {}
-                        )
+    // WHEN: We try to send a command to the SAME ID with the SAME email
+    val command =
+            CreateAccountCommand(
+                    clientId = clientId, // Use the SAME ID as above
+                    clientEmail = duplicateEmail,
+                    companyId = 789,
+                    connectionId = RandomData.newInstance {}
+            )
 
-                // THEN: The Aggregate sees it already has an email and throws the exception
-                fixture.given(events)
-                        .`when`(command)
-                        .expectException(CommandException::class.java)
-                        .expectExceptionMessage(
-                                containsString("Account already exists with email: $duplicateEmail")
-                        )
-        }
+    // THEN: The Aggregate sees it already has an email and throws the exception
+    fixture.given(events)
+            .`when`(command)
+            .expectException(CommandException::class.java)
+            .expectExceptionMessage(
+                    containsString("Account already exists with email: $duplicateEmail")
+            )
+  }
 }

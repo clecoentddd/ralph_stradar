@@ -18,21 +18,17 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008525
 @RequestMapping("/client")
 class CompanyorderlistlookupResource(private val queryGateway: QueryGateway) {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @GetMapping("/companyorderlistlookup/{id}")
-        fun findReadModel(
-                @PathVariable("id") companyId: Long
-        ): CompletableFuture<ListOfOrdersReadModel> {
+  @CrossOrigin
+  @GetMapping("/companyorderlistlookup/{id}")
+  fun findReadModel(@PathVariable("id") companyId: Long): CompletableFuture<ListOfOrdersReadModel> {
 
-                logger.info { "Fetching order list for companyId: $companyId" }
+    logger.info { "Fetching order list for companyId: $companyId" }
 
-                // Dispatches the query through the Axon QueryBus to the
-                // ListOfOrdersReadModelQueryHandler
-                return queryGateway.query(
-                        ListOfOrdersReadModelQuery(companyId),
-                        ListOfOrdersReadModel::class.java
-                )
-        }
+    // Dispatches the query through the Axon QueryBus to the
+    // ListOfOrdersReadModelQueryHandler
+    return queryGateway.query(
+        ListOfOrdersReadModelQuery(companyId), ListOfOrdersReadModel::class.java)
+  }
 }

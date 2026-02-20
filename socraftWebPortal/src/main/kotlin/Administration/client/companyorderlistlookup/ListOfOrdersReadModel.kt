@@ -1,6 +1,6 @@
 package administration.client.companyorderlistlookup
 
-import administration.common.ListOfOrdersItem
+import administration.common.OrderDetails
 import jakarta.persistence.*
 import java.io.Serializable
 import java.util.UUID
@@ -21,16 +21,16 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008525
 @Table(name = "company_order_list_lookup")
 class ListOfOrdersReadModelEntity : Serializable {
 
-   @Id @Column(name = "companyId", nullable = false) var companyId: Long? = null
+  @Id @Column(name = "companyId", nullable = false) var companyId: Long? = null
 
-   @Column(name = "clientId") var clientId: UUID? = null
+  @Column(name = "clientId") var clientId: UUID? = null
 
-   @Column(name = "timestamp") var timestamp: Long? = null
+  @Column(name = "timestamp") var timestamp: Long? = null
 
-   // Pattern aligned with Invoices/Projects: No @ElementCollection
-   @JdbcTypeCode(SqlTypes.JSON)
-   @Column(name = "order_list", columnDefinition = "jsonb")
-   var orderList: List<ListOfOrdersItem> = mutableListOf()
+  // Pattern aligned with Invoices/Projects: No @ElementCollection
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(name = "order_list", columnDefinition = "jsonb")
+  var orderList: List<OrderDetails> = mutableListOf()
 }
 
 data class ListOfOrdersReadModel(val data: ListOfOrdersReadModelEntity)

@@ -22,29 +22,24 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465995471
 @RequestMapping("/admin")
 class RequestInvoiceStateMappingUpdateResource(private var commandGateway: CommandGateway) {
 
-        var logger = KotlinLogging.logger {}
+  var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @PostMapping("/debug/requestinvoicestatemappingupdate")
-        fun processDebugCommand(
-                @RequestParam settingsId: UUID,
-                @RequestParam connectionId: UUID
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        RequestInvoiceStateMappingUpdateCommand(settingsId, connectionId)
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/debug/requestinvoicestatemappingupdate")
+  fun processDebugCommand(
+      @RequestParam settingsId: UUID,
+      @RequestParam connectionId: UUID
+  ): CompletableFuture<Any> {
+    return commandGateway.send(RequestInvoiceStateMappingUpdateCommand(settingsId, connectionId))
+  }
 
-        @CrossOrigin
-        @PostMapping("/requestinvoicestatemappingupdate")
-        fun processCommand(
-                @RequestBody payload: RequestInvoiceStateMappingUpdatePayload
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        RequestInvoiceStateMappingUpdateCommand(
-                                SettingsConstants.SETTINGS_ID,
-                                connectionId = payload.connectionId
-                        )
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/requestinvoicestatemappingupdate")
+  fun processCommand(
+      @RequestBody payload: RequestInvoiceStateMappingUpdatePayload
+  ): CompletableFuture<Any> {
+    return commandGateway.send(
+        RequestInvoiceStateMappingUpdateCommand(
+            SettingsConstants.SETTINGS_ID, connectionId = payload.connectionId))
+  }
 }

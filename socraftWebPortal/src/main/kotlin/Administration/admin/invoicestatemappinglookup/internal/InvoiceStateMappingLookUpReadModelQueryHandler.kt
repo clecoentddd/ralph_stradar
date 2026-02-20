@@ -10,12 +10,12 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465995471
 */
 @Component
 class InvoiceStateMappingLookUpReadModelQueryHandler(
-        private val repository: InvoiceStateMappingLookUpReadModelRepository
+    private val repository: InvoiceStateMappingLookUpReadModelRepository
 ) {
 
   @QueryHandler
   fun handleQuery(
-          query: InvoiceStateMappingLookUpReadModelQuery
+      query: InvoiceStateMappingLookUpReadModelQuery
   ): InvoiceStateMappingLookUpReadModelEntity? {
     return repository.findById(query.settingsId).orElse(null)
   }

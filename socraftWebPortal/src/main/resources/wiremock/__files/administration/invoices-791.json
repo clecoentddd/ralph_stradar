@@ -231,6 +231,7 @@
                 "state": 60,
                 "invoiceDate": "2024-01-25",
                 "dueDate": "2024-02-25",
+                "performedDate": "2024-02-25",
                 "amount": 21000.00,
                 "informations": {
                     "totalExcludingTaxes": 21000.00,

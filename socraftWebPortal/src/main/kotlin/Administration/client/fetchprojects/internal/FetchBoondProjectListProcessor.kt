@@ -2,8 +2,8 @@ package administration.client.fetchprojects.internal
 
 import administration.client.domain.commands.fetchprojects.MarkListOfProjectsFetchedCommand
 import administration.client.fetchprojects.internal.adapter.FetchBoondAPIProjectList
-import administration.common.ListOfProjectsItem
 import administration.common.Processor
+import administration.common.ProjectDetails
 import administration.events.ClientConnectedEvent
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
@@ -19,63 +19,61 @@ class FetchBoondProjectListProcessor(
         private val adapter: FetchBoondAPIProjectList
 ) : Processor {
 
-    private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-    // ---------- TRIGGER EVENT ----------
-    @EventHandler
-    fun on(event: ClientConnectedEvent) {
-        logger.info { "ClientConnectedEvent received: $event" }
-        fetchAndDispatch(event)
+  // ---------- TRIGGER EVENT ----------
+  @EventHandler
+  fun on(event: ClientConnectedEvent) {
+    logger.info { "ClientConnectedEvent received: $event" }
+    fetchAndDispatch(event)
+  }
+
+  // ---------- SHARED FLOW ----------
+  private fun fetchAndDispatch(event: ClientConnectedEvent) {
+
+    logger.info { "Fetching FetchBoondProjectList..." }
+
+    if (event.companyId == null || event.companyId == 0L) {
+      logger.warn {
+        "Skipping fetch: Invalid companyId (${event.companyId}) for client ${event.clientId}"
+      }
+      return
     }
 
-    // ---------- SHARED FLOW ----------
-    private fun fetchAndDispatch(event: ClientConnectedEvent) {
+    // 1️⃣ Call external system
+    val adapterResult = adapter.fetch(event.companyId)
 
-        logger.info { "Fetching FetchBoondProjectList..." }
-
-        if (event.companyId == null || event.companyId == 0L) {
-            logger.warn {
-                "Skipping fetch: Invalid companyId (${event.companyId}) for client ${event.clientId}"
+    // 2️⃣ Map adapter result to domain payload
+    val mappedPayload =
+            adapterResult.projects.map { item ->
+              ProjectDetails(
+                      projectId = item.projectId,
+                      reference = item.reference,
+                      projectTitle = item.projectTitle,
+                      projectDescription = item.projectDescription,
+                      startDate = item.startDate, // Now supports null/String correctly
+                      endDate = item.endDate,
+                      forecastEndDate = item.forecastEndDate,
+                      status = item.status,
+                      manager = item.manager ?: "Unknown Manager"
+              )
             }
-            return
-        }
 
-        // 1️⃣ Call external system
-        val adapterResult = adapter.fetch(event.companyId)
+    logger.info { "Dispatching MarkListOfProjectsFetchedCommand with ${mappedPayload.size} items" }
 
-        // 2️⃣ Map adapter result to domain payload
-        val mappedPayload =
-                adapterResult.projects.map { item ->
-                    ListOfProjectsItem(
-                            projectId = item.projectId,
-                            reference = item.reference,
-                            projectTitle = item.projectTitle,
-                            projectDescription = item.projectDescription,
-                            startDate = item.startDate, // Now supports null/String correctly
-                            endDate = item.endDate,
-                            forecastEndDate = item.forecastEndDate,
-                            status = item.status,
-                            manager = item.manager ?: "Unknown Manager"
+    // 3️⃣ Dispatch command
+    commandGateway.send<Any>(
+                    MarkListOfProjectsFetchedCommand(
+                            clientId = event.clientId,
+                            companyId = event.companyId,
+                            projectList = mappedPayload
                     )
-                }
-
-        logger.info {
-            "Dispatching MarkListOfProjectsFetchedCommand with ${mappedPayload.size} items"
-        }
-
-        // 3️⃣ Dispatch command
-        commandGateway.send<Any>(
-                        MarkListOfProjectsFetchedCommand(
-                                clientId = event.clientId,
-                                companyId = event.companyId,
-                                projectList = mappedPayload
-                        )
-                )
-                .exceptionally { throwable ->
-                    logger.error(throwable) {
-                        "FAILED to process FetchBoondProjectList: ${throwable.message}"
-                    }
-                    null
-                }
-    }
+            )
+            .exceptionally { throwable ->
+              logger.error(throwable) {
+                "FAILED to process FetchBoondProjectList: ${throwable.message}"
+              }
+              null
+            }
+  }
 }

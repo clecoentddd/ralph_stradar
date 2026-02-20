@@ -1,7 +1,7 @@
 package administration.admin.domain.commands.fetchinvoicestatemappinglist
 
 import administration.common.Command
-import administration.common.ListOfInvoiceStatesItem
+import administration.common.InvoiceState
 import java.util.UUID
 import kotlin.collections.List
 import org.axonframework.modelling.command.TargetAggregateIdentifier
@@ -12,5 +12,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465995471
 data class MarkListOfInvoiceStateFetchedCommand(
         @TargetAggregateIdentifier var settingsId: UUID,
         var connectionId: UUID,
-        var listOfInvoiceStates: List<ListOfInvoiceStatesItem>
+        var listOfInvoiceStates: List<InvoiceState>
 ) : Command

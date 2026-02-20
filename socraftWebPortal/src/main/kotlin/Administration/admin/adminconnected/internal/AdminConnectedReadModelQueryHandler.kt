@@ -10,7 +10,7 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465973482
 */
 @Component
 class AdminConnectedReadModelQueryHandler(
-        private val repository: AdminConnectedReadModelRepository
+    private val repository: AdminConnectedReadModelRepository
 ) {
 
   @QueryHandler

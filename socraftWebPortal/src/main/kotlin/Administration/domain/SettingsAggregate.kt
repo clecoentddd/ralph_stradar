@@ -6,7 +6,7 @@ import administration.admin.domain.commands.initializesettings.CreateSettingsCom
 import administration.admin.domain.commands.requestcompanylistupdate.RequestCompanyListUpdateCommand
 import administration.admin.domain.commands.requestinvoicestatemappingupdate.RequestInvoiceStateMappingUpdateCommand
 import administration.common.CommandException
-import administration.common.ListOfCompaniesItem
+import administration.common.CompanyDetails
 import administration.common.SettingsConstants
 import administration.events.CompanyListUpdateRequestedEvent
 import administration.events.InvoiceStateMappingFetchedEvent
@@ -30,7 +30,7 @@ class SettingsAggregate() {
 
   @AggregateIdentifier private lateinit var settingsId: UUID
 
-  var listOfCompanies: List<ListOfCompaniesItem> = emptyList()
+  var listOfCompanies: List<CompanyDetails> = emptyList()
   var connectionId: UUID? = null
   var state: String = "INCOMPLETE"
 

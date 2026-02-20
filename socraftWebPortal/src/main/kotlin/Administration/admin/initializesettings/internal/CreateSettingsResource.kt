@@ -27,8 +27,8 @@ class CreateSettingsResource(private var commandGateway: CommandGateway) {
   @CrossOrigin
   @PostMapping("/debug/initializesettings")
   fun processDebugCommand(
-          @RequestParam settingsId: UUID,
-          @RequestParam connectionId: UUID
+      @RequestParam settingsId: UUID,
+      @RequestParam connectionId: UUID
   ): CompletableFuture<Any> {
     return commandGateway.send(CreateSettingsCommand(settingsId, connectionId))
   }
@@ -37,7 +37,6 @@ class CreateSettingsResource(private var commandGateway: CommandGateway) {
   @PostMapping("/initializesettings")
   fun processCommand(@RequestBody payload: InitializesettingsPayload): CompletableFuture<Any> {
     return commandGateway.send(
-            CreateSettingsCommand(SETTINGS_ID, connectionId = payload.connectionId)
-    )
+        CreateSettingsCommand(SETTINGS_ID, connectionId = payload.connectionId))
   }
 }

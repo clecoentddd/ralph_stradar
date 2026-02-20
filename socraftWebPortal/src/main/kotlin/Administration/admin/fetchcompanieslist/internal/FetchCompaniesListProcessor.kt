@@ -2,7 +2,7 @@ package administration.admin.fetchcompanieslist.internal
 
 import administration.admin.domain.commands.fetchcompanieslist.MarkListOfCompaniesFetchedCommand
 import administration.admin.fetchcompanieslist.internal.adapter.FetchBoondAPICompanyList
-import administration.common.ListOfCompaniesItem
+import administration.common.CompanyDetails
 import administration.common.Processor
 import administration.events.CompanyListUpdateRequestedEvent
 import mu.KotlinLogging
@@ -39,7 +39,7 @@ class FetchCompaniesListProcessor(
     // 2️⃣ Map adapter result to domain payload
     val mappedPayload =
             adapterResult.map { item ->
-              ListOfCompaniesItem(companyId = item.companyId, companyName = item.companyName)
+              CompanyDetails(companyId = item.companyId, companyName = item.companyName)
             }
 
     logger.info { "Dispatching MarkListOfCompaniesFetchedCommand with ${mappedPayload.size} items" }

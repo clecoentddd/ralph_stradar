@@ -1,6 +1,6 @@
 package administration.admin.invoicestatemappinglookup
 
-import administration.common.ListOfInvoiceStatesItem
+import administration.common.InvoiceState
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
@@ -27,7 +27,7 @@ class InvoiceStateMappingLookUpReadModelEntity {
 
    @JdbcTypeCode(SqlTypes.JSON)
    @Column(name = "invoice_states", columnDefinition = "jsonb")
-   var listOfInvoiceStates: List<ListOfInvoiceStatesItem> = mutableListOf()
+   var listOfInvoiceStates: List<InvoiceState> = mutableListOf()
 }
 
 data class InvoiceStateMappingLookUpReadModel(val data: InvoiceStateMappingLookUpReadModelEntity)

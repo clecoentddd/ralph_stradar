@@ -10,7 +10,7 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466003656
 */
 @Component
 class ClientAccountListReadModelQueryHandler(
-        private val repository: ClientAccountListReadModelRepository
+    private val repository: ClientAccountListReadModelRepository
 ) {
 
   @QueryHandler

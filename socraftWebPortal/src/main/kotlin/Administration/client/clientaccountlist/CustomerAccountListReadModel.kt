@@ -12,8 +12,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466003656
 */
 @Entity
 class ClientAccountListReadModelEntity {
-    @Id @Column(name = "clientId") var clientId: UUID? = null
-    @Column(name = "clientEmail") var clientEmail: String? = null
-    @Column(name = "companyId") var companyId: Long? = null
-    @Column(name = "connectionId") var connectionId: UUID? = null
+  @Id @Column(name = "clientId") var clientId: UUID? = null
+  @Column(name = "clientEmail") var clientEmail: String? = null
+  @Column(name = "companyId") var companyId: Long? = null
+  @Column(name = "connectionId") var connectionId: UUID? = null
 }

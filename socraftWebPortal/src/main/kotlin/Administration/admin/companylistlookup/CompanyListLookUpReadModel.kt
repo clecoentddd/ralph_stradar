@@ -1,6 +1,6 @@
 package administration.admin.companylistlookup
 
-import administration.common.ListOfCompaniesItem
+import administration.common.CompanyDetails
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import java.io.Serializable
@@ -20,10 +20,10 @@ class CompanyListLookUpReadModelEntity(
         @JdbcTypeCode(SqlTypes.JSON)
         @Column(name = "companies", columnDefinition = "jsonb")
         @JsonProperty("listOfCompanies")
-        var listOfCompanies: List<ListOfCompaniesItem>? = null
+        var listOfCompanies: List<CompanyDetails>? = null
 ) : Serializable {
-        // Secondary constructor for Hibernate proxy creation
-        constructor() : this(UUID.randomUUID(), null, 0, null)
+  // Secondary constructor for Hibernate proxy creation
+  constructor() : this(UUID.randomUUID(), null, 0, null)
 }
 
 data class CompanyListLookUpReadModelQuery(val settingsId: UUID)

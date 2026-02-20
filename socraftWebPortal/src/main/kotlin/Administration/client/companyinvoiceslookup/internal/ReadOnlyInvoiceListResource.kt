@@ -18,20 +18,16 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008696
 @RequestMapping("/client")
 class CompanyinvoiceslookupResource(private val queryGateway: QueryGateway) {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @GetMapping("/companyinvoiceslookup/{id}")
-        fun findReadModel(
-                @PathVariable("id") companyId: Long
-        ): CompletableFuture<InvoiceListReadModel> {
+  @CrossOrigin
+  @GetMapping("/companyinvoiceslookup/{id}")
+  fun findReadModel(@PathVariable("id") companyId: Long): CompletableFuture<InvoiceListReadModel> {
 
-                logger.info { "Request received to fetch invoices for company: $companyId" }
+    logger.info { "Request received to fetch invoices for company: $companyId" }
 
-                // Dispatches the query through the Axon Query Bus
-                return queryGateway.query(
-                        InvoiceListReadModelQuery(companyId),
-                        InvoiceListReadModel::class.java
-                )
-        }
+    // Dispatches the query through the Axon Query Bus
+    return queryGateway.query(
+        InvoiceListReadModelQuery(companyId), InvoiceListReadModel::class.java)
+  }
 }

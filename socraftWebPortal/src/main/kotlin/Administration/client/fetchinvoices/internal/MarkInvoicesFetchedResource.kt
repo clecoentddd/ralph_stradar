@@ -1,7 +1,7 @@
 package administration.client.fetchinvoices.internal
 
 import administration.client.domain.commands.fetchinvoices.MarkInvoicesFetchedCommand
-import administration.common.ListOfInvoicesItem
+import administration.common.InvoiceDetails
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import kotlin.collections.List
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 data class FetchInvoicesPayload(
         var companyId: Long,
         var clientId: UUID,
-        var invoiceList: List<ListOfInvoicesItem>
+        var invoiceList: List<InvoiceDetails>
 )
 
 /*
@@ -35,7 +35,7 @@ class MarkInvoicesFetchedResource(private var commandGateway: CommandGateway) {
         fun processDebugCommand(
                 @RequestParam companyId: Long,
                 @RequestParam clientId: UUID,
-                @RequestParam invoiceList: List<ListOfInvoicesItem>
+                @RequestParam invoiceList: List<InvoiceDetails>
         ): CompletableFuture<Any> {
                 return commandGateway.send(
                         MarkInvoicesFetchedCommand(companyId, clientId, invoiceList)

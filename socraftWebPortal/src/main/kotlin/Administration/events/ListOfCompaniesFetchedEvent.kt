@@ -1,7 +1,7 @@
 package administration.events
 
+import administration.common.CompanyDetails
 import administration.common.Event
-import administration.common.ListOfCompaniesItem
 import java.util.UUID
 import kotlin.collections.List
 
@@ -11,5 +11,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465973482
 data class ListOfCompaniesFetchedEvent(
         var settingsId: UUID,
         var connectionId: UUID?,
-        var listOfCompanies: List<ListOfCompaniesItem>
+        var listOfCompanies: List<CompanyDetails>
 ) : Event

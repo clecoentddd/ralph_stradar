@@ -37,10 +37,10 @@ class AdminConnectedReadModelProjector(var repository: AdminConnectedReadModelRe
     // throws exception if not available (adjust logic)
     val entity = this.repository.findById(event.connectionId).orElse(AdminConnectedReadModel())
     entity
-            .apply {
-              connectionId = event.connectionId
-              email = event.email
-            }
-            .also { this.repository.save(it) }
+        .apply {
+          connectionId = event.connectionId
+          email = event.email
+        }
+        .also { this.repository.save(it) }
   }
 }

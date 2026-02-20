@@ -2,7 +2,7 @@ package administration.common
 
 import java.io.Serializable
 
-data class ListOfInvoicesItem(
+data class InvoiceDetails(
         var invoiceId: Long = 0,
         var companyId: Long = 0,
         var projectId: Long = 0,

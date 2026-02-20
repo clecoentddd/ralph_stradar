@@ -1,7 +1,7 @@
 package administration.events
 
 import administration.common.Event
-import administration.common.ListOfProjectsItem
+import administration.common.ProjectDetails
 import java.util.UUID
 import kotlin.collections.List
 
@@ -11,5 +11,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466004405
 data class ListOfProjectsFetchedEvent(
         var companyId: Long,
         var clientId: UUID,
-        var projectList: List<ListOfProjectsItem>
+        var projectList: List<ProjectDetails>
 ) : Event

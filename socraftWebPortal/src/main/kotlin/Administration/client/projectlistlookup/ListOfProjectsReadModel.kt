@@ -1,6 +1,6 @@
 package administration.client.projectlistlookup
 
-import administration.common.ListOfProjectsItem
+import administration.common.ProjectDetails
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import java.io.Serializable
@@ -22,18 +22,18 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466006597
 @Table(name = "project_list_lookup")
 class ListOfProjectsReadModelEntity : Serializable {
 
-   @Id @Column(name = "companyId", nullable = false) var companyId: Long? = null
+  @Id @Column(name = "companyId", nullable = false) var companyId: Long? = null
 
-   @Column(name = "companyName") var companyName: String? = null
+  @Column(name = "companyName") var companyName: String? = null
 
-   @Column(name = "clientId") var clientId: UUID? = null
+  @Column(name = "clientId") var clientId: UUID? = null
 
-   @Column(name = "timestamp") var timestamp: Long? = null
+  @Column(name = "timestamp") var timestamp: Long? = null
 
-   @JdbcTypeCode(SqlTypes.JSON)
-   @Column(name = "project_list", columnDefinition = "jsonb")
-   @JsonProperty("projectList")
-   // Now that @Embeddable is removed from ListOfProjectsItem,
-   // we can use the specific type safely.
-   var projectList: List<ListOfProjectsItem> = mutableListOf()
+  @JdbcTypeCode(SqlTypes.JSON)
+  @Column(name = "project_list", columnDefinition = "jsonb")
+  @JsonProperty("projectList")
+  // Now that @Embeddable is removed from ProjectDetails,
+  // we can use the specific type safely.
+  var projectList: List<ProjectDetails> = mutableListOf()
 }

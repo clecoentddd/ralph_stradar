@@ -1,6 +1,6 @@
 package administration.common
 
-data class ListOfProjectsItem(
+data class ProjectDetails(
         var projectId: Long = 0,
         var reference: String? = null,
         var projectTitle: String? = null,

@@ -8,8 +8,8 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660029388833
 */
 data class CreateAccountCommand(
-        @TargetAggregateIdentifier var clientId: UUID,
-        var clientEmail: String,
-        var companyId: Long,
-        var connectionId: UUID,
+    @TargetAggregateIdentifier var clientId: UUID,
+    var clientEmail: String,
+    var companyId: Long,
+    var connectionId: UUID,
 ) : Command

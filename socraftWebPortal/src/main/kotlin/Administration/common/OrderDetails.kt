@@ -1,6 +1,6 @@
 package administration.common
 
-data class ListOfOrdersItem(
+data class OrderDetails(
         var orderId: Long,
         var companyId: Long,
         var projectId: Long,

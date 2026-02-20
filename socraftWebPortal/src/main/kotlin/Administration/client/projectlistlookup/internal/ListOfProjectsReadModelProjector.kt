@@ -17,36 +17,36 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466006597
 
 @Component
 class ListOfProjectsReadModelProjector(
-        private val repository: ListOfProjectsReadModelRepository,
-        private val companyRepository: CompanyListLookUpReadModelRepository
+    private val repository: ListOfProjectsReadModelRepository,
+    private val companyRepository: CompanyListLookUpReadModelRepository
 ) {
 
-    @EventHandler
-    @Transactional
-    fun on(event: ListOfProjectsFetchedEvent, @Timestamp axonTimestamp: Instant) {
+  @EventHandler
+  @Transactional
+  fun on(event: ListOfProjectsFetchedEvent, @Timestamp axonTimestamp: Instant) {
 
-        // 1. Find existing record or create new
-        val entity =
-                repository.findById(event.companyId).orElseGet {
-                    ListOfProjectsReadModelEntity().apply { this.companyId = event.companyId }
-                }
-
-        // 2. Lookup the actual company name from the company list reference
-        val companyList = companyRepository.findAll().firstOrNull()
-        val actualCompanyName =
-                companyList?.listOfCompanies?.find { it.companyId == event.companyId }?.companyName
-                        ?: "Unknown Company"
-
-        // 3. Update the state
-        entity.apply {
-            this.clientId = event.clientId
-            this.companyName = actualCompanyName
-            // This line (38) will now resolve correctly
-            this.projectList = event.projectList
-            this.timestamp = axonTimestamp.toEpochMilli()
+    // 1. Find existing record or create new
+    val entity =
+        repository.findById(event.companyId).orElseGet {
+          ListOfProjectsReadModelEntity().apply { this.companyId = event.companyId }
         }
 
-        // 3. Save
-        repository.save(entity)
+    // 2. Lookup the actual company name from the company list reference
+    val companyList = companyRepository.findAll().firstOrNull()
+    val actualCompanyName =
+        companyList?.listOfCompanies?.find { it.companyId == event.companyId }?.companyName
+            ?: "Unknown Company"
+
+    // 3. Update the state
+    entity.apply {
+      this.clientId = event.clientId
+      this.companyName = actualCompanyName
+      // This line (38) will now resolve correctly
+      this.projectList = event.projectList
+      this.timestamp = axonTimestamp.toEpochMilli()
     }
+
+    // 3. Save
+    repository.save(entity)
+  }
 }

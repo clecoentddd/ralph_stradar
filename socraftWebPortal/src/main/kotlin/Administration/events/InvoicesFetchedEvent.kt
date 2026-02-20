@@ -1,7 +1,7 @@
 package administration.events
 
 import administration.common.Event
-import administration.common.ListOfInvoicesItem
+import administration.common.InvoiceDetails
 import java.util.UUID
 import kotlin.collections.List
 
@@ -11,5 +11,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466008696
 data class InvoicesFetchedEvent(
         var companyId: Long,
         var clientId: UUID,
-        var invoiceList: List<ListOfInvoicesItem>
+        var invoiceList: List<InvoiceDetails>
 ) : Event

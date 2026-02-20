@@ -1,7 +1,7 @@
 package administration.client.domain.commands.fetchprojects
 
 import administration.common.Command
-import administration.common.ListOfProjectsItem
+import administration.common.ProjectDetails
 import java.util.UUID
 import kotlin.collections.List
 import org.axonframework.modelling.command.TargetAggregateIdentifier
@@ -12,5 +12,5 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466004405
 data class MarkListOfProjectsFetchedCommand(
         var clientId: UUID,
         @TargetAggregateIdentifier var companyId: Long,
-        var projectList: List<ListOfProjectsItem>
+        var projectList: List<ProjectDetails>
 ) : Command

@@ -18,24 +18,24 @@ class ListOfOrdersReadModelProjector(
                 ListOfOrdersReadModelRepository // Using private val for best practice
 ) {
 
-    @EventHandler
-    @Transactional
-    fun on(event: OrdersFetchedEvent, @Timestamp axonTimestamp: Instant) {
+  @EventHandler
+  @Transactional
+  fun on(event: OrdersFetchedEvent, @Timestamp axonTimestamp: Instant) {
 
-        // 1. Find existing record by companyId or create a new shell
-        val entity =
-                repository.findById(event.companyId).orElseGet {
-                    ListOfOrdersReadModelEntity().apply { this.companyId = event.companyId }
-                }
+    // 1. Find existing record by companyId or create a new shell
+    val entity =
+            repository.findById(event.companyId).orElseGet {
+              ListOfOrdersReadModelEntity().apply { this.companyId = event.companyId }
+            }
 
-        // 2. Update the state (Replace the JSON list)
-        entity.apply {
-            this.clientId = event.clientId
-            this.orderList = event.orderList // List<ListOfOrdersItem> mapped to JSONB
-            this.timestamp = axonTimestamp.toEpochMilli()
-        }
-
-        // 3. Persist (Save updates the single row for this companyId)
-        repository.save(entity)
+    // 2. Update the state (Replace the JSON list)
+    entity.apply {
+      this.clientId = event.clientId
+      this.orderList = event.orderList // List<OrderDetails> mapped to JSONB
+      this.timestamp = axonTimestamp.toEpochMilli()
     }
+
+    // 3. Persist (Save updates the single row for this companyId)
+    repository.save(entity)
+  }
 }

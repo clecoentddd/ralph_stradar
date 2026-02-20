@@ -35,8 +35,7 @@ class AdminAccountAggregate {
 
     // Apply the event
     AggregateLifecycle.apply(
-            AdminConnectedEvent(connectionId = command.connectionId, email = command.email)
-    )
+        AdminConnectedEvent(connectionId = command.connectionId, email = command.email))
   }
 
   @EventSourcingHandler

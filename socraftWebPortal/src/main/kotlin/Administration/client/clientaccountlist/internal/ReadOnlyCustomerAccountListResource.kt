@@ -18,14 +18,13 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466003656
 @RequestMapping("/client")
 class ClientAccountListResource(private var queryGateway: QueryGateway) {
 
-     var logger = KotlinLogging.logger {}
+  var logger = KotlinLogging.logger {}
 
-     @CrossOrigin
-     @GetMapping("/clientaccountlist")
-     fun findReadModel(): CompletableFuture<List<ClientAccountListReadModelEntity>> {
-          return queryGateway.query(
-                  ClientAccountListReadModelQuery(),
-                  ResponseTypes.multipleInstancesOf(ClientAccountListReadModelEntity::class.java)
-          )
-     }
+  @CrossOrigin
+  @GetMapping("/clientaccountlist")
+  fun findReadModel(): CompletableFuture<List<ClientAccountListReadModelEntity>> {
+    return queryGateway.query(
+        ClientAccountListReadModelQuery(),
+        ResponseTypes.multipleInstancesOf(ClientAccountListReadModelEntity::class.java))
+  }
 }
