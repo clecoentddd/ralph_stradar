@@ -1,29 +1,26 @@
 package administration.admin.companylistlookup
 
-import administration.common.CompanyDetails
-import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
 import java.io.Serializable
 import java.util.UUID
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.type.SqlTypes
 
-/*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764659734822859
-*/
 @Entity
 @Table(name = "company_list_lookup")
 class CompanyListLookUpReadModelEntity(
-        @Id @Column(name = "settingsId", nullable = false) var settingsId: UUID, // Non-nullable
-        @Column(name = "connectionId") var connectionId: UUID? = null,
-        @Column(name = "timestamp", nullable = false) var timestamp: Long = 0,
-        @JdbcTypeCode(SqlTypes.JSON)
-        @Column(name = "companies", columnDefinition = "jsonb")
-        @JsonProperty("listOfCompanies")
-        var listOfCompanies: List<CompanyDetails>? = null
+        @Id
+        @Column(name = "company_id", nullable = false)
+        var companyId: Long, // Now the Primary Key
+        @Column(name = "company_name", nullable = false) var companyName: String,
+        @Column(name = "settings_id", nullable = false) var settingsId: UUID,
+        @Column(name = "connection_id") var connectionId: UUID? = null,
+        @Column(name = "timestamp", nullable = false) var timestamp: Long = 0
 ) : Serializable {
-  // Secondary constructor for Hibernate proxy creation
-  constructor() : this(UUID.randomUUID(), null, 0, null)
+  // Required for Hibernate
+  constructor() : this(0L, "", UUID.randomUUID(), null, 0L)
 }
 
-data class CompanyListLookUpReadModelQuery(val settingsId: UUID)
+/** Used for the Admin "All" view */
+class FetchAllCompaniesQuery
+
+/** Used for the Client "Specific Name" view */
+data class FetchCompanyNameByCompanyIdQuery(val companyId: Long)

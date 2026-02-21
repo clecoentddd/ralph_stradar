@@ -26,39 +26,41 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465973467
 @RequestMapping("/admin")
 class ToConnectResource(private var commandGateway: CommandGateway) {
 
-  var logger = KotlinLogging.logger {}
+        var logger = KotlinLogging.logger {}
 
-  @CrossOrigin
-  @PostMapping("/debug/adminconnection")
-  fun processDebugCommand(
-          @RequestParam connectionId: UUID,
-          @RequestParam email: String
-  ): CompletableFuture<Any> {
-    return commandGateway.send(ToConnectCommand(connectionId, email))
-  }
+        @CrossOrigin
+        @PostMapping("/debug/adminconnection")
+        fun processDebugCommand(
+                @RequestParam connectionId: UUID,
+                @RequestParam email: String
+        ): CompletableFuture<Any> {
+                return commandGateway.send(ToConnectCommand(connectionId, email))
+        }
 
-  @CrossOrigin(
-          origins = ["\${app.frontend-url:http://localhost:8081}"],
-          allowedHeaders = ["*"],
-          methods = [RequestMethod.POST, RequestMethod.OPTIONS]
-  )
-  @PostMapping("/adminconnection")
-  fun processCommand(
-          @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String,
-          @RequestBody payload: AdminConnectionPayload
-  ): CompletableFuture<Map<String, Any>> {
-    logger.info { "Processing command for email: ${payload.email} and sessionId: $sessionId" }
-    val connectionId = UUID.randomUUID()
-    val metaData =
-            MetaData.with(AdminSecurityHeaders.SESSION_ID, sessionId)
-                    .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "MAIN_COMPANY_789")
+        @CrossOrigin(
+                origins = ["\${app.frontend-url:http://localhost:8081}"],
+                allowedHeaders = ["*"],
+                methods = [RequestMethod.POST, RequestMethod.OPTIONS]
+        )
+        @PostMapping("/adminconnection")
+        fun processCommand(
+                @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String,
+                @RequestBody payload: AdminConnectionPayload
+        ): CompletableFuture<Map<String, Any>> {
+                logger.info {
+                        "Processing command for email: ${payload.email} and sessionId: $sessionId"
+                }
+                val connectionId = UUID.randomUUID()
+                val metaData =
+                        MetaData.with(AdminSecurityHeaders.SESSION_ID, sessionId)
+                                .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "SOCRAFT_ADMIN_BACKEND")
 
-    val command = ToConnectCommand(connectionId = connectionId, email = payload.email)
+                val command = ToConnectCommand(connectionId = connectionId, email = payload.email)
 
-    return commandGateway.send<Any>(
-                    GenericCommandMessage.asCommandMessage<ToConnectCommand>(command)
-                            .withMetaData(metaData)
-            )
-            .thenApply { mapOf("connectionId" to connectionId) }
-  }
+                return commandGateway.send<Any>(
+                                GenericCommandMessage.asCommandMessage<ToConnectCommand>(command)
+                                        .withMetaData(metaData)
+                        )
+                        .thenApply { mapOf("connectionId" to connectionId) }
+        }
 }

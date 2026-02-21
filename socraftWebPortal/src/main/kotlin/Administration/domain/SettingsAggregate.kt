@@ -26,30 +26,26 @@ import org.axonframework.spring.stereotype.Aggregate
 @Aggregate
 class SettingsAggregate() {
 
-  private val logger = KotlinLogging.logger {}
-
   @AggregateIdentifier private lateinit var settingsId: UUID
 
   var listOfCompanies: List<CompanyDetails> = emptyList()
   var connectionId: UUID? = null
   var state: String = "INCOMPLETE"
 
-  /** CommandHandler for creating the aggregate */
   @CommandHandler
   @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
   fun handle(command: CreateSettingsCommand) {
-
+    // Use the companion logger
     if (::settingsId.isInitialized) {
-      // Aggregate already exists
       if (command.settingsId != settingsId) {
         throw CommandException("Cannot create SettingsAggregate with a different settingsId")
       }
-      logger.info { "SettingsAggregate already exists, ignoring duplicate creation" }
+      logger.info { "SettingsAggregate already exists for ID: $settingsId" }
       return
     }
 
     require(command.settingsId == SettingsConstants.SETTINGS_ID) {
-      "Invalid settingsId. Expected SETTINGS_ID."
+      "Invalid settingsId. Expected ${SettingsConstants.SETTINGS_ID}."
     }
 
     AggregateLifecycle.apply(
@@ -73,12 +69,12 @@ class SettingsAggregate() {
   @EventSourcingHandler
   fun on(event: SettingsCreatedEvent) {
     this.settingsId = event.settingsId
+    this.connectionId = event.connectionId
+    this.state = "INITIALIZED"
   }
 
-  // Mark Companies Fetched
   @CommandHandler
   fun handle(command: MarkListOfCompaniesFetchedCommand) {
-
     AggregateLifecycle.apply(
             ListOfCompaniesFetchedEvent(
                     settingsId = command.settingsId,
@@ -90,11 +86,9 @@ class SettingsAggregate() {
 
   @EventSourcingHandler
   fun on(event: ListOfCompaniesFetchedEvent) {
-    // handle event
-    listOfCompanies = event.listOfCompanies
+    this.listOfCompanies = event.listOfCompanies
   }
 
-  // Request Invoice State Mapping Update
   @CommandHandler
   fun handle(command: RequestInvoiceStateMappingUpdateCommand) {
     AggregateLifecycle.apply(
@@ -105,16 +99,8 @@ class SettingsAggregate() {
     )
   }
 
-  @EventSourcingHandler
-  fun on(event: InvoiceStateMappingUpdateRequestedEvent) {
-    // handle event
-    settingsId = event.settingsId
-  }
-
-  // Mark Invoice State Mapping Fetched
   @CommandHandler
   fun handle(command: MarkListOfInvoiceStateFetchedCommand) {
-
     AggregateLifecycle.apply(
             InvoiceStateMappingFetchedEvent(
                     settingsId = command.settingsId,
@@ -124,11 +110,8 @@ class SettingsAggregate() {
     )
   }
 
-  @EventSourcingHandler
-  fun on(event: InvoiceStateMappingFetchedEvent) {
-    // handle event
-    settingsId = event.settingsId
-  }
+  // Note: Re-assigning settingsId in every EventSourcingHandler is technically
+  // redundant if it's already set in SettingsCreatedEvent, but harmless.
 
   companion object {
     private val logger = KotlinLogging.logger {}

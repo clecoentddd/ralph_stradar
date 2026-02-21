@@ -235,7 +235,7 @@
     {
       "id": "3458764659734675972",
       "slice": "slice: Admin Connection",
-      "index": 3,
+      "index": 1,
       "context": "Socraft Client Portal v3",
       "folder": "adminconnection",
       "status": "Done"
@@ -243,7 +243,7 @@
     {
       "id": "3458764659734822171",
       "slice": "slice: Admin Connected",
-      "index": 5,
+      "index": 3,
       "context": "Socraft Client Portal v3",
       "folder": "adminconnected",
       "status": "Done"
@@ -251,7 +251,7 @@
     {
       "id": "3458764659734822169",
       "slice": "slice: Request Company List Update",
-      "index": 11,
+      "index": 9,
       "context": "Socraft Client Portal v3",
       "folder": "requestcompanylistupdate",
       "status": "Done"
@@ -259,7 +259,7 @@
     {
       "id": "3458764659734822170",
       "slice": "slice: CompanyListToFetch",
-      "index": 13,
+      "index": 11,
       "context": "Socraft Client Portal v3",
       "folder": "companylisttofetch",
       "status": "Informational"
@@ -267,23 +267,23 @@
     {
       "id": "3458764659734822850",
       "slice": "slice: Adapter Boond Companies Data",
-      "index": 15,
+      "index": 13,
       "context": "Socraft Client Portal v3",
       "folder": "adapterboondcompaniesdata",
       "status": "Informational"
     },
     {
       "id": "3458764659734822852",
-      "slice": "slice: Fetch Companies List From Boond",
-      "index": 17,
+      "slice": "slice: Fetch Companies List",
+      "index": 15,
       "context": "Socraft Client Portal v3",
-      "folder": "fetchcompanieslistfromboond",
+      "folder": "fetchcompanieslist",
       "status": "Done"
     },
     {
       "id": "3458764659734822851",
       "slice": "slice: Company List Look Up",
-      "index": 1,
+      "index": 17,
       "context": "Socraft Client Portal v3",
       "folder": "companylistlookup",
       "status": "Done"
@@ -291,18 +291,58 @@
     {
       "id": "3458764659756306798",
       "slice": "slice: InitializeSettings",
-      "index": 7,
+      "index": 5,
       "context": "Socraft Client Portal v3",
       "folder": "initializesettings",
       "status": "Done"
     },
     {
       "id": "3458764659756306797",
-      "slice": "slice: SettingsView",
-      "index": 9,
+      "slice": "slice: System Status",
+      "index": 7,
       "context": "Socraft Client Portal v3",
-      "folder": "settingsview",
+      "folder": "systemstatus",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659954713521",
+      "slice": "slice: Request Invoice State Mapping Update",
+      "index": 19,
+      "context": "Socraft Client Portal v3",
+      "folder": "requestinvoicestatemappingupdate",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659954713520",
+      "slice": "slice: Invoice State Mapping To Fetch",
+      "index": 21,
+      "context": "Socraft Client Portal v3",
+      "folder": "invoicestatemappingtofetch",
       "status": "Informational"
+    },
+    {
+      "id": "3458764659954713524",
+      "slice": "slice: Adapter Boond Invoice State Mapping Data",
+      "index": 23,
+      "context": "Socraft Client Portal v3",
+      "folder": "adapterboondinvoicestatemappingdata",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659954713519",
+      "slice": "slice: Fetch Invoice State Mapping List",
+      "index": 25,
+      "context": "Socraft Client Portal v3",
+      "folder": "fetchinvoicestatemappinglist",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659954713523",
+      "slice": "slice: Invoice State Mapping Look Up",
+      "index": 27,
+      "context": "Socraft Client Portal v3",
+      "folder": "invoicestatemappinglookup",
+      "status": "Done"
     }
   ]
 }

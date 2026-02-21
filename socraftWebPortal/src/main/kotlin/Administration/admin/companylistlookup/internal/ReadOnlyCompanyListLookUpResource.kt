@@ -1,40 +1,50 @@
 package administration.admin.companylistlookup.internal
 
 import administration.admin.companylistlookup.CompanyListLookUpReadModelEntity
-import administration.admin.companylistlookup.CompanyListLookUpReadModelQuery
-import administration.common.SettingsConstants
+import administration.admin.companylistlookup.FetchAllCompaniesQuery
+import administration.admin.companylistlookup.FetchCompanyNameByCompanyIdQuery
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
+import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
-/*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764659734822859
-*/
 @RestController
 @RequestMapping("/admin")
 class CompanylistlookupResource(private val queryGateway: QueryGateway) {
 
-  private val logger = KotlinLogging.logger {}
+        private val logger = KotlinLogging.logger {}
 
-  @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
-  @GetMapping("/companylistlookup")
-  fun findReadModel(
-          // Add this to satisfy the "Missing required header" check
-          @RequestHeader("X-Session-Id") sessionId: String
-  ): CompletableFuture<CompanyListLookUpReadModelEntity> {
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
+        @GetMapping("/companylistlookup/all")
+        fun findAllCompanies(
+                @RequestHeader("X-Session-Id") sessionId: String
+        ): CompletableFuture<List<CompanyListLookUpReadModelEntity>> {
 
-    logger.info {
-      "Fetching Company List for Session: $sessionId using fixed Settings ID: ${SettingsConstants.SETTINGS_ID}"
-    }
+                logger.info { "Admin Session $sessionId fetching all companies" }
 
-    return queryGateway.query(
-            CompanyListLookUpReadModelQuery(SettingsConstants.SETTINGS_ID),
-            CompanyListLookUpReadModelEntity::class.java
-    )
-  }
+                // multipleInstancesOf is required when returning a List
+                return queryGateway.query(
+                        FetchAllCompaniesQuery(),
+                        ResponseTypes.multipleInstancesOf(
+                                CompanyListLookUpReadModelEntity::class.java
+                        )
+                )
+        }
+
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
+        @GetMapping("/companyname/{companyId}")
+        fun findCompanyName(
+                @PathVariable companyId: Long,
+                @RequestHeader("X-Session-Id") sessionId: String
+        ): CompletableFuture<String> {
+
+                logger.info { "Session $sessionId fetching name for company: $companyId" }
+
+                // instanceOf is used for single objects or primitives (String)
+                return queryGateway.query(
+                        FetchCompanyNameByCompanyIdQuery(companyId),
+                        ResponseTypes.instanceOf(String::class.java)
+                )
+        }
 }

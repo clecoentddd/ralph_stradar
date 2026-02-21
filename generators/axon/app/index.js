@@ -5,7 +5,9 @@
 
 var Generator = require('yeoman-generator');
 var slugify = require('slugify')
-
+var fs = require('fs');
+const { _packageFolderName } = require('../../common/util/naming');
+const { lowercaseFirstCharacter } = require('../../common/util/util');
 
 let config = {}
 
@@ -19,17 +21,27 @@ module.exports = class extends Generator {
         config = require(this.env.cwd + "/config.json");
     }
 
+    initializing() {
+        this.answers = {
+            appName: config?.codeGen?.application ?? this.defaultAppName,
+            rootPackageName: config?.codeGen?.rootPackage
+        };
+        this.displayInfo();
+    }
+
     // Async Await
     async prompting() {
         this.answers = await this.prompt([{
             type: 'input',
             name: 'appName',
             message: 'Projectame?',
+            default: this.answers.appName,
             when: () => !config?.codeGen?.application,
         }, {
             type: 'input',
             name: 'rootPackageName',
             message: 'Root Package?',
+            default: this.answers.rootPackageName,
             when: () => !config?.codeGen?.rootPackage,
         },
         {
@@ -41,12 +53,34 @@ module.exports = class extends Generator {
     }
 
     setDefaults() {
+        // Ensure defaults are set if not prompted
         if (!this.answers.appName) {
             this.answers.appName = config?.codeGen?.application ?? this.defaultAppName
         }
         if (!this.answers.rootPackageName) {
             this.answers.rootPackageName = config?.codeGen?.rootPackage
         }
+    }
+
+    displayInfo() {
+        const configPath = this.env.cwd + "/config.json";
+        let configTime = 'N/A';
+        try {
+            const stats = fs.statSync(configPath);
+            configTime = stats.mtime.toLocaleString();
+        } catch (e) {
+            // handle error if needed
+        }
+
+        const rootPackageEffective = this.answers.rootPackageName || config?.codeGen?.rootPackage || '';
+        const targetPath = this.destinationPath(`src/main/kotlin/${_packageFolderName(rootPackageEffective, config?.codeGen?.contextPackage, false)}`);
+
+        this.log('\n--- Generator Configuration ---');
+        this.log(`Project Name:     ${this.answers.appName || config?.codeGen?.application || this.defaultAppName}`);
+        this.log(`Context:          ${config?.codeGen?.contextPackage ?? 'N/A'}`);
+        this.log(`Target Directory: ${targetPath}`);
+        this.log(`Config Updated:   ${configTime}`);
+        this.log('-------------------------------\n');
     }
 
     writing() {

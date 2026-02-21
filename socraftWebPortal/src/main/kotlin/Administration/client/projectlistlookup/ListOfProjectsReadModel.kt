@@ -24,8 +24,6 @@ class ListOfProjectsReadModelEntity : Serializable {
 
   @Id @Column(name = "companyId", nullable = false) var companyId: Long? = null
 
-  @Column(name = "companyName") var companyName: String? = null
-
   @Column(name = "clientId") var clientId: UUID? = null
 
   @Column(name = "timestamp") var timestamp: Long? = null

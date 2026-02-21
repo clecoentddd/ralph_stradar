@@ -32,9 +32,9 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "Account",
+      "aggregate": "Admin Account",
       "aggregateDependencies": [
-        "Account"
+        "Admin Account"
       ],
       "dependencies": [
         {
@@ -85,9 +85,9 @@
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "Account",
+      "aggregate": "Admin Account",
       "aggregateDependencies": [
-        "Account"
+        "Admin Account"
       ],
       "dependencies": [
         {
@@ -134,9 +134,9 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "Account",
+      "aggregate": "Admin Account",
       "aggregateDependencies": [
-        "Account"
+        "Admin Account"
       ],
       "dependencies": [
         {
@@ -161,16 +161,16 @@
   "specifications": [
     {
       "vertical": false,
-      "id": "3458764659756708369",
+      "id": "3458764660243006187",
       "sliceName": "<p>slice: Admin Connection</p>",
-      "title": "spec: Admin Connection Ensure Non Null Values",
+      "title": "spec: Admin Connection - email socraft required",
       "given": [],
       "when": [
         {
           "title": "To connect",
           "tags": [],
           "examples": [],
-          "id": "3458764659756708370",
+          "id": "3458764660243006189",
           "index": 0,
           "specRow": -1,
           "type": "SPEC_COMMAND",
@@ -182,14 +182,14 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true,
-              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
+              "example": "734400ed-dda8-45ad-9d2f-da00136c3bab"
             },
             {
               "name": "email",
               "type": "String",
               "subfields": [],
               "cardinality": "Single",
-              "example": "test@test.com"
+              "example": "test@socraft.com"
             }
           ],
           "linkedId": "3458764659734675975"
@@ -197,36 +197,23 @@
       ],
       "then": [
         {
-          "title": "Admin Connected",
+          "title": "Error Case",
           "tags": [],
-          "examples": [],
-          "id": "3458764659756708374",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
+          "examples": [
             {
-              "name": "connectionId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "24af641b-d7ef-43ce-8325-79089244a4a8"
-            },
-            {
-              "name": "email",
-              "type": "String",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "test@test"
+              "message": "email must be a socraft.ch email address"
             }
           ],
-          "linkedId": "3458764659734675973"
+          "id": "3458764660243006191",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
         }
       ],
       "comments": [
         {
-          "description": "Ensure non null values"
+          "description": "Must be a socraft.ch email"
         }
       ],
       "linkedId": "3458764659734675972"
@@ -234,6 +221,6 @@
   ],
   "actors": [],
   "aggregates": [
-    "Account"
+    "Admin Account"
   ]
 }

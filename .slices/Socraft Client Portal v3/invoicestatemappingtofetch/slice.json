@@ -1,20 +1,20 @@
 {
-  "id": "3458764659734822170",
+  "id": "3458764659954713520",
   "status": "Informational",
-  "title": "slice: CompanyListToFetch",
+  "title": "slice: Invoice State Mapping To Fetch",
   "context": "Socraft Client Portal v3",
   "sliceType": "STATE_VIEW",
   "commands": [],
   "events": [],
   "readmodels": [
     {
-      "id": "3458764659735379611",
+      "id": "3458764659954713548",
       "tags": [],
       "elementContext": "INTERNAL",
       "modelContext": "Socraft Client Portal v3",
       "context": "INTERNAL",
-      "slice": "slice: CompanyListToFetch",
-      "title": "CompanyListToFetch",
+      "slice": "slice: Invoice State Mapping To Fetch",
+      "title": "Invoice State Mapping To Fetch",
       "fields": [
         {
           "name": "settingsId",
@@ -41,15 +41,15 @@
       ],
       "dependencies": [
         {
-          "id": "3458764659734822854",
+          "id": "3458764659954713536",
           "type": "OUTBOUND",
-          "title": "Fetch Companies List",
+          "title": "Fetch Invoice State Mapping",
           "elementType": "AUTOMATION"
         },
         {
-          "id": "3458764659734822172",
+          "id": "3458764659954713522",
           "type": "INBOUND",
-          "title": "Company List Update Requested",
+          "title": "Invoice State Mapping Update Requested",
           "elementType": "EVENT"
         }
       ],

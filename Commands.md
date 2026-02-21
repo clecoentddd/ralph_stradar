@@ -47,7 +47,13 @@ Copy-Item -Recurse temp-frontend/* ./frontend/
 Remove-Item -Recurse temp-frontend
 
 # cleaning DB
-docker exec -it backend-postgres-1 psql -U postgres -d postgres-so-portal
+
+docker-compose up -d
+
+docker exec -it socraftwebportal-postgres-1 psql -U postgres -d postgres-so -c "DROP TABLE system_status_read_model_entity;"
+
+docker exec -it socraftwebportal-postgres-1 psql -U postgres -d postgres-so -c "ALTER TABLE list_of_projects DROP COLUMN company_name;"
+
 
 Use control-D to quit.
 

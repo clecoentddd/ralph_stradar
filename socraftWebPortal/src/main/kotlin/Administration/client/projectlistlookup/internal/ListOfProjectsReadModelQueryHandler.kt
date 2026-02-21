@@ -12,7 +12,7 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466006597
 
 @Component
 class ListOfProjectsReadModelQueryHandler(
-    private val repository: ListOfProjectsReadModelRepository
+        private val repository: ListOfProjectsReadModelRepository
 ) {
 
   @QueryHandler

@@ -49,7 +49,16 @@ class FetchCompaniesListBoondDataCheckTest : BaseIntegrationTest() {
     @AfterAll
     @JvmStatic
     fun stopWireMock() {
-      wireMockServer.stop()
+      // Check if it's running BEFORE trying to stop it
+      if (wireMockServer.isRunning) {
+        try {
+          wireMockServer.stop()
+        } catch (e: Exception) {
+          println("Skipping WireMock stop: ${e.message}")
+        }
+      } else {
+        println("WireMock was already stopped or managed externally. Skipping stop.")
+      }
     }
   }
 

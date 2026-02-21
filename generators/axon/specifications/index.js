@@ -15,7 +15,7 @@ const {
     _packageFolderName
 } = require("../../common/util/naming");
 const { lowercaseFirstCharacter, uniqBy, splitByCamelCase, idField } = require("../../common/util/util");
-const { idType } = require("../../common/util/generator");
+const { idType, customItemTypeName } = require("../../common/util/generator");
 
 
 function _sliceTitle(title) {
@@ -89,13 +89,16 @@ module.exports = class extends Generator {
                     "aggregateId": aggregateId
                 }
 
-                var events = given?.map(it => {
-                    return config.slices.flatMap(it => it.events).find(item => item.id === it.linkedId)
-                }).map(it => it);
+                var givenCommands = given.map(ge => {
+                    const event = config.slices.flatMap(s => s.events).find(e => e.id === ge.linkedId);
+                    if (!event) return null;
+                    const commandRef = event.dependencies.find(d => d.type === "INBOUND" && d.elementType === "COMMAND");
+                    if (!commandRef) return null;
+                    const command = config.slices.flatMap(s => s.commands).find(c => c.id === commandRef.id);
+                    return { command, spec: ge };
+                }).filter(it => it);
 
-                var commands = uniqBy(events.flatMap(it => it?.dependencies).filter(it => it?.type === "INBOUND")
-                    .filter(it => it?.elementType === "COMMAND")
-                    .map(it => config.slices.flatMap(item => item.commands).find(item => item.id === it.id)).filter(it => it), it => it.title);
+                var commands = uniqBy(givenCommands.map(gc => gc.command), it => it.title);
 
                 var _commandImports = this._commandImports(this.givenAnswers.rootPackageName, config.codeGen?.contextPackage, commands);
 
@@ -153,9 +156,9 @@ module.exports = class extends Generator {
                             _commandImports: _commandImports,
                             _queryImports: _queryImports,
                             _typeImports: _typeImports,
-                            //_when: renderWhen(when, then, defaults),
-                            _given: this._renderReadModelGiven(commands),
-                            _then: this._renderReadModelThen(commands, then, defaults),
+                            _when: when ? renderWhen(when, then, defaults) : "",
+                            _given: this._renderReadModelGiven(givenCommands),
+                            _then: this._renderReadModelThen(givenCommands, then, defaults),
                             // take first aggregate
                             _aggregate: _aggregateTitle((slice.aggregates || [])[0]),
                             _aggregateId: aggregateId,
@@ -219,24 +222,25 @@ module.exports = class extends Generator {
         ` : ""
     }
 
-    _renderReadModelGiven(commands) {
+    _renderReadModelGiven(givenCommands) {
+        if (!givenCommands || givenCommands.length === 0) return "";
 
-        var idFieldValue = commands.length > 0 ? idField(commands[0]) : "aggregateId"
-        var idFieldType = commands.length > 0 ? idType(commands[0]) : "UUID"
+        var firstCmd = givenCommands[0].command;
+        var idFieldValue = idField(firstCmd) || "aggregateId";
+        var idFieldType = idType(firstCmd) || "UUID";
 
-        var commandExecution = commands.map(it => {
-
-            var idFieldValue = idField(it)
-            var idFieldType = idType(it)
+        var commandExecution = givenCommands.map((gc, index) => {
+            const cmd = gc.command;
+            const spec = gc.spec;
+            var cmdTitle = _commandTitle(cmd.title);
+            var varName = `${lowercaseFirstCharacter(cmdTitle)}${index > 0 ? index : ""}`;
 
             return `
-        
-        var ${lowercaseFirstCharacter(_commandTitle(it.title))} = RandomData.newInstance<${_commandTitle(it.title)}>{
-            this.${idFieldValue} = ${idFieldValue}
+        var ${varName} = RandomData.newInstance<${cmdTitle}> {
+${randomizedInvocationParamterList(spec.fields, { [idFieldValue]: idFieldValue }, "\n", "            this")}
         }
-       
-        commandGateway.sendAndWait<Any>(${lowercaseFirstCharacter(_commandTitle(it.title))})
-        `
+        commandGateway.sendAndWait<Any>(${varName})
+            `;
         }).join("\n")
 
         return `val ${idFieldValue} = RandomData.newInstance<${idFieldType}> {}
@@ -246,17 +250,34 @@ module.exports = class extends Generator {
     }
 
 
-    _renderReadModelThen(commands, then) {
-        var thenReadModel = then ? then[0] : undefined
-        var readModel = config.slices.flatMap((item) => item.readmodels).find((it) => it.id === thenReadModel?.linkedId)
+    _renderReadModelThen(givenCommands, thenList, defaults) {
+        return thenList.map(thenSpec => {
+            const readModel = config.slices.flatMap(s => s.readmodels).find(rm => rm.id === thenSpec.linkedId);
+            const queryCode = this._generateQuery(thenSpec, givenCommands.map(gc => gc.command));
 
-        return then.map(it => `
+            let assertions = "";
+            if (thenSpec.fields && thenSpec.fields.length > 0) {
+                assertions = thenSpec.fields.filter(f => f.example !== "" && f.example !== null).map(f => {
+                    const expectedValue = renderVariable(f.example, f.type, f.name, defaults);
+                    if (readModel.listElement) {
+                        return `assertThat(result.map { it.${f.name} }).contains(${expectedValue})`;
+                    } else {
+                        return `assertThat(result.${f.name}).isEqualTo(${expectedValue})`;
+                    }
+                }).join("\n            ");
+            }
+
+            if (!assertions) {
+                assertions = readModel?.listElement ? "assertThat(result).isNotEmpty" : "assertThat(result).isNotNull()";
+            }
+
+            return `
         awaitUntilAssserted {
-            var readModel = ${this._generateQuery(it, commands)}
-            //TODO add assertions
-            ${readModel?.listElement ? "assertThat(readModel.get().data).isNotEmpty" : "assertThat(readModel.get()).isNotNull"}
+            val result = ${queryCode}.get()
+            ${assertions}
         }
-        `)
+            `;
+        }).join("\n");
     }
 
     _generateQuery(readModelSpec, commands) {
@@ -433,13 +454,27 @@ function renderGiven(givenList, paramDefaults) {
 
 }
 
-function renderVariable(variableValue, variableType, variableName, defaults) {
+function renderVariable(variable, defaults) {
+    var value = variable.example;
+    var name = variable.name;
 
-    var value = variableValue
-    if (!variableValue && defaults[variableName]) {
-        value = defaults[variableName]
+    if (!value && defaults[name]) {
+        value = defaults[name];
     }
-    switch (variableType.toLowerCase()) {
+
+    if (variable.cardinality?.toLowerCase() === "list") {
+        if (Array.isArray(value)) {
+            return `listOf(${value.map(val => renderSingleValue(variable, val, defaults)).join(", ")})`;
+        }
+        return "listOf()";
+    }
+
+    return renderSingleValue(variable, value, defaults);
+}
+
+function renderSingleValue(variable, value, defaults) {
+    const variableType = variable.type.toLowerCase();
+    switch (variableType) {
         case "uuid":
             return `UUID.fromString("${value}")`;
         case "string":
@@ -450,9 +485,20 @@ function renderVariable(variableValue, variableType, variableName, defaults) {
             return `LocalDateTime.parse("${value}", DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))`;
         case "boolean":
         case "long":
-            return `${value}`;
         case "double":
         case "int":
+            return `${value}`;
+        case "custom":
+            const typeName = customItemTypeName(variable.name);
+            if (typeof value === 'object' && value !== null) {
+                const params = (variable.subfields || []).map(sf => {
+                    const sfValue = value[sf.name];
+                    return `${sf.name} = ${renderSingleValue(sf, sfValue, defaults)}`;
+                }).join(", ");
+                return `${typeName}(${params})`;
+            }
+            return `${typeName}()`;
+        default:
             return `${value}`;
     }
 }
@@ -460,8 +506,8 @@ function renderVariable(variableValue, variableType, variableName, defaults) {
 function randomizedInvocationParamterList(variables, defaults, separator = ",\n", assignmentPrefix) {
 
     return variables?.map((variable) => {
-        if (variable.example !== "") {
-            return `\t${variable.name} = ${renderVariable(variable.example, variable.type, variable.name, defaults)}`
+        if (variable.example !== "" && variable.example !== undefined && variable.example !== null) {
+            return `\t${variable.name} = ${renderVariable(variable, defaults)}`
         } else if (variable.idAttribute) {
             return `\t${assignmentPrefix ? `${assignmentPrefix}.` : ""}${variable.name} = ${variable.name}`
         } else {

@@ -30,6 +30,8 @@ class <%=_name%> : BaseIntegrationTest() {
 
         <%- _given %>
 
+        <%- _when %>
+
         <%- _then %>
 
     }
