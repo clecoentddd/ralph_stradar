@@ -24,11 +24,11 @@ class RequestInvoiceStateMappingUpdateResource(private var commandGateway: Comma
 
   var logger = KotlinLogging.logger {}
 
-  @CrossOrigin
+  @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
   @PostMapping("/debug/requestinvoicestatemappingupdate")
   fun processDebugCommand(
-      @RequestParam settingsId: UUID,
-      @RequestParam connectionId: UUID
+          @RequestParam settingsId: UUID,
+          @RequestParam connectionId: UUID
   ): CompletableFuture<Any> {
     return commandGateway.send(RequestInvoiceStateMappingUpdateCommand(settingsId, connectionId))
   }
@@ -36,10 +36,13 @@ class RequestInvoiceStateMappingUpdateResource(private var commandGateway: Comma
   @CrossOrigin
   @PostMapping("/requestinvoicestatemappingupdate")
   fun processCommand(
-      @RequestBody payload: RequestInvoiceStateMappingUpdatePayload
+          @RequestBody payload: RequestInvoiceStateMappingUpdatePayload
   ): CompletableFuture<Any> {
     return commandGateway.send(
-        RequestInvoiceStateMappingUpdateCommand(
-            SettingsConstants.SETTINGS_ID, connectionId = payload.connectionId))
+            RequestInvoiceStateMappingUpdateCommand(
+                    SettingsConstants.SETTINGS_ID,
+                    connectionId = payload.connectionId
+            )
+    )
   }
 }

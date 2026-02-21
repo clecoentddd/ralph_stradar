@@ -28,7 +28,7 @@ class ToConnectResource(private var commandGateway: CommandGateway) {
 
         var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
         @PostMapping("/debug/adminconnection")
         fun processDebugCommand(
                 @RequestParam connectionId: UUID,

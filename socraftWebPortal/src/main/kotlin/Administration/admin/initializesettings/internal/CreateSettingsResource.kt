@@ -22,7 +22,7 @@ class CreateSettingsResource(private var commandGateway: CommandGateway) {
 
         var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
         @PostMapping("/debug/initializesettings")
         fun processDebugCommand(
                 @RequestParam settingsId: UUID,
@@ -31,7 +31,7 @@ class CreateSettingsResource(private var commandGateway: CommandGateway) {
                 return commandGateway.send(CreateSettingsCommand(settingsId, connectionId))
         }
 
-        @CrossOrigin
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
         @PostMapping("/initializesettings")
         fun processCommand(
                 @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String,

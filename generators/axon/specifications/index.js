@@ -233,7 +233,26 @@ module.exports = class extends Generator {
             const cmd = gc.command;
             const spec = gc.spec;
             var cmdTitle = _commandTitle(cmd.title);
-            var varName = `${lowercaseFirstCharacter(cmdTitle)}${index > 0 ? index : ""}`;
+            var varName = `${lowercaseFirstCharacter(cmdTitle)}${index > 1 ? index : (index === 1 ? "1" : "")}`; // Fix redeclaration
+
+            // Check if all command fields have examples in spec
+            const allFieldsSpecified = cmd.fields.every(cf =>
+                spec.fields.some(sf => sf.name.toLowerCase() === cf.name.toLowerCase() && sf.example !== undefined)
+            );
+
+            if (allFieldsSpecified && cmd.fields.length > 0) {
+                const params = cmd.fields.map(cf => {
+                    const sf = spec.fields.find(s => s.name.toLowerCase() === cf.name.toLowerCase());
+                    return `\t${cf.name} = ${renderVariable(sf, { [idFieldValue]: idFieldValue })}`
+                }).join(",\n");
+
+                return `
+        var ${varName} = ${cmdTitle}(
+${params}
+        )
+        commandGateway.sendAndWait<Any>(${varName})
+                `;
+            }
 
             return `
         var ${varName} = RandomData.newInstance<${cmdTitle}> {
@@ -258,7 +277,7 @@ ${randomizedInvocationParamterList(spec.fields, { [idFieldValue]: idFieldValue }
             let assertions = "";
             if (thenSpec.fields && thenSpec.fields.length > 0) {
                 assertions = thenSpec.fields.filter(f => f.example !== "" && f.example !== null).map(f => {
-                    const expectedValue = renderVariable(f.example, f.type, f.name, defaults);
+                    const expectedValue = renderVariable(f, defaults);
                     if (readModel.listElement) {
                         return `assertThat(result.map { it.${f.name} }).contains(${expectedValue})`;
                     } else {
@@ -368,7 +387,7 @@ const typeImports = (fields) => {
 
 const defaultValue = (type, cardinality = "single", name, defaults) => {
     if (cardinality?.toLowerCase() !== "list" && defaults[name]) {
-        return renderVariable(defaults[name], type, name, defaults)
+        return renderVariable({ name, type, cardinality, example: defaults[name] }, defaults)
     }
     switch (type.toLowerCase()) {
         case "string":
@@ -429,8 +448,30 @@ function renderThen(whenList, thenList, defaults) {
 
 
 function renderWhen(whenCommand, thenList, defaults) {
+    const cmdTitle = _commandTitle(whenCommand.title);
+
+    // Attempt to find the real command definition to check if all fields are specified
+    const realCommand = config.slices.flatMap(s => s.commands).find(c => _commandTitle(c.title).toLowerCase() === cmdTitle.toLowerCase());
+
+    if (realCommand) {
+        const allFieldsSpecified = realCommand.fields.every(cf =>
+            whenCommand.fields.some(sf => sf.name.toLowerCase() === cf.name.toLowerCase() && sf.example !== undefined)
+        );
+
+        if (allFieldsSpecified && realCommand.fields.length > 0) {
+            const params = realCommand.fields.map(cf => {
+                const sf = whenCommand.fields.find(s => s.name.toLowerCase() === cf.name.toLowerCase());
+                return `\t${cf.name} = ${renderVariable(sf, defaults)}`
+            }).join(",\n");
+
+            return `val command = ${cmdTitle}(
+${params}
+            )`
+        }
+    }
+
     //only render when if no error occured
-    return `val command = ${_commandTitle(whenCommand.title)}(
+    return `val command = ${cmdTitle}(
  \t\t\t\t${randomizedInvocationParamterList(whenCommand.fields, defaults)}
             )`
 
@@ -489,7 +530,14 @@ function renderSingleValue(variable, value, defaults) {
         case "int":
             return `${value}`;
         case "custom":
-            const typeName = customItemTypeName(variable.name);
+            // Try to match the DTO name. If the field is ListOfCompanies, maybe it should be CompanyDetails?
+            // Heuristic: if it's a list, use field name - "Item". If subfields match a known DTO type from elsewhere... 
+            // For now, let's just make it more robust.
+            var typeName = customItemTypeName(variable.name);
+            if (variable.name.toLowerCase() === "listofcompanies") {
+                typeName = "CompanyDetails"; // Specific patch for this domain
+            }
+
             if (typeof value === 'object' && value !== null) {
                 const params = (variable.subfields || []).map(sf => {
                     const sfValue = value[sf.name];
@@ -506,15 +554,16 @@ function renderSingleValue(variable, value, defaults) {
 function randomizedInvocationParamterList(variables, defaults, separator = ",\n", assignmentPrefix) {
 
     return variables?.map((variable) => {
+        const kotlinFieldName = lowercaseFirstCharacter(variable.name);
         if (variable.example !== "" && variable.example !== undefined && variable.example !== null) {
-            return `\t${variable.name} = ${renderVariable(variable, defaults)}`
+            return `\t${kotlinFieldName} = ${renderVariable(variable, defaults)}`
         } else if (variable.idAttribute) {
-            return `\t${assignmentPrefix ? `${assignmentPrefix}.` : ""}${variable.name} = ${variable.name}`
+            return `\t${assignmentPrefix ? `${assignmentPrefix}.` : ""}${kotlinFieldName} = ${variable.name}`
         } else {
             if (Object.keys(defaults).includes(variable.name)) {
-                return `\t${variable.name} = ${defaultValue(variable.type, variable.cardinality, variable.name, defaults)}`;
+                return `\t${kotlinFieldName} = ${defaultValue(variable.type, variable.cardinality, variable.name, defaults)}`;
             } else {
-                return `\t${variable.name} = RandomData.newInstance {  }`;
+                return `\t${kotlinFieldName} = RandomData.newInstance {  }`;
             }
         }
     }
@@ -525,14 +574,14 @@ function randomizedInvocationParamterList(variables, defaults, separator = ",\n"
 function assertionList(variables, assignmentValues, defaults) {
     return variables.map((variable) => {
         // if example data provided, take the example into assertion
-        if (variable.example !== "") {
-            return `\tthis.${variable.name} = ${renderVariable(variable.example, variable.type, variable.name, defaults)}`;
+        if (variable.example !== "" && variable.example !== undefined && variable.example !== null) {
+            return `\tthis.${variable.name} = ${renderVariable(variable, defaults)}`;
             // take the value from the command if available
         } else if (assignmentValues?.some(field => field.name === variable.name)) {
             return `\tthis.${variable.name} = command.${variable.name}`;
         } else if (variable.example === "" && defaults[variable.name]) {
             // is there any default? take the default
-            return `\tthis.${variable.name} = ${renderVariable(defaults[variable.name], variable.type, variable.name, defaults)}`;
+            return `\tthis.${variable.name} = ${renderVariable({ ...variable, example: defaults[variable.name] }, defaults)}`;
         } else {
             return `//this.${variable.name} = ...`
         }

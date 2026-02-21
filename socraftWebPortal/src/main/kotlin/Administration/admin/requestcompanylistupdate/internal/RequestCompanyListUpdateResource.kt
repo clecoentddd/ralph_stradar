@@ -25,32 +25,34 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465973482
 @RequestMapping("/admin")
 class RequestCompanyListUpdateResource(private var commandGateway: CommandGateway) {
 
-  var logger = KotlinLogging.logger {}
+        var logger = KotlinLogging.logger {}
 
-  @CrossOrigin
-  @PostMapping("/debug/requestcompanylistupdate")
-  fun processDebugCommand(
-          @RequestParam connectionId: UUID,
-          @RequestParam settingsId: UUID
-  ): CompletableFuture<Any> {
-    return commandGateway.send(RequestCompanyListUpdateCommand(connectionId, settingsId))
-  }
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
+        @PostMapping("/debug/requestcompanylistupdate")
+        fun processDebugCommand(
+                @RequestParam connectionId: UUID,
+                @RequestParam settingsId: UUID
+        ): CompletableFuture<Any> {
+                return commandGateway.send(
+                        RequestCompanyListUpdateCommand(connectionId, settingsId)
+                )
+        }
 
-  @CrossOrigin
-  @PostMapping("/requestcompanylistupdate")
-  fun processCommand(
-          @RequestBody payload: RequestCompanyListUpdatePayload,
-          @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String
-  ): CompletableFuture<Any> {
-    return commandGateway.send(
-            RequestCompanyListUpdateCommand(
-                    settingsId = SettingsConstants.SETTINGS_ID,
-                    connectionId = payload.connectionId
-            ),
-            MetaData.with(
-                    AdminSecurityHeaders.SESSION_ID,
-                    sessionId
-            ) // Just pass it as the 2nd argument
-    )
-  }
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
+        @PostMapping("/requestcompanylistupdate")
+        fun processCommand(
+                @RequestBody payload: RequestCompanyListUpdatePayload,
+                @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String
+        ): CompletableFuture<Any> {
+                return commandGateway.send(
+                        RequestCompanyListUpdateCommand(
+                                settingsId = SettingsConstants.SETTINGS_ID,
+                                connectionId = payload.connectionId
+                        ),
+                        MetaData.with(
+                                AdminSecurityHeaders.SESSION_ID,
+                                sessionId
+                        ) // Just pass it as the 2nd argument
+                )
+        }
 }

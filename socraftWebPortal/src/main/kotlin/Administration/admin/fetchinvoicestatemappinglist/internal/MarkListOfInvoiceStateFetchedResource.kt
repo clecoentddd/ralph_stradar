@@ -27,35 +27,35 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465995471
 @RequestMapping("/admin")
 class MarkListOfInvoiceStateFetchedResource(private var commandGateway: CommandGateway) {
 
-    private val logger = KotlinLogging.logger {}
+        private val logger = KotlinLogging.logger {}
 
-    @CrossOrigin
-    @PostMapping("/debug/fetchinvoicestatemappinglist")
-    fun processDebugCommand(
-            @RequestParam connectionId: UUID,
-            @RequestBody listOfInvoiceStates: List<InvoiceState>
-    ): CompletableFuture<Any> {
-        return commandGateway.send(
-                MarkListOfInvoiceStateFetchedCommand(
-                        settingsId = SettingsConstants.SETTINGS_ID, // Use fixed Constant
-                        connectionId = connectionId,
-                        listOfInvoiceStates = listOfInvoiceStates
+        @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
+        @PostMapping("/debug/fetchinvoicestatemappinglist")
+        fun processDebugCommand(
+                @RequestParam connectionId: UUID,
+                @RequestBody listOfInvoiceStates: List<InvoiceState>
+        ): CompletableFuture<Any> {
+                return commandGateway.send(
+                        MarkListOfInvoiceStateFetchedCommand(
+                                settingsId = SettingsConstants.SETTINGS_ID, // Use fixed Constant
+                                connectionId = connectionId,
+                                listOfInvoiceStates = listOfInvoiceStates
+                        )
                 )
-        )
-    }
+        }
 
-    @CrossOrigin
-    @PostMapping("/fetchinvoicestatemappinglist/{id}")
-    fun processCommand(
-            @PathVariable("id") id: String,
-            @RequestBody payload: FetchInvoiceStateMappingListPayload
-    ): CompletableFuture<Any> {
-        return commandGateway.send(
-                MarkListOfInvoiceStateFetchedCommand(
-                        settingsId = SettingsConstants.SETTINGS_ID,
-                        connectionId = payload.connectionId,
-                        listOfInvoiceStates = payload.listOfInvoiceStates
+        @CrossOrigin
+        @PostMapping("/fetchinvoicestatemappinglist/{id}")
+        fun processCommand(
+                @PathVariable("id") id: String,
+                @RequestBody payload: FetchInvoiceStateMappingListPayload
+        ): CompletableFuture<Any> {
+                return commandGateway.send(
+                        MarkListOfInvoiceStateFetchedCommand(
+                                settingsId = SettingsConstants.SETTINGS_ID,
+                                connectionId = payload.connectionId,
+                                listOfInvoiceStates = payload.listOfInvoiceStates
+                        )
                 )
-        )
-    }
+        }
 }

@@ -20,12 +20,12 @@ class InvoicestatemappinglookupResource(private val queryGateway: QueryGateway) 
 
   private val logger = KotlinLogging.logger {}
 
-  @CrossOrigin
+  @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
   @GetMapping("/invoicestatemappinglookup")
   fun findReadModel(): CompletableFuture<InvoiceStateMappingLookUpReadModelEntity> {
     return queryGateway.query(
-        InvoiceStateMappingLookUpReadModelQuery(SettingsConstants.SETTINGS_ID),
-        InvoiceStateMappingLookUpReadModelEntity::class.java // Expect the entity back
-        )
+            InvoiceStateMappingLookUpReadModelQuery(SettingsConstants.SETTINGS_ID),
+            InvoiceStateMappingLookUpReadModelEntity::class.java // Expect the entity back
+    )
   }
 }
