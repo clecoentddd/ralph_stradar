@@ -3,7 +3,7 @@ package administration.admin.adminconnection
 import administration.admin.domain.commands.adminconnection.ToConnectCommand
 import administration.common.CommandException
 import administration.domain.AdminAccountAggregate
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import org.axonframework.commandhandling.GenericCommandMessage
 import org.axonframework.messaging.MetaData
@@ -36,7 +36,10 @@ class AdminConnectionemailsocraftrequiredTest {
     // 2. Wrap it with Metadata to satisfy the Interceptor
     val commandMessage =
             GenericCommandMessage.asCommandMessage<ToConnectCommand>(command)
-                    .withMetaData(MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session"))
+                    .withMetaData(
+                            MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, "test-session")
+                                    .and(AppSecurityHeaders.COMPANY_ID_HEADER, "test-company")
+                    )
 
     // WHEN & THEN
     fixture.givenNoPriorActivity()

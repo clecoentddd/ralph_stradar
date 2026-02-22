@@ -5,7 +5,7 @@ import administration.common.Event
 import administration.common.support.RandomData
 import administration.domain.AdminAccountAggregate
 import administration.events.AdminConnectedEvent
-import administration.support.metadata.AdminSecurityHeaders // Added
+import administration.support.metadata.AppSecurityHeaders // Added
 import java.util.UUID
 import org.axonframework.commandhandling.GenericCommandMessage // Added
 import org.axonframework.messaging.MetaData // Added
@@ -36,8 +36,8 @@ class AdminConnectionEnsureNonNullValuesTest {
 
     // Create metadata to satisfy the Interceptor
     val metaData =
-            MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session-123")
-                    .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "MAIN_COMPANY_789")
+            MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, "test-session-123")
+                    .and(AppSecurityHeaders.COMPANY_ID_HEADER, "MAIN_COMPANY_789")
 
     // Wrap the command in a message that includes the metadata
     val commandMessage =

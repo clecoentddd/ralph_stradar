@@ -5,7 +5,7 @@ import administration.common.CommandException
 import administration.common.SettingsConstants
 import administration.domain.SettingsAggregate
 import administration.events.SettingsCreatedEvent
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import org.axonframework.commandhandling.GenericCommandMessage
 import org.axonframework.messaging.MetaData
@@ -22,8 +22,8 @@ class InitializeSettingsSettingsIdIsSetOnceOnlyTest {
 
         // Coherent Metadata: Matches the "SOCRAFT_ADMIN_BACKEND" pattern from your Resource
         private val testMetaData =
-                MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session-123")
-                        .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "SOCRAFT_ADMIN_BACKEND")
+                MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, "test-session-123")
+                        .and(AppSecurityHeaders.COMPANY_ID_HEADER, "SOCRAFT_ADMIN_BACKEND")
 
         @BeforeEach
         fun setUp() {

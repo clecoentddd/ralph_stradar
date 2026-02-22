@@ -2,7 +2,7 @@ package administration.admin.requestcompanylistupdate.internal
 
 import administration.admin.domain.commands.requestcompanylistupdate.RequestCompanyListUpdateCommand
 import administration.common.SettingsConstants
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
@@ -42,17 +42,15 @@ class RequestCompanyListUpdateResource(private var commandGateway: CommandGatewa
         @PostMapping("/requestcompanylistupdate")
         fun processCommand(
                 @RequestBody payload: RequestCompanyListUpdatePayload,
-                @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String
+                @RequestHeader(AppSecurityHeaders.SESSION_ID_HEADER) sessionId: String
         ): CompletableFuture<Any> {
                 return commandGateway.send(
                         RequestCompanyListUpdateCommand(
                                 settingsId = SettingsConstants.SETTINGS_ID,
                                 connectionId = payload.connectionId
                         ),
-                        MetaData.with(
-                                AdminSecurityHeaders.SESSION_ID,
-                                sessionId
-                        ) // Just pass it as the 2nd argument
+                        MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, sessionId)
+                                .and(AppSecurityHeaders.COMPANY_ID_HEADER, "SOCRAFT_ADMIN_BACKEND")
                 )
         }
 }

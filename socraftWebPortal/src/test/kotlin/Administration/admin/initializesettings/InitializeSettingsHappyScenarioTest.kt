@@ -4,7 +4,7 @@ import administration.admin.domain.commands.initializesettings.CreateSettingsCom
 import administration.common.SettingsConstants
 import administration.domain.SettingsAggregate
 import administration.events.SettingsCreatedEvent
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import org.axonframework.commandhandling.GenericCommandMessage
 import org.axonframework.messaging.MetaData
@@ -13,7 +13,7 @@ import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class InitializeSettingsScenarioTest {
+class InitializeSettingsHappyScenarioTest {
 
         private lateinit var fixture: FixtureConfiguration<SettingsAggregate>
 
@@ -33,16 +33,16 @@ class InitializeSettingsScenarioTest {
                                 connectionId = connectionId
                         )
 
-                // UPDATED: Added ADMIN_COMPANY_ID to match the "SOCRAFT_ADMIN_BACKEND" pattern
+                // UPDATED: Added COMPANY_ID_HEADER to match the "SOCRAFT_ADMIN_BACKEND" pattern
                 val commandMessage =
                         GenericCommandMessage.asCommandMessage<CreateSettingsCommand>(command)
                                 .withMetaData(
                                         MetaData.with(
-                                                        AdminSecurityHeaders.SESSION_ID,
+                                                        AppSecurityHeaders.SESSION_ID_HEADER,
                                                         "test-session-abc"
                                                 )
                                                 .and(
-                                                        AdminSecurityHeaders.ADMIN_COMPANY_ID,
+                                                        AppSecurityHeaders.COMPANY_ID_HEADER,
                                                         "SOCRAFT_ADMIN_BACKEND"
                                                 )
                                 )

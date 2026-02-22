@@ -1,17 +1,22 @@
 package administration.client.clientaccountlist.internal
 
-import administration.client.clientaccountlist.ClientAccountListReadModelEntity
+import administration.client.clientaccountlist.ClientAccountListReadModel
 import administration.events.AccountCreatedEvent
 import java.util.UUID
 import org.axonframework.eventhandling.EventHandler
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 
-interface ClientAccountListReadModelRepository :
-    JpaRepository<ClientAccountListReadModelEntity, UUID> {
+interface ClientAccountListReadModelRepository : JpaRepository<ClientAccountListReadModel, UUID> {
 
   // Added for uniqueness check via QueryHandler
-  fun findByClientEmail(clientEmail: String): ClientAccountListReadModelEntity?
+  fun findByClientEmail(clientEmail: String): ClientAccountListReadModel?
+
+  // Added for verification during connection
+  fun findByClientEmailAndCompanyId(
+          clientEmail: String,
+          companyId: Long
+  ): ClientAccountListReadModel?
 
   // Added for "fail-fast" existence checks
   fun existsByClientEmail(clientEmail: String): Boolean
@@ -26,14 +31,14 @@ class ClientAccountListReadModelProjector(var repository: ClientAccountListReadM
   @EventHandler
   fun on(event: AccountCreatedEvent) {
     // throws exception if not available (adjust logic)
-    val entity = this.repository.findById(event.clientId).orElse(ClientAccountListReadModelEntity())
+    val entity = this.repository.findById(event.clientId).orElse(ClientAccountListReadModel())
     entity
-        .apply {
-          clientEmail = event.clientEmail
-          clientId = event.clientId
-          companyId = event.companyId
-          connectionId = event.connectionId
-        }
-        .also { this.repository.save(it) }
+            .apply {
+              clientEmail = event.clientEmail
+              clientId = event.clientId
+              companyId = event.companyId
+              connectionId = event.connectionId
+            }
+            .also { this.repository.save(it) }
   }
 }

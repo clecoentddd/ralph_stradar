@@ -1,6 +1,6 @@
 package administration.client.clientaccountlist.internal
 
-import administration.client.clientaccountlist.ClientAccountListReadModelEntity
+import administration.client.clientaccountlist.ClientAccountListReadModel
 import administration.client.clientaccountlist.ClientAccountListReadModelQuery
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
@@ -22,9 +22,10 @@ class ClientAccountListResource(private var queryGateway: QueryGateway) {
 
   @CrossOrigin
   @GetMapping("/clientaccountlist")
-  fun findReadModel(): CompletableFuture<List<ClientAccountListReadModelEntity>> {
+  fun findReadModel(): CompletableFuture<List<ClientAccountListReadModel>> {
     return queryGateway.query(
-        ClientAccountListReadModelQuery(),
-        ResponseTypes.multipleInstancesOf(ClientAccountListReadModelEntity::class.java))
+            ClientAccountListReadModelQuery(),
+            ResponseTypes.multipleInstancesOf(ClientAccountListReadModel::class.java)
+    )
   }
 }

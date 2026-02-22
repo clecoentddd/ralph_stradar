@@ -2,7 +2,7 @@ package administration.admin.initializesettings.internal
 
 import administration.admin.domain.commands.initializesettings.CreateSettingsCommand
 import administration.common.SettingsConstants.SETTINGS_ID
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
@@ -34,7 +34,7 @@ class CreateSettingsResource(private var commandGateway: CommandGateway) {
         @CrossOrigin(origins = ["\${app.frontend-url:http://localhost:8081}"])
         @PostMapping("/initializesettings")
         fun processCommand(
-                @RequestHeader(AdminSecurityHeaders.SESSION_ID) sessionId: String,
+                @RequestHeader(AppSecurityHeaders.SESSION_ID_HEADER) sessionId: String,
                 @RequestBody payload: InitializesettingsPayload
         ): CompletableFuture<Any> {
                 logger.info {
@@ -42,8 +42,8 @@ class CreateSettingsResource(private var commandGateway: CommandGateway) {
                 }
 
                 val metaData =
-                        MetaData.with(AdminSecurityHeaders.SESSION_ID, sessionId)
-                                .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "SOCRAFT_ADMIN_BACKEND")
+                        MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, sessionId)
+                                .and(AppSecurityHeaders.COMPANY_ID_HEADER, "SOCRAFT_ADMIN_BACKEND")
 
                 val command =
                         CreateSettingsCommand(SETTINGS_ID, connectionId = payload.connectionId)

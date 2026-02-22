@@ -1,17 +1,30 @@
 package administration.support.metadata
 
-import org.axonframework.messaging.correlation.CorrelationDataProvider
+import org.axonframework.commandhandling.CommandMessage
+import org.axonframework.messaging.correlation.MessageOriginProvider
 import org.axonframework.messaging.correlation.SimpleCorrelationDataProvider
+import org.axonframework.messaging.interceptors.CorrelationDataInterceptor
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-const val SESSION_ID_HEADER = "X-Session-Id"
-
 @Configuration
 class CorrelationConfig {
+
   @Bean
-  fun adminCorrelationDataProvider(): CorrelationDataProvider {
+  fun lawFirmCorrelationDataProvider(): SimpleCorrelationDataProvider {
     return SimpleCorrelationDataProvider(
-        AdminSecurityHeaders.SESSION_ID, AdminSecurityHeaders.ADMIN_COMPANY_ID)
+            AppSecurityHeaders.SESSION_ID_HEADER,
+            AppSecurityHeaders.COMPANY_ID_HEADER
+    ) //
+  }
+
+  @Bean
+  fun messageOriginProvider(): MessageOriginProvider {
+    return MessageOriginProvider()
+  }
+
+  @Bean
+  fun correlationDataInterceptor(): CorrelationDataInterceptor<CommandMessage<Any>> {
+    return CorrelationDataInterceptor(messageOriginProvider(), lawFirmCorrelationDataProvider())
   }
 }

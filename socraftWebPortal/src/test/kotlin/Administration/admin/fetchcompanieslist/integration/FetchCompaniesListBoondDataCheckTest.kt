@@ -7,7 +7,7 @@ import administration.common.support.RandomData
 import administration.common.support.StreamAssertions
 import administration.common.support.awaitUntilAssserted
 import administration.events.ListOfCompaniesFetchedEvent
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.*
@@ -86,8 +86,8 @@ class FetchCompaniesListBoondDataCheckTest : BaseIntegrationTest() {
 
     // Create common Metadata for the test to satisfy the Interceptor
     val testMetadata =
-            MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session")
-                    .and(AdminSecurityHeaders.ADMIN_COMPANY_ID, "test-company")
+            MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, "test-session")
+                    .and(AppSecurityHeaders.COMPANY_ID_HEADER, "test-company")
 
     // 3. Create Settings (Wrapped with Metadata)
     val createSettingsCommand =

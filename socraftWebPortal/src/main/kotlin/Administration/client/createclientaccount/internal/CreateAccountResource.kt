@@ -1,84 +1,102 @@
 package administration.client.createclientaccount.internal
 
-import administration.client.clientaccountlist.ClientAccountListReadModelEntity
+import administration.client.clientaccountlist.ClientAccountListReadModel
 import administration.client.clientaccountlist.ClientAccountListReadModelQuery
 import administration.client.domain.commands.createclientaccount.CreateAccountCommand
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
+import org.axonframework.messaging.MetaData
 import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 data class CreateClientAccountPayload(
-    var clientEmail: String,
-    var companyId: Long,
-    var connectionId: UUID
+        var clientEmail: String,
+        var companyId: Long,
+        var connectionId: UUID
 )
 
-/*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660029388833
-*/
 @RestController
 @RequestMapping("/client")
 class CreateAccountResource(
-    private val commandGateway: CommandGateway,
-    private val queryGateway: QueryGateway // Added to check for existing email
+        private val commandGateway: CommandGateway,
+        private val queryGateway: QueryGateway
 ) {
 
-  private val logger = KotlinLogging.logger {}
+        private val logger = KotlinLogging.logger {}
 
-  @CrossOrigin
-  @PostMapping("/createclientaccount")
-  fun processCommand(
-      @RequestBody payload: CreateClientAccountPayload
-  ): CompletableFuture<Map<String, Any>> {
+        @CrossOrigin
+        @PostMapping("/createclientaccount")
+        fun processCommand(
+                @RequestHeader(AppSecurityHeaders.SESSION_ID_HEADER) sessionId: String,
+                @RequestHeader(AppSecurityHeaders.COMPANY_ID_HEADER) companyId: String,
+                @RequestBody payload: CreateClientAccountPayload
+        ): CompletableFuture<Map<String, Any>> {
 
-    // 1. Validation: Check if email already exists in the Read Model
-    val query = ClientAccountListReadModelQuery(email = payload.clientEmail)
+                val query = ClientAccountListReadModelQuery(email = payload.clientEmail)
 
-    val existingAccounts =
-        queryGateway
-            .query(
-                query,
-                ResponseTypes.multipleInstancesOf(ClientAccountListReadModelEntity::class.java))
-            .get() // Blocks to ensure we don't create a duplicate
+                return queryGateway
+                        .query(
+                                query,
+                                ResponseTypes.multipleInstancesOf(
+                                        ClientAccountListReadModel::class.java
+                                )
+                        )
+                        .thenCompose { existingAccounts ->
+                                if (existingAccounts.isNotEmpty()) {
+                                        throw ResponseStatusException(
+                                                HttpStatus.CONFLICT,
+                                                "Email already exists"
+                                        )
+                                }
 
-    if (existingAccounts.isNotEmpty()) {
-      // This is the message the user WILL see now
-      throw ResponseStatusException(
-          HttpStatus.CONFLICT,
-          "The email '${payload.clientEmail}' is already associated with an account. Please use a different email.")
-    }
+                                val clientId = UUID.randomUUID()
 
-    // 2. Execution: Only happens if the list above was empty
-    val clientId = UUID.randomUUID()
-    return commandGateway
-        .send<Long>(
-            CreateAccountCommand(
-                clientId = clientId,
-                clientEmail = payload.clientEmail,
-                companyId = payload.companyId,
-                connectionId = payload.connectionId))
-        .thenApply { companyId -> mapOf("clientId" to clientId, "companyId" to companyId) }
-  }
+                                val metaData =
+                                        MetaData.with(
+                                                        AppSecurityHeaders.SESSION_ID_HEADER,
+                                                        sessionId
+                                                )
+                                                .and(
+                                                        AppSecurityHeaders.COMPANY_ID_HEADER,
+                                                        "SOCRAFT_ADMIN_BACKEND"
+                                                )
 
-  @CrossOrigin
-  @PostMapping("/debug/createclientaccount")
-  fun processDebugCommand(
-      @RequestParam clientEmail: String,
-      @RequestParam companyId: Long,
-      @RequestParam connectionId: UUID,
-      @RequestParam clientId: UUID
-  ): CompletableFuture<Any> {
-    return commandGateway.send(CreateAccountCommand(clientId, clientEmail, companyId, connectionId))
-  }
+                                commandGateway.send<Long>(
+                                                CreateAccountCommand(
+                                                        clientId = clientId,
+                                                        clientEmail = payload.clientEmail,
+                                                        companyId = payload.companyId,
+                                                        connectionId = payload.connectionId
+                                                ),
+                                                metaData
+                                        )
+                                        .thenApply { companyId ->
+                                                mapOf<String, Any>(
+                                                        "clientId" to clientId,
+                                                        "companyId" to companyId
+                                                )
+                                        }
+                        }
+                        .exceptionally { throwable ->
+                                // This block will catch the Interceptor's IllegalArgumentException
+                                logger.error {
+                                        "Interceptor blocked the command: ${throwable.message}"
+                                }
+                                throw ResponseStatusException(
+                                        HttpStatus.BAD_REQUEST,
+                                        "Security Block: ${throwable.localizedMessage}"
+                                )
+                        }
+        }
 }

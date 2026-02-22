@@ -8,7 +8,7 @@ import administration.common.SettingsConstants
 import administration.common.support.BaseIntegrationTest
 import administration.common.support.RandomData
 import administration.common.support.awaitUntilAssserted
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
@@ -27,8 +27,9 @@ class CompanyListLookUpBasicCheckWithRealDataTest : BaseIntegrationTest() {
                 val settingsId = SettingsConstants.SETTINGS_ID
 
                 // Define the metadata required by your interceptor
-                val metaData = MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session")
-
+                val metaData =
+                        MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, "test-session")
+                                .and(AppSecurityHeaders.COMPANY_ID_HEADER, "test-company")
                 // 1. Initialize Settings
                 val createSettingsCommand =
                         RandomData.newInstance<CreateSettingsCommand> {

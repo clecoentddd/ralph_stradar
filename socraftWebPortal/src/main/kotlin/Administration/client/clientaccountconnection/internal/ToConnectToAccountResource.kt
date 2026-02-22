@@ -1,50 +1,86 @@
 package administration.client.clientaccountconnection.internal
 
+import administration.client.clientaccountlist.*
 import administration.client.domain.commands.clientaccountconnection.ToConnectToAccountCommand
+import administration.support.metadata.AppSecurityHeaders
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
-import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.axonframework.messaging.MetaData
+import org.axonframework.messaging.responsetypes.ResponseTypes
+import org.axonframework.queryhandling.QueryGateway
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
-data class ClientAccountConnectionPayload(var clientEmail: String, var clientId: UUID)
+data class ClientAccountConnectionPayload(val clientEmail: String, val clientId: UUID)
 
-/*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764660036569904
-*/
 @RestController
 @RequestMapping("/client")
-class ToConnectToAccountResource(private var commandGateway: CommandGateway) {
+@CrossOrigin
+class ToConnectToAccountResource(
+        private val commandGateway: CommandGateway,
+        private val queryGateway: QueryGateway
+) {
+        @PostMapping("/debug/clientaccountconnection")
+        fun processDebugCommand(
+                @RequestParam clientEmail: String,
+                @RequestParam clientId: UUID
+        ): CompletableFuture<Any> {
+                return commandGateway.send(ToConnectToAccountCommand(clientEmail, clientId))
+        }
 
-  var logger = KotlinLogging.logger {}
+        @PostMapping("/clientaccountconnection/{id}")
+        fun processCommand(
+                @PathVariable("id") clientId: UUID,
+                @RequestBody payload: ClientAccountConnectionPayload,
+                @RequestHeader(AppSecurityHeaders.SESSION_ID_HEADER) sessionId: String,
+                @RequestHeader(AppSecurityHeaders.COMPANY_ID_HEADER) companyId: String
+        ): CompletableFuture<Map<String, Any>> {
 
-  @CrossOrigin
-  @PostMapping("/debug/clientaccountconnection")
-  fun processDebugCommand(
-          @RequestParam clientEmail: String,
-          @RequestParam clientId: UUID
-  ): CompletableFuture<Any> {
-    return commandGateway.send(ToConnectToAccountCommand(clientEmail, clientId))
-  }
+                val companyIdLong = companyId.toLongOrNull()
+                val query =
+                        ClientAccountListReadModelQuery(
+                                email = payload.clientEmail,
+                                companyId = companyIdLong
+                        )
 
-  @CrossOrigin
-  @PostMapping("/clientaccountconnection/{id}")
-  fun processCommand(
-          @PathVariable("id") clientId: UUID,
-          @RequestBody payload: ClientAccountConnectionPayload
-  ): CompletableFuture<Map<String, Any>> {
-    return commandGateway.send<Long>(
-                    ToConnectToAccountCommand(
-                            clientId = clientId,
-                            clientEmail = payload.clientEmail
-                    )
-            )
-            .thenApply { mapOf("companyId" to it) }
-  }
+                // We must specify the List return type for multipleInstancesOf
+                return queryGateway.query(
+                                query,
+                                ResponseTypes.multipleInstancesOf(
+                                        ClientAccountListReadModel::class.java
+                                )
+                        )
+                        .thenCompose { accounts ->
+                                val account =
+                                        accounts.firstOrNull()
+                                                ?: throw ResponseStatusException(
+                                                        HttpStatus.NOT_FOUND,
+                                                        "Client account not found"
+                                                )
+
+                                val metaData =
+                                        MetaData.with(
+                                                        AppSecurityHeaders.SESSION_ID_HEADER,
+                                                        sessionId
+                                                )
+                                                .and(
+                                                        AppSecurityHeaders.COMPANY_ID_HEADER,
+                                                        account.companyId?.toString() ?: "UNKNOWN"
+                                                )
+
+                                // Ensure parameter names match your ToConnectToAccountCommand
+                                // exactly
+                                val command =
+                                        ToConnectToAccountCommand(
+                                                clientEmail = payload.clientEmail,
+                                                clientId = clientId
+                                        )
+
+                                commandGateway.send<Any>(command, metaData).thenApply { result ->
+                                        mapOf("companyId" to (result ?: "SUCCESS"))
+                                }
+                        }
+        }
 }

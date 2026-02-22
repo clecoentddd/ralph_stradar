@@ -1,6 +1,6 @@
 package administration.client.clientaccountlist.internal
 
-import administration.client.clientaccountlist.ClientAccountListReadModelEntity
+import administration.client.clientaccountlist.ClientAccountListReadModel
 import administration.client.clientaccountlist.ClientAccountListReadModelQuery
 import org.axonframework.queryhandling.QueryHandler
 import org.springframework.stereotype.Component
@@ -10,18 +10,22 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466003656
 */
 @Component
 class ClientAccountListReadModelQueryHandler(
-    private val repository: ClientAccountListReadModelRepository
+        private val repository: ClientAccountListReadModelRepository
 ) {
 
   @QueryHandler
-  fun handleQuery(query: ClientAccountListReadModelQuery): List<ClientAccountListReadModelEntity> {
-    // We return the List directly instead of wrapping it in ClientAccountListReadModel
-    return if (query.email != null) {
-      // Fetch only the specific record for uniqueness check
-      repository.findByClientEmail(query.email)?.let { listOf(it) } ?: emptyList()
-    } else {
-      // Standard behavior: fetch everything for the dashboard
-      repository.findAll()
+  fun handleQuery(query: ClientAccountListReadModelQuery): List<ClientAccountListReadModel> {
+    return when {
+      query.email != null && query.companyId != null -> {
+        repository.findByClientEmailAndCompanyId(query.email, query.companyId)?.let { listOf(it) }
+                ?: emptyList()
+      }
+      query.email != null -> {
+        repository.findByClientEmail(query.email)?.let { listOf(it) } ?: emptyList()
+      }
+      else -> {
+        repository.findAll()
+      }
     }
   }
 }

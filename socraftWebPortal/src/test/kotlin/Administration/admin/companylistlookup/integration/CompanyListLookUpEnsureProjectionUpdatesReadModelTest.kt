@@ -9,7 +9,7 @@ import administration.common.SettingsConstants
 import administration.common.support.BaseIntegrationTest
 import administration.common.support.RandomData
 import administration.common.support.awaitUntilAssserted
-import administration.support.metadata.AdminSecurityHeaders
+import administration.support.metadata.AppSecurityHeaders
 import java.util.*
 import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway
@@ -27,7 +27,9 @@ class CompanyListLookUpEnsureProjectionUpdatesReadModelTest : BaseIntegrationTes
         @Test
         fun `Company List Look Up Ensure Projection Updates Read Model Test`() {
                 val settingsId = SettingsConstants.SETTINGS_ID
-                val metaData = MetaData.with(AdminSecurityHeaders.SESSION_ID, "test-session")
+                val metaData =
+                        MetaData.with(AppSecurityHeaders.SESSION_ID_HEADER, "test-session")
+                                .and(AppSecurityHeaders.COMPANY_ID_HEADER, "test-company")
                 val targetConnectionId = UUID.fromString("24af641b-d7ef-43ce-8325-79089244a4a8")
 
                 // 1. Initialize Settings
