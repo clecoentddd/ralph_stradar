@@ -169,6 +169,12 @@
           "type": "OUTBOUND",
           "title": "Define Organization",
           "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764660816044921",
+          "type": "INBOUND",
+          "title": "admin",
+          "elementType": "READMODEL"
         }
       ],
       "createsAggregate": false,

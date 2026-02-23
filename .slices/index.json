@@ -347,7 +347,7 @@
     {
       "id": "3458764645850349025",
       "slice": "slice: Create Strategy Dashboard",
-      "index": 1,
+      "index": 5,
       "context": "Stradar",
       "folder": "createstrategydashboard",
       "status": "Created"
@@ -355,7 +355,7 @@
     {
       "id": "3458764645851938986",
       "slice": "slice: strategy dashboard",
-      "index": 3,
+      "index": 7,
       "context": "Stradar",
       "folder": "strategydashboard",
       "status": "Created"
@@ -363,7 +363,7 @@
     {
       "id": "3458764645851939395",
       "slice": "slice: Add Strategy",
-      "index": 5,
+      "index": 9,
       "context": "Stradar",
       "folder": "addstrategy",
       "status": "Created"
@@ -371,7 +371,7 @@
     {
       "id": "3458764645855079487",
       "slice": "slice: strategy",
-      "index": 7,
+      "index": 11,
       "context": "Stradar",
       "folder": "strategy",
       "status": "Created"
@@ -379,7 +379,7 @@
     {
       "id": "3458764645855304955",
       "slice": "slice: Create An Initiative",
-      "index": 9,
+      "index": 13,
       "context": "Stradar",
       "folder": "createaninitiative",
       "status": "Created"
@@ -387,7 +387,7 @@
     {
       "id": "3458764645855652334",
       "slice": "slice: an initiative",
-      "index": 11,
+      "index": 15,
       "context": "Stradar",
       "folder": "aninitiative",
       "status": "Created"
@@ -395,7 +395,7 @@
     {
       "id": "3458764645856214406",
       "slice": "slice: Diagnostic Item Added",
-      "index": 13,
+      "index": 17,
       "context": "Stradar",
       "folder": "diagnosticitemadded",
       "status": "Created"
@@ -403,7 +403,7 @@
     {
       "id": "3458764645827750525",
       "slice": "slice: Define Organization",
-      "index": 15,
+      "index": 19,
       "context": "Stradar",
       "folder": "defineorganization",
       "status": "Created"
@@ -411,7 +411,7 @@
     {
       "id": "3458764645856647735",
       "slice": "slice: Approach Item Added",
-      "index": 17,
+      "index": 21,
       "context": "Stradar",
       "folder": "approachitemadded",
       "status": "Created"
@@ -419,7 +419,7 @@
     {
       "id": "3458764645830936253",
       "slice": "slice: Organization list",
-      "index": 19,
+      "index": 23,
       "context": "Stradar",
       "folder": "organizationlist",
       "status": "Created"
@@ -427,7 +427,7 @@
     {
       "id": "3458764645857206882",
       "slice": "slice: Action Item Added",
-      "index": 21,
+      "index": 25,
       "context": "Stradar",
       "folder": "actionitemadded",
       "status": "Created"
@@ -435,7 +435,7 @@
     {
       "id": "3458764645831088163",
       "slice": "slice: Create Team",
-      "index": 23,
+      "index": 27,
       "context": "Stradar",
       "folder": "createteam",
       "status": "Created"
@@ -443,7 +443,7 @@
     {
       "id": "3458764645857703039",
       "slice": "slice: Proximate Objective Added",
-      "index": 25,
+      "index": 29,
       "context": "Stradar",
       "folder": "proximateobjectiveadded",
       "status": "Created"
@@ -451,7 +451,7 @@
     {
       "id": "3458764645856475067",
       "slice": "slice: Value Stream",
-      "index": 27,
+      "index": 31,
       "context": "Stradar",
       "folder": "valuestream",
       "status": "Created"
@@ -475,7 +475,7 @@
     {
       "id": "3458764645872431573",
       "slice": "slice: Radar View",
-      "index": 29,
+      "index": 33,
       "context": "Stradar",
       "folder": "radarview",
       "status": "Created"
@@ -483,9 +483,25 @@
     {
       "id": "3458764645872569805",
       "slice": "slice: read-model",
-      "index": 31,
+      "index": 35,
       "context": "Stradar",
       "folder": "read-model",
+      "status": "Created"
+    },
+    {
+      "id": "3458764660825671360",
+      "slice": "slice: signin_admin",
+      "index": 1,
+      "context": "Stradar",
+      "folder": "signin_admin",
+      "status": "Created"
+    },
+    {
+      "id": "3458764660825671418",
+      "slice": "slice: admin_connected",
+      "index": 3,
+      "context": "Stradar",
+      "folder": "admin_connected",
       "status": "Created"
     }
   ]

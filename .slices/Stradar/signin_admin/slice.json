@@ -1,54 +1,53 @@
 {
-  "id": "3458764645857206882",
+  "id": "3458764660825671360",
   "status": "Created",
-  "title": "slice: Action Item Added",
-  "context": "StratFlow",
+  "title": "slice: signin_admin",
+  "context": "Stradar",
   "sliceType": "STATE_CHANGE",
   "commands": [
     {
-      "id": "3458764645857206884",
+      "id": "3458764660815651079",
       "tags": [],
       "elementContext": "INTERNAL",
-      "modelContext": "StratFlow",
+      "modelContext": "Stradar",
       "context": "INTERNAL",
-      "slice": "slice: Action Item Added",
-      "title": "Add Action Item",
+      "slice": "slice: signin_admin",
+      "title": "Sign In Admin",
       "fields": [
         {
-          "name": "actionItemId",
-          "type": "UUID",
+          "name": "adminAccountId",
           "generated": true,
+          "type": "UUID",
           "cardinality": "Single",
+          "subfields": [],
           "idAttribute": true
         },
         {
-          "name": "actionDescription",
+          "name": "email",
+          "generated": true,
           "type": "String",
           "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "initiativeId",
-          "type": "UUID",
-          "cardinality": "Single",
+          "subfields": [],
           "idAttribute": false
         }
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
       "dependencies": [
         {
-          "id": "3458764645857206883",
+          "id": "3458764660815509287",
           "type": "OUTBOUND",
-          "title": "Action Item Added",
+          "title": "Admin Signed In",
           "elementType": "EVENT"
         },
         {
-          "id": "3458764645857206885",
+          "id": "3458764660815651093",
           "type": "INBOUND",
-          "title": "Action Plan",
+          "title": "Admin Sign In Console",
           "elementType": "SCREEN"
         }
       ],
@@ -62,49 +61,48 @@
   ],
   "events": [
     {
-      "id": "3458764645857206883",
+      "id": "3458764660815509287",
       "tags": [],
       "elementContext": "INTERNAL",
-      "modelContext": "StratFlow",
+      "modelContext": "Stradar",
       "context": "INTERNAL",
-      "slice": "slice: Action Item Added",
-      "title": "Action Item Added",
+      "slice": "slice: signin_admin",
+      "title": "Admin Signed In",
       "fields": [
         {
-          "name": "actionItemId",
-          "type": "UUID",
+          "name": "adminAccountId",
           "generated": true,
+          "type": "UUID",
           "cardinality": "Single",
+          "subfields": [],
           "idAttribute": true
         },
         {
-          "name": "actionDescription",
+          "name": "email",
+          "generated": true,
           "type": "String",
           "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "initiativeId",
-          "type": "UUID",
-          "cardinality": "Single",
+          "subfields": [],
           "idAttribute": false
         }
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
       "dependencies": [
         {
-          "id": "3458764645856348397",
+          "id": "3458764660816044921",
           "type": "OUTBOUND",
-          "title": "Value Stream",
+          "title": "admin",
           "elementType": "READMODEL"
         },
         {
-          "id": "3458764645857206884",
+          "id": "3458764660815651079",
           "type": "INBOUND",
-          "title": "Add Action Item",
+          "title": "Sign In Admin",
           "elementType": "COMMAND"
         }
       ],
@@ -119,45 +117,44 @@
   "readmodels": [],
   "screens": [
     {
-      "id": "3458764645857206885",
+      "id": "3458764660815651093",
       "tags": [],
-      "groupId": "3458764645857206891",
+      "groupId": "3458764660815651105",
       "elementContext": "INTERNAL",
-      "modelContext": "StratFlow",
+      "modelContext": "Stradar",
       "context": "INTERNAL",
-      "slice": "slice: Action Item Added",
-      "title": "Action Plan",
+      "slice": "slice: signin_admin",
+      "title": "Admin Sign In Console",
       "fields": [
         {
-          "name": "initiativeId",
-          "type": "UUID",
+          "name": "email",
+          "generated": true,
+          "type": "String",
           "cardinality": "Single",
-          "idAttribute": true
+          "subfields": [],
+          "idAttribute": false
         },
         {
-          "name": "actionDescription",
-          "type": "String",
+          "name": "password",
           "generated": true,
+          "type": "String",
           "cardinality": "Single",
+          "subfields": [],
           "idAttribute": false
         }
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
       "dependencies": [
         {
-          "id": "3458764645857206884",
+          "id": "3458764660815651079",
           "type": "OUTBOUND",
-          "title": "Add Action Item",
+          "title": "Sign In Admin",
           "elementType": "COMMAND"
-        },
-        {
-          "id": "3458764645855652122",
-          "type": "INBOUND",
-          "title": "an initiative",
-          "elementType": "READMODEL"
         }
       ],
       "createsAggregate": false,
@@ -174,5 +171,7 @@
   "tables": [],
   "specifications": [],
   "actors": [],
-  "aggregates": []
+  "aggregates": [
+    "admin"
+  ]
 }
