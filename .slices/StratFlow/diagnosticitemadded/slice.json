@@ -1,0 +1,178 @@
+{
+  "id": "3458764645856214406",
+  "status": "Created",
+  "title": "slice: Diagnostic Item Added",
+  "context": "StratFlow",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645855790977",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Diagnostic Item Added",
+      "title": "Add Diagnostic Item",
+      "fields": [
+        {
+          "name": "diagnosticItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "diagnosticDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645850906234",
+          "type": "OUTBOUND",
+          "title": "Diagnostic Item Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645855790983",
+          "type": "INBOUND",
+          "title": "Diagnostic",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645850906234",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Diagnostic Item Added",
+      "title": "Diagnostic Item Added",
+      "fields": [
+        {
+          "name": "diagnosticItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "diagnosticDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856348397",
+          "type": "OUTBOUND",
+          "title": "Value Stream",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645855790977",
+          "type": "INBOUND",
+          "title": "Add Diagnostic Item",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645855790983",
+      "tags": [],
+      "groupId": "3458764645855790987",
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Diagnostic Item Added",
+      "title": "Diagnostic",
+      "fields": [
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "diagnosticDescription",
+          "type": "String",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645855790977",
+          "type": "OUTBOUND",
+          "title": "Add Diagnostic Item",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645855652122",
+          "type": "INBOUND",
+          "title": "an initiative",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

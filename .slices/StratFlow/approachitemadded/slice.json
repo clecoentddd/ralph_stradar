@@ -1,0 +1,178 @@
+{
+  "id": "3458764645856647735",
+  "status": "Created",
+  "title": "slice: Approach Item Added",
+  "context": "StratFlow",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645856647737",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Approach Item Added",
+      "title": "Add Approach Item",
+      "fields": [
+        {
+          "name": "approachItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "approachDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856647736",
+          "type": "OUTBOUND",
+          "title": "Approach Item Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645856647738",
+          "type": "INBOUND",
+          "title": "Overall Approach",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645856647736",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Approach Item Added",
+      "title": "Approach Item Added",
+      "fields": [
+        {
+          "name": "approachItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "approachDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856348397",
+          "type": "OUTBOUND",
+          "title": "Value Stream",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645856647737",
+          "type": "INBOUND",
+          "title": "Add Approach Item",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645856647738",
+      "tags": [],
+      "groupId": "3458764645856647744",
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Approach Item Added",
+      "title": "Overall Approach",
+      "fields": [
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "approachDescription",
+          "type": "String",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856647737",
+          "type": "OUTBOUND",
+          "title": "Add Approach Item",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645855652122",
+          "type": "INBOUND",
+          "title": "an initiative",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

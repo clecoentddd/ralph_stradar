@@ -1,3 +1,0 @@
-# src/test/resources/application-test.yml
-external-service:
-  url: http://localhost:${wiremock.server.port}/api

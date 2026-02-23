@@ -1,0 +1,155 @@
+{
+  "id": "3458764645856475067",
+  "status": "Created",
+  "title": "slice: Value Stream",
+  "context": "StratFlow",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764645856348397",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Value Stream",
+      "title": "Value Stream",
+      "fields": [
+        {
+          "name": "diagnosticItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "approachItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "diagnosticDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "approachDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856348405",
+          "type": "OUTBOUND",
+          "title": "Value Stream",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645857703042",
+          "type": "INBOUND",
+          "title": "Action Item Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645857206883",
+          "type": "INBOUND",
+          "title": "Action Item Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645856647736",
+          "type": "INBOUND",
+          "title": "Approach Item Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645850906234",
+          "type": "INBOUND",
+          "title": "Diagnostic Item Added",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764645856348405",
+      "tags": [],
+      "groupId": "3458764645856348409",
+      "elementContext": "INTERNAL",
+      "modelContext": "StratFlow",
+      "context": "INTERNAL",
+      "slice": "slice: Value Stream",
+      "title": "Value Stream",
+      "fields": [
+        {
+          "name": "diagnosticItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "diagnosticDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "View: 4 columns view as a flow. User can add, update, delete items for each column: 1) diagnostic, 2) overall approach, 3) action plan and 4) proximate objectives.",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856348397",
+          "type": "INBOUND",
+          "title": "Value Stream",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}
