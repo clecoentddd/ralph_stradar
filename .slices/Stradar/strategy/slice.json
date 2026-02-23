@@ -1,0 +1,243 @@
+{
+  "id": "3458764645855079487",
+  "status": "Created",
+  "title": "slice: strategy",
+  "context": "Stradar",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764645854569412",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: strategy",
+      "title": "strategy",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "statut",
+          "type": "String",
+          "example": "Draft",
+          "generated": true,
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true,
+          "subfields": []
+        },
+        {
+          "name": "strategyName",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "timeFrame",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645854569102",
+          "type": "OUTBOUND",
+          "title": "Create an initiative",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645854569421",
+          "type": "OUTBOUND",
+          "title": "Strategy List",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645850767264",
+          "type": "INBOUND",
+          "title": "Strategy Added",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764645854569421",
+      "tags": [],
+      "groupId": "3458764645854569434",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: strategy",
+      "title": "Strategy List",
+      "fields": [
+        {
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true,
+          "subfields": []
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "statut",
+          "type": "String",
+          "example": "Draft",
+          "generated": true,
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "timeFrame",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "Listing: Draft Strategy first, then Open Strategy, then by order of creation (Closed, Obsolete, Deleted)",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645854569412",
+          "type": "INBOUND",
+          "title": "strategy",
+          "elementType": "READMODEL"
+        }
+      ],
+      "listElement": false,
+      "todoList": false,
+      "apiEndpoint": "",
+      "service": null,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
+    {
+      "id": "3458764645854569102",
+      "tags": [],
+      "groupId": "3458764645854569108",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: strategy",
+      "title": "Create an initiative",
+      "fields": [
+        {
+          "name": "initiativeName",
+          "type": "String",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "statut",
+          "type": "String",
+          "example": "Draft",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "Initiatives belong to a strategy. ",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645854569036",
+          "type": "OUTBOUND",
+          "title": "Create An Initiative",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645854569412",
+          "type": "INBOUND",
+          "title": "strategy",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

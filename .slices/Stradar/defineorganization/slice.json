@@ -1,0 +1,344 @@
+{
+  "id": "3458764645827750525",
+  "status": "Created",
+  "title": "slice: Define Organization",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645827750140",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Define Organization",
+      "title": "Define Organization",
+      "fields": [
+        {
+          "name": "organizationId",
+          "generated": true,
+          "idAttribute": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": []
+        },
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645827622167",
+          "type": "OUTBOUND",
+          "title": "Organization Defined",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645832707774",
+          "type": "INBOUND",
+          "title": "Welcome - Create An Organisation",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645827622167",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Define Organization",
+      "title": "Organization Defined",
+      "fields": [
+        {
+          "name": "organizationId",
+          "generated": true,
+          "idAttribute": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": []
+        },
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645830935933",
+          "type": "OUTBOUND",
+          "title": "organization",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645827750140",
+          "type": "INBOUND",
+          "title": "Define Organization",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645832707774",
+      "tags": [],
+      "groupId": "3458764645832707779",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Define Organization",
+      "title": "Welcome - Create An Organisation",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": true
+        }
+      ],
+      "type": "SCREEN",
+      "description": "Create an organization that will have teams",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645827750140",
+          "type": "OUTBOUND",
+          "title": "Define Organization",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764645828948084",
+      "sliceName": "<p>slice: Define Organization</p>",
+      "title": "spec: Title is mandatory",
+      "given": [],
+      "when": [
+        {
+          "title": "Define Organization",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645828948085",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "organizationId",
+              "generated": true,
+              "idAttribute": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "adminAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "generated": true,
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827750140"
+        }
+      ],
+      "then": [
+        {
+          "title": "Error-Case",
+          "tags": [],
+          "examples": [
+            {
+              "Message": "Error: title is mandatory"
+            }
+          ],
+          "id": "3458764645828948086",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "Title is mandatory"
+        }
+      ],
+      "linkedId": "3458764645827750525"
+    },
+    {
+      "vertical": false,
+      "id": "3458764645827937074",
+      "sliceName": "<p>slice: Define Organization</p>",
+      "title": "spec: Define Organization",
+      "given": [],
+      "when": [
+        {
+          "title": "Define Organization",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645827937075",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "organizationId",
+              "generated": true,
+              "idAttribute": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "adminAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "generated": true,
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827750140"
+        }
+      ],
+      "then": [
+        {
+          "title": "Organization Defined",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645827937079",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "organizationId",
+              "generated": true,
+              "idAttribute": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "adminAccountId",
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "generated": true,
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827622167"
+        }
+      ],
+      "comments": [],
+      "linkedId": "3458764645827750525"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "organization"
+  ]
+}

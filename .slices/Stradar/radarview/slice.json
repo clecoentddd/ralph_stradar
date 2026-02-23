@@ -1,0 +1,515 @@
+{
+  "id": "3458764645872431573",
+  "status": "Created",
+  "title": "slice: Radar View",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645871713471",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Radar View",
+      "title": "Rdadaritemad",
+      "fields": [
+        {
+          "name": "radarItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "radarId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Title",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Distance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Detected",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessing",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessed",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responding",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responded",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Assessment",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Response",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Type",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Threat",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Opportunity",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Impact",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Medium",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "High",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "LinkToRadar",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645858318697",
+          "type": "OUTBOUND",
+          "title": "rdadarItemAdded",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645871713479",
+          "type": "INBOUND",
+          "title": "Add Radar Item",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645858318697",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Radar View",
+      "title": "rdadarItemAdded",
+      "fields": [
+        {
+          "name": "radarItemId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "radarId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Title",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Distance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Detected",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessing",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessed",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responding",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responded",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Assessment",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Response",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Type",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Threat",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Opportunity",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Impact",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Medium",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "High",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "LinkToRadar",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645872569559",
+          "type": "OUTBOUND",
+          "title": "read-model",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645871713471",
+          "type": "INBOUND",
+          "title": "Rdadaritemad",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645871713479",
+      "tags": [],
+      "groupId": "3458764645871713483",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Radar View",
+      "title": "Add Radar Item",
+      "fields": [
+        {
+          "name": "radarId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Title",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Distance",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "Detected",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessing",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessed",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responding",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responded",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Assessment",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Response",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Type",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "Threat",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Opportunity",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Impact",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Medium",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "High",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "LinkToRadar",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "Allows user to add a radar item:\nAttributes (one option only - mandatory):\nType: Threat or Oppotunity\nCategory: Business, Operating Model, Capabilities, People & Knowledge\nDistance: Detected, Assessing, Assessed or Responding, Responded\nImpact: Low, Medium or High\nTolerance: High, Medium or Low\nLink (one only, not mandatory)\nZoom In: a link to another radar - if the user clicks, will open the link\n\nUpdate and Delete will be supported\n",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645871713471",
+          "type": "OUTBOUND",
+          "title": "Rdadaritemad",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}
