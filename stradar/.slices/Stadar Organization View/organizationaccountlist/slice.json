@@ -54,15 +54,15 @@
       ],
       "dependencies": [
         {
-          "id": "3458764660938159264",
-          "type": "OUTBOUND",
-          "title": "Company Sign In",
-          "elementType": "SCREEN"
-        },
-        {
           "id": "3458764661504820723",
           "type": "OUTBOUND",
           "title": "Organization Account List",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764660938159264",
+          "type": "OUTBOUND",
+          "title": "Company Sign In",
           "elementType": "SCREEN"
         },
         {

@@ -13,10 +13,10 @@
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Update Radar Element",
-      "title": "Update Radar Element",
+      "title": "Update Environmental Change",
       "fields": [
         {
-          "name": "teamId",
+          "name": "envChangeId",
           "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
@@ -70,14 +70,6 @@
           "idAttribute": false
         },
         {
-          "name": "radarElementId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
           "name": "respond",
           "type": "String",
           "generated": true,
@@ -89,6 +81,13 @@
           "name": "risk",
           "type": "String",
           "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -112,15 +111,15 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "radar",
+      "aggregate": "environmental change",
       "aggregateDependencies": [
-        "radar"
+        "environmental change"
       ],
       "dependencies": [
         {
           "id": "3458764661032936502",
           "type": "OUTBOUND",
-          "title": "Radar Element Updated",
+          "title": "Environmental Change Updated",
           "elementType": "EVENT"
         },
         {
@@ -147,10 +146,10 @@
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Update Radar Element",
-      "title": "Radar Element Updated",
+      "title": "Environmental Change Updated",
       "fields": [
         {
-          "name": "teamId",
+          "name": "envChangeId",
           "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
@@ -204,14 +203,6 @@
           "idAttribute": false
         },
         {
-          "name": "radarElementId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
           "name": "respond",
           "type": "String",
           "generated": true,
@@ -223,6 +214,13 @@
           "name": "risk",
           "type": "String",
           "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -246,21 +244,21 @@
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "radar",
+      "aggregate": "environmental change",
       "aggregateDependencies": [
-        "radar"
+        "environmental change"
       ],
       "dependencies": [
         {
           "id": "3458764661040894563",
           "type": "OUTBOUND",
-          "title": "radar",
+          "title": "Environmental Changes",
           "elementType": "READMODEL"
         },
         {
           "id": "3458764661051289511",
           "type": "INBOUND",
-          "title": "Update Radar Element",
+          "title": "Update Environmental Change",
           "elementType": "COMMAND"
         }
       ],
@@ -286,42 +284,11 @@
       "title": "Update Radar Element",
       "fields": [
         {
-          "name": "teamId",
+          "name": "envChangeId",
           "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
-        },
-        {
-          "name": "organizationId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "radarElementId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "title",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "detect",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
         },
         {
           "name": "assess",
@@ -332,23 +299,15 @@
           "idAttribute": false
         },
         {
-          "name": "respond",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "type",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
           "name": "category",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "detect",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -372,7 +331,45 @@
           "idAttribute": false
         },
         {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "respond",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
           "name": "risk",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "type",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -382,21 +379,21 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "radar",
+      "aggregate": "environmental change",
       "aggregateDependencies": [
-        "radar"
+        "environmental change"
       ],
       "dependencies": [
         {
           "id": "3458764661051289511",
           "type": "OUTBOUND",
-          "title": "Update Radar Element",
+          "title": "Update Environmental Change",
           "elementType": "COMMAND"
         },
         {
           "id": "3458764661040894563",
           "type": "INBOUND",
-          "title": "radar",
+          "title": "Environmental Changes",
           "elementType": "READMODEL"
         }
       ],
@@ -412,391 +409,9 @@
   "screenLayouts": [],
   "processors": [],
   "tables": [],
-  "specifications": [
-    {
-      "vertical": false,
-      "id": "3458764661100518073",
-      "sliceName": "<p>slice: Update Radar Element</p>",
-      "title": "spec: Update Radar Element - Ensure Updated",
-      "given": [
-        {
-          "title": "RadarElementDetected",
-          "tags": [],
-          "examples": [],
-          "id": "3458764661100518079",
-          "index": 1,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "environmentalChangeId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "0x123"
-            },
-            {
-              "name": "assess",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "assess v1"
-            },
-            {
-              "name": "category",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "capabilities"
-            },
-            {
-              "name": "detect",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "distance",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "impact",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            },
-            {
-              "name": "radarElementId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x909"
-            },
-            {
-              "name": "respond",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "risk",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x789"
-            },
-            {
-              "name": "title",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "type",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            }
-          ],
-          "linkedId": "3458764661032650856"
-        },
-        {
-          "title": "Radar Created",
-          "tags": [],
-          "examples": [],
-          "id": "3458764661100518077",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "environmentalChangeId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "0x123"
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x789"
-            }
-          ],
-          "linkedId": "3458764661034167819"
-        }
-      ],
-      "when": [
-        {
-          "title": "Update Radar Element",
-          "tags": [],
-          "examples": [],
-          "id": "3458764661100518074",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_COMMAND",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "0x789"
-            },
-            {
-              "name": "assess",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "assess v2"
-            },
-            {
-              "name": "category",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "people"
-            },
-            {
-              "name": "detect",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "distance",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "impact",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            },
-            {
-              "name": "radarElementId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x909"
-            },
-            {
-              "name": "respond",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "risk",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "title",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "type",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            }
-          ],
-          "linkedId": "3458764661051289511"
-        }
-      ],
-      "then": [
-        {
-          "title": "Radar Element Updated",
-          "tags": [],
-          "examples": [],
-          "id": "3458764661100518076",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "0x789"
-            },
-            {
-              "name": "assess",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "assess v2"
-            },
-            {
-              "name": "category",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "people"
-            },
-            {
-              "name": "detect",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "distance",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "impact",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            },
-            {
-              "name": "radarElementId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x909"
-            },
-            {
-              "name": "respond",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "risk",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "title",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "type",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            }
-          ],
-          "linkedId": "3458764661032936502"
-        }
-      ],
-      "comments": [
-        {
-          "description": "Check the environmentalChangeId, organizationId, teamId and radarElementId match and are not null"
-        }
-      ],
-      "linkedId": "3458764661100320100"
-    }
-  ],
+  "specifications": [],
   "actors": [],
   "aggregates": [
-    "radar"
+    "environmental change"
   ]
 }

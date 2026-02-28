@@ -48,8 +48,6 @@ class TeamCreatedTest {
                         CreateTeamCommand(
                                 teamId = teamId,
                                 organizationId = orgId,
-                                adminAccountId = adminId,
-                                organizationName = "TechStart",
                                 context = "IT",
                                 level = 1,
                                 name = "CTO",
@@ -60,12 +58,10 @@ class TeamCreatedTest {
                 val expectedEvent =
                         RandomData.newInstance<TeamCreatedEvent> {
                                 this.teamId = teamId
-                                this.adminAccountId = adminId
                                 this.context = "IT"
                                 this.level = 1
                                 this.name = "CTO"
                                 this.organizationId = orgId
-                                this.organizationName = "TechStart"
                                 this.purpose = "To do good"
                         }
 

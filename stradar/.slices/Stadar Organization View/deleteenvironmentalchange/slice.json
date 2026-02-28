@@ -1,0 +1,201 @@
+{
+  "id": "3458764661105229298",
+  "status": "Created",
+  "title": "slice: Delete Environmental Change",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764661052478597",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Delete Environmental Change",
+      "title": "Delete Environmental Change",
+      "fields": [
+        {
+          "name": "envChangeId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "environmental change",
+      "aggregateDependencies": [
+        "environmental change"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661033170251",
+          "type": "OUTBOUND",
+          "title": "Environmental Change Deleted",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661052478614",
+          "type": "INBOUND",
+          "title": "Delete Environment Change",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764661033170251",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Delete Environmental Change",
+      "title": "Environmental Change Deleted",
+      "fields": [
+        {
+          "name": "envChangeId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "environmental change",
+      "aggregateDependencies": [
+        "environmental change"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661040894563",
+          "type": "OUTBOUND",
+          "title": "Environmental Changes",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661052478597",
+          "type": "INBOUND",
+          "title": "Delete Environmental Change",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661052478614",
+      "tags": [],
+      "groupId": "3458764661052478625",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Delete Environmental Change",
+      "title": "Delete Environment Change",
+      "fields": [
+        {
+          "name": "envChangeId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "environmental change",
+      "aggregateDependencies": [
+        "environmental change"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661052478597",
+          "type": "OUTBOUND",
+          "title": "Delete Environmental Change",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764661040894563",
+          "type": "INBOUND",
+          "title": "Environmental Changes",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "environmental change"
+  ]
+}

@@ -70,7 +70,7 @@
         {
           "id": "3458764660937880791",
           "type": "INBOUND",
-          "title": "Company Admin Signed In",
+          "title": "Person Signed In",
           "elementType": "EVENT"
         }
       ],

@@ -7,7 +7,9 @@ import jakarta.persistence.Table
 import java.util.UUID
 import stradar.common.NoArg
 
-class CompanyTeamListReadModelQuery()
+class TeamListReadModelQuery()
+
+data class TeamListByOrganizationQuery(val organizationId: java.util.UUID)
 
 data class TeamNameUniquenessQuery(val organizationId: java.util.UUID, val teamName: String)
 
@@ -23,7 +25,7 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464584975
 @NoArg
 @Entity
 @Table(name = "team_read_model")
-class CompanyTeamListReadModelEntity {
+class TeamListReadModelEntity {
     @Id @Column(name = "team_id") var teamId: UUID? = null
     @Column(name = "context") var context: String? = null
     @Column(name = "level") var level: Int? = null
@@ -34,4 +36,4 @@ class CompanyTeamListReadModelEntity {
     @Column(name = "purpose") var purpose: String? = null
 }
 
-data class CompanyTeamListReadModel(val data: List<CompanyTeamListReadModelEntity>)
+data class TeamListReadModel(val teams: List<TeamListReadModelEntity>)

@@ -67,11 +67,9 @@ class CreateTeamResource(
                         CreateTeamCommand(
                                 teamId = UUID.randomUUID(),
                                 organizationId = payload.organizationId,
-                                adminAccountId = payload.adminAccountId,
                                 context = payload.context,
                                 level = payload.level,
                                 name = payload.name,
-                                organizationName = payload.organizationName,
                                 purpose = payload.purpose
                         ),
                         metadata

@@ -81,9 +81,15 @@
       ],
       "dependencies": [
         {
-          "id": "3458764661333536917",
+          "id": "3458764661044303447",
           "type": "OUTBOUND",
-          "title": "Radar",
+          "title": "Detect Environmental Change",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764661631265248",
+          "type": "OUTBOUND",
+          "title": "Update Team Information",
           "elementType": "SCREEN"
         },
         {
@@ -104,18 +110,18 @@
   ],
   "screens": [
     {
-      "id": "3458764661333536917",
+      "id": "3458764661044303447",
       "tags": [],
-      "groupId": "3458764661333536923",
+      "groupId": "3458764661044303451",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Team List",
-      "title": "Radar",
+      "title": "Detect Environmental Change",
       "fields": [
         {
-          "name": "teamId",
+          "name": "envChangeId",
           "type": "UUID",
           "generated": true,
           "subfields": [],
@@ -123,8 +129,87 @@
           "idAttribute": true
         },
         {
+          "name": "assess",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "category",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "detect",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "distance",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "impact",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
           "name": "organizationId",
           "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "respond",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "risk",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -138,9 +223,103 @@
       ],
       "dependencies": [
         {
-          "id": "3458764661034694453",
+          "id": "3458764661044303442",
           "type": "OUTBOUND",
-          "title": "Create Radar",
+          "title": "Detect Environmental Change",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645849750300",
+          "type": "INBOUND",
+          "title": "Company Team List",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
+    {
+      "id": "3458764661631265248",
+      "tags": [],
+      "groupId": "3458764661631265254",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Team List",
+      "title": "Update Team Information",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661631265233",
+          "type": "OUTBOUND",
+          "title": "Update Team",
           "elementType": "COMMAND"
         },
         {

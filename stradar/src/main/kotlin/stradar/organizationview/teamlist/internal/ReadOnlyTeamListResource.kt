@@ -18,10 +18,18 @@ class TeamlistResource(private var queryGateway: QueryGateway) {
 
      @CrossOrigin
      @GetMapping("/teamlist")
-     fun findReadModel(): CompletableFuture<CompanyTeamListReadModel> {
+     fun findReadModel(): CompletableFuture<TeamListReadModel> {
+          return queryGateway.query(TeamListReadModelQuery(), TeamListReadModel::class.java)
+     }
+
+     @CrossOrigin
+     @GetMapping("/teamlist/{organizationId}")
+     fun findByOrganization(
+             @PathVariable("organizationId") organizationId: UUID
+     ): CompletableFuture<TeamListReadModel> {
           return queryGateway.query(
-                  CompanyTeamListReadModelQuery(),
-                  CompanyTeamListReadModel::class.java
+                  TeamListByOrganizationQuery(organizationId),
+                  TeamListReadModel::class.java
           )
      }
 

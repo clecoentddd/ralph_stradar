@@ -1,0 +1,218 @@
+{
+  "id": "3458764661684920791",
+  "status": "Created",
+  "title": "slice: strategies",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764661684920684",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: strategies",
+      "title": "strategies",
+      "fields": [
+        {
+          "name": "strategyBuilderId",
+          "type": "String",
+          "idAttribute": true,
+          "subfields": [],
+          "generated": true,
+          "cardinality": "Single"
+        },
+        {
+          "name": "activeStrategyId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": false
+        },
+        {
+          "name": "draftStrategyId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "strategy",
+          "type": "Custom",
+          "cardinality": "List",
+          "subfields": [
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "timeframe",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "cardinality": "Single"
+            }
+          ],
+          "generated": true,
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "Strategy Builder",
+      "aggregateDependencies": [
+        "Strategy Builder"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661684920689",
+          "type": "OUTBOUND",
+          "title": "Strategies",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764661671789872",
+          "type": "INBOUND",
+          "title": "Strategy Draft Created Event",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764661684920689",
+      "tags": [],
+      "groupId": "3458764661684920691",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: strategies",
+      "title": "Strategies",
+      "fields": [
+        {
+          "name": "strategyBuildId",
+          "type": "String",
+          "idAttribute": true,
+          "subfields": [],
+          "generated": true,
+          "cardinality": "Single"
+        },
+        {
+          "name": "activeStrategyId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": false
+        },
+        {
+          "name": "draftStrategyId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "strategy",
+          "type": "Custom",
+          "cardinality": "List",
+          "subfields": [
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "timeframe",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "cardinality": "Single"
+            }
+          ],
+          "generated": true,
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "Strategy Builder",
+      "aggregateDependencies": [
+        "Strategy Builder"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661684920684",
+          "type": "INBOUND",
+          "title": "strategies",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Strategy Builder"
+  ]
+}

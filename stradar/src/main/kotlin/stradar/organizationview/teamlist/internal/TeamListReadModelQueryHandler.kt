@@ -9,13 +9,16 @@ import stradar.organizationview.teamlist.*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645849750300
 */
 @Component
-class CompanyTeamListReadModelQueryHandler(
-        private val repository: CompanyTeamListReadModelRepository
-) {
+class TeamListReadModelQueryHandler(private val repository: TeamListReadModelRepository) {
 
   @QueryHandler
-  fun handleQuery(_query: CompanyTeamListReadModelQuery): CompanyTeamListReadModel? {
-    return CompanyTeamListReadModel(repository.findAll())
+  fun handleQuery(_query: TeamListReadModelQuery): TeamListReadModel? {
+    return TeamListReadModel(repository.findAll())
+  }
+
+  @QueryHandler
+  fun handleByOrganization(query: TeamListByOrganizationQuery): TeamListReadModel {
+    return TeamListReadModel(repository.findByOrganizationId(query.organizationId))
   }
 
   @QueryHandler

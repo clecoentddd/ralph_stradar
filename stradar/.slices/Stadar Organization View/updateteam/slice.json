@@ -1,0 +1,739 @@
+{
+  "id": "3458764661631987971",
+  "status": "Created",
+  "title": "slice: Update Team",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764661631265233",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Update Team",
+      "title": "Update Team",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661631101975",
+          "type": "OUTBOUND",
+          "title": "Team Updated",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661631265248",
+          "type": "INBOUND",
+          "title": "Update Team Information",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764661631101975",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Update Team",
+      "title": "Team Updated",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645849750300",
+          "type": "OUTBOUND",
+          "title": "Company Team List",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661631265233",
+          "type": "INBOUND",
+          "title": "Update Team",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661631265248",
+      "tags": [],
+      "groupId": "3458764661631265254",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Update Team",
+      "title": "Update Team Information",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661631265233",
+          "type": "OUTBOUND",
+          "title": "Update Team",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645849750300",
+          "type": "INBOUND",
+          "title": "Company Team List",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764661650936247",
+      "sliceName": "slice: Update Team",
+      "title": "spec: Update Team - Happy Flow",
+      "given": [
+        {
+          "title": "Team Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661650936269",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Context v1"
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "1"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Name 1"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Purpose 1"
+            }
+          ],
+          "linkedId": "3458764645830373813"
+        }
+      ],
+      "when": [
+        {
+          "title": "Update Team",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661650936249",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Context v2"
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "2"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Name 2"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Purpose 2"
+            }
+          ],
+          "linkedId": "3458764661631265233"
+        }
+      ],
+      "then": [
+        {
+          "title": "Team Updated",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661650936258",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Context v2"
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "2"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Name 2"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Purpose 2"
+            }
+          ],
+          "linkedId": "3458764661631101975"
+        }
+      ],
+      "comments": [
+        {
+          "description": "Happy Flow"
+        }
+      ],
+      "linkedId": "3458764661631987971"
+    },
+    {
+      "vertical": false,
+      "id": "3458764661658628233",
+      "sliceName": "slice: Update Team",
+      "title": "spec: Update Team - Recovery After Delete",
+      "given": [
+        {
+          "title": "Team Created",
+          "tags": [],
+          "examples": [
+            {
+              "teamId": "0x123",
+              "Context": "Context 1",
+              "Level": 4,
+              "Name": "CTO v2",
+              "organizationId": "0x456",
+              "Purpose": "Purpose 1"
+            }
+          ],
+          "id": "3458764661658628255",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645830373813"
+        },
+        {
+          "title": "Team Deleted",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661658628268",
+          "index": 1,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            }
+          ],
+          "linkedId": "3458764661631102656"
+        }
+      ],
+      "when": [
+        {
+          "title": "Update Team",
+          "tags": [],
+          "examples": [
+            {
+              "teamId": "0x123",
+              "Context": "Context 1",
+              "Level": 4,
+              "Name": "CTO v2",
+              "organizationId": "0x456",
+              "Purpose": "Purpose 1"
+            }
+          ],
+          "id": "3458764661658628240",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764661631265233"
+        }
+      ],
+      "then": [
+        {
+          "title": "Team Updated",
+          "tags": [],
+          "examples": [
+            {
+              "teamId": "0x123",
+              "Context": "Context 1",
+              "Level": 4,
+              "Name": "CTO v2",
+              "organizationId": "0x456",
+              "Purpose": "Purpose 1"
+            }
+          ],
+          "id": "3458764661658628247",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764661631101975"
+        }
+      ],
+      "comments": [
+        {
+          "description": "User can update a team after deleting it (recovery mecanism)"
+        }
+      ],
+      "linkedId": "3458764661631987971"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "team"
+  ]
+}

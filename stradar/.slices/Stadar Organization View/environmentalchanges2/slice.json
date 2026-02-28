@@ -1,0 +1,49 @@
+{
+  "id": "3458764661101039959",
+  "status": "Created",
+  "title": "slice: Environmental Changes 2",
+  "context": "Stadar Organization View",
+  "sliceType": "UNDEFINED",
+  "commands": [],
+  "events": [],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661600401907",
+      "tags": [],
+      "groupId": "3458764661600401926",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Environmental Changes 2",
+      "title": "Environmental Changes",
+      "fields": [],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764661040894563",
+          "type": "INBOUND",
+          "title": "Environmental Changes",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

@@ -27,7 +27,7 @@ class OrganizationAggregate {
   fun handle(command: DefineOrganizationCommand): CommandResult {
 
     if (command.organizationName.isBlank()) {
-      throw CommandException("Error: Organization name is mandatory")
+      throw CommandException("organizationName is required and cannot be empty")
     }
 
     // Apply the event using standardized 'personId' and 'role'

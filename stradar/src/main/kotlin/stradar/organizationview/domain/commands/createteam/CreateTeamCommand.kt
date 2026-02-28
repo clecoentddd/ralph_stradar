@@ -10,10 +10,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464583067
 data class CreateTeamCommand(
         @TargetAggregateIdentifier var teamId: UUID,
         var organizationId: UUID,
-        var adminAccountId: UUID,
         var context: String,
         var level: Int,
         var name: String,
-        var organizationName: String,
         var purpose: String
 ) : Command

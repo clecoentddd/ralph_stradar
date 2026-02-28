@@ -86,18 +86,18 @@
       "title": "person created",
       "fields": [
         {
-          "name": "organizationId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
           "name": "personId",
           "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
         },
         {
           "name": "role",
