@@ -1,0 +1,1 @@
+package stradar.organizationview.domain;

@@ -1,0 +1,253 @@
+{
+  "id": "3458764660825671418",
+  "status": "Created",
+  "title": "slice: admin_connected",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764660938676873",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: admin_connected",
+      "title": "organization admin",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660938676892",
+          "type": "OUTBOUND",
+          "title": "Admin Account",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645833837016",
+          "type": "OUTBOUND",
+          "title": "Create Your team",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764660937880791",
+          "type": "INBOUND",
+          "title": "Company Admin Signed In",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764660938676892",
+      "tags": [],
+      "groupId": "3458764660938676902",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: admin_connected",
+      "title": "Admin Account",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660938676873",
+          "type": "INBOUND",
+          "title": "organization admin",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
+    {
+      "id": "3458764645833837016",
+      "tags": [],
+      "groupId": "3458764645833837019",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: admin_connected",
+      "title": "Create Your team",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": " Teams in a hierarchical structure using levels: level 0, the below level 1, then below level 2, etc. The only relationship between teams is the level",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645830671029",
+          "type": "OUTBOUND",
+          "title": "Create Team",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764660938676873",
+          "type": "INBOUND",
+          "title": "organization admin",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "organization admin"
+  ]
+}

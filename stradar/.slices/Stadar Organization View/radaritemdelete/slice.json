@@ -1,0 +1,225 @@
+{
+  "id": "3458764661105229298",
+  "status": "Created",
+  "title": "slice: Radaritemdelete",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764661052478597",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Radaritemdelete",
+      "title": "Delete Radar Element",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "radarElementId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "environmentalChangeId",
+          "idAttribute": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": []
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "radar",
+      "aggregateDependencies": [
+        "radar"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661033170251",
+          "type": "OUTBOUND",
+          "title": "Radar Element Deleted",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661052478614",
+          "type": "INBOUND",
+          "title": "Delete a radar element",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764661033170251",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Radaritemdelete",
+      "title": "Radar Element Deleted",
+      "fields": [
+        {
+          "name": "environmentalChangeId",
+          "idAttribute": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": []
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "radarElementId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "radar",
+      "aggregateDependencies": [
+        "radar"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661040894563",
+          "type": "OUTBOUND",
+          "title": "radar",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661052478597",
+          "type": "INBOUND",
+          "title": "Delete Radar Element",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661052478614",
+      "tags": [],
+      "groupId": "3458764661052478625",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Radaritemdelete",
+      "title": "Delete a radar element",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "radarElementId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "environmentalChangeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "radar",
+      "aggregateDependencies": [
+        "radar"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661052478597",
+          "type": "OUTBOUND",
+          "title": "Delete Radar Element",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764661040894563",
+          "type": "INBOUND",
+          "title": "radar",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "radar"
+  ]
+}

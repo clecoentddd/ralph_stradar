@@ -1,0 +1,353 @@
+{
+  "id": "3458764660937620380",
+  "status": "Created",
+  "title": "slice: Sign In To Company Admin Account",
+  "context": "Stadar Company View",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764660937417035",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Company View",
+      "context": "INTERNAL",
+      "slice": "slice: Sign In To Company Admin Account",
+      "title": "Create Admin Account",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660937880791",
+          "type": "OUTBOUND",
+          "title": "Company Admin Signed In",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764660938159264",
+          "type": "INBOUND",
+          "title": "Company Sign In",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764660937880791",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Company View",
+      "context": "INTERNAL",
+      "slice": "slice: Sign In To Company Admin Account",
+      "title": "Company Admin Signed In",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660938676873",
+          "type": "OUTBOUND",
+          "title": "company admin",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764660937417035",
+          "type": "INBOUND",
+          "title": "Create Admin Account",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764660938159264",
+      "tags": [],
+      "groupId": "3458764660938159279",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Company View",
+      "context": "INTERNAL",
+      "slice": "slice: Sign In To Company Admin Account",
+      "title": "Company Sign In",
+      "fields": [
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660937417035",
+          "type": "OUTBOUND",
+          "title": "Create Admin Account",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764660973427752",
+      "sliceName": "<p>slice: Sign In To Company Admin Account</p>",
+      "title": "spec: Sign In To Company Admin Account - scenario",
+      "given": [
+        {
+          "title": "Organization Defined",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660973427759",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "adminAccountId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827622167"
+        }
+      ],
+      "when": [
+        {
+          "title": "Create Admin Account",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660973427754",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "adminAccountId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "email",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x00§"
+            },
+            {
+              "name": "organizationName",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764660937417035"
+        }
+      ],
+      "then": [
+        {
+          "title": "Company does not exist",
+          "tags": [],
+          "id": "3458764660973427756",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "Company does not exist"
+        }
+      ],
+      "linkedId": "3458764660937620380"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "organization admin"
+  ]
+}

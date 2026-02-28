@@ -4,20 +4,22 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/postgres-stradar
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
 
   # Flyway Configuration
   flyway:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/postgres-stradar
     locations: classpath:db/migration
     user: postgres
     password: postgres
+    baseline-on-migrate: true
+    baseline-version: 20240101
 
 axon:
   serializer:

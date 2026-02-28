@@ -1,0 +1,229 @@
+{
+  "id": "3458764661501673119",
+  "status": "Created",
+  "title": "slice: Create Person",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764661498263339",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Create Person",
+      "title": "Create Person",
+      "fields": [
+        {
+          "name": "personId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661498040166",
+          "type": "OUTBOUND",
+          "title": "person created",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661498263330",
+          "type": "INBOUND",
+          "title": "Organization Automation",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764661498040166",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Create Person",
+      "title": "person created",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "personId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660938676873",
+          "type": "OUTBOUND",
+          "title": "organization admin",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661504820713",
+          "type": "OUTBOUND",
+          "title": "person",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661498263339",
+          "type": "INBOUND",
+          "title": "Create Person",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764661498263330",
+      "tags": [],
+      "groupId": "3458764661498263338",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Create Person",
+      "title": "Organization Automation",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "personId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "organization admin",
+      "aggregateDependencies": [
+        "organization admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661498263339",
+          "type": "OUTBOUND",
+          "title": "Create Person",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "organization admin"
+  ]
+}

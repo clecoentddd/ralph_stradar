@@ -1,0 +1,579 @@
+{
+  "id": "3458764645851939395",
+  "status": "Created",
+  "title": "slice: Add Strategy",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645851078901",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Add Strategy",
+      "title": "Add Strategy",
+      "fields": [
+        {
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "timeFrame",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "statut",
+          "type": "String",
+          "example": "Draft",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645850767264",
+          "type": "OUTBOUND",
+          "title": "Strategy Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645851253934",
+          "type": "INBOUND",
+          "title": "Add a strategy",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645850767264",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Add Strategy",
+      "title": "Strategy Added",
+      "fields": [
+        {
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "statut",
+          "type": "String",
+          "example": "Draft",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "timeFrame",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645854569412",
+          "type": "OUTBOUND",
+          "title": "strategy",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645851078901",
+          "type": "INBOUND",
+          "title": "Add Strategy",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645851253934",
+      "tags": [],
+      "groupId": "3458764645851253939",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Add Strategy",
+      "title": "Add a strategy",
+      "fields": [
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "timeFrame",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "One page to add strategy and initiatives.",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645851078901",
+          "type": "OUTBOUND",
+          "title": "Add Strategy",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645851078375",
+          "type": "INBOUND",
+          "title": "strategy dashboard",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764645853402515",
+      "sliceName": "slice: Add Strategy",
+      "title": "spec: One draft strategy at a time",
+      "given": [
+        {
+          "title": "Strategy Added",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645853402520",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x331"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "statut",
+              "type": "String",
+              "example": "Draft",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single"
+            },
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x333"
+            },
+            {
+              "name": "strategyName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Team A"
+            },
+            {
+              "name": "timeFrame",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645850767264"
+        }
+      ],
+      "when": [
+        {
+          "title": "Add Strategy",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645853402516",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x993"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x333"
+            },
+            {
+              "name": "strategyName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Present"
+            },
+            {
+              "name": "timeFrame",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "2026"
+            },
+            {
+              "name": "statut",
+              "type": "String",
+              "example": "draft",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single"
+            }
+          ],
+          "linkedId": "3458764645851078901"
+        }
+      ],
+      "then": [
+        {
+          "title": "Error-Case",
+          "tags": [],
+          "examples": [
+            {
+              "message": "Draft strategy already exists"
+            }
+          ],
+          "id": "3458764645853402518",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "A draft strategy already exists"
+        }
+      ],
+      "linkedId": "3458764645851939395"
+    },
+    {
+      "vertical": false,
+      "id": "3458764645852557488",
+      "sliceName": "slice: Add Strategy",
+      "title": "spec: Add Strategy",
+      "given": [
+        {
+          "title": "Strategy Dashboard Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645852557501",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x441"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Team A"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x321"
+            }
+          ],
+          "linkedId": "3458764645836875733"
+        }
+      ],
+      "when": [
+        {
+          "title": "Add Strategy",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645852557493",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x998"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x441"
+            },
+            {
+              "name": "strategyName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Future"
+            },
+            {
+              "name": "timeFrame",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "2025-2026"
+            },
+            {
+              "name": "statut",
+              "type": "String",
+              "example": "Draft",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single"
+            }
+          ],
+          "linkedId": "3458764645851078901"
+        }
+      ],
+      "then": [
+        {
+          "title": "Strategy Added",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645852557497",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x998"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "statut",
+              "type": "String",
+              "example": "Draft",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single"
+            },
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x441"
+            },
+            {
+              "name": "strategyName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Future"
+            },
+            {
+              "name": "timeFrame",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "2025-2026"
+            }
+          ],
+          "linkedId": "3458764645850767264"
+        }
+      ],
+      "comments": [],
+      "linkedId": "3458764645851939395"
+    }
+  ],
+  "actors": [],
+  "aggregates": []
+}

@@ -1,0 +1,252 @@
+{
+  "slices": [
+    {
+      "id": "3458764660825671360",
+      "slice": "slice: signin_admin",
+      "index": 1,
+      "context": "Stradar",
+      "folder": "signin_admin",
+      "status": "Created"
+    },
+    {
+      "id": "3458764660825671418",
+      "slice": "slice: organization person connected",
+      "index": 7,
+      "context": "Stadar Organization View",
+      "folder": "organizationpersonconnected",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645850349025",
+      "slice": "slice: Create Strategy Dashboard",
+      "index": 5,
+      "context": "Stradar",
+      "folder": "createstrategydashboard",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645851938986",
+      "slice": "slice: strategy dashboard",
+      "index": 7,
+      "context": "Stradar",
+      "folder": "strategydashboard",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645851939395",
+      "slice": "slice: Add Strategy",
+      "index": 9,
+      "context": "Stradar",
+      "folder": "addstrategy",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645855079487",
+      "slice": "slice: strategy",
+      "index": 11,
+      "context": "Stradar",
+      "folder": "strategy",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645855304955",
+      "slice": "slice: Create An Initiative",
+      "index": 13,
+      "context": "Stradar",
+      "folder": "createaninitiative",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645855652334",
+      "slice": "slice: an initiative",
+      "index": 15,
+      "context": "Stradar",
+      "folder": "aninitiative",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645856214406",
+      "slice": "slice: Diagnostic Item Added",
+      "index": 17,
+      "context": "Stradar",
+      "folder": "diagnosticitemadded",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645827750525",
+      "slice": "slice: Define Organization",
+      "index": 19,
+      "context": "Stradar",
+      "folder": "defineorganization",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645856647735",
+      "slice": "slice: Approach Item Added",
+      "index": 21,
+      "context": "Stradar",
+      "folder": "approachitemadded",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645830936253",
+      "slice": "slice: Organization list",
+      "index": 23,
+      "context": "Stradar",
+      "folder": "organizationlist",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645857206882",
+      "slice": "slice: Action Item Added",
+      "index": 25,
+      "context": "Stradar",
+      "folder": "actionitemadded",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645831088163",
+      "slice": "slice: Create Team",
+      "index": 9,
+      "context": "Stadar Organization View",
+      "folder": "createteam",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645857703039",
+      "slice": "slice: Proximate Objective Added",
+      "index": 29,
+      "context": "Stradar",
+      "folder": "proximateobjectiveadded",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645856475067",
+      "slice": "slice: Value Stream",
+      "index": 31,
+      "context": "Stradar",
+      "folder": "valuestream",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645872431573",
+      "slice": "slice: Radar View",
+      "index": 33,
+      "context": "Stradar",
+      "folder": "radarview",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645872569805",
+      "slice": "slice: read-model",
+      "index": 35,
+      "context": "Stradar",
+      "folder": "read-model",
+      "status": "Created"
+    },
+    {
+      "id": "3458764660937620380",
+      "slice": "slice: Sign In To Company Admin Account",
+      "index": 5,
+      "context": "Stadar Organization View",
+      "folder": "signintocompanyadminaccount",
+      "status": "Created"
+    },
+    {
+      "id": "3458764645850227982",
+      "slice": "slice: Team List",
+      "index": 11,
+      "context": "Stadar Organization View",
+      "folder": "teamlist",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661054364254",
+      "slice": "slice: Create Radar",
+      "index": 13,
+      "context": "Stadar Organization View",
+      "folder": "createradar",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661054617991",
+      "slice": "slice: radar list",
+      "index": 15,
+      "context": "Stadar Organization View",
+      "folder": "radarlist",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661099002342",
+      "slice": "slice: Detect Radar Element",
+      "index": 17,
+      "context": "Stadar Organization View",
+      "folder": "detectenvironmentalchange",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661099982925",
+      "slice": "slice: radar view 1",
+      "index": 15,
+      "context": "Stadar Organization View",
+      "folder": "radarview1",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661100320100",
+      "slice": "slice: Update Radar Element",
+      "index": 21,
+      "context": "Stadar Organization View",
+      "folder": "updateradarelement",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661101039959",
+      "slice": "slice: radar view 2",
+      "index": 23,
+      "context": "Stadar Organization View",
+      "folder": "radarview2",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661105229298",
+      "slice": "slice: Delete Radar Element",
+      "index": 25,
+      "context": "Stadar Organization View",
+      "folder": "deleteradarelement",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661105229635",
+      "slice": "slice: radar view 3",
+      "index": 27,
+      "context": "Stadar Organization View",
+      "folder": "radarview3",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661146327818",
+      "slice": "slice: radar view 1",
+      "index": 19,
+      "context": "Stadar Organization View",
+      "folder": "radarview1",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661501673119",
+      "slice": "slice: Create Person",
+      "index": 1,
+      "context": "Stadar Organization View",
+      "folder": "createperson",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661504996265",
+      "slice": "slice: Organization Account List",
+      "index": 3,
+      "context": "Stadar Organization View",
+      "folder": "organizationaccountlist",
+      "status": "Created"
+    }
+  ]
+}

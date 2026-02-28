@@ -1,0 +1,703 @@
+{
+  "id": "3458764661099002342",
+  "status": "Created",
+  "title": "slice: Detect Radar Element",
+  "context": "Stadar Organization View",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764661044303442",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Detect Radar Element",
+      "title": "Detect Radar Element",
+      "fields": [
+        {
+          "name": "environmentalChangeId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "radarElementId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "assess",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "category",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "detect",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "distance",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "impact",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "respond",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "risk",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "radar",
+      "aggregateDependencies": [
+        "radar"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661032650856",
+          "type": "OUTBOUND",
+          "title": "RadarElementDetected",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661044303447",
+          "type": "INBOUND",
+          "title": "Add Radar Element",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764661032650856",
+      "tags": [],
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Detect Radar Element",
+      "title": "RadarElementDetected",
+      "fields": [
+        {
+          "name": "environmentalChangeId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "assess",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "category",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "detect",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "distance",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "impact",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "radarElementId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "respond",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "risk",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "title",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "radar",
+      "aggregateDependencies": [
+        "radar"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661040894563",
+          "type": "OUTBOUND",
+          "title": "radar",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661044303442",
+          "type": "INBOUND",
+          "title": "Detect Radar Element",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661044303447",
+      "tags": [],
+      "groupId": "3458764661044303451",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Detect Radar Element",
+      "title": "Add Radar Element",
+      "fields": [
+        {
+          "name": "environmentalChangeId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "radarElements",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "radarElementId",
+              "type": "UUID",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "detect",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "assess",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "respond",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "type",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "category",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "distance",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "impact",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "risk",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "radar",
+      "aggregateDependencies": [
+        "radar"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764661044303442",
+          "type": "OUTBOUND",
+          "title": "Detect Radar Element",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764661410664563",
+          "type": "INBOUND",
+          "title": "radar list",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764661099204174",
+      "sliceName": "slice: Detect Radar Element",
+      "title": "spec: Detect Radar Element - Happy Flow",
+      "given": [
+        {
+          "title": "Radar Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661099204320",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "environmentalChangeId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x678"
+            }
+          ],
+          "linkedId": "3458764661034167819"
+        }
+      ],
+      "when": [
+        {
+          "title": "Detect Radar Element",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661099204175",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "environmentalChangeId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "radarElementId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x098"
+            },
+            {
+              "name": "assess",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Assess v1"
+            },
+            {
+              "name": "category",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "capabilities"
+            },
+            {
+              "name": "detect",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "distance",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "detect v1"
+            },
+            {
+              "name": "impact",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "low"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
+              "name": "respond",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "respond v1"
+            },
+            {
+              "name": "risk",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "low"
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x678"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "element v1"
+            },
+            {
+              "name": "type",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "opportunity"
+            }
+          ],
+          "linkedId": "3458764661044303442"
+        }
+      ],
+      "then": [
+        {
+          "title": "RadarElementDetected",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661099204179",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "environmentalChangeId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "assess",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Assess v1"
+            },
+            {
+              "name": "category",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "capabilities"
+            },
+            {
+              "name": "detect",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "distance",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "detect v1"
+            },
+            {
+              "name": "impact",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "low"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
+              "name": "radarElementId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x098"
+            },
+            {
+              "name": "respond",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "respond v1"
+            },
+            {
+              "name": "risk",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "low"
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x678"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "element v1"
+            },
+            {
+              "name": "type",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "opportunity"
+            }
+          ],
+          "linkedId": "3458764661032650856"
+        }
+      ],
+      "comments": [
+        {
+          "description": "Radar Element is created with a new ID"
+        }
+      ],
+      "linkedId": "3458764661099002342"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "radar"
+  ]
+}

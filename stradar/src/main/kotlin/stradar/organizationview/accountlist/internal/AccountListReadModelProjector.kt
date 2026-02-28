@@ -1,0 +1,40 @@
+package stradar.organizationview.accountlist.internal
+
+import java.util.UUID
+import mu.KotlinLogging
+import org.axonframework.config.ProcessingGroup
+import org.axonframework.eventhandling.EventHandler
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Component
+import stradar.events.PersonCreatedEvent
+import stradar.organizationview.ProcessingGroups
+import stradar.organizationview.accountlist.AccountListReadModelEntity
+
+interface AccountListReadModelRepository : JpaRepository<AccountListReadModelEntity, UUID> {
+  fun existsByUsername(username: String): Boolean
+}
+
+/*
+Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645830935933
+*/
+@Component
+@ProcessingGroup(ProcessingGroups.COMPANY_VIEW)
+class AccountListReadModelProjector(private val repository: AccountListReadModelRepository) {
+
+  private val logger = KotlinLogging.logger {}
+
+  @EventHandler
+  fun on(event: PersonCreatedEvent) {
+    logger.info { "Projecting PersonCreatedEvent for: ${event.organizationName}" }
+    val entity = repository.findById(event.personId).orElseGet { AccountListReadModelEntity() }
+    entity
+            .apply {
+              organizationId = event.organizationId
+              organizationName = event.organizationName
+              personId = event.personId
+              username = event.username
+              role = event.role
+            }
+            .also { repository.save(it) }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "3458764661105229635",
+  "status": "Created",
+  "title": "slice: radar view 3",
+  "context": "Stadar Organization View",
+  "sliceType": "UNDEFINED",
+  "commands": [],
+  "events": [],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661054099079",
+      "tags": [],
+      "groupId": "3458764661054099086",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: radar view 3",
+      "title": "Radar",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "radarElements",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "radarElementId",
+              "type": "UUID",
+              "cardinality": "Single"
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "detect",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "assess",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "respond",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "type",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "category",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "distance",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "impact",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "risk",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764661040894563",
+          "type": "INBOUND",
+          "title": "radar",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

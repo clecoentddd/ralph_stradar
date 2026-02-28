@@ -1,0 +1,171 @@
+{
+  "id": "3458764645851938986",
+  "status": "Created",
+  "title": "slice: strategy dashboard",
+  "context": "Stradar",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764645851078375",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: strategy dashboard",
+      "title": "strategy dashboard",
+      "fields": [
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "dashboard",
+      "aggregateDependencies": [
+        "dashboard"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645851253934",
+          "type": "OUTBOUND",
+          "title": "Add a strategy",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645836875733",
+          "type": "INBOUND",
+          "title": "Strategy Dashboard Created",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764645851253934",
+      "tags": [],
+      "groupId": "3458764645851253939",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: strategy dashboard",
+      "title": "Add a strategy",
+      "fields": [
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "timeFrame",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "One page to add strategy and initiatives.",
+      "aggregate": "dashboard",
+      "aggregateDependencies": [
+        "dashboard"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645851078901",
+          "type": "OUTBOUND",
+          "title": "Add Strategy",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645851078375",
+          "type": "INBOUND",
+          "title": "strategy dashboard",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "dashboard"
+  ]
+}

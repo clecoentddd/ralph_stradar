@@ -1,0 +1,77 @@
+package stradar.organizationview.createteam
+
+import java.util.UUID
+import java.util.concurrent.CompletableFuture
+import org.axonframework.queryhandling.QueryGateway
+import org.axonframework.test.aggregate.AggregateTestFixture
+import org.axonframework.test.aggregate.FixtureConfiguration
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import stradar.common.support.RandomData
+import stradar.domain.TeamAggregate
+import stradar.events.TeamCreatedEvent
+import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
+import stradar.organizationview.teamlist.TeamNameUniquenessQuery
+
+class TeamCreatedTest {
+
+        private lateinit var fixture: FixtureConfiguration<TeamAggregate>
+        private lateinit var queryGateway: QueryGateway
+
+        @BeforeEach
+        fun setUp() {
+                fixture = AggregateTestFixture(TeamAggregate::class.java)
+                queryGateway = mock(QueryGateway::class.java)
+                fixture.registerInjectableResource(queryGateway)
+        }
+
+        @Test
+        fun `Team Created Test`() {
+                val orgId = UUID.randomUUID()
+                val adminId = UUID.randomUUID()
+                val teamId = UUID.randomUUID()
+
+                // Stub QueryGateway to return false (not a duplicate) for any uniqueness check
+                `when`(
+                                queryGateway.query(
+                                        any(TeamNameUniquenessQuery::class.java),
+                                        any(Class::class.java)
+                                )
+                        )
+                        .thenReturn(CompletableFuture.completedFuture(false))
+
+                // WHEN
+                val command =
+                        CreateTeamCommand(
+                                teamId = teamId,
+                                organizationId = orgId,
+                                adminAccountId = adminId,
+                                organizationName = "TechStart",
+                                context = "IT",
+                                level = 1,
+                                name = "CTO",
+                                purpose = "To do good"
+                        )
+
+                // THEN
+                val expectedEvent =
+                        RandomData.newInstance<TeamCreatedEvent> {
+                                this.teamId = teamId
+                                this.adminAccountId = adminId
+                                this.context = "IT"
+                                this.level = 1
+                                this.name = "CTO"
+                                this.organizationId = orgId
+                                this.organizationName = "TechStart"
+                                this.purpose = "To do good"
+                        }
+
+                fixture.givenNoPriorActivity()
+                        .`when`(command)
+                        .expectSuccessfulHandlerExecution()
+                        .expectEvents(expectedEvent)
+        }
+}

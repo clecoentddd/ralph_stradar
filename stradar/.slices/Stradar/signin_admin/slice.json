@@ -1,0 +1,177 @@
+{
+  "id": "3458764660825671360",
+  "status": "Created",
+  "title": "slice: signin_admin",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764660815651079",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: signin_admin",
+      "title": "Sign In Admin",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660815509287",
+          "type": "OUTBOUND",
+          "title": "Admin Signed In",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764660815651093",
+          "type": "INBOUND",
+          "title": "Admin Sign In Console",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764660815509287",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: signin_admin",
+      "title": "Admin Signed In",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660816044921",
+          "type": "OUTBOUND",
+          "title": "admin",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764660815651079",
+          "type": "INBOUND",
+          "title": "Sign In Admin",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764660815651093",
+      "tags": [],
+      "groupId": "3458764660815651105",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: signin_admin",
+      "title": "Admin Sign In Console",
+      "fields": [
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "password",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660815651079",
+          "type": "OUTBOUND",
+          "title": "Sign In Admin",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "admin"
+  ]
+}

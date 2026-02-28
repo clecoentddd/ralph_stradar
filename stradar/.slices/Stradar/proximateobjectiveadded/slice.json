@@ -1,0 +1,178 @@
+{
+  "id": "3458764645857703039",
+  "status": "Created",
+  "title": "slice: Proximate Objective Added",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645857703043",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Proximate Objective Added",
+      "title": "Add Objective Item",
+      "fields": [
+        {
+          "name": "objectiveItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "objectiveDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645857703042",
+          "type": "OUTBOUND",
+          "title": "Action Item Added",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645857703044",
+          "type": "INBOUND",
+          "title": "Proximate Objectives",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645857703042",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Proximate Objective Added",
+      "title": "Action Item Added",
+      "fields": [
+        {
+          "name": "objectiveItemId",
+          "type": "UUID",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "objectiveDescription",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645856348397",
+          "type": "OUTBOUND",
+          "title": "Value Stream",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645857703043",
+          "type": "INBOUND",
+          "title": "Add Objective Item",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645857703044",
+      "tags": [],
+      "groupId": "3458764645857703050",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Proximate Objective Added",
+      "title": "Proximate Objectives",
+      "fields": [
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "objectiveDescription",
+          "type": "String",
+          "generated": true,
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645857703043",
+          "type": "OUTBOUND",
+          "title": "Add Objective Item",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645855652122",
+          "type": "INBOUND",
+          "title": "an initiative",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

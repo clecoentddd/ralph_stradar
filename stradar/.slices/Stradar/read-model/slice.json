@@ -1,0 +1,332 @@
+{
+  "id": "3458764645872569805",
+  "status": "Created",
+  "title": "slice: read-model",
+  "context": "Stradar",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764645872569559",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: read-model",
+      "title": "read-model",
+      "fields": [
+        {
+          "name": "radarItemId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "environmentalChangeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Title",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Distance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Detected",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessing",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessed",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responding",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responded",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Assessment",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Response",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Type",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Threat",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Opportunity",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Impact",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Medium",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "High",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "LinkToRadar",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645872569565",
+          "type": "OUTBOUND",
+          "title": "Radar List",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645858318697",
+          "type": "INBOUND",
+          "title": "rdadarItemAdded",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764645872569565",
+      "tags": [],
+      "groupId": "3458764645872569569",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: read-model",
+      "title": "Radar List",
+      "fields": [
+        {
+          "name": "radarItemId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "environmentalChangeId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Title",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Distance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Detected",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessing",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Assessed",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responding",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Responded",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Assessment",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Response",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Type",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Threat",
+              "type": "String",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Opportunity",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Impact",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Tolerance",
+          "type": "Custom",
+          "subfields": [
+            {
+              "name": "Low",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "Medium",
+              "type": "Int",
+              "cardinality": "Single"
+            },
+            {
+              "name": "High",
+              "type": "Int",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "LinkToRadar",
+          "type": "String",
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "List of radar items, filtering and sorting available",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645872569559",
+          "type": "INBOUND",
+          "title": "read-model",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

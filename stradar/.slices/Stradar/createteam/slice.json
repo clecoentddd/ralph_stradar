@@ -1,0 +1,437 @@
+{
+  "id": "3458764645831088163",
+  "status": "Created",
+  "title": "slice: Create Team",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645830671029",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Create Team",
+      "title": "Create Team",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645830373813",
+          "type": "OUTBOUND",
+          "title": "Team Created",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645833837016",
+          "type": "INBOUND",
+          "title": "Create Your team",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645830373813",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Create Team",
+      "title": "Team Created",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645830671029",
+          "type": "INBOUND",
+          "title": "Create Team",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645833837016",
+      "tags": [],
+      "groupId": "3458764645833837019",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Create Team",
+      "title": "Create Your team",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": " Teams in a hierarchical structure using levels: level 0, the below level 1, then below level 2, etc. The only relationship between teams is the level",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645830671029",
+          "type": "OUTBOUND",
+          "title": "Create Team",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645830935933",
+          "type": "INBOUND",
+          "title": "organization",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764645832124500",
+      "sliceName": "slice: Create Team",
+      "title": "spec: Team Created",
+      "given": [
+        {
+          "title": "Organization Defined",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645832124506",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "adminAccountId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827622167"
+        }
+      ],
+      "when": [
+        {
+          "title": "Create Team",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645832124502",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x321"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "CTO"
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "To do good"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "IT"
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "1"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645830671029"
+        }
+      ],
+      "then": [
+        {
+          "title": "Team Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645832124504",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x321"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "IT"
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "1"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "CTO"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "To do good"
+            }
+          ],
+          "linkedId": "3458764645830373813"
+        }
+      ],
+      "comments": [
+        {
+          "description": "Creating a team based on an organisationId"
+        }
+      ],
+      "linkedId": "3458764645831088163"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "team"
+  ]
+}

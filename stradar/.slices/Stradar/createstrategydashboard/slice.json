@@ -1,0 +1,497 @@
+{
+  "id": "3458764645850349025",
+  "status": "Created",
+  "title": "slice: Create Strategy Dashboard",
+  "context": "Stradar",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645849750295",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Create Strategy Dashboard",
+      "title": "Create Strategy Dashboard",
+      "fields": [
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "dashboard",
+      "aggregateDependencies": [
+        "dashboard"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645836875733",
+          "type": "OUTBOUND",
+          "title": "Strategy Dashboard Created",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645849750282",
+          "type": "INBOUND",
+          "title": "Create Strategy Dashbaord Page",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645836875733",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Create Strategy Dashboard",
+      "title": "Strategy Dashboard Created",
+      "fields": [
+        {
+          "name": "strategyDashboardId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "dashboard",
+      "aggregateDependencies": [
+        "dashboard"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645851078375",
+          "type": "OUTBOUND",
+          "title": "strategy dashboard",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645849750295",
+          "type": "INBOUND",
+          "title": "Create Strategy Dashboard",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764645849750282",
+      "tags": [],
+      "groupId": "3458764645849750294",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: Create Strategy Dashboard",
+      "title": "Create Strategy Dashbaord Page",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "Page that will contain strategies, their initiatives, and value stream for each initiative",
+      "aggregate": "dashboard",
+      "aggregateDependencies": [
+        "dashboard"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645849750295",
+          "type": "OUTBOUND",
+          "title": "Create Strategy Dashboard",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764645852089301",
+      "sliceName": "slice: Create Strategy Dashboard",
+      "title": "spec: 1 team = 1 dashboard",
+      "given": [
+        {
+          "title": "Team Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645852089308",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x321"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645830373813"
+        }
+      ],
+      "when": [
+        {
+          "title": "Create Strategy Dashboard",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645852089303",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x321"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645849750295"
+        }
+      ],
+      "then": [
+        {
+          "title": "Error-Case",
+          "tags": [],
+          "examples": [
+            {
+              "message": "A dashboard already exists for that team"
+            }
+          ],
+          "id": "3458764645852089306",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "A strategy dashboard already exists for that team"
+        }
+      ],
+      "linkedId": "3458764645850349025"
+    },
+    {
+      "vertical": false,
+      "id": "3458764645850349565",
+      "sliceName": "slice: Create Strategy Dashboard",
+      "title": "spec: Create Strategy Dashboard For A team",
+      "given": [
+        {
+          "title": "Team Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645850349571",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Team A"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645830373813"
+        }
+      ],
+      "when": [
+        {
+          "title": "Create Strategy Dashboard",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645850349566",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x123"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Team A"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645849750295"
+        }
+      ],
+      "then": [
+        {
+          "title": "Strategy Dashboard Created",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645850349569",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "strategyDashboardId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x234"
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Team A"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x123"
+            }
+          ],
+          "linkedId": "3458764645836875733"
+        }
+      ],
+      "comments": [
+        {
+          "description": "Creating a strategy dashboard for the team"
+        }
+      ],
+      "linkedId": "3458764645850349025"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "dashboard"
+  ]
+}

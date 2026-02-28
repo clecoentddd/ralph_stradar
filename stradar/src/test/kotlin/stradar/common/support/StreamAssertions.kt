@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component
 class StreamAssertions(private val eventStore: EventStore) {
 
     fun assertEvent(aggregateId: String, predicate: (event: Any) -> Boolean) {
-        assertThat(
-            eventStore.readEvents(aggregateId)
-                .asStream().map { it.payload }.toList()
-        ).anyMatch(predicate)
+        assertThat(eventStore.readEvents(aggregateId).asStream().map { it.payload }.toList())
+                .anyMatch(predicate)
     }
 }
