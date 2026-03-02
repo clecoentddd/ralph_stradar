@@ -282,6 +282,259 @@
   "specifications": [
     {
       "vertical": false,
+      "id": "3458764661658628233",
+      "sliceName": "slice: Update Team",
+      "title": "spec: Update Team - Recovery After Delete",
+      "given": [
+        {
+          "title": "Team Deleted",
+          "tags": [],
+          "examples": [],
+          "id": "3458764661658628268",
+          "index": 1,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "0x123"
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            }
+          ],
+          "linkedId": "3458764661631102656"
+        },
+        {
+          "title": "Team Created",
+          "tags": [],
+          "examples": [
+            {
+              "Name": "CTO v2",
+              "Level": 4,
+              "teamId": "0x123",
+              "Context": "Context 1",
+              "Purpose": "Purpose 1",
+              "organizationId": "0x456"
+            }
+          ],
+          "id": "3458764661658628255",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645830373813"
+        }
+      ],
+      "when": [
+        {
+          "title": "Update Team",
+          "tags": [],
+          "examples": [
+            {
+              "Name": "CTO v2",
+              "Level": 4,
+              "teamId": "0x123",
+              "Context": "Context 1",
+              "Purpose": "Purpose 1",
+              "organizationId": "0x456"
+            }
+          ],
+          "id": "3458764661658628240",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764661631265233"
+        }
+      ],
+      "then": [
+        {
+          "title": "Team Updated",
+          "tags": [],
+          "examples": [
+            {
+              "Name": "CTO v2",
+              "Level": 4,
+              "teamId": "0x123",
+              "Context": "Context 1",
+              "Purpose": "Purpose 1",
+              "organizationId": "0x456"
+            }
+          ],
+          "id": "3458764661658628247",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764661631101975"
+        }
+      ],
+      "comments": [
+        {
+          "description": "User can update a team after deleting it (recovery mecanism)"
+        }
+      ],
+      "linkedId": "3458764661631987971"
+    },
+    {
+      "vertical": false,
       "id": "3458764661650936247",
       "sliceName": "slice: Update Team",
       "title": "spec: Update Team - Happy Flow",
@@ -474,259 +727,6 @@
       "comments": [
         {
           "description": "Happy Flow"
-        }
-      ],
-      "linkedId": "3458764661631987971"
-    },
-    {
-      "vertical": false,
-      "id": "3458764661658628233",
-      "sliceName": "slice: Update Team",
-      "title": "spec: Update Team - Recovery After Delete",
-      "given": [
-        {
-          "title": "Team Created",
-          "tags": [],
-          "examples": [
-            {
-              "teamId": "0x123",
-              "Context": "Context 1",
-              "Level": 4,
-              "Name": "CTO v2",
-              "organizationId": "0x456",
-              "Purpose": "Purpose 1"
-            }
-          ],
-          "id": "3458764661658628255",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": ""
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            }
-          ],
-          "linkedId": "3458764645830373813"
-        },
-        {
-          "title": "Team Deleted",
-          "tags": [],
-          "examples": [],
-          "id": "3458764661658628268",
-          "index": 1,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "0x123"
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            }
-          ],
-          "linkedId": "3458764661631102656"
-        }
-      ],
-      "when": [
-        {
-          "title": "Update Team",
-          "tags": [],
-          "examples": [
-            {
-              "teamId": "0x123",
-              "Context": "Context 1",
-              "Level": 4,
-              "Name": "CTO v2",
-              "organizationId": "0x456",
-              "Purpose": "Purpose 1"
-            }
-          ],
-          "id": "3458764661658628240",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_COMMAND",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": ""
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            }
-          ],
-          "linkedId": "3458764661631265233"
-        }
-      ],
-      "then": [
-        {
-          "title": "Team Updated",
-          "tags": [],
-          "examples": [
-            {
-              "teamId": "0x123",
-              "Context": "Context 1",
-              "Level": 4,
-              "Name": "CTO v2",
-              "organizationId": "0x456",
-              "Purpose": "Purpose 1"
-            }
-          ],
-          "id": "3458764661658628247",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": ""
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            }
-          ],
-          "linkedId": "3458764661631101975"
-        }
-      ],
-      "comments": [
-        {
-          "description": "User can update a team after deleting it (recovery mecanism)"
         }
       ],
       "linkedId": "3458764661631987971"

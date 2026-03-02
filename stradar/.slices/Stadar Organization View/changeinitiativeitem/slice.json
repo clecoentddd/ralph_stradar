@@ -1,93 +1,80 @@
 {
-  "id": "3458764661684920791",
+  "id": "3458764661765881509",
   "status": "Created",
-  "title": "slice: strategies",
+  "title": "slice: Change Initiative Item",
   "context": "Stadar Organization View",
-  "sliceType": "STATE_VIEW",
-  "commands": [],
-  "events": [],
-  "readmodels": [
+  "sliceType": "STATE_CHANGE",
+  "commands": [
     {
-      "id": "3458764661684920684",
+      "id": "3458764661765153723",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: strategies",
-      "title": "strategies",
+      "slice": "slice: Change Initiative Item",
+      "title": "Change Initiative Item",
       "fields": [
         {
-          "name": "strategyBuilderId",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "idAttribute": true,
-          "cardinality": "Single"
-        },
-        {
-          "name": "organizationId",
+          "name": "initiativeId",
           "type": "UUID",
+          "example": "0x123",
           "subfields": [],
           "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true
         },
         {
-          "name": "strategyId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "strategyName",
+          "name": "step",
           "type": "String",
+          "example": "DIAGNOSTIC",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "strategyTimeframe",
-          "type": "String",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
+          "name": "itemId",
           "type": "UUID",
+          "example": "0x567",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "content",
+          "type": "String",
+          "example": "this is some diagnostic. Very cool.",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "status",
+          "type": "String",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         }
       ],
-      "type": "READMODEL",
+      "type": "COMMAND",
       "description": "",
-      "aggregate": "Strategy Builder",
+      "aggregate": "Initiative",
       "aggregateDependencies": [
-        "Strategy Builder"
+        "Initiative"
       ],
       "dependencies": [
         {
-          "id": "3458764661684920689",
+          "id": "3458764661764455538",
           "type": "OUTBOUND",
-          "title": "Strategies",
-          "elementType": "SCREEN"
-        },
-        {
-          "id": "3458764645854569102",
-          "type": "OUTBOUND",
-          "title": "Create an initiative",
-          "elementType": "SCREEN"
-        },
-        {
-          "id": "3458764661671789872",
-          "type": "INBOUND",
-          "title": "Strategy Draft Created Event",
+          "title": "Initiative Item Changed",
           "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661765153746",
+          "type": "INBOUND",
+          "title": "screen",
+          "elementType": "SCREEN"
         }
       ],
-      "listElement": true,
       "createsAggregate": false,
       "triggers": [],
       "sketched": false,
@@ -96,74 +83,75 @@
       }
     }
   ],
-  "screens": [
+  "events": [
     {
-      "id": "3458764661684920689",
+      "id": "3458764661764455538",
       "tags": [],
-      "groupId": "3458764661684920691",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: strategies",
-      "title": "Strategies",
+      "slice": "slice: Change Initiative Item",
+      "title": "Initiative Item Changed",
       "fields": [
         {
-          "name": "strategyBuilderId",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "idAttribute": true,
-          "cardinality": "Single"
-        },
-        {
-          "name": "organizationId",
+          "name": "initiativeId",
           "type": "UUID",
+          "example": "0x123",
           "subfields": [],
           "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true
         },
         {
-          "name": "strategyId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "strategyName",
+          "name": "step",
           "type": "String",
+          "example": "DIAGNOSTIC",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "strategyTimeframe",
-          "type": "String",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
+          "name": "itemId",
           "type": "UUID",
+          "example": "0x567",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "content",
+          "type": "String",
+          "example": "this is some diagnostic. Very cool.",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "status",
+          "type": "String",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         }
       ],
-      "type": "SCREEN",
+      "type": "EVENT",
       "description": "",
-      "aggregate": "Strategy Builder",
+      "aggregate": "Initiative",
       "aggregateDependencies": [
-        "Strategy Builder"
+        "Initiative"
       ],
       "dependencies": [
         {
-          "id": "3458764661684920684",
-          "type": "INBOUND",
-          "title": "strategies",
+          "id": "3458764645855652122",
+          "type": "OUTBOUND",
+          "title": "Initiatives",
           "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764661765153723",
+          "type": "INBOUND",
+          "title": "Change Initiative Item",
+          "elementType": "COMMAND"
         }
       ],
       "createsAggregate": false,
@@ -172,55 +160,55 @@
       "prototype": {
         "activeByDefault": false
       }
-    },
+    }
+  ],
+  "readmodels": [],
+  "screens": [
     {
-      "id": "3458764645854569102",
+      "id": "3458764661765153746",
       "tags": [],
-      "groupId": "3458764645854569108",
+      "groupId": "3458764661765153760",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: strategies",
-      "title": "Create an initiative",
+      "slice": "slice: Change Initiative Item",
+      "title": "screen",
       "fields": [
         {
           "name": "initiativeId",
           "type": "UUID",
-          "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "content",
+          "type": "String",
           "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "strategyId",
+          "name": "itemId",
           "type": "UUID",
-          "example": "77777777-7777-7777-7777-777777777777",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "organizationId",
-          "type": "UUID",
-          "example": "474e4828-a953-4240-bb26-368bb332398e",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
-          "type": "UUID",
-          "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "initiativeName",
+          "name": "step",
           "type": "String",
-          "example": "Modernize Legacy Infrastructure",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "status",
+          "type": "String",
           "generated": true,
           "subfields": [],
           "cardinality": "Single",
@@ -228,22 +216,22 @@
         }
       ],
       "type": "SCREEN",
-      "description": "Initiatives belong to a strategy. ",
-      "aggregate": "Strategy Builder",
+      "description": "",
+      "aggregate": "Initiative",
       "aggregateDependencies": [
-        "Strategy Builder"
+        "Initiative"
       ],
       "dependencies": [
         {
-          "id": "3458764645854569036",
+          "id": "3458764661765153723",
           "type": "OUTBOUND",
-          "title": "Create An Initiative",
+          "title": "Change Initiative Item",
           "elementType": "COMMAND"
         },
         {
-          "id": "3458764661684920684",
+          "id": "3458764645855652122",
           "type": "INBOUND",
-          "title": "strategies",
+          "title": "Initiatives",
           "elementType": "READMODEL"
         }
       ],
@@ -262,6 +250,6 @@
   "specifications": [],
   "actors": [],
   "aggregates": [
-    "Strategy Builder"
+    "Initiative"
   ]
 }

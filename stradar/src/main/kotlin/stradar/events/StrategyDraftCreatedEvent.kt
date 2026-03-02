@@ -11,5 +11,5 @@ data class StrategyDraftCreatedEvent(
         var organizationId: UUID,
         var teamId: UUID,
         var strategyName: String, // Flat
-        var timeframe: String // Flat
+        var strategyTimeframe: String // Flat
 )

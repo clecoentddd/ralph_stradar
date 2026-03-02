@@ -8,8 +8,7 @@ import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
-import stradar.commands.CreateDraftStrategyCommand
-import stradar.common.StrategyDetails
+import stradar.organizationview.domain.commands.createdraftstrategy.CreateDraftStrategyCommand
 import stradar.support.metadata.SESSION_ID_HEADER
 
 /**
@@ -33,45 +32,47 @@ data class CreateStrategyPayload(
 @RequestMapping("/api/v1/strategies")
 class StrategyResource(private val commandGateway: CommandGateway) {
 
-    private val logger = KotlinLogging.logger {}
+        private val logger = KotlinLogging.logger {}
 
-    @CrossOrigin
-    @PostMapping("/draft")
-    @Operation(summary = "Create a new Draft Strategy slot for a team")
-    fun createDraft(
-            @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
-            @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
-            @RequestHeader(value = "x-user-id", required = true) userId: String,
-            @RequestBody payload: CreateStrategyPayload
-    ): CompletableFuture<Any> {
+        @CrossOrigin
+        @PostMapping("/draft")
+        @Operation(summary = "Create a new Draft Strategy slot for a team")
+        fun createDraft(
+                @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
+                @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
+                @RequestHeader(value = "x-user-id", required = true) userId: String,
+                @RequestBody payload: CreateStrategyPayload
+        ): CompletableFuture<Any> {
 
-        // 🏗️ ID Derivation: Creating the technical "Slot" ID
-        val strategyBuilderId = "${payload.teamId}-STRATEGY-BUILDER"
+                // ID Derivation: Creating the technical "Slot" ID
+                val strategyBuilderId = "${payload.teamId}-STRATEGY-BUILDER"
 
-        // 🆔 Instance Generation: Creating the unique ID for this specific Strategy version
-        val newStrategyId = UUID.randomUUID()
+                // Instance Generation: Creating the unique ID for this specific Strategy version
+                val newStrategyId = UUID.randomUUID()
 
-        logger.info { "Creating draft strategy $newStrategyId for builder $strategyBuilderId" }
+                logger.info {
+                        "Creating draft strategy $newStrategyId for builder $strategyBuilderId"
+                }
 
-        val metadata =
-                MetaData.with("x-user-id", userId)
-                        .and("X-Correlation-Id", correlationId ?: UUID.randomUUID().toString())
-                        .and(SESSION_ID_HEADER, sessionId)
-
-        // Mapping payload to the Command + Nested StrategyDetails Value Object
-        val command =
-                CreateDraftStrategyCommand(
-                        strategyBuilderId = strategyBuilderId,
-                        teamId = payload.teamId,
-                        organizationId = payload.organizationId,
-                        strategy =
-                                StrategyDetails(
-                                        strategyId = newStrategyId,
-                                        title = payload.title,
-                                        timeframe = payload.timeframe
+                val metadata =
+                        MetaData.with("x-user-id", userId)
+                                .and(
+                                        "X-Correlation-Id",
+                                        correlationId ?: UUID.randomUUID().toString()
                                 )
-                )
+                                .and(SESSION_ID_HEADER, sessionId)
 
-        return commandGateway.send<Any>(command, metadata)
-    }
+                // Mapping payload to the Command + Nested StrategyDetails Value Object
+                val command =
+                        CreateDraftStrategyCommand(
+                                strategyBuilderId = strategyBuilderId,
+                                teamId = payload.teamId,
+                                organizationId = payload.organizationId,
+                                strategyId = newStrategyId,
+                                strategyName = payload.title,
+                                strategyTimeframe = payload.timeframe
+                        )
+
+                return commandGateway.send<Any>(command, metadata)
+        }
 }

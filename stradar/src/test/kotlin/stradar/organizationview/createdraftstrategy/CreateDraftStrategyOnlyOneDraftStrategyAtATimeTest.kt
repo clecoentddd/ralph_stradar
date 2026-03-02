@@ -5,7 +5,6 @@ import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import stradar.common.StrategyDetails // Ensure this matches your package
 import stradar.events.StrategyDraftCreatedEvent
 import stradar.organizationview.domain.StrategyBuilderAggregate
 import stradar.organizationview.domain.commands.createdraftstrategy.CreateDraftStrategyCommand
@@ -37,7 +36,7 @@ class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
                                 organizationId = orgId,
                                 teamId = teamId,
                                 strategyName = "Initial Plan",
-                                timeframe = "2026"
+                                strategyTimeframe = "2026"
                         )
 
                 // WHEN: Attempting to create a second draft
@@ -46,15 +45,10 @@ class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
                                 strategyBuilderId = sharedStrategyBuilderId,
                                 teamId = teamId,
                                 organizationId = orgId,
-                                strategy =
-                                        StrategyDetails(
-                                                strategyId =
-                                                        UUID.fromString(
-                                                                "99999999-9999-9999-9999-999999999999"
-                                                        ),
-                                                title = "A Different Strategy",
-                                                timeframe = "2026-Q2"
-                                        )
+                                strategyId =
+                                        UUID.fromString("99999999-9999-9999-9999-999999999999"),
+                                strategyName = "A Different Strategy",
+                                strategyTimeframe = "2026-Q2"
                         )
 
                 fixture.given(givenEvent)

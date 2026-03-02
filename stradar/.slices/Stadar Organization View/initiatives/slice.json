@@ -1,0 +1,126 @@
+{
+  "id": "3458764661766210431",
+  "status": "Created",
+  "title": "slice: Initiatives",
+  "context": "Stadar Organization View",
+  "sliceType": "UNDEFINED",
+  "commands": [],
+  "events": [],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764661766047311",
+      "tags": [],
+      "groupId": "3458764661766047313",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Initiatives",
+      "title": "Initiative List",
+      "fields": [
+        {
+          "name": "initiativeId",
+          "type": "UUID",
+          "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+          "subfields": [],
+          "idAttribute": true,
+          "cardinality": "Single"
+        },
+        {
+          "name": "coherentActions",
+          "type": "Custom",
+          "example": "[]",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "diagnostic",
+          "type": "Custom",
+          "example": "[]",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "initiativeName",
+          "type": "String",
+          "example": "Modernize Legacy Infrastructure",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "example": "474e4828-a953-4240-bb26-368bb332398e",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "overallPlan",
+          "type": "Custom",
+          "example": "[]",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "proximateObjectives",
+          "type": "Custom",
+          "example": "[]",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyId",
+          "type": "UUID",
+          "example": "77777777-7777-7777-7777-777777777777",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764645855652122",
+          "type": "INBOUND",
+          "title": "Initiatives",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}
