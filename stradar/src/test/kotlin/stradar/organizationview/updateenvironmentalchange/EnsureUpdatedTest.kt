@@ -1,6 +1,7 @@
 package stradar.organizationview.updateenvironmentalchange
 
 import java.util.UUID
+import org.axonframework.messaging.MetaData
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
@@ -83,7 +84,7 @@ class EnsureUpdatedTest {
                         )
 
                 fixture.given(events)
-                        .`when`(command)
+                        .`when`(command, MetaData.with("organizationId", organizationId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

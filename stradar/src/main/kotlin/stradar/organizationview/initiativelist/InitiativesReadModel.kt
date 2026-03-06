@@ -1,10 +1,12 @@
 package stradar.organizationview.initiativelist
 
+import jakarta.persistence.CollectionTable
 import jakarta.persistence.Column
 import jakarta.persistence.ElementCollection
 import jakarta.persistence.Embeddable
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
 import java.util.UUID
 
 /*
@@ -15,7 +17,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464585565
 data class InitiativeItem(
         var id: UUID? = null,
         var content: String? = null,
-        var status: String? = null
+        var status: String? = null,
+        var step: String? = null
 )
 
 @Entity
@@ -32,13 +35,12 @@ class InitiativesReadModelEntity {
 
         @Column(name = "statut") var statut: String? = "Draft"
 
-        @ElementCollection var coherentActions: MutableList<InitiativeItem> = mutableListOf()
-
-        @ElementCollection var diagnostic: MutableList<InitiativeItem> = mutableListOf()
-
-        @ElementCollection var overallPlan: MutableList<InitiativeItem> = mutableListOf()
-
-        @ElementCollection var proximateObjectives: MutableList<InitiativeItem> = mutableListOf()
+        @ElementCollection
+        @CollectionTable(
+                name = "initiative_items",
+                joinColumns = [JoinColumn(name = "initiative_id")]
+        )
+        var allItems: MutableList<InitiativeItem> = mutableListOf()
 }
 
 /** The "Answer" for the coherent list query */

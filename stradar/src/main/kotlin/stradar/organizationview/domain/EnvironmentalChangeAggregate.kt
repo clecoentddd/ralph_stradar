@@ -4,10 +4,12 @@ import java.util.UUID
 import mu.KotlinLogging
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
+import org.axonframework.messaging.MetaData
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.spring.stereotype.Aggregate
 import stradar.common.*
+import stradar.common.resolveOrganizationId
 import stradar.events.*
 import stradar.organizationview.domain.commands.deleteenvironmentalchange.DeleteEnvironmentalChangeCommand
 import stradar.organizationview.domain.commands.detectenvironmentalchange.DetectEnvironmentalChangeCommand
@@ -30,7 +32,8 @@ class EnvironmentalChangeAggregate() {
     /* ===================================================== */
 
     @CommandHandler
-    constructor(command: DetectEnvironmentalChangeCommand) : this() {
+    constructor(command: DetectEnvironmentalChangeCommand, metaData: MetaData) : this() {
+        val organizationId = metaData.resolveOrganizationId()
         logger.info { "🌱 Detecting Environmental Change: ${command.environmentalChangeId}" }
 
         AggregateLifecycle.apply(
@@ -56,7 +59,8 @@ class EnvironmentalChangeAggregate() {
     /* ===================================================== */
 
     @CommandHandler
-    fun handle(command: UpdateEnvironmentalChangeCommand) {
+    fun handle(command: UpdateEnvironmentalChangeCommand, metaData: MetaData) {
+        val secureOrgId = metaData.resolveOrganizationId()
         if (isDeleted) throw IllegalStateException("Cannot update a deleted environmental change.")
 
         logger.info { "🔄 Updating Environmental Change: $environmentalChangeId" }
@@ -84,7 +88,8 @@ class EnvironmentalChangeAggregate() {
     /* ===================================================== */
 
     @CommandHandler
-    fun handle(command: DeleteEnvironmentalChangeCommand): CommandResult {
+    fun handle(command: DeleteEnvironmentalChangeCommand, metaData: MetaData): CommandResult {
+        val secureOrgId = metaData.resolveOrganizationId()
         if (isDeleted) throw IllegalStateException("Change already deleted.")
 
         logger.info { "🗑 Deleting Environmental Change: $environmentalChangeId" }

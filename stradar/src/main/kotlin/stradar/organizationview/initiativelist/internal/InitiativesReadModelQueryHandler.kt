@@ -13,35 +13,34 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464585565
 @Component
 class InitiativesReadModelQueryHandler(private val repository: InitiativesReadModelRepository) {
 
-  /** Handles the single initiative lookup by ID */
-  @QueryHandler
-  fun handle(query: InitiativesReadModelQuery): InitiativesReadModel {
-    val entity = repository.findById(query.initiativeId).get()
+        /** Handles the single initiative lookup by ID */
+        @QueryHandler
+        fun handle(query: InitiativesReadModelQuery): InitiativesReadModel {
+                val entity = repository.findById(query.initiativeId).get()
 
-    // Accessing the fields here "touches" them, forcing a load
-    // while the QueryHandler's session is still active.
-    return InitiativesReadModel(
-            data =
-                    entity.apply {
-                      diagnostic.size // Force load
-                      overallPlan.size // Force load
-                    }
-    )
-  }
+                // Accessing the fields here "touches" them, forcing a load
+                // while the QueryHandler's session is still active.
+                return InitiativesReadModel(
+                        data =
+                                entity.apply {
+                                        allItems.size // Force load unified list
+                                }
+                )
+        }
 
-  /**
-   * Handles the coherent lookup by Strategy, Team, and Organization. This ensures users only see
-   * what they are authorized to see.
-   */
-  @QueryHandler
-  fun handle(query: InitiativesByStrategyQuery): InitiativeListResponse {
-    val results =
-            repository.findAllByStrategyIdAndTeamIdAndOrganizationId(
-                    query.strategyId,
-                    query.teamId,
-                    query.organizationId
-            )
+        /**
+         * Handles the coherent lookup by Strategy, Team, and Organization. This ensures users only
+         * see what they are authorized to see.
+         */
+        @QueryHandler
+        fun handle(query: InitiativesByStrategyQuery): InitiativeListResponse {
+                val results =
+                        repository.findAllByStrategyIdAndTeamIdAndOrganizationId(
+                                query.strategyId,
+                                query.teamId,
+                                query.organizationId
+                        )
 
-    return InitiativeListResponse(strategyId = query.strategyId, items = results)
-  }
+                return InitiativeListResponse(strategyId = query.strategyId, items = results)
+        }
 }

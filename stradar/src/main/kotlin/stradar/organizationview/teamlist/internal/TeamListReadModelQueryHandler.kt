@@ -3,43 +3,48 @@ package stradar.organizationview.teamlist.internal
 import org.axonframework.messaging.MetaData
 import org.axonframework.queryhandling.QueryHandler
 import org.springframework.stereotype.Component
-import stradar.organizationview.teamlist.*
+import stradar.common.resolveOrganizationId
+import stradar.organizationview.teamlist.TeamListByOrganizationQuery
+import stradar.organizationview.teamlist.TeamListReadModel
+import stradar.organizationview.teamlist.TeamNameByTeamIdQuery
+import stradar.organizationview.teamlist.TeamNameResponse
 
-/*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645849750300
-*/
 @Component
 class TeamListReadModelQueryHandler(private val repository: TeamListReadModelRepository) {
 
-  @QueryHandler
-  fun handleQuery(_query: TeamListReadModelQuery): TeamListReadModel? {
-    return TeamListReadModel(repository.findAll())
-  }
+        /**
+         * Fetches all teams scoped to the organization. Enforces organizationId from MetaData to
+         * prevent cross-organization data leakage.
+         */
+        @QueryHandler
+        fun handleByOrganization(
+                query: TeamListByOrganizationQuery,
+                metadata: MetaData
+        ): TeamListReadModel {
+                val organizationId = metadata.resolveOrganizationId()
 
-  @QueryHandler
-  fun handleByOrganization(query: TeamListByOrganizationQuery): TeamListReadModel {
-    return TeamListReadModel(repository.findByOrganizationId(query.organizationId))
-  }
+                return TeamListReadModel(repository.findByOrganizationId(organizationId))
+        }
 
-  @QueryHandler
-  fun handleUniqueness(query: TeamNameUniquenessQuery): Boolean {
-    return repository.existsByOrganizationIdAndName(query.organizationId, query.teamName)
-  }
+        /**
+         * Fetches the name of a specific team. Also enforces an organization matching check to
+         * ensure the team belongs to the requester's org.
+         */
+        @QueryHandler
+        fun handle(query: TeamNameByTeamIdQuery, metadata: MetaData): TeamNameResponse {
+                val organizationId = metadata.resolveOrganizationId()
 
-  /**
-   * * NEW: Step-by-step addition to handle fetching Team Name by ID. We include MetaData as a
-   * parameter now so it's ready for your organization check.
-   */
-  @QueryHandler
-  fun handle(query: TeamNameByTeamIdQuery, metadata: MetaData): TeamNameResponse {
-    val team =
-            repository.findById(query.teamId).orElseThrow {
-              IllegalStateException("Team with ID ${query.teamId} not found")
-            }
+                val team =
+                        repository.findById(query.teamId).orElseThrow {
+                                IllegalStateException("Team with ID ${query.teamId} not found")
+                        }
 
-    // Here is where you will later add:
-    // if (team.organizationId != metadata["organizationId"]) { ... }
+                if (team.organizationId != organizationId) {
+                        throw IllegalStateException(
+                                "Access denied: team ${query.teamId} does not belong to org $organizationId"
+                        )
+                }
 
-    return TeamNameResponse(teamName = team.name ?: "Unknown Team")
-  }
+                return TeamNameResponse(teamName = team.name ?: "Unknown Team")
+        }
 }

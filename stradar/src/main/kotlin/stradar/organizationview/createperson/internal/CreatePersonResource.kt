@@ -6,6 +6,7 @@ import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
+import stradar.organizationview.createinitiative.internal.SESSION_ID_HEADER
 import stradar.organizationview.domain.commands.createperson.CreatePersonCommand
 
 data class CreatePersonPayload(
@@ -21,11 +22,19 @@ class CreatePersonResource(private val commandGateway: CommandGateway) {
 
         private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping("/debug/createperson")
         fun processDebugCommand(
                 @RequestHeader(
-                        value = "X-User-Id",
+                        value = "x-user-id",
                         required = false,
                         defaultValue = "\${user.name}"
                 )
@@ -58,7 +67,7 @@ class CreatePersonResource(private val commandGateway: CommandGateway) {
         @PostMapping("/createperson/{id}")
         fun processCommand(
                 @RequestHeader(
-                        value = "X-User-Id",
+                        value = "x-user-id",
                         required = false,
                         defaultValue = "\${user.name}"
                 )

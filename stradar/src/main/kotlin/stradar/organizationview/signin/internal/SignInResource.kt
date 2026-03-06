@@ -16,7 +16,15 @@ class SignInResource(private val commandGateway: CommandGateway) {
 
         private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping(value = ["/signin", "/signintoorganizationpersonaccount"])
         fun processCommand(
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,

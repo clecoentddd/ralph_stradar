@@ -56,12 +56,6 @@
       ],
       "dependencies": [
         {
-          "id": "3458764645833837016",
-          "type": "OUTBOUND",
-          "title": "Create Your team",
-          "elementType": "SCREEN"
-        },
-        {
           "id": "3458764661498040166",
           "type": "INBOUND",
           "title": "person created",
@@ -83,94 +77,7 @@
       }
     }
   ],
-  "screens": [
-    {
-      "id": "3458764645833837016",
-      "tags": [],
-      "groupId": "3458764645833837019",
-      "domain": "stradar",
-      "elementContext": "INTERNAL",
-      "modelContext": "Stadar Organization View",
-      "context": "INTERNAL",
-      "slice": "slice: organization person connected",
-      "title": "Create Your team",
-      "fields": [
-        {
-          "name": "teamId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": true
-        },
-        {
-          "name": "organizationId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Context",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Level",
-          "type": "Int",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Name",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Purpose",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        }
-      ],
-      "type": "SCREEN",
-      "description": " Teams in a hierarchical structure using levels: level 0, the below level 1, then below level 2, etc. The only relationship between teams is the level",
-      "aggregate": "organization admin",
-      "aggregateDependencies": [
-        "organization admin"
-      ],
-      "dependencies": [
-        {
-          "id": "3458764645830671029",
-          "type": "OUTBOUND",
-          "title": "Create Team",
-          "elementType": "COMMAND"
-        },
-        {
-          "id": "3458764660938676873",
-          "type": "INBOUND",
-          "title": "organization admin",
-          "elementType": "READMODEL"
-        }
-      ],
-      "createsAggregate": false,
-      "triggers": [],
-      "sketched": false,
-      "prototype": {
-        "activeByDefault": false
-      }
-    }
-  ],
+  "screens": [],
   "screenImages": [],
   "screenLayouts": [],
   "processors": [],

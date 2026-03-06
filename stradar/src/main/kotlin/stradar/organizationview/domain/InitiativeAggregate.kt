@@ -15,56 +15,57 @@ import stradar.organizationview.domain.commands.createinitiative.CreateInitiativ
 @Aggregate
 class InitiativeAggregate() {
 
-    @AggregateIdentifier private lateinit var initiativeId: UUID
+        @AggregateIdentifier private lateinit var initiativeId: UUID
 
-    // Updated state tracking: Map of ItemID to its content/status
-    private val items = mutableMapOf<UUID, String>()
+        // Updated state tracking: Map of ItemID to its content/status
+        private val items = mutableMapOf<UUID, String>()
 
-    @CommandHandler
-    constructor(command: CreateInitiativeCommand, metaData: MetaData) : this() {
-        AggregateLifecycle.apply(
-                InitiativeCreatedEvent(
-                        initiativeId = command.initiativeId,
-                        initiativeName = command.initiativeName,
-                        organizationId = command.organizationId,
-                        strategyId = command.strategyId,
-                        teamId = command.teamId
+        @CommandHandler
+        constructor(command: CreateInitiativeCommand, metaData: MetaData) : this() {
+                AggregateLifecycle.apply(
+                        InitiativeCreatedEvent(
+                                initiativeId = command.initiativeId,
+                                initiativeName = command.initiativeName,
+                                organizationId = command.organizationId,
+                                strategyId = command.strategyId,
+                                teamId = command.teamId
+                        )
                 )
-        )
-    }
-
-    // --- NEW COMMAND HANDLER ---
-    @CommandHandler
-    fun handle(command: ChangeInitiativeItemCommand, metaData: MetaData) {
-        val userId = metaData["x-user-id"] as? String
-
-        // Business Logic Example:
-        // if (command.content.isBlank()) throw IllegalArgumentException("Content cannot be empty")
-
-        AggregateLifecycle.apply(
-                InitiativeItemChangedEvent(
-                        initiativeId = command.initiativeId,
-                        step = command.step,
-                        itemId = command.itemId,
-                        content = command.content,
-                        status = command.status
-                )
-        )
-    }
-
-    @EventSourcingHandler
-    fun on(event: InitiativeCreatedEvent) {
-        this.initiativeId = event.initiativeId
-    }
-
-    // --- NEW EVENT SOURCING HANDLER ---
-    @EventSourcingHandler
-    fun on(event: InitiativeItemChangedEvent) {
-        // We update our internal map so the aggregate "remembers" this item
-        if (event.status == "DELETED") {
-            items.remove(event.itemId)
-        } else {
-            items[event.itemId] = event.content
         }
-    }
+
+        // --- NEW COMMAND HANDLER ---
+        @CommandHandler
+        fun handle(command: ChangeInitiativeItemCommand, metaData: MetaData) {
+                val userId = metaData["x-user-id"] as? String
+
+                // Business Logic Example:
+                // if (command.content.isBlank()) throw IllegalArgumentException("Content cannot be
+                // empty")
+
+                AggregateLifecycle.apply(
+                        InitiativeItemChangedEvent(
+                                initiativeId = command.initiativeId,
+                                step = command.step,
+                                itemId = command.itemId,
+                                content = command.content,
+                                status = command.status
+                        )
+                )
+        }
+
+        @EventSourcingHandler
+        fun on(event: InitiativeCreatedEvent) {
+                this.initiativeId = event.initiativeId
+        }
+
+        // --- NEW EVENT SOURCING HANDLER ---
+        @EventSourcingHandler
+        fun on(event: InitiativeItemChangedEvent) {
+                // We update our internal map so the aggregate "remembers" this item
+                if (event.status == "DELETED") {
+                        items.remove(event.itemId)
+                } else {
+                        items[event.itemId] = event.content
+                }
+        }
 }

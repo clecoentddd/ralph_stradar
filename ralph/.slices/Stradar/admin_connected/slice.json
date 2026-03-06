@@ -1,0 +1,183 @@
+{
+  "id": "3458764660825671418",
+  "status": "Created",
+  "title": "slice: admin_connected",
+  "context": "Stradar",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764660816044921",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: admin_connected",
+      "title": "admin",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "generated": true,
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660816044927",
+          "type": "OUTBOUND",
+          "title": "Admin Connected Status",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764645832707774",
+          "type": "OUTBOUND",
+          "title": "Welcome - Create An Organisation",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764660815509287",
+          "type": "INBOUND",
+          "title": "Admin Signed In",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764660816044927",
+      "tags": [],
+      "groupId": "3458764660816179934",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: admin_connected",
+      "title": "Admin Connected Status",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "generated": true,
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660816044921",
+          "type": "INBOUND",
+          "title": "admin",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
+    {
+      "id": "3458764645832707774",
+      "tags": [],
+      "groupId": "3458764645832707779",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar",
+      "context": "INTERNAL",
+      "slice": "slice: admin_connected",
+      "title": "Welcome - Create An Organisation",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": true
+        }
+      ],
+      "type": "SCREEN",
+      "description": "Create an organization that will have teams",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645827750140",
+          "type": "OUTBOUND",
+          "title": "Define Organization",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764660816044921",
+          "type": "INBOUND",
+          "title": "admin",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "admin"
+  ]
+}

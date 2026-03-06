@@ -14,59 +14,54 @@ private val logger = KotlinLogging.logger {}
 
 interface InitiativesReadModelRepository : JpaRepository<InitiativesReadModelEntity, UUID> {
 
-  // This is the 3-parameter query we discussed for "coherence"
+        // This is the 3-parameter query we discussed for "coherence"
 
-  fun findAllByStrategyIdAndTeamIdAndOrganizationId(
-          strategyId: UUID,
-          teamId: UUID,
-          organizationId: UUID
-  ): List<InitiativesReadModelEntity>
+        fun findAllByStrategyIdAndTeamIdAndOrganizationId(
+                strategyId: UUID,
+                teamId: UUID,
+                organizationId: UUID
+        ): List<InitiativesReadModelEntity>
 }
 
 @Component
 class InitiativesReadModelProjector(private val repository: InitiativesReadModelRepository) {
 
-  @EventHandler
-  fun on(event: InitiativeCreatedEvent) {
-    logger.info { "Projecting new initiative: ${event.initiativeId}" }
-    val entity =
-            InitiativesReadModelEntity().apply {
-              initiativeId = event.initiativeId
-              initiativeName = event.initiativeName
-              organizationId = event.organizationId
-              strategyId = event.strategyId
-              teamId = event.teamId
-            }
-    repository.save(entity)
-  }
+        @EventHandler
+        fun on(event: InitiativeCreatedEvent) {
+                logger.info { "Projecting new initiative: ${event.initiativeId}" }
+                val entity =
+                        InitiativesReadModelEntity().apply {
+                                initiativeId = event.initiativeId
+                                initiativeName = event.initiativeName
+                                organizationId = event.organizationId
+                                strategyId = event.strategyId
+                                teamId = event.teamId
+                        }
+                repository.save(entity)
+        }
 
-  @EventHandler
-  fun on(event: InitiativeItemChangedEvent) {
-    val initiative =
-            repository.findById(event.initiativeId).orElseThrow {
-              IllegalStateException("Initiative ${event.initiativeId} not found")
-            }
+        @EventHandler
+        fun on(event: InitiativeItemChangedEvent) {
+                val initiative =
+                        repository.findById(event.initiativeId).orElseThrow {
+                                IllegalStateException("Initiative ${event.initiativeId} not found")
+                        }
 
-    // 1. Explicitly cast or ensure targetList is Mutable
-    val targetList: MutableList<InitiativeItem> =
-            when (event.step.uppercase()) {
-              "DIAGNOSTIC" -> initiative.diagnostic
-              "OVERALLAPPROACH" -> initiative.overallPlan
-              "COHERENTACTION" -> initiative.coherentActions
-              "PROXIMATEOBJECTIVE" -> initiative.proximateObjectives
-              else -> throw IllegalArgumentException("Unknown step: ${event.step}")
-            }
+                // 1. Remove the item if it exists (using standard Java/Kotlin removeIf)
+                initiative.allItems.removeIf { it.id == event.itemId }
 
-    // 2. Use removeIf (standard Java/Kotlin 1.1+ feature for MutableIterables)
-    targetList.removeIf { it.id == event.itemId }
+                // 2. Re-add if not a deletion
+                if (event.status != "DELETED") {
+                        initiative.allItems.add(
+                                InitiativeItem(
+                                        id = event.itemId,
+                                        content = event.content,
+                                        status = event.status,
+                                        step = event.step.uppercase()
+                                )
+                        )
+                }
 
-    // 3. Re-add if not a deletion
-    if (event.status != "DELETED") {
-      targetList.add(
-              InitiativeItem(id = event.itemId, content = event.content, status = event.status)
-      )
-    }
-
-    repository.save(initiative)
-  }
+                repository.save(initiative)
+        }
 }

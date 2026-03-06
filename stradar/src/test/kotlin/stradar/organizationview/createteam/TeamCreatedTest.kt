@@ -2,6 +2,7 @@ package stradar.organizationview.createteam
 
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
+import org.axonframework.messaging.MetaData
 import org.axonframework.queryhandling.QueryGateway
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
@@ -65,8 +66,10 @@ class TeamCreatedTest {
                                 this.purpose = "To do good"
                         }
 
+                val metadata = MetaData.with("organizationId", orgId)
+
                 fixture.givenNoPriorActivity()
-                        .`when`(command)
+                        .`when`(command, metadata)
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

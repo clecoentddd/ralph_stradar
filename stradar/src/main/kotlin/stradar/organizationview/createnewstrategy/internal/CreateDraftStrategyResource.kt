@@ -34,7 +34,15 @@ class StrategyResource(private val commandGateway: CommandGateway) {
 
         private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping("/draft")
         @Operation(summary = "Create a new Draft Strategy slot for a team")
         fun createDraft(
@@ -61,6 +69,7 @@ class StrategyResource(private val commandGateway: CommandGateway) {
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("organizationId", payload.organizationId)
 
                 // Mapping payload to the Command + Nested StrategyDetails Value Object
                 val command =

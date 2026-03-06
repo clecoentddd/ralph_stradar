@@ -4,6 +4,8 @@ import java.util.*
 import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
+import org.axonframework.messaging.responsetypes.ResponseTypes
+import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,8 +15,8 @@ import stradar.common.support.awaitUntilAssserted
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
 import stradar.organizationview.domain.commands.updateteam.UpdateTeamCommand
+import stradar.organizationview.teamlist.TeamListByOrganizationQuery
 import stradar.organizationview.teamlist.TeamListReadModel
-import stradar.organizationview.teamlist.TeamListReadModelQuery
 
 class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest() {
 
@@ -29,7 +31,9 @@ class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest(
 
                 // 2. Prepare required MetaData
                 val meta =
-                        MetaData.with("X-Session-Id", "test-session").and("x-user-id", "test-admin")
+                        MetaData.with("X-Session-Id", "test-session")
+                                .and("x-user-id", "test-admin")
+                                .and("organizationId", organizationId)
 
                 // 3. Create the team
                 val createTeamCommand =
@@ -65,8 +69,24 @@ class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest(
                         val result =
                                 queryGateway
                                         .query(
-                                                TeamListReadModelQuery(),
-                                                TeamListReadModel::class.java
+                                                GenericQueryMessage(
+                                                                TeamListByOrganizationQuery(
+                                                                        organizationId
+                                                                ),
+                                                                ResponseTypes.instanceOf(
+                                                                        TeamListReadModel::class
+                                                                                .java
+                                                                )
+                                                        )
+                                                        .withMetaData(
+                                                                MetaData.with(
+                                                                        "organizationId",
+                                                                        organizationId
+                                                                )
+                                                        ),
+                                                ResponseTypes.instanceOf(
+                                                        TeamListReadModel::class.java
+                                                )
                                         )
                                         .get()
 

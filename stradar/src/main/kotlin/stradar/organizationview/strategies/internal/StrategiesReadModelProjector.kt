@@ -3,8 +3,10 @@ package stradar.organizationview.strategies.internal
 import java.util.UUID
 import mu.KotlinLogging
 import org.axonframework.eventhandling.EventHandler
+import org.axonframework.messaging.MetaData
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
+import stradar.common.resolveOrganizationId
 import stradar.events.StrategyDraftCreatedEvent
 import stradar.organizationview.strategies.StrategiesReadModelEntity
 
@@ -32,14 +34,15 @@ class StrategiesReadModelProjector(private val repository: StrategiesReadModelRe
      * This projection is idempotent and safe for event replay.
      */
     @EventHandler
-    fun on(event: StrategyDraftCreatedEvent) {
+    fun on(event: StrategyDraftCreatedEvent, metaData: MetaData) {
+        val secureOrgId = metaData.resolveOrganizationId()
 
         val entity = repository.findById(event.strategyId).orElse(StrategiesReadModelEntity())
 
         entity.apply {
             strategyId = event.strategyId
             strategyBuilderId = event.strategyBuilderId
-            organizationId = event.organizationId
+            organizationId = secureOrgId
             teamId = event.teamId
             strategyName = event.strategyName
             strategyTimeframe = event.strategyTimeframe

@@ -11,7 +11,7 @@
     {
       "id": "3458764660825671418",
       "slice": "slice: organization person connected",
-      "index": 7,
+      "index": 17,
       "context": "Stadar Organization View",
       "folder": "organizationpersonconnected",
       "status": "Created"
@@ -50,16 +50,16 @@
     },
     {
       "id": "3458764645855304955",
-      "slice": "slice: Create An Initiative",
-      "index": 11,
+      "slice": "slice: Create Initiative",
+      "index": 5,
       "context": "Stadar Organization View",
-      "folder": "createaninitiative",
+      "folder": "createinitiative",
       "status": "Created"
     },
     {
       "id": "3458764645855652334",
       "slice": "slice: Initiative List",
-      "index": 17,
+      "index": 11,
       "context": "Stadar Organization View",
       "folder": "initiativelist",
       "status": "Created"
@@ -106,10 +106,10 @@
     },
     {
       "id": "3458764645831088163",
-      "slice": "slice: Create Team",
-      "index": 15,
+      "slice": "slice: Create Team 2",
+      "index": 23,
       "context": "Stadar Organization View",
-      "folder": "createteam",
+      "folder": "createteam2",
       "status": "Created"
     },
     {
@@ -147,7 +147,7 @@
     {
       "id": "3458764660937620380",
       "slice": "slice: Sign In To Company Admin Account",
-      "index": 5,
+      "index": 13,
       "context": "Stadar Organization View",
       "folder": "signintocompanyadminaccount",
       "status": "Created"
@@ -155,7 +155,7 @@
     {
       "id": "3458764645850227982",
       "slice": "slice: Team List",
-      "index": 19,
+      "index": 25,
       "context": "Stadar Organization View",
       "folder": "teamlist",
       "status": "Created"
@@ -179,7 +179,7 @@
     {
       "id": "3458764661099002342",
       "slice": "slice: Detect Radar Element",
-      "index": 23,
+      "index": 27,
       "context": "Stadar Organization View",
       "folder": "detectradarelement",
       "status": "Created"
@@ -195,7 +195,7 @@
     {
       "id": "3458764661100320100",
       "slice": "slice: Update Environmental Change",
-      "index": 29,
+      "index": 31,
       "context": "Stadar Organization View",
       "folder": "updateenvironmentalchange",
       "status": "Created"
@@ -203,7 +203,7 @@
     {
       "id": "3458764661101039959",
       "slice": "slice: Environmental Changes 2",
-      "index": 31,
+      "index": 33,
       "context": "Stadar Organization View",
       "folder": "environmentalchanges2",
       "status": "Created"
@@ -211,7 +211,7 @@
     {
       "id": "3458764661105229298",
       "slice": "slice: Delete Environmental Change",
-      "index": 33,
+      "index": 35,
       "context": "Stadar Organization View",
       "folder": "deleteenvironmentalchange",
       "status": "Created"
@@ -219,7 +219,7 @@
     {
       "id": "3458764661105229635",
       "slice": "slice: radar view 3",
-      "index": 35,
+      "index": 37,
       "context": "Stadar Organization View",
       "folder": "radarview3",
       "status": "Created"
@@ -227,7 +227,7 @@
     {
       "id": "3458764661146327818",
       "slice": "slice: environmental changes",
-      "index": 27,
+      "index": 29,
       "context": "Stadar Organization View",
       "folder": "environmentalchanges",
       "status": "Created"
@@ -235,7 +235,7 @@
     {
       "id": "3458764661501673119",
       "slice": "slice: Create Person",
-      "index": 1,
+      "index": 7,
       "context": "Stadar Organization View",
       "folder": "createperson",
       "status": "Created"
@@ -243,7 +243,7 @@
     {
       "id": "3458764661504996265",
       "slice": "slice: Organization Account List",
-      "index": 3,
+      "index": 9,
       "context": "Stadar Organization View",
       "folder": "organizationaccountlist",
       "status": "Created"
@@ -251,7 +251,7 @@
     {
       "id": "3458764661631987971",
       "slice": "slice: Update Team",
-      "index": 37,
+      "index": 39,
       "context": "Stadar Organization View",
       "folder": "updateteam",
       "status": "Created"
@@ -259,7 +259,7 @@
     {
       "id": "3458764661631988306",
       "slice": "slice: Delete Team",
-      "index": 39,
+      "index": 41,
       "context": "Stadar Organization View",
       "folder": "deleteteam",
       "status": "Created"
@@ -267,7 +267,7 @@
     {
       "id": "3458764661685018093",
       "slice": "slice: Create Draft Strategy",
-      "index": 9,
+      "index": 1,
       "context": "Stadar Organization View",
       "folder": "createdraftstrategy",
       "status": "Created"
@@ -275,7 +275,7 @@
     {
       "id": "3458764661684920791",
       "slice": "slice: strategies",
-      "index": 13,
+      "index": 3,
       "context": "Stadar Organization View",
       "folder": "strategies",
       "status": "Created"
@@ -283,7 +283,7 @@
     {
       "id": "3458764661765881509",
       "slice": "slice: Change Initiative Item",
-      "index": 21,
+      "index": 15,
       "context": "Stadar Organization View",
       "folder": "changeinitiativeitem",
       "status": "Created"
@@ -291,9 +291,17 @@
     {
       "id": "3458764661766210431",
       "slice": "slice: Initiatives",
-      "index": 25,
+      "index": 19,
       "context": "Stadar Organization View",
       "folder": "initiatives",
+      "status": "Created"
+    },
+    {
+      "id": "3458764661877939780",
+      "slice": "slice: Change Initiative",
+      "index": 21,
+      "context": "Stadar Organization View",
+      "folder": "changeinitiative",
       "status": "Created"
     }
   ]

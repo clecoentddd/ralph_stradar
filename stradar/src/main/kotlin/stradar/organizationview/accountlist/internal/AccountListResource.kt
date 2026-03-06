@@ -18,7 +18,15 @@ class AccountListResource(private val queryGateway: QueryGateway) {
   private val logger = KotlinLogging.logger {}
 
   /** 1. Get the full list (Admin View) */
-  @CrossOrigin
+  @CrossOrigin(
+          allowedHeaders =
+                  [
+                          "organizationId",
+                          "X-Session-Id",
+                          "X-Correlation-Id",
+                          "Content-Type",
+                          "x-user-id"]
+  )
   @GetMapping("/accountlist")
   fun findReadModel(): CompletableFuture<ResponseEntity<AccountListReadModel>> {
     logger.info { "Fetching full account list" }

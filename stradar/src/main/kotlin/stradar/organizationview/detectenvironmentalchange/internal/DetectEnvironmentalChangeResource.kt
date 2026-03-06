@@ -33,7 +33,15 @@ class DetectEnvironmentalChangeResource(private var commandGateway: CommandGatew
 
         var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping("/debug/detectenvironmentalchange")
         fun processDebugCommand(
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
@@ -57,6 +65,7 @@ class DetectEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("organizationId", organizationId)
 
                 return commandGateway.send(
                         DetectEnvironmentalChangeCommand(
@@ -80,6 +89,7 @@ class DetectEnvironmentalChangeResource(private var commandGateway: CommandGatew
         @CrossOrigin
         @PostMapping("/detectenvironmentalchange")
         fun processCommand(
+                @RequestHeader(value = "x-user-id") userId: String,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @RequestBody payload: DetectEnvironmentalChangePayload
@@ -90,6 +100,8 @@ class DetectEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("x-user-id", userId)
+                                .and("organizationId", payload.organizationId)
 
                 return commandGateway.send(
                         DetectEnvironmentalChangeCommand(

@@ -4,6 +4,8 @@ import java.util.*
 import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
+import org.axonframework.messaging.responsetypes.ResponseTypes
+import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,8 +13,8 @@ import stradar.common.support.BaseIntegrationTest
 import stradar.common.support.awaitUntilAssserted
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
+import stradar.organizationview.teamlist.TeamListByOrganizationQuery
 import stradar.organizationview.teamlist.TeamListReadModel
-import stradar.organizationview.teamlist.TeamListReadModelQuery
 import stradar.support.metadata.SESSION_ID_HEADER
 
 /**
@@ -31,7 +33,10 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
                 val teamId = UUID.randomUUID()
                 val organizationId = UUID.randomUUID()
                 val adminAccountId = UUID.randomUUID()
-                val metadata = MetaData.with(SESSION_ID_HEADER, UUID.randomUUID().toString())
+                val metadata =
+                        MetaData.with(SESSION_ID_HEADER, UUID.randomUUID().toString())
+                                .and("organizationId", organizationId)
+                                .and("x-user-id", "test-user")
 
                 val createTeamCommand =
                         CreateTeamCommand(
@@ -52,8 +57,24 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
                         val result =
                                 queryGateway
                                         .query(
-                                                TeamListReadModelQuery(),
-                                                TeamListReadModel::class.java
+                                                GenericQueryMessage(
+                                                                TeamListByOrganizationQuery(
+                                                                        organizationId
+                                                                ),
+                                                                ResponseTypes.instanceOf(
+                                                                        TeamListReadModel::class
+                                                                                .java
+                                                                )
+                                                        )
+                                                        .withMetaData(
+                                                                MetaData.with(
+                                                                        "organizationId",
+                                                                        organizationId
+                                                                )
+                                                        ),
+                                                ResponseTypes.instanceOf(
+                                                        TeamListReadModel::class.java
+                                                )
                                         )
                                         .get()
                         assertThat(result).isNotNull

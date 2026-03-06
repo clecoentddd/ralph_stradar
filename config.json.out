@@ -32,7 +32,7 @@
               "generated": true,
               "subfields": [
                 {
-                  "name": "companyId",
+                  "name": "organizationId",
                   "type": "Long",
                   "cardinality": "Single"
                 },
@@ -98,7 +98,7 @@
               "generated": true,
               "subfields": [
                 {
-                  "name": "companyId",
+                  "name": "organizationId",
                   "type": "Long",
                   "cardinality": "Single"
                 },
@@ -1059,7 +1059,7 @@
               "generated": true,
               "subfields": [
                 {
-                  "name": "companyId",
+                  "name": "organizationId",
                   "type": "Long",
                   "cardinality": "Single"
                 },
@@ -1132,7 +1132,7 @@
               "generated": true,
               "subfields": [
                 {
-                  "name": "companyId",
+                  "name": "organizationId",
                   "type": "Long",
                   "cardinality": "Single"
                 },
@@ -1197,7 +1197,7 @@
               "generated": true,
               "subfields": [
                 {
-                  "name": "companyId",
+                  "name": "organizationId",
                   "type": "Long",
                   "cardinality": "Single"
                 },
@@ -1276,7 +1276,7 @@
               "generated": true,
               "subfields": [
                 {
-                  "name": "companyId",
+                  "name": "organizationId",
                   "type": "Long",
                   "cardinality": "Single"
                 },

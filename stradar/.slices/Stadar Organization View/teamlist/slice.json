@@ -15,7 +15,7 @@
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Team List",
-      "title": "Company Team List",
+      "title": "Company Team List 2",
       "fields": [
         {
           "name": "teamId",
@@ -95,7 +95,7 @@
         {
           "id": "3458764645830373813",
           "type": "INBOUND",
-          "title": "Team Created",
+          "title": "Team Created 2",
           "elementType": "EVENT"
         }
       ],
@@ -192,7 +192,7 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List",
+          "title": "Company Team List 2",
           "elementType": "READMODEL"
         }
       ],
@@ -325,7 +325,7 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List",
+          "title": "Company Team List 2",
           "elementType": "READMODEL"
         }
       ],

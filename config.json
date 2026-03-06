@@ -4715,7 +4715,7 @@
               "idAttribute": true
             },
             {
-              "name": "radarId",
+              "name": "environmentalChangeId",
               "type": "UUID",
               "cardinality": "Single",
               "idAttribute": false
@@ -4875,7 +4875,7 @@
               "idAttribute": true
             },
             {
-              "name": "radarId",
+              "name": "environmentalChangeId",
               "type": "UUID",
               "cardinality": "Single",
               "idAttribute": false
@@ -5031,7 +5031,7 @@
           "title": "Add Radar Item",
           "fields": [
             {
-              "name": "radarId",
+              "name": "environmentalChangeId",
               "type": "UUID",
               "generated": true,
               "subfields": [],
@@ -5232,7 +5232,7 @@
               "idAttribute": true
             },
             {
-              "name": "radarId",
+              "name": "environmentalChangeId",
               "type": "UUID",
               "cardinality": "Single",
               "idAttribute": false
@@ -5394,7 +5394,7 @@
               "idAttribute": true
             },
             {
-              "name": "radarId",
+              "name": "environmentalChangeId",
               "type": "UUID",
               "cardinality": "Single",
               "idAttribute": false

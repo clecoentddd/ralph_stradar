@@ -26,7 +26,15 @@ class CreateInitiativeResource(private var commandGateway: CommandGateway) {
 
         private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                "X-Session-Id",
+                                "X-Correlation-Id",
+                                "Content-Type",
+                                "x-user-id"]
+        )
         @PostMapping("/createinitiative/{id}")
         fun processCommand(
                 @PathVariable("id") initiativeId: UUID,
@@ -44,9 +52,10 @@ class CreateInitiativeResource(private var commandGateway: CommandGateway) {
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("organizationId", payload.organizationId)
 
                 logger.info {
-                        "Dispatching Initiative for $initiativeId [User: $userId, Session: $sessionId]"
+                        "Dispatching Initiative for $initiativeId [User: $userId, Session: $sessionId, Org: ${payload.organizationId}]"
                 }
 
                 val command =

@@ -1,6 +1,7 @@
 package stradar.organizationview.deleteteam
 
 import java.util.UUID
+import org.axonframework.messaging.MetaData
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
@@ -52,7 +53,7 @@ class DeleteTeamHappyFlowTest {
     expectedEvents.add(TeamDeletedEvent(teamId = teamId, organizationId = organizationId))
 
     fixture.given(events)
-            .`when`(command)
+            .`when`(command, MetaData.with("organizationId", organizationId))
             .expectSuccessfulHandlerExecution()
             .expectEvents(*expectedEvents.toTypedArray())
   }

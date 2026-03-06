@@ -1,0 +1,37 @@
+# Ralph Progress Log
+Started: 2026-02-23T12:41:00+01:00
+---
+## 2026-02-23 - signin_admin
+- Implemented `SignInAdminCommand`, `AdminSignedInEvent`, and `AdminAggregate`.
+- Added `SignInAdminResource` with security headers and metadata.
+- Implemented `AdminAggregateTest` with business validation.
+- **Learnings:**
+  - Use `CommandResult` for aggregate feedback.
+  - `@NoArg` is the correct annotation for entities.
+  - `X-Session-Id` is mandatory for metadata interceptors.
+
+## 2026-02-23 - adminconnected
+- Implemented `AdminReadModelEntity`, `AdminReadModelProjector`, and `AdminReadModelQueryHandler`.
+- Established `ProcessingGroups.PLATFORM_ADMINISTRATION`.
+- **Learnings:**
+  - `ProcessingGroup` isolation is required for all projectors.
+  - `ProjectionFixtureConfiguration` facilitates end-to-end integration testing.
+
+
+## 2026-02-23 - defineorganization
+- Implemented `OrganizationAggregate` with `QueryGateway` injection for uniqueness checks.
+- Enforced "Title is mandatory" business invariant.
+- Refactored `DefineOrganizationResource` with security headers and `ResponseEntity`.
+- **Learnings:**
+  - `AggregateTestFixture` requires `registerInjectableResource` for `QueryGateway` mocking.
+  - Business invariants should use `CommandException` for consistent project error handling.
+  - PowerShell wildcards in `mvn -Dtest` require meticulous quoting.
+
+## 2026-02-23 - organizationlist (Projection)
+- Implemented `OrganizationReadModel` and Projector for the list feature.
+- Implemented `@QueryHandler` for `OrganizationNameQuery` (resolving Iteration 4 runtime gap).
+- Added Flyway migration `V20260223_2__create_organization_read_model.sql`.
+- **Learnings:**
+  - Aggregates performing uniqueness checks via `QueryGateway` require a real query handler at runtime.
+  - Unit tests pass with mocks, but integration tests verify the "Full Circuit" of the uniqueness validation.
+  - Centralizing queries into the `readmodel` package prevents circular dependencies and duplication.

@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import mu.KotlinLogging
+import org.axonframework.messaging.MetaData
+import org.axonframework.messaging.responsetypes.ResponseTypes
+import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.initiativelist.InitiativeListResponse
@@ -23,7 +26,15 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
         private val logger = KotlinLogging.logger {}
 
         /** Finds a specific initiative by its unique ID */
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                "X-Session-Id",
+                                "X-Correlation-Id",
+                                "Content-Type",
+                                "x-user-id"]
+        )
         @GetMapping("/initiativelist/{id}")
         fun findReadModel(
                 @Parameter(
@@ -31,18 +42,34 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                         example = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
                 )
                 @PathVariable("id")
-                initiativeId: UUID
+                initiativeId: UUID,
+                @RequestHeader("organizationId") organizationId: UUID,
+                @RequestHeader("x-user-id") userId: String
         ): CompletableFuture<InitiativesReadModel> {
-                logger.debug { "Querying single initiative: $initiativeId" }
-                return queryGateway.query(
-                        InitiativesReadModelQuery(initiativeId),
-                        InitiativesReadModel::class.java
-                )
+                logger.debug { "Querying single initiative: $initiativeId (org: $organizationId)" }
+
+                val responseType = ResponseTypes.instanceOf(InitiativesReadModel::class.java)
+                val queryMessage =
+                        GenericQueryMessage(InitiativesReadModelQuery(initiativeId), responseType)
+                                .withMetaData(
+                                        MetaData.with("organizationId", organizationId)
+                                                .and("x-user-id", userId)
+                                )
+
+                return queryGateway.query(queryMessage, responseType)
         }
 
         /** Coherent query: Finds all initiatives for a specific strategy, team, and organization */
         @Operation(summary = "Get initiatives for a specific strategy context")
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                "X-Session-Id",
+                                "X-Correlation-Id",
+                                "Content-Type",
+                                "x-user-id"]
+        )
         @GetMapping("/initiativelist/by-strategy")
         fun findByStrategy(
                 @RequestParam
@@ -51,19 +78,28 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                 @RequestParam
                 @Parameter(example = "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d")
                 teamId: UUID,
-                @RequestParam
-                @Parameter(example = "474e4828-a953-4240-bb26-368bb332398e")
-                organizationId: UUID
+                @RequestHeader("organizationId") organizationId: UUID,
+                @RequestHeader("x-user-id") userId: String
         ): CompletableFuture<InitiativeListResponse> {
-                logger.info { "Querying initiatives for strategy $strategyId, team $teamId" }
+                logger.info {
+                        "Querying initiatives for strategy $strategyId, team $teamId (org: $organizationId)"
+                }
 
-                return queryGateway.query(
-                        InitiativesByStrategyQuery(
-                                strategyId = strategyId,
-                                teamId = teamId,
-                                organizationId = organizationId
-                        ),
-                        InitiativeListResponse::class.java
-                )
+                val responseType = ResponseTypes.instanceOf(InitiativeListResponse::class.java)
+                val queryMessage =
+                        GenericQueryMessage(
+                                        InitiativesByStrategyQuery(
+                                                strategyId = strategyId,
+                                                teamId = teamId,
+                                                organizationId = organizationId
+                                        ),
+                                        responseType
+                                )
+                                .withMetaData(
+                                        MetaData.with("organizationId", organizationId)
+                                                .and("x-user-id", userId)
+                                )
+
+                return queryGateway.query(queryMessage, responseType)
         }
 }

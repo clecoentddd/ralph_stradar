@@ -1,4 +1,12 @@
-docker:
+# backend: 
+
+mvn spring-boot:run
+
+# codegen manuel
+ yo @dilgerma/nebulit - select axon
+
+
+# docker:
 
 docker run -ti -p 3001:3000 -v "$($PWD.Path):/workspace" -e HOST_WORKSPACE="$($PWD.Path)" --name codegen --rm nebulit/codegen
 
@@ -18,7 +26,7 @@ PRE-BUILD CHANGES:
 3. Start PostgreSQL:
    - docker-compose up -d
 
-4. access DB: docker exec -it backend-postgres-1 psql -U postgres -d postgres-so
+4. access DB: docker exec -it stradar-postgres-1 psql -U postgres -d postgres-stradar
 
 MVN:
 ./mvnw clean compile

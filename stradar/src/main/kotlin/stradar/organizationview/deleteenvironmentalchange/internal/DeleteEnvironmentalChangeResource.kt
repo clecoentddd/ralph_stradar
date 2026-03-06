@@ -23,7 +23,15 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
 
         var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping("/debug/deleteenvironmentalchange")
         fun processDebugCommand(
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
@@ -38,6 +46,7 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("organizationId", organizationId)
                 return commandGateway.send(
                         DeleteEnvironmentalChangeCommand(
                                 environmentalChangeId,
@@ -48,9 +57,18 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
                 )
         }
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping("/deleteenvironmentalchange/{id}")
         fun processCommand(
+                @RequestHeader(value = "x-user-id") userId: String,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @PathVariable("id") environmentalChangeId: UUID,
@@ -62,6 +80,8 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("x-user-id", userId)
+                                .and("organizationId", payload.organizationId)
                 return commandGateway.send(
                         DeleteEnvironmentalChangeCommand(
                                 environmentalChangeId = environmentalChangeId,

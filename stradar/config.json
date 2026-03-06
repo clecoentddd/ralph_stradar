@@ -1,803 +1,9 @@
 {
   "slices": [
     {
-      "id": "3458764661501673119",
-      "status": "Created",
-      "index": 1,
-      "title": "slice: Create Person",
-      "context": "Stadar Organization View",
-      "sliceType": "STATE_CHANGE",
-      "commands": [
-        {
-          "id": "3458764661498263339",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Create Person",
-          "title": "Create Person",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "role",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "COMMAND",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764661498040166",
-              "type": "OUTBOUND",
-              "title": "person created",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "3458764661498263330",
-              "type": "INBOUND",
-              "title": "Organization Automation",
-              "elementType": "AUTOMATION"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "events": [
-        {
-          "id": "3458764661498040166",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Create Person",
-          "title": "person created",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "role",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "EVENT",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764660938676873",
-              "type": "OUTBOUND",
-              "title": "organization admin",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "3458764661504820713",
-              "type": "OUTBOUND",
-              "title": "person",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "3458764661498263339",
-              "type": "INBOUND",
-              "title": "Create Person",
-              "elementType": "COMMAND"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "readmodels": [],
-      "screens": [],
-      "screenImages": [],
-      "screenLayouts": [],
-      "processors": [
-        {
-          "id": "3458764661498263330",
-          "tags": [],
-          "groupId": "3458764661498263338",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Create Person",
-          "title": "Organization Automation",
-          "fields": [
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "role",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "AUTOMATION",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764661498263339",
-              "type": "OUTBOUND",
-              "title": "Create Person",
-              "elementType": "COMMAND"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "tables": [],
-      "specifications": [],
-      "actors": [],
-      "aggregates": [
-        "organization admin"
-      ]
-    },
-    {
-      "id": "3458764661504996265",
-      "status": "Created",
-      "index": 3,
-      "title": "slice: Organization Account List",
-      "context": "Stadar Organization View",
-      "sliceType": "STATE_VIEW",
-      "commands": [],
-      "events": [],
-      "readmodels": [
-        {
-          "id": "3458764661504820713",
-          "tags": [],
-          "domain": "stradar",
-          "modelContext": "Stadar Organization View",
-          "slice": "slice: Organization Account List",
-          "title": "person",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "role",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "READMODEL",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764661504820723",
-              "type": "OUTBOUND",
-              "title": "Organization Account List",
-              "elementType": "SCREEN"
-            },
-            {
-              "id": "3458764660938159264",
-              "type": "OUTBOUND",
-              "title": "Company Sign In",
-              "elementType": "SCREEN"
-            },
-            {
-              "id": "3458764661498040166",
-              "type": "INBOUND",
-              "title": "person created",
-              "elementType": "EVENT"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screens": [
-        {
-          "id": "3458764661504820723",
-          "tags": [],
-          "groupId": "3458764661504820731",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Organization Account List",
-          "title": "Organization Account List",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "role",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "SCREEN",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764661504820713",
-              "type": "INBOUND",
-              "title": "person",
-              "elementType": "READMODEL"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        },
-        {
-          "id": "3458764660938159264",
-          "tags": [],
-          "groupId": "3458764660938159279",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Organization Account List",
-          "title": "Company Sign In",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "SCREEN",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764660937417035",
-              "type": "OUTBOUND",
-              "title": "Sign In Admin Account",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "3458764661504820713",
-              "type": "INBOUND",
-              "title": "person",
-              "elementType": "READMODEL"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screenImages": [],
-      "screenLayouts": [],
-      "processors": [],
-      "tables": [],
-      "specifications": [],
-      "actors": [],
-      "aggregates": [
-        "organization admin"
-      ]
-    },
-    {
-      "id": "3458764660937620380",
-      "status": "Created",
-      "index": 5,
-      "title": "slice: Sign In To Company Admin Account",
-      "context": "Stadar Organization View",
-      "sliceType": "STATE_CHANGE",
-      "commands": [
-        {
-          "id": "3458764660937417035",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Sign In To Company Admin Account",
-          "title": "Sign In Admin Account",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            }
-          ],
-          "type": "COMMAND",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764660937880791",
-              "type": "OUTBOUND",
-              "title": "Person Signed In",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "3458764660938159264",
-              "type": "INBOUND",
-              "title": "Company Sign In",
-              "elementType": "SCREEN"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "events": [
-        {
-          "id": "3458764660937880791",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Sign In To Company Admin Account",
-          "title": "Person Signed In",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            }
-          ],
-          "type": "EVENT",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764660938676873",
-              "type": "OUTBOUND",
-              "title": "organization admin",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "3458764660937417035",
-              "type": "INBOUND",
-              "title": "Sign In Admin Account",
-              "elementType": "COMMAND"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "readmodels": [],
-      "screens": [
-        {
-          "id": "3458764660938159264",
-          "tags": [],
-          "groupId": "3458764660938159279",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Sign In To Company Admin Account",
-          "title": "Company Sign In",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "SCREEN",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764660937417035",
-              "type": "OUTBOUND",
-              "title": "Sign In Admin Account",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "3458764661504820713",
-              "type": "INBOUND",
-              "title": "person",
-              "elementType": "READMODEL"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screenImages": [],
-      "screenLayouts": [],
-      "processors": [],
-      "tables": [],
-      "specifications": [],
-      "actors": [],
-      "aggregates": [
-        "organization admin"
-      ]
-    },
-    {
-      "id": "3458764660825671418",
-      "status": "Created",
-      "index": 7,
-      "title": "slice: organization person connected",
-      "context": "Stadar Organization View",
-      "sliceType": "STATE_VIEW",
-      "commands": [],
-      "events": [],
-      "readmodels": [
-        {
-          "id": "3458764660938676873",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: organization person connected",
-          "title": "organization admin",
-          "fields": [
-            {
-              "name": "personId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "userName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "role",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "READMODEL",
-          "description": "",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764645833837016",
-              "type": "OUTBOUND",
-              "title": "Create Your team",
-              "elementType": "SCREEN"
-            },
-            {
-              "id": "3458764661498040166",
-              "type": "INBOUND",
-              "title": "person created",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "3458764660937880791",
-              "type": "INBOUND",
-              "title": "Person Signed In",
-              "elementType": "EVENT"
-            }
-          ],
-          "listElement": true,
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screens": [
-        {
-          "id": "3458764645833837016",
-          "tags": [],
-          "groupId": "3458764645833837019",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: organization person connected",
-          "title": "Create Your team",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "SCREEN",
-          "description": " Teams in a hierarchical structure using levels: level 0, the below level 1, then below level 2, etc. The only relationship between teams is the level",
-          "aggregate": "organization admin",
-          "aggregateDependencies": [
-            "organization admin"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764645830671029",
-              "type": "OUTBOUND",
-              "title": "Create Team",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "3458764660938676873",
-              "type": "INBOUND",
-              "title": "organization admin",
-              "elementType": "READMODEL"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screenImages": [],
-      "screenLayouts": [],
-      "processors": [],
-      "tables": [],
-      "specifications": [],
-      "actors": [],
-      "aggregates": [
-        "organization admin"
-      ]
-    },
-    {
       "id": "3458764661685018093",
       "status": "Created",
-      "index": 9,
+      "index": 1,
       "title": "slice: Create Draft Strategy",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -1209,302 +415,9 @@
       ]
     },
     {
-      "id": "3458764645855304955",
-      "status": "Created",
-      "index": 11,
-      "title": "slice: Create An Initiative",
-      "context": "Stadar Organization View",
-      "sliceType": "STATE_CHANGE",
-      "commands": [
-        {
-          "id": "3458764645854569036",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Create An Initiative",
-          "title": "Create An Initiative",
-          "fields": [
-            {
-              "name": "initiativeId",
-              "type": "UUID",
-              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
-              "subfields": [],
-              "idAttribute": true,
-              "cardinality": "Single"
-            },
-            {
-              "name": "initiativeName",
-              "type": "String",
-              "example": "Modernize Legacy Infrastructure",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "example": "474e4828-a953-4240-bb26-368bb332398e",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "strategyId",
-              "type": "UUID",
-              "example": "77777777-7777-7777-7777-777777777777",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "COMMAND",
-          "description": "",
-          "aggregate": "Initiative",
-          "aggregateDependencies": [
-            "Initiative"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764645850767799",
-              "type": "OUTBOUND",
-              "title": "Initiative Created",
-              "elementType": "EVENT"
-            },
-            {
-              "id": "3458764645854569102",
-              "type": "INBOUND",
-              "title": "Create an initiative",
-              "elementType": "SCREEN"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "events": [
-        {
-          "id": "3458764645850767799",
-          "tags": [],
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Create An Initiative",
-          "title": "Initiative Created",
-          "fields": [
-            {
-              "name": "initiativeId",
-              "type": "UUID",
-              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
-              "subfields": [],
-              "idAttribute": true,
-              "cardinality": "Single"
-            },
-            {
-              "name": "coherentActions",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "diagnostic",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "initiativeName",
-              "type": "String",
-              "example": "Modernize Legacy Infrastructure",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "example": "474e4828-a953-4240-bb26-368bb332398e",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "overallPlan",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "proximateObjectives",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "strategyId",
-              "type": "UUID",
-              "example": "77777777-7777-7777-7777-777777777777",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "EVENT",
-          "description": "",
-          "aggregate": "Initiative",
-          "aggregateDependencies": [
-            "Initiative"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764645855652122",
-              "type": "OUTBOUND",
-              "title": "Initiatives",
-              "elementType": "READMODEL"
-            },
-            {
-              "id": "3458764645854569036",
-              "type": "INBOUND",
-              "title": "Create An Initiative",
-              "elementType": "COMMAND"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "readmodels": [],
-      "screens": [
-        {
-          "id": "3458764645854569102",
-          "tags": [],
-          "groupId": "3458764645854569108",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Create An Initiative",
-          "title": "Create an initiative",
-          "fields": [
-            {
-              "name": "initiativeId",
-              "type": "UUID",
-              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "strategyId",
-              "type": "UUID",
-              "example": "77777777-7777-7777-7777-777777777777",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "example": "474e4828-a953-4240-bb26-368bb332398e",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "initiativeName",
-              "type": "String",
-              "example": "Modernize Legacy Infrastructure",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "SCREEN",
-          "description": "Initiatives belong to a strategy. ",
-          "aggregate": "Initiative",
-          "aggregateDependencies": [
-            "Initiative"
-          ],
-          "dependencies": [
-            {
-              "id": "3458764645854569036",
-              "type": "OUTBOUND",
-              "title": "Create An Initiative",
-              "elementType": "COMMAND"
-            },
-            {
-              "id": "3458764661684920684",
-              "type": "INBOUND",
-              "title": "strategies",
-              "elementType": "READMODEL"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screenImages": [],
-      "screenLayouts": [],
-      "processors": [],
-      "tables": [],
-      "specifications": [],
-      "actors": [],
-      "aggregates": [
-        "Initiative"
-      ]
-    },
-    {
       "id": "3458764661684920791",
       "status": "Created",
-      "index": 13,
+      "index": 3,
       "title": "slice: strategies",
       "context": "Stadar Organization View",
       "sliceType": "STATE_VIEW",
@@ -1741,7 +654,7 @@
             {
               "id": "3458764645854569036",
               "type": "OUTBOUND",
-              "title": "Create An Initiative",
+              "title": "Create Initiative",
               "elementType": "COMMAND"
             },
             {
@@ -1770,66 +683,59 @@
       ]
     },
     {
-      "id": "3458764645831088163",
+      "id": "3458764645855304955",
       "status": "Created",
-      "index": 15,
-      "title": "slice: Create Team",
+      "index": 5,
+      "title": "slice: Create Initiative",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
       "commands": [
         {
-          "id": "3458764645830671029",
+          "id": "3458764645854569036",
           "tags": [],
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
-          "slice": "slice: Create Team",
-          "title": "Create Team",
+          "slice": "slice: Create Initiative",
+          "title": "Create Initiative",
           "fields": [
             {
-              "name": "teamId",
+              "name": "initiativeId",
               "type": "UUID",
-              "generated": true,
+              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+              "subfields": [],
+              "idAttribute": true,
+              "cardinality": "Single"
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "example": "Modernize Legacy Infrastructure",
               "subfields": [],
               "cardinality": "Single",
-              "idAttribute": true
+              "idAttribute": false
             },
             {
               "name": "organizationId",
               "type": "UUID",
+              "example": "474e4828-a953-4240-bb26-368bb332398e",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
             },
             {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
+              "name": "strategyId",
+              "type": "UUID",
+              "example": "77777777-7777-7777-7777-777777777777",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
             },
             {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
+              "name": "teamId",
+              "type": "UUID",
+              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
@@ -1837,21 +743,21 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "Initiative",
           "aggregateDependencies": [
-            "team"
+            "Initiative"
           ],
           "dependencies": [
             {
-              "id": "3458764645830373813",
+              "id": "3458764645850767799",
               "type": "OUTBOUND",
-              "title": "Team Created",
+              "title": "Initiative Created",
               "elementType": "EVENT"
             },
             {
-              "id": "3458764645833837016",
+              "id": "3458764645854569102",
               "type": "INBOUND",
-              "title": "Create Your team",
+              "title": "Create an initiative",
               "elementType": "SCREEN"
             }
           ],
@@ -1865,43 +771,43 @@
       ],
       "events": [
         {
-          "id": "3458764645830373813",
+          "id": "3458764645850767799",
           "tags": [],
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
-          "slice": "slice: Create Team",
-          "title": "Team Created",
+          "slice": "slice: Create Initiative",
+          "title": "Initiative Created",
           "fields": [
             {
-              "name": "teamId",
+              "name": "initiativeId",
               "type": "UUID",
-              "generated": true,
+              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
               "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
+              "idAttribute": true,
+              "cardinality": "Single"
             },
             {
-              "name": "Context",
-              "type": "String",
+              "name": "coherentActions",
+              "type": "Custom",
+              "example": "[]",
               "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
             },
             {
-              "name": "Name",
-              "type": "String",
+              "name": "diagnostic",
+              "type": "Custom",
+              "example": "[]",
               "generated": true,
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "example": "Modernize Legacy Infrastructure",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
@@ -1909,14 +815,39 @@
             {
               "name": "organizationId",
               "type": "UUID",
+              "example": "474e4828-a953-4240-bb26-368bb332398e",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
             },
             {
-              "name": "Purpose",
-              "type": "String",
+              "name": "overallPlan",
+              "type": "Custom",
+              "example": "[]",
               "generated": true,
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "proximateObjectives",
+              "type": "Custom",
+              "example": "[]",
+              "generated": true,
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "example": "77777777-7777-7777-7777-777777777777",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
@@ -1924,21 +855,21 @@
           ],
           "type": "EVENT",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "Initiative",
           "aggregateDependencies": [
-            "team"
+            "Initiative"
           ],
           "dependencies": [
             {
-              "id": "3458764645849750300",
+              "id": "3458764645855652122",
               "type": "OUTBOUND",
-              "title": "Company Team List",
+              "title": "Initiatives",
               "elementType": "READMODEL"
             },
             {
-              "id": "3458764645830671029",
+              "id": "3458764645854569036",
               "type": "INBOUND",
-              "title": "Create Team",
+              "title": "Create Initiative",
               "elementType": "COMMAND"
             }
           ],
@@ -1953,58 +884,53 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "3458764645833837016",
+          "id": "3458764645854569102",
           "tags": [],
-          "groupId": "3458764645833837019",
+          "groupId": "3458764645854569108",
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
-          "slice": "slice: Create Team",
-          "title": "Create Your team",
+          "slice": "slice: Create Initiative",
+          "title": "Create an initiative",
           "fields": [
             {
-              "name": "teamId",
+              "name": "initiativeId",
               "type": "UUID",
+              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
               "generated": true,
               "subfields": [],
               "cardinality": "Single",
-              "idAttribute": true
+              "idAttribute": false
+            },
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "example": "77777777-7777-7777-7777-777777777777",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
             },
             {
               "name": "organizationId",
               "type": "UUID",
+              "example": "474e4828-a953-4240-bb26-368bb332398e",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
             },
             {
-              "name": "Context",
+              "name": "teamId",
+              "type": "UUID",
+              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "initiativeName",
               "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
+              "example": "Modernize Legacy Infrastructure",
               "generated": true,
               "subfields": [],
               "cardinality": "Single",
@@ -2012,22 +938,22 @@
             }
           ],
           "type": "SCREEN",
-          "description": " Teams in a hierarchical structure using levels: level 0, the below level 1, then below level 2, etc. The only relationship between teams is the level",
-          "aggregate": "team",
+          "description": "Initiatives belong to a strategy. ",
+          "aggregate": "Initiative",
           "aggregateDependencies": [
-            "team"
+            "Initiative"
           ],
           "dependencies": [
             {
-              "id": "3458764645830671029",
+              "id": "3458764645854569036",
               "type": "OUTBOUND",
-              "title": "Create Team",
+              "title": "Create Initiative",
               "elementType": "COMMAND"
             },
             {
-              "id": "3458764660938676873",
+              "id": "3458764661684920684",
               "type": "INBOUND",
-              "title": "organization admin",
+              "title": "strategies",
               "elementType": "READMODEL"
             }
           ],
@@ -2043,729 +969,458 @@
       "screenLayouts": [],
       "processors": [],
       "tables": [],
-      "specifications": [
-        {
-          "vertical": false,
-          "id": "3458764661658934834",
-          "sliceName": "<p>slice: Create Team</p>",
-          "title": "spec: Create Team - List of 2 teams",
-          "given": [
-            {
-              "title": "Team Created",
-              "tags": [],
-              "examples": [
-                {
-                  "Name": "Frontend Squad",
-                  "Level": 2,
-                  "teamId": "0x789",
-                  "Context": "Context 2",
-                  "Purpose": "UI Development",
-                  "organizationId": "0x456"
-                }
-              ],
-              "id": "3458764661658934849",
-              "index": 1,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": ""
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                }
-              ],
-              "linkedId": "3458764645830373813"
-            },
-            {
-              "title": "Team Created",
-              "tags": [],
-              "examples": [
-                {
-                  "Name": "CTO v2",
-                  "Level": 4,
-                  "teamId": "0x123",
-                  "Context": "Context 1",
-                  "Purpose": "Purpose 1",
-                  "organizationId": "0x456"
-                }
-              ],
-              "id": "3458764661658934842",
-              "index": 0,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 1"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "3"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 1"
-                }
-              ],
-              "linkedId": "3458764645830373813"
-            }
-          ],
-          "when": [],
-          "then": [
-            {
-              "title": "Company Team List",
-              "tags": [],
-              "examples": [
-                {
-                  "Name": "CTO v2",
-                  "Level": 4,
-                  "teamId": "0x123",
-                  "Context": "Context 1",
-                  "Purpose": "Purpose 1",
-                  "organizationId": "0x456",
-                  "organizationName": "Main Org"
-                },
-                {
-                  "Name": "Frontend Squad",
-                  "Level": 2,
-                  "teamId": "0x789",
-                  "Context": "Context 2",
-                  "Purpose": "UI Development",
-                  "organizationId": "0x456",
-                  "organizationName": "Main Org"
-                }
-              ],
-              "id": "3458764661658934839",
-              "index": 0,
-              "specRow": -1,
-              "type": "SPEC_READMODEL",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 2"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "4"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO v2"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "organizationName",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 2"
-                }
-              ],
-              "linkedId": "3458764645849750300"
-            }
-          ],
-          "comments": [
-            {
-              "description": "2 elements in the list"
-            }
-          ],
-          "linkedId": "3458764645831088163"
-        },
-        {
-          "vertical": false,
-          "id": "3458764661650585772",
-          "sliceName": "<p>slice: Create Team</p>",
-          "title": "spec: Create Team - End 2 End Recovery Of Team Deleted",
-          "given": [
-            {
-              "title": "Team Updated",
-              "tags": [],
-              "id": "3458764661650585818",
-              "index": 2,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 1"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "4"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO v2"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 1"
-                }
-              ],
-              "linkedId": "3458764661631101975"
-            },
-            {
-              "title": "Team Deleted",
-              "tags": [],
-              "id": "3458764661650585802",
-              "index": 1,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                }
-              ],
-              "linkedId": "3458764661631102656"
-            },
-            {
-              "title": "Team Created",
-              "tags": [],
-              "id": "3458764661650585786",
-              "index": 0,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 1"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "3"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 1"
-                }
-              ],
-              "linkedId": "3458764645830373813"
-            }
-          ],
-          "when": [],
-          "then": [
-            {
-              "title": "Company Team List",
-              "tags": [],
-              "examples": [
-                {
-                  "Name": "CTO v2",
-                  "Level": 4,
-                  "teamId": "0x123",
-                  "Context": "Context 2",
-                  "Purpose": "Purpose 2",
-                  "organizationId": "0x456",
-                  "organizationName": "Main Org"
-                }
-              ],
-              "id": "3458764661650585776",
-              "index": 0,
-              "specRow": -1,
-              "type": "SPEC_READMODEL",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 2"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "4"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO v2"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "organizationName",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 2"
-                }
-              ],
-              "linkedId": "3458764645849750300"
-            }
-          ],
-          "comments": [
-            {
-              "description": "A deleted change is recovered by a simple update"
-            }
-          ],
-          "linkedId": "3458764645831088163"
-        },
-        {
-          "vertical": false,
-          "id": "3458764661632441150",
-          "sliceName": "<p>slice: Create Team</p>",
-          "title": "spec: Create Team - End 2 End Flow Projection",
-          "given": [
-            {
-              "title": "Team Deleted",
-              "tags": [],
-              "examples": [],
-              "id": "3458764661632441167",
-              "index": 2,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                }
-              ],
-              "linkedId": "3458764661631102656"
-            },
-            {
-              "title": "Team Updated",
-              "tags": [],
-              "examples": [],
-              "id": "3458764661632441161",
-              "index": 1,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 1"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "4"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO v2"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 1"
-                }
-              ],
-              "linkedId": "3458764661631101975"
-            },
-            {
-              "title": "Team Created",
-              "tags": [],
-              "examples": [],
-              "id": "3458764661632441158",
-              "index": 0,
-              "specRow": -1,
-              "type": "SPEC_EVENT",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Context 1"
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "3"
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "CTO"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "Purpose 1"
-                }
-              ],
-              "linkedId": "3458764645830373813"
-            }
-          ],
-          "when": [],
-          "then": [
-            {
-              "title": "Company Team List",
-              "tags": [],
-              "examples": [],
-              "id": "3458764661632441152",
-              "index": 0,
-              "specRow": -1,
-              "type": "SPEC_READMODEL",
-              "fields": [
-                {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": ""
-                },
-                {
-                  "name": "Context",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Level",
-                  "type": "Int",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Name",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "organizationName",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "Purpose",
-                  "type": "String",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                }
-              ],
-              "linkedId": "3458764645849750300",
-              "expectEmptyList": true
-            }
-          ],
-          "comments": [],
-          "linkedId": "3458764645831088163"
-        }
-      ],
+      "specifications": [],
       "actors": [],
       "aggregates": [
-        "team"
+        "Initiative"
+      ]
+    },
+    {
+      "id": "3458764661501673119",
+      "status": "Created",
+      "index": 7,
+      "title": "slice: Create Person",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764661498263339",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Create Person",
+          "title": "Create Person",
+          "fields": [
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661498040166",
+              "type": "OUTBOUND",
+              "title": "person created",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764661498263330",
+              "type": "INBOUND",
+              "title": "Organization Automation",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764661498040166",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Create Person",
+          "title": "person created",
+          "fields": [
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764660938676873",
+              "type": "OUTBOUND",
+              "title": "organization admin",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764661504820713",
+              "type": "OUTBOUND",
+              "title": "person",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764661498263339",
+              "type": "INBOUND",
+              "title": "Create Person",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [
+        {
+          "id": "3458764661498263330",
+          "tags": [],
+          "groupId": "3458764661498263338",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Create Person",
+          "title": "Organization Automation",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "AUTOMATION",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661498263339",
+              "type": "OUTBOUND",
+              "title": "Create Person",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "organization admin"
+      ]
+    },
+    {
+      "id": "3458764661504996265",
+      "status": "Created",
+      "index": 9,
+      "title": "slice: Organization Account List",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764661504820713",
+          "tags": [],
+          "domain": "stradar",
+          "modelContext": "Stadar Organization View",
+          "slice": "slice: Organization Account List",
+          "title": "person",
+          "fields": [
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661504820723",
+              "type": "OUTBOUND",
+              "title": "Organization Account List",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764660938159264",
+              "type": "OUTBOUND",
+              "title": "Company Sign In",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764661498040166",
+              "type": "INBOUND",
+              "title": "person created",
+              "elementType": "EVENT"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [
+        {
+          "id": "3458764661504820723",
+          "tags": [],
+          "groupId": "3458764661504820731",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Organization Account List",
+          "title": "Organization Account List",
+          "fields": [
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661504820713",
+              "type": "INBOUND",
+              "title": "person",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        },
+        {
+          "id": "3458764660938159264",
+          "tags": [],
+          "groupId": "3458764660938159279",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Organization Account List",
+          "title": "Company Sign In",
+          "fields": [
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764660937417035",
+              "type": "OUTBOUND",
+              "title": "Sign In Admin Account",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764661504820713",
+              "type": "INBOUND",
+              "title": "person",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "organization admin"
       ]
     },
     {
       "id": "3458764645855652334",
       "status": "Created",
-      "index": 17,
+      "index": 11,
       "title": "slice: Initiative List",
       "context": "Stadar Organization View",
       "sliceType": "STATE_VIEW",
@@ -2862,6 +1517,12 @@
             "Initiative"
           ],
           "dependencies": [
+            {
+              "id": "3458764661876429654",
+              "type": "OUTBOUND",
+              "title": "Change Initiative",
+              "elementType": "SCREEN"
+            },
             {
               "id": "3458764661765153746",
               "type": "OUTBOUND",
@@ -2988,6 +1649,74 @@
             "Initiative"
           ],
           "dependencies": [
+            {
+              "id": "3458764645855652122",
+              "type": "INBOUND",
+              "title": "Initiatives",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        },
+        {
+          "id": "3458764661876429654",
+          "tags": [],
+          "groupId": "3458764661876429661",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Initiative List",
+          "title": "Change Initiative",
+          "fields": [
+            {
+              "name": "initiativeId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "Initiative",
+          "aggregateDependencies": [
+            "Initiative"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661876429645",
+              "type": "OUTBOUND",
+              "title": "Change Initiative",
+              "elementType": "COMMAND"
+            },
             {
               "id": "3458764645855652122",
               "type": "INBOUND",
@@ -3266,19 +1995,19 @@
               "tags": [],
               "examples": [
                 {
-                  "itemId": "0x111",
-                  "initiativeId": "0x123",
                   "step": "DIAGNOSTIC",
-                  "content": "This is my diagnostic. So be it.",
+                  "itemId": "0x111",
                   "status": "ACTIVE",
+                  "content": "This is my diagnostic. So be it.",
+                  "initiativeId": "0x123",
                   "initiativeName": "Modernize Legacy Infrastructure"
                 },
                 {
-                  "itemId": "0x222",
-                  "initiativeId": "0x123",
                   "step": "OVERALLAPPROACH",
-                  "content": "This is my approach. So go for it.",
+                  "itemId": "0x222",
                   "status": "ACTIVE",
+                  "content": "This is my approach. So go for it.",
+                  "initiativeId": "0x123",
                   "initiativeName": "Modernize Legacy Infrastructure"
                 }
               ],
@@ -3740,108 +2469,51 @@
       ]
     },
     {
-      "id": "3458764645850227982",
+      "id": "3458764660937620380",
       "status": "Created",
-      "index": 19,
-      "title": "slice: Team List",
+      "index": 13,
+      "title": "slice: Sign In To Company Admin Account",
       "context": "Stadar Organization View",
-      "sliceType": "STATE_VIEW",
-      "commands": [],
-      "events": [],
-      "readmodels": [
+      "sliceType": "STATE_CHANGE",
+      "commands": [
         {
-          "id": "3458764645849750300",
+          "id": "3458764660937417035",
           "tags": [],
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
-          "slice": "slice: Team List",
-          "title": "Company Team List",
+          "slice": "slice: Sign In To Company Admin Account",
+          "title": "Sign In Admin Account",
           "fields": [
             {
-              "name": "teamId",
+              "name": "personId",
               "type": "UUID",
-              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
             }
           ],
-          "type": "READMODEL",
+          "type": "COMMAND",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "organization admin",
           "aggregateDependencies": [
-            "team"
+            "organization admin"
           ],
           "dependencies": [
             {
-              "id": "3458764661631265248",
+              "id": "3458764660937880791",
               "type": "OUTBOUND",
-              "title": "Update Team Information",
-              "elementType": "SCREEN"
-            },
-            {
-              "id": "3458764661044303447",
-              "type": "OUTBOUND",
-              "title": "Detect Environmental Change",
-              "elementType": "SCREEN"
-            },
-            {
-              "id": "3458764645830373813",
-              "type": "INBOUND",
-              "title": "Team Created",
+              "title": "Person Signed In",
               "elementType": "EVENT"
+            },
+            {
+              "id": "3458764660938159264",
+              "type": "INBOUND",
+              "title": "Company Sign In",
+              "elementType": "SCREEN"
             }
           ],
-          "listElement": true,
           "createsAggregate": false,
           "triggers": [],
           "sketched": false,
@@ -3850,92 +2522,43 @@
           }
         }
       ],
-      "screens": [
+      "events": [
         {
-          "id": "3458764661631265248",
+          "id": "3458764660937880791",
           "tags": [],
-          "groupId": "3458764661631265254",
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
-          "slice": "slice: Team List",
-          "title": "Update Team Information",
+          "slice": "slice: Sign In To Company Admin Account",
+          "title": "Person Signed In",
           "fields": [
             {
-              "name": "teamId",
+              "name": "personId",
               "type": "UUID",
-              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
             }
           ],
-          "type": "SCREEN",
+          "type": "EVENT",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "organization admin",
           "aggregateDependencies": [
-            "team"
+            "organization admin"
           ],
           "dependencies": [
             {
-              "id": "3458764661631265233",
+              "id": "3458764660938676873",
               "type": "OUTBOUND",
-              "title": "Update Team",
-              "elementType": "COMMAND"
+              "title": "organization admin",
+              "elementType": "READMODEL"
             },
             {
-              "id": "3458764645849750300",
+              "id": "3458764660937417035",
               "type": "INBOUND",
-              "title": "Company Team List",
-              "elementType": "READMODEL"
+              "title": "Sign In Admin Account",
+              "elementType": "COMMAND"
             }
           ],
           "createsAggregate": false,
@@ -3944,106 +2567,30 @@
           "prototype": {
             "activeByDefault": false
           }
-        },
+        }
+      ],
+      "readmodels": [],
+      "screens": [
         {
-          "id": "3458764661044303447",
+          "id": "3458764660938159264",
           "tags": [],
-          "groupId": "3458764661044303451",
+          "groupId": "3458764660938159279",
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
-          "slice": "slice: Team List",
-          "title": "Detect Environmental Change",
+          "slice": "slice: Sign In To Company Admin Account",
+          "title": "Company Sign In",
           "fields": [
             {
-              "name": "envChangeId",
+              "name": "personId",
               "type": "UUID",
-              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true
             },
             {
-              "name": "assess",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "category",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "detect",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "distance",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "impact",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "respond",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "risk",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "title",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "type",
+              "name": "userName",
               "type": "String",
               "generated": true,
               "subfields": [],
@@ -4053,21 +2600,21 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "organization admin",
           "aggregateDependencies": [
-            "team"
+            "organization admin"
           ],
           "dependencies": [
             {
-              "id": "3458764661044303442",
+              "id": "3458764660937417035",
               "type": "OUTBOUND",
-              "title": "Detect Environmental Change",
+              "title": "Sign In Admin Account",
               "elementType": "COMMAND"
             },
             {
-              "id": "3458764645849750300",
+              "id": "3458764661504820713",
               "type": "INBOUND",
-              "title": "Company Team List",
+              "title": "person",
               "elementType": "READMODEL"
             }
           ],
@@ -4086,13 +2633,13 @@
       "specifications": [],
       "actors": [],
       "aggregates": [
-        "team"
+        "organization admin"
       ]
     },
     {
       "id": "3458764661765881509",
       "status": "Created",
-      "index": 21,
+      "index": 15,
       "title": "slice: Change Initiative Item",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -4346,9 +2893,1790 @@
       ]
     },
     {
-      "id": "3458764661099002342",
+      "id": "3458764660825671418",
+      "status": "Created",
+      "index": 17,
+      "title": "slice: organization person connected",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764660938676873",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: organization person connected",
+          "title": "organization admin",
+          "fields": [
+            {
+              "name": "personId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "userName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "role",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661498040166",
+              "type": "INBOUND",
+              "title": "person created",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764660937880791",
+              "type": "INBOUND",
+              "title": "Person Signed In",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true,
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "organization admin"
+      ]
+    },
+    {
+      "id": "3458764661766210431",
+      "status": "Created",
+      "index": 19,
+      "title": "slice: Initiatives",
+      "context": "Stadar Organization View",
+      "sliceType": "UNDEFINED",
+      "commands": [],
+      "events": [],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "3458764661766047311",
+          "tags": [],
+          "groupId": "3458764661766047313",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Initiatives",
+          "title": "Initiative List",
+          "fields": [
+            {
+              "name": "initiativeId",
+              "type": "UUID",
+              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+              "subfields": [],
+              "idAttribute": true,
+              "cardinality": "Single"
+            },
+            {
+              "name": "coherentActions",
+              "type": "Custom",
+              "example": "[]",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "diagnostic",
+              "type": "Custom",
+              "example": "[]",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "example": "Modernize Legacy Infrastructure",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "example": "474e4828-a953-4240-bb26-368bb332398e",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "overallPlan",
+              "type": "Custom",
+              "example": "[]",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "proximateObjectives",
+              "type": "Custom",
+              "example": "[]",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "strategyId",
+              "type": "UUID",
+              "example": "77777777-7777-7777-7777-777777777777",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "default",
+          "aggregateDependencies": [],
+          "dependencies": [
+            {
+              "id": "3458764645855652122",
+              "type": "INBOUND",
+              "title": "Initiatives",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": []
+    },
+    {
+      "id": "3458764661877939780",
+      "status": "Created",
+      "index": 21,
+      "title": "slice: Change Initiative",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764661876429645",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Change Initiative",
+          "title": "Change Initiative",
+          "fields": [
+            {
+              "name": "initiativeId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "Initiative",
+          "aggregateDependencies": [
+            "Initiative"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661874616036",
+              "type": "OUTBOUND",
+              "title": "Initiative Change Event",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764661876429654",
+              "type": "INBOUND",
+              "title": "Change Initiative",
+              "elementType": "SCREEN"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764661874616036",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Change Initiative",
+          "title": "Initiative Change Event",
+          "fields": [
+            {
+              "name": "initiativeId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Initiative",
+          "aggregateDependencies": [
+            "Initiative"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764645855652122",
+              "type": "OUTBOUND",
+              "title": "Initiatives",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764661876429645",
+              "type": "INBOUND",
+              "title": "Change Initiative",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "3458764661876429654",
+          "tags": [],
+          "groupId": "3458764661876429661",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Change Initiative",
+          "title": "Change Initiative",
+          "fields": [
+            {
+              "name": "initiativeId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "initiativeName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "Initiative",
+          "aggregateDependencies": [
+            "Initiative"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661876429645",
+              "type": "OUTBOUND",
+              "title": "Change Initiative",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764645855652122",
+              "type": "INBOUND",
+              "title": "Initiatives",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Initiative"
+      ]
+    },
+    {
+      "id": "3458764645831088163",
       "status": "Created",
       "index": 23,
+      "title": "slice: Create Team 2",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764645830671029",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Create Team 2",
+          "title": "Create Team 2",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764645830373813",
+              "type": "OUTBOUND",
+              "title": "Team Created 2",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764645833837016",
+              "type": "INBOUND",
+              "title": "Create Your team",
+              "elementType": "SCREEN"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764645830373813",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Create Team 2",
+          "title": "Team Created 2",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764645849750300",
+              "type": "OUTBOUND",
+              "title": "Company Team List 2",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764645830671029",
+              "type": "INBOUND",
+              "title": "Create Team 2",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "3458764645833837016",
+          "tags": [],
+          "groupId": "3458764645833837019",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Create Team 2",
+          "title": "Create Your team",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": " Teams in a hierarchical structure using levels: level 0, the below level 1, then below level 2, etc. The only relationship between teams is the level",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764645830671029",
+              "type": "OUTBOUND",
+              "title": "Create Team 2",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [
+        {
+          "vertical": false,
+          "id": "3458764661658934834",
+          "sliceName": "slice: Create Team 2",
+          "title": "spec: Create Team - List of 2 teams",
+          "given": [
+            {
+              "title": "Team Created",
+              "tags": [],
+              "examples": [
+                {
+                  "Name": "Frontend Squad",
+                  "Level": 2,
+                  "teamId": "0x789",
+                  "Context": "Context 2",
+                  "Purpose": "UI Development",
+                  "organizationId": "0x456"
+                }
+              ],
+              "id": "3458764661658934849",
+              "index": 1,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": ""
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                }
+              ],
+              "linkedId": "3458764645830373813"
+            },
+            {
+              "title": "Team Created",
+              "tags": [],
+              "examples": [
+                {
+                  "Name": "CTO v2",
+                  "Level": 4,
+                  "teamId": "0x123",
+                  "Context": "Context 1",
+                  "Purpose": "Purpose 1",
+                  "organizationId": "0x456"
+                }
+              ],
+              "id": "3458764661658934842",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 1"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "3"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO"
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 1"
+                }
+              ],
+              "linkedId": "3458764645830373813"
+            }
+          ],
+          "when": [],
+          "then": [
+            {
+              "title": "Company Team List",
+              "tags": [],
+              "examples": [
+                {
+                  "Name": "CTO v2",
+                  "Level": 4,
+                  "teamId": "0x123",
+                  "Context": "Context 1",
+                  "Purpose": "Purpose 1",
+                  "organizationId": "0x456",
+                  "organizationName": "Main Org"
+                },
+                {
+                  "Name": "Frontend Squad",
+                  "Level": 2,
+                  "teamId": "0x789",
+                  "Context": "Context 2",
+                  "Purpose": "UI Development",
+                  "organizationId": "0x456",
+                  "organizationName": "Main Org"
+                }
+              ],
+              "id": "3458764661658934839",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_READMODEL",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 2"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "4"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO v2"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "organizationName",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 2"
+                }
+              ],
+              "linkedId": "3458764645849750300"
+            }
+          ],
+          "comments": [
+            {
+              "description": "2 elements in the list"
+            }
+          ],
+          "linkedId": "3458764645831088163"
+        },
+        {
+          "vertical": false,
+          "id": "3458764661650585772",
+          "sliceName": "slice: Create Team 2",
+          "title": "spec: Create Team - End 2 End Recovery Of Team Deleted",
+          "given": [
+            {
+              "title": "Team Updated",
+              "tags": [],
+              "id": "3458764661650585818",
+              "index": 2,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 1"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "4"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO v2"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 1"
+                }
+              ],
+              "linkedId": "3458764661631101975"
+            },
+            {
+              "title": "Team Deleted",
+              "tags": [],
+              "id": "3458764661650585802",
+              "index": 1,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                }
+              ],
+              "linkedId": "3458764661631102656"
+            },
+            {
+              "title": "Team Created",
+              "tags": [],
+              "id": "3458764661650585786",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 1"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "3"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO"
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 1"
+                }
+              ],
+              "linkedId": "3458764645830373813"
+            }
+          ],
+          "when": [],
+          "then": [
+            {
+              "title": "Company Team List",
+              "tags": [],
+              "examples": [
+                {
+                  "Name": "CTO v2",
+                  "Level": 4,
+                  "teamId": "0x123",
+                  "Context": "Context 2",
+                  "Purpose": "Purpose 2",
+                  "organizationId": "0x456",
+                  "organizationName": "Main Org"
+                }
+              ],
+              "id": "3458764661650585776",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_READMODEL",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 2"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "4"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO v2"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "organizationName",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 2"
+                }
+              ],
+              "linkedId": "3458764645849750300"
+            }
+          ],
+          "comments": [
+            {
+              "description": "A deleted change is recovered by a simple update"
+            }
+          ],
+          "linkedId": "3458764645831088163"
+        },
+        {
+          "vertical": false,
+          "id": "3458764661632441150",
+          "sliceName": "slice: Create Team 2",
+          "title": "spec: Create Team - End 2 End Flow Projection",
+          "given": [
+            {
+              "title": "Team Deleted",
+              "tags": [],
+              "examples": [],
+              "id": "3458764661632441167",
+              "index": 2,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                }
+              ],
+              "linkedId": "3458764661631102656"
+            },
+            {
+              "title": "Team Updated",
+              "tags": [],
+              "examples": [],
+              "id": "3458764661632441161",
+              "index": 1,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 1"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "4"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO v2"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 1"
+                }
+              ],
+              "linkedId": "3458764661631101975"
+            },
+            {
+              "title": "Team Created",
+              "tags": [],
+              "examples": [],
+              "id": "3458764661632441158",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Context 1"
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "3"
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "CTO"
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "Purpose 1"
+                }
+              ],
+              "linkedId": "3458764645830373813"
+            }
+          ],
+          "when": [],
+          "then": [
+            {
+              "title": "Company Team List",
+              "tags": [],
+              "examples": [],
+              "id": "3458764661632441152",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_READMODEL",
+              "fields": [
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": ""
+                },
+                {
+                  "name": "Context",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Level",
+                  "type": "Int",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Name",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "organizationName",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "Purpose",
+                  "type": "String",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                }
+              ],
+              "linkedId": "3458764645849750300",
+              "expectEmptyList": true
+            }
+          ],
+          "comments": [],
+          "linkedId": "3458764645831088163"
+        }
+      ],
+      "actors": [],
+      "aggregates": [
+        "team"
+      ]
+    },
+    {
+      "id": "3458764645850227982",
+      "status": "Created",
+      "index": 25,
+      "title": "slice: Team List",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764645849750300",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Team List",
+          "title": "Company Team List 2",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661631265248",
+              "type": "OUTBOUND",
+              "title": "Update Team Information",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764661044303447",
+              "type": "OUTBOUND",
+              "title": "Detect Environmental Change",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764645830373813",
+              "type": "INBOUND",
+              "title": "Team Created 2",
+              "elementType": "EVENT"
+            }
+          ],
+          "listElement": true,
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [
+        {
+          "id": "3458764661631265248",
+          "tags": [],
+          "groupId": "3458764661631265254",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Team List",
+          "title": "Update Team Information",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661631265233",
+              "type": "OUTBOUND",
+              "title": "Update Team",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764645849750300",
+              "type": "INBOUND",
+              "title": "Company Team List 2",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        },
+        {
+          "id": "3458764661044303447",
+          "tags": [],
+          "groupId": "3458764661044303451",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Team List",
+          "title": "Detect Environmental Change",
+          "fields": [
+            {
+              "name": "envChangeId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "assess",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "category",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "detect",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "distance",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "impact",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "respond",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "risk",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "title",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "type",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764661044303442",
+              "type": "OUTBOUND",
+              "title": "Detect Environmental Change",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764645849750300",
+              "type": "INBOUND",
+              "title": "Company Team List 2",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "team"
+      ]
+    },
+    {
+      "id": "3458764661099002342",
+      "status": "Created",
+      "index": 27,
       "title": "slice: Detect Radar Element",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -4742,7 +5070,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List",
+              "title": "Company Team List 2",
               "elementType": "READMODEL"
             }
           ],
@@ -4765,136 +5093,9 @@
       ]
     },
     {
-      "id": "3458764661766210431",
-      "status": "Created",
-      "index": 25,
-      "title": "slice: Initiatives",
-      "context": "Stadar Organization View",
-      "sliceType": "UNDEFINED",
-      "commands": [],
-      "events": [],
-      "readmodels": [],
-      "screens": [
-        {
-          "id": "3458764661766047311",
-          "tags": [],
-          "groupId": "3458764661766047313",
-          "domain": "stradar",
-          "elementContext": "INTERNAL",
-          "modelContext": "Stadar Organization View",
-          "context": "INTERNAL",
-          "slice": "slice: Initiatives",
-          "title": "Initiative List",
-          "fields": [
-            {
-              "name": "initiativeId",
-              "type": "UUID",
-              "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
-              "subfields": [],
-              "idAttribute": true,
-              "cardinality": "Single"
-            },
-            {
-              "name": "coherentActions",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "diagnostic",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "initiativeName",
-              "type": "String",
-              "example": "Modernize Legacy Infrastructure",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "example": "474e4828-a953-4240-bb26-368bb332398e",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "overallPlan",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "proximateObjectives",
-              "type": "Custom",
-              "example": "[]",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "strategyId",
-              "type": "UUID",
-              "example": "77777777-7777-7777-7777-777777777777",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            }
-          ],
-          "type": "SCREEN",
-          "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
-          "dependencies": [
-            {
-              "id": "3458764645855652122",
-              "type": "INBOUND",
-              "title": "Initiatives",
-              "elementType": "READMODEL"
-            }
-          ],
-          "createsAggregate": false,
-          "triggers": [],
-          "sketched": false,
-          "prototype": {
-            "activeByDefault": false
-          }
-        }
-      ],
-      "screenImages": [],
-      "screenLayouts": [],
-      "processors": [],
-      "tables": [],
-      "specifications": [],
-      "actors": [],
-      "aggregates": []
-    },
-    {
       "id": "3458764661146327818",
       "status": "Created",
-      "index": 27,
+      "index": 29,
       "title": "slice: environmental changes",
       "context": "Stadar Organization View",
       "sliceType": "STATE_VIEW",
@@ -5410,7 +5611,7 @@
     {
       "id": "3458764661100320100",
       "status": "Created",
-      "index": 29,
+      "index": 31,
       "title": "slice: Update Environmental Change",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -6195,7 +6396,7 @@
     {
       "id": "3458764661101039959",
       "status": "Created",
-      "index": 31,
+      "index": 33,
       "title": "slice: Environmental Changes 2",
       "context": "Stadar Organization View",
       "sliceType": "UNDEFINED",
@@ -6245,7 +6446,7 @@
     {
       "id": "3458764661105229298",
       "status": "Created",
-      "index": 33,
+      "index": 35,
       "title": "slice: Delete Environmental Change",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -6447,7 +6648,7 @@
     {
       "id": "3458764661105229635",
       "status": "Created",
-      "index": 35,
+      "index": 37,
       "title": "slice: radar view 3",
       "context": "Stadar Organization View",
       "sliceType": "UNDEFINED",
@@ -6572,7 +6773,7 @@
     {
       "id": "3458764661631987971",
       "status": "Created",
-      "index": 37,
+      "index": 39,
       "title": "slice: Update Team",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -6732,7 +6933,7 @@
             {
               "id": "3458764645849750300",
               "type": "OUTBOUND",
-              "title": "Company Team List",
+              "title": "Company Team List 2",
               "elementType": "READMODEL"
             },
             {
@@ -6835,7 +7036,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List",
+              "title": "Company Team List 2",
               "elementType": "READMODEL"
             }
           ],
@@ -6914,6 +7115,13 @@
                   "example": ""
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -6933,13 +7141,6 @@
                   "name": "Name",
                   "type": "String",
                   "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
                   "subfields": [],
                   "cardinality": "Single",
                   "example": ""
@@ -7130,6 +7331,13 @@
                   "example": "0x123"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7152,13 +7360,6 @@
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Name 1"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
                 },
                 {
                   "name": "Purpose",
@@ -7312,7 +7513,7 @@
     {
       "id": "3458764661631988306",
       "status": "Created",
-      "index": 39,
+      "index": 41,
       "title": "slice: Delete Team",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -7408,7 +7609,7 @@
             {
               "id": "3458764645849750300",
               "type": "OUTBOUND",
-              "title": "Company Team List",
+              "title": "Company Team List 2",
               "elementType": "READMODEL"
             },
             {
@@ -7479,7 +7680,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List",
+              "title": "Company Team List 2",
               "elementType": "READMODEL"
             }
           ],
@@ -7521,6 +7722,13 @@
                   "example": "0x123"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7543,13 +7751,6 @@
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "CTO"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
                 },
                 {
                   "name": "Purpose",
@@ -7640,12 +7841,6 @@
   "flows": [],
   "aggregates": [
     {
-      "id": "3458764660938457373",
-      "title": "organization admin",
-      "fields": [],
-      "type": "AGGREGATE"
-    },
-    {
       "id": "3458764661685315085",
       "title": "Strategy Builder",
       "fields": [],
@@ -7654,6 +7849,12 @@
     {
       "id": "3458764661719524682",
       "title": "Initiative",
+      "fields": [],
+      "type": "AGGREGATE"
+    },
+    {
+      "id": "3458764660938457373",
+      "title": "organization admin",
       "fields": [],
       "type": "AGGREGATE"
     },

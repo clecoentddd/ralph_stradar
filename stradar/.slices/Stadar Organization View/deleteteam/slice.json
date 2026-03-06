@@ -96,7 +96,7 @@
         {
           "id": "3458764645849750300",
           "type": "OUTBOUND",
-          "title": "Company Team List",
+          "title": "Company Team List 2",
           "elementType": "READMODEL"
         },
         {
@@ -167,7 +167,7 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List",
+          "title": "Company Team List 2",
           "elementType": "READMODEL"
         }
       ],
@@ -209,6 +209,13 @@
               "example": "0x123"
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
               "name": "Context",
               "type": "String",
               "generated": true,
@@ -231,13 +238,6 @@
               "subfields": [],
               "cardinality": "Single",
               "example": "CTO"
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
             },
             {
               "name": "Purpose",

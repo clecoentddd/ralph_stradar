@@ -44,7 +44,7 @@ class DefineOrganizationResource(
         @PostMapping("/defineorganization")
         fun processCommand(
                 @RequestHeader("X-Session-Id") sessionId: String,
-                @RequestHeader("X-User-Id", required = false, defaultValue = "\${user.name}")
+                @RequestHeader("x-user-id", required = false, defaultValue = "\${user.name}")
                 userId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
                 @RequestBody payload: DefineOrganizationPayload

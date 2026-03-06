@@ -30,9 +30,18 @@ class CreateTeamResource(
 
         private val logger = KotlinLogging.logger {}
 
-        @CrossOrigin
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                "organizationId",
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                "x-user-id"]
+        )
         @PostMapping("/createteam")
         fun processCommand(
+                @RequestHeader("x-user-id") userId: String,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @RequestBody payload: CreateTeamPayload
@@ -57,11 +66,13 @@ class CreateTeamResource(
                 }
 
                 val metadata =
-                        MetaData.with(
+                        MetaData.with("x-user-id", userId)
+                                .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
+                                .and("organizationId", payload.organizationId)
 
                 return commandGateway.send(
                         CreateTeamCommand(

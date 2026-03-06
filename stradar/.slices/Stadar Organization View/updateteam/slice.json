@@ -160,7 +160,7 @@
         {
           "id": "3458764645849750300",
           "type": "OUTBOUND",
-          "title": "Company Team List",
+          "title": "Company Team List 2",
           "elementType": "READMODEL"
         },
         {
@@ -263,7 +263,7 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List",
+          "title": "Company Team List 2",
           "elementType": "READMODEL"
         }
       ],
@@ -342,6 +342,13 @@
               "example": ""
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
               "name": "Context",
               "type": "String",
               "generated": true,
@@ -361,13 +368,6 @@
               "name": "Name",
               "type": "String",
               "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
               "subfields": [],
               "cardinality": "Single",
               "example": ""
@@ -558,6 +558,13 @@
               "example": "0x123"
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
               "name": "Context",
               "type": "String",
               "generated": true,
@@ -580,13 +587,6 @@
               "subfields": [],
               "cardinality": "Single",
               "example": "Name 1"
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
             },
             {
               "name": "Purpose",

@@ -1,6 +1,7 @@
 package stradar.organizationview.createdraftstrategy
 
 import java.util.UUID
+import org.axonframework.messaging.MetaData
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
@@ -52,7 +53,7 @@ class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
                         )
 
                 fixture.given(givenEvent)
-                        .`when`(command)
+                        .`when`(command, MetaData.with("organizationId", orgId))
                         .expectException(IllegalStateException::class.java)
                         .expectExceptionMessage("There is already a DRAFT strategy.")
         }
