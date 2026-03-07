@@ -12,8 +12,8 @@ import stradar.organizationview.ProcessingGroups
 import stradar.organizationview.teamlist.TeamListReadModelEntity
 
 interface TeamListReadModelRepository : JpaRepository<TeamListReadModelEntity, UUID> {
-    fun existsByOrganizationIdAndName(organizationId: UUID, name: String): Boolean
     fun findByOrganizationId(organizationId: UUID): List<TeamListReadModelEntity>
+    fun existsByNameAndOrganizationId(name: String, organizationId: UUID): Boolean
 }
 
 /*

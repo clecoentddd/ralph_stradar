@@ -11,7 +11,7 @@ class TeamListReadModelQuery()
 
 data class TeamListByOrganizationQuery(val organizationId: java.util.UUID)
 
-data class TeamNameUniquenessQuery(val organizationId: java.util.UUID, val teamName: String)
+data class TeamNameAlreadyExistsQuery(val organizationId: java.util.UUID, val teamName: String)
 
 /** STEP 1: Add the query to fetch Name by Team ID */
 data class TeamNameByTeamIdQuery(val teamId: UUID)

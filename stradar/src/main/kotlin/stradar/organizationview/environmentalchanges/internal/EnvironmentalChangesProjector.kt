@@ -34,7 +34,7 @@ interface EnvironmentalChangesReadModelRepository :
         ): List<EnvironmentalChangesReadModelEntity>
 }
 
-@ProcessingGroup(ProcessingGroups.COMPANY_VIEW)
+@ProcessingGroup(ProcessingGroups.ENVIRONMENTAL_CHANGES_VIEW)
 @Component
 class EnvironmentalChangesReadModelProjector(
         var repository: EnvironmentalChangesReadModelRepository

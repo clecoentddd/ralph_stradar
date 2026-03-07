@@ -15,7 +15,7 @@ import stradar.common.support.RandomData
 import stradar.domain.TeamAggregate
 import stradar.events.TeamCreatedEvent
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
-import stradar.organizationview.teamlist.TeamNameUniquenessQuery
+import stradar.organizationview.teamlist.TeamNameAlreadyExistsQuery
 
 class TeamCreatedTest {
 
@@ -38,7 +38,7 @@ class TeamCreatedTest {
                 // Stub QueryGateway to return false (not a duplicate) for any uniqueness check
                 `when`(
                                 queryGateway.query(
-                                        any(TeamNameUniquenessQuery::class.java),
+                                        any(TeamNameAlreadyExistsQuery::class.java),
                                         any(Class::class.java)
                                 )
                         )

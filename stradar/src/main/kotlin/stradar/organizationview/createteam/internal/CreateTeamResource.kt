@@ -6,10 +6,12 @@ import java.util.concurrent.TimeUnit
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
+import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.*
+import stradar.common.queryWithMetaData
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
-import stradar.organizationview.teamlist.TeamNameUniquenessQuery
+import stradar.organizationview.teamlist.TeamNameAlreadyExistsQuery
 import stradar.support.metadata.SESSION_ID_HEADER
 
 data class CreateTeamPayload(
@@ -47,23 +49,7 @@ class CreateTeamResource(
                 @RequestBody payload: CreateTeamPayload
         ): CompletableFuture<Any> {
 
-                // 🔎 Master Skill: Uniqueness Validation
-                val isDuplicate =
-                        queryGateway
-                                .query(
-                                        TeamNameUniquenessQuery(
-                                                payload.organizationId,
-                                                payload.name
-                                        ),
-                                        Boolean::class.java
-                                )
-                                .get(5, TimeUnit.SECONDS)
-
-                if (isDuplicate == true) {
-                        throw IllegalArgumentException(
-                                "Create Team - team name must be unique for a given organization"
-                        )
-                }
+                logger.info { "Create Team - payload: $payload" }
 
                 val metadata =
                         MetaData.with("x-user-id", userId)
@@ -74,6 +60,27 @@ class CreateTeamResource(
                                 .and(SESSION_ID_HEADER, sessionId)
                                 .and("organizationId", payload.organizationId)
 
+                if (payload.level < 0) {
+                        throw IllegalArgumentException(
+                                "Invalid team level: $payload.level. Levels must be non-negative."
+                        )
+                }
+                val nameAlreadyExists =
+                        queryGateway
+                                .queryWithMetaData(
+                                        TeamNameAlreadyExistsQuery(
+                                                payload.organizationId,
+                                                payload.name
+                                        ),
+                                        metadata,
+                                        ResponseTypes.instanceOf(Boolean::class.java)
+                                )
+                                .get(5, TimeUnit.SECONDS)
+
+                // If it ALREADY EXISTS (True), then we throw the error
+                if (nameAlreadyExists == true) {
+                        throw IllegalArgumentException("Create Team - team name must be unique")
+                }
                 return commandGateway.send(
                         CreateTeamCommand(
                                 teamId = UUID.randomUUID(),
