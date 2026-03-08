@@ -32,7 +32,8 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
 
                 val teamId = UUID.randomUUID()
                 val organizationId = UUID.randomUUID()
-                val adminAccountId = UUID.randomUUID()
+                val deletedReason = "Reason ABC"
+
                 val metadata =
                         MetaData.with(SESSION_ID_HEADER, UUID.randomUUID().toString())
                                 .and("organizationId", organizationId)
@@ -50,7 +51,11 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
                 commandGateway.sendAndWait<Any>(createTeamCommand, metadata)
 
                 val deleteTeamCommand =
-                        DeleteTeamCommand(teamId = teamId, organizationId = organizationId)
+                        DeleteTeamCommand(
+                                teamId = teamId,
+                                organizationId = organizationId,
+                                reason = deletedReason
+                        )
                 commandGateway.sendAndWait<Any>(deleteTeamCommand, metadata)
 
                 awaitUntilAssserted {
@@ -79,6 +84,7 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
                                         .get()
                         assertThat(result).isNotNull
                         assertThat(result.teams.none { it.teamId == teamId }).isTrue()
+                        assertThat(result.teams.none { it.reason == deletedReason }).isTrue()
                 }
         }
 }

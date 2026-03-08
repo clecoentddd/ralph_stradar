@@ -3,13 +3,10 @@ package stradar.domain
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
-import org.axonframework.modelling.command.AggregateCreationPolicy
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle
-import org.axonframework.modelling.command.CreationPolicy
 import org.axonframework.spring.stereotype.Aggregate
 import stradar.common.CommandException
-import stradar.common.CommandResult
 import stradar.events.OrganizationDefinedEvent
 import stradar.platformadministration.domain.commands.defineorganization.DefineOrganizationCommand
 
@@ -17,20 +14,19 @@ import stradar.platformadministration.domain.commands.defineorganization.DefineO
 class OrganizationAggregate {
 
   @AggregateIdentifier private var organizationId: UUID? = null
-  private var personId: UUID? = null // Using standardized naming
+  private var personId: UUID? = null
 
-  // Required by Axon for rebuilding the aggregate from events
+  // Required for Axon
   constructor()
 
-  @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
+  // Change 'fun handle' to 'constructor'
   @CommandHandler
-  fun handle(command: DefineOrganizationCommand): CommandResult {
+  constructor(command: DefineOrganizationCommand) : this() {
 
     if (command.organizationName.isBlank()) {
       throw CommandException("organizationName is required and cannot be empty")
     }
 
-    // Apply the event using standardized 'personId' and 'role'
     AggregateLifecycle.apply(
             OrganizationDefinedEvent(
                     organizationId = command.organizationId,
@@ -40,16 +36,10 @@ class OrganizationAggregate {
                     role = "ORGANIZATION_ADMIN"
             )
     )
-
-    return CommandResult(
-            identifier = command.organizationId,
-            aggregateSequence = AggregateLifecycle.getVersion()
-    )
   }
 
   @EventSourcingHandler
   fun on(event: OrganizationDefinedEvent) {
-    // Corrected: Assigning the event data to the standardized class fields
     this.organizationId = event.organizationId
     this.personId = event.personId
   }

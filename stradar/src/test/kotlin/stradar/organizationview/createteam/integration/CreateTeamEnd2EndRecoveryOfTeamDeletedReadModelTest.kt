@@ -28,6 +28,7 @@ class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest(
                 // 1. Generate valid random UUIDs for this specific test run
                 val teamId = RandomData.newInstance<UUID> {}
                 val organizationId = RandomData.newInstance<UUID> {}
+                val deletedReason = "Reason ABC"
 
                 // 2. Prepare required MetaData
                 val meta =
@@ -49,7 +50,11 @@ class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest(
 
                 // 4. Delete the team
                 val deleteTeamCommand =
-                        DeleteTeamCommand(teamId = teamId, organizationId = organizationId)
+                        DeleteTeamCommand(
+                                teamId = teamId,
+                                organizationId = organizationId,
+                                reason = deletedReason
+                        )
                 commandGateway.sendAndWait<Any>(deleteTeamCommand, meta)
 
                 // 5. Update (Recover) the team

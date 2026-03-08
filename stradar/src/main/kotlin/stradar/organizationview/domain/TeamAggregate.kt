@@ -18,18 +18,23 @@ import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
 import stradar.organizationview.domain.commands.updateteam.UpdateTeamCommand
 
+enum class TeamStatus {
+        ACTIVE,
+        DELETED
+}
+
 @Aggregate
 class TeamAggregate() {
 
         @AggregateIdentifier private lateinit var teamId: UUID
         private lateinit var organizationId: UUID
+        private var status: TeamStatus = TeamStatus.ACTIVE
 
         @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
         @CommandHandler
         fun handle(command: CreateTeamCommand, metaData: MetaData): CommandResult {
                 val secureOrgId = metaData.resolveOrganizationId()
 
-                // Guard: Prevent overwriting an existing aggregate belonging to another Org
                 if (this::teamId.isInitialized) {
                         validateOrganization(secureOrgId)
                         throw IllegalStateException("Team ${command.teamId} already exists.")
@@ -38,12 +43,14 @@ class TeamAggregate() {
                 AggregateLifecycle.apply(
                         TeamCreatedEvent(
                                 teamId = command.teamId,
-                                organizationId = secureOrgId, // TRUST the metadata for creation
+                                organizationId = secureOrgId,
                                 context = command.context,
                                 level = command.level,
                                 name = command.name,
-                                purpose = command.purpose
-                        )
+                                purpose = command.purpose,
+                                status = "ACTIVE"
+                        ),
+                        metaData
                 )
 
                 return CommandResult(command.teamId, AggregateLifecycle.getVersion())
@@ -51,18 +58,26 @@ class TeamAggregate() {
 
         @CommandHandler
         fun handle(command: DeleteTeamCommand, metaData: MetaData): CommandResult {
-                // Guard: Ensure the requester owns this resource
                 validateOrganization(metaData.resolveOrganizationId())
 
+                if (this.status == TeamStatus.DELETED) {
+                        throw IllegalStateException("Team is already deleted.")
+                }
+
                 AggregateLifecycle.apply(
-                        TeamDeletedEvent(teamId = this.teamId, organizationId = this.organizationId)
+                        TeamDeletedEvent(
+                                teamId = this.teamId,
+                                organizationId = this.organizationId,
+                                status = "DELETED",
+                                reason = command.reason
+                        ),
+                        metaData
                 )
                 return CommandResult(this.teamId, AggregateLifecycle.getVersion())
         }
 
         @CommandHandler
         fun handle(command: UpdateTeamCommand, metaData: MetaData): CommandResult {
-                // Guard: Ensure the requester owns this resource
                 validateOrganization(metaData.resolveOrganizationId())
 
                 AggregateLifecycle.apply(
@@ -72,17 +87,15 @@ class TeamAggregate() {
                                 context = command.context,
                                 level = command.level,
                                 name = command.name,
-                                purpose = command.purpose
-                        )
+                                purpose = command.purpose,
+                                status = "ACTIVE"
+                        ),
+                        metaData
                 )
 
                 return CommandResult(this.teamId, AggregateLifecycle.getVersion())
         }
 
-        /**
-         * Encapsulated Security Check Compares the trusted ID from the MetaData against the
-         * Aggregate's owner
-         */
         private fun validateOrganization(trustedOrgId: UUID) {
                 if (this.organizationId != trustedOrgId) {
                         throw IllegalStateException("Security Violation: Organization mismatch.")
@@ -93,10 +106,16 @@ class TeamAggregate() {
         fun on(event: TeamCreatedEvent) {
                 this.teamId = event.teamId
                 this.organizationId = event.organizationId
+                this.status = TeamStatus.ACTIVE
         }
 
         @EventSourcingHandler
         fun on(event: TeamDeletedEvent) {
-                // Optional: AggregateLifecycle.markDeleted() if you want to block further commands
+                this.status = TeamStatus.DELETED
+        }
+
+        @EventSourcingHandler
+        fun on(event: TeamUpdatedEvent) {
+                this.status = TeamStatus.ACTIVE
         }
 }

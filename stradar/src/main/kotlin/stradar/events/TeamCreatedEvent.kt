@@ -12,5 +12,6 @@ data class TeamCreatedEvent(
         var level: Int,
         var name: String,
         var organizationId: UUID,
-        var purpose: String
+        var purpose: String,
+        val status: String? = null
 ) : Event

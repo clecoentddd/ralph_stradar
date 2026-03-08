@@ -44,7 +44,7 @@ class TeamListReadModelQueryHandler(private val repository: TeamListReadModelRep
         ): TeamListReadModel {
                 val organizationId = metadata.resolveOrganizationId()
 
-                return TeamListReadModel(repository.findByOrganizationId(organizationId))
+                return TeamListReadModel(repository.findByOrganizationIdAndStatus(organizationId))
         }
 
         /**

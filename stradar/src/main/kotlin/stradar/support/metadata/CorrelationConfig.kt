@@ -14,7 +14,7 @@ class CorrelationConfig {
 
   @Bean
   fun lawFirmCorrelationDataProvider(): SimpleCorrelationDataProvider {
-    return SimpleCorrelationDataProvider(SESSION_ID_HEADER) //
+    return SimpleCorrelationDataProvider(SESSION_ID_HEADER, "organizationId", "x-user-id")
   }
 
   @Bean

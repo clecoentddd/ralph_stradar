@@ -40,19 +40,21 @@ class UpdateTeamRecoveryAfterDeleteTest {
     events.add(
             RandomData.newInstance<TeamCreatedEvent> {
               this.teamId = teamId
-              this.context = RandomData.newInstance {}
-              this.level = RandomData.newInstance {}
-              this.name = RandomData.newInstance {}
+              this.context = "Context 1"
+              this.level = 1
+              this.name = "Name 1"
               this.organizationId = organizationId
-              this.purpose = RandomData.newInstance {}
+              this.purpose = "Purpose 1"
             }
     )
 
     events.add(
-            RandomData.newInstance<TeamDeletedEvent> {
-              this.teamId = teamId
-              this.organizationId = organizationId
-            }
+            TeamDeletedEvent(
+                    teamId = teamId,
+                    organizationId = organizationId,
+                    status = "DELETED",
+                    reason = "A very good reason"
+            )
     )
 
     // WHEN
@@ -67,22 +69,20 @@ class UpdateTeamRecoveryAfterDeleteTest {
             )
 
     // THEN
-    val expectedEvents = mutableListOf<Event>()
-
-    expectedEvents.add(
-            RandomData.newInstance<TeamUpdatedEvent> {
-              this.teamId = command.teamId
-              this.context = command.context
-              this.level = command.level
-              this.name = command.name
-              this.organizationId = command.organizationId
-              this.purpose = command.purpose
-            }
-    )
+    val expectedEvent =
+            TeamUpdatedEvent(
+                    teamId = teamId,
+                    organizationId = organizationId,
+                    context = "Context v2",
+                    level = 2,
+                    name = "Name 2",
+                    purpose = "Purpose 2",
+                    status = "ACTIVE"
+            )
 
     fixture.given(events)
             .`when`(command, MetaData.with("organizationId", organizationId))
             .expectSuccessfulHandlerExecution()
-            .expectEvents(*expectedEvents.toTypedArray())
+            .expectEvents(expectedEvent)
   }
 }

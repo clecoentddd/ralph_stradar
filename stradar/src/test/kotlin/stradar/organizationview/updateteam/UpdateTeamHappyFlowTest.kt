@@ -6,18 +6,12 @@ import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import stradar.common.Event
-import stradar.common.support.RandomData
 import stradar.domain.TeamAggregate
 import stradar.events.TeamCreatedEvent
 import stradar.events.TeamUpdatedEvent
 import stradar.organizationview.domain.commands.updateteam.UpdateTeamCommand
 
-/**
- * Happy Flow
- *
- * Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661650936247
- */
+/** Happy Flow: Updating an existing team within the same organization. */
 class UpdateTeamHappyFlowTest {
 
   private lateinit var fixture: FixtureConfiguration<TeamAggregate>
@@ -29,52 +23,49 @@ class UpdateTeamHappyFlowTest {
 
   @Test
   fun `Update Team Happy Flow Test`() {
+    val teamId = UUID.fromString("00000000-0000-0000-0000-000000000123")
+    val organizationId = UUID.fromString("00000000-0000-0000-0000-000000000456")
 
-    val teamId: UUID = UUID.fromString("00000000-0000-0000-0000-000000000123")
-    val organizationId: UUID = UUID.fromString("00000000-0000-0000-0000-000000000456")
+    // GIVEN: The team was already created in the past
+    val initialEvent =
+            TeamCreatedEvent(
+                    teamId = teamId,
+                    organizationId = organizationId,
+                    context = "Context v1",
+                    level = 1,
+                    name = "Name 1",
+                    purpose = "Purpose 1",
+                    status = "ACTIVE"
+            )
 
-    // GIVEN
-    val events = mutableListOf<Event>()
-
-    events.add(
-            RandomData.newInstance<TeamCreatedEvent> {
-              this.teamId = teamId
-              this.context = "Context v1"
-              this.level = 1
-              this.name = "Name 1"
-              this.organizationId = organizationId
-              this.purpose = "Purpose 1"
-            }
-    )
-
-    // WHEN
+    // WHEN: We issue an update command with the correct organizationId in MetaData
     val command =
             UpdateTeamCommand(
                     teamId = teamId,
+                    organizationId =
+                            organizationId, // Included in command for clarity, but MetaData is the
+                    // guard
                     context = "Context v2",
                     level = 2,
                     name = "Name 2",
-                    organizationId = organizationId,
                     purpose = "Purpose 2"
             )
 
-    // THEN
-    val expectedEvents = mutableListOf<Event>()
+    // THEN: We expect a TeamUpdatedEvent with the new values and 'ACTIVE' status
+    val expectedEvent =
+            TeamUpdatedEvent(
+                    teamId = teamId,
+                    organizationId = organizationId,
+                    context = "Context v2",
+                    level = 2,
+                    name = "Name 2",
+                    purpose = "Purpose 2",
+                    status = "ACTIVE"
+            )
 
-    expectedEvents.add(
-            RandomData.newInstance<TeamUpdatedEvent> {
-              this.teamId = teamId
-              this.context = "Context v2"
-              this.level = 2
-              this.name = "Name 2"
-              this.organizationId = organizationId
-              this.purpose = "Purpose 2"
-            }
-    )
-
-    fixture.given(events)
+    fixture.given(initialEvent)
             .`when`(command, MetaData.with("organizationId", organizationId))
             .expectSuccessfulHandlerExecution()
-            .expectEvents(*expectedEvents.toTypedArray())
+            .expectEvents(expectedEvent)
   }
 }

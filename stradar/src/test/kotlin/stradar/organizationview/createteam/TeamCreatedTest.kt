@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import stradar.common.support.RandomData
 import stradar.domain.TeamAggregate
 import stradar.events.TeamCreatedEvent
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
@@ -57,19 +56,18 @@ class TeamCreatedTest {
 
                 // THEN
                 val expectedEvent =
-                        RandomData.newInstance<TeamCreatedEvent> {
-                                this.teamId = teamId
-                                this.context = "IT"
-                                this.level = 1
-                                this.name = "CTO"
-                                this.organizationId = orgId
-                                this.purpose = "To do good"
-                        }
-
-                val metadata = MetaData.with("organizationId", orgId)
+                        TeamCreatedEvent(
+                                teamId = teamId,
+                                organizationId = orgId,
+                                context = "IT",
+                                level = 1,
+                                name = "CTO",
+                                purpose = "To do good",
+                                status = "ACTIVE" // <--- MUST BE HARDCODED TO "ACTIVE"
+                        )
 
                 fixture.givenNoPriorActivity()
-                        .`when`(command, metadata)
+                        .`when`(command, MetaData.with("organizationId", orgId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

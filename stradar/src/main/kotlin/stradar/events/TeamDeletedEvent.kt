@@ -1,13 +1,14 @@
 package stradar.events
 
-import stradar.common.Event
-
 import java.util.UUID
+import stradar.common.Event
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661631102656
 */
 data class TeamDeletedEvent(
-    var teamId:UUID,
-	var organizationId:UUID
+        val teamId: UUID,
+        val organizationId: UUID,
+        val status: String,
+        val reason: String
 ) : Event

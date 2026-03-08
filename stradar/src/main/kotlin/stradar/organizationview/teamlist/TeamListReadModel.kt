@@ -34,6 +34,8 @@ class TeamListReadModelEntity {
     @Column(name = "organization_name") var organizationName: String? = null
     @Column(name = "admin_account_id") var adminAccountId: UUID? = null
     @Column(name = "purpose") var purpose: String? = null
+    @Column(name = "status") var status: String? = "ACTIVE"
+    @Column(name = "reason") var reason: String? = null
 }
 
 data class TeamListReadModel(val teams: List<TeamListReadModelEntity>)
