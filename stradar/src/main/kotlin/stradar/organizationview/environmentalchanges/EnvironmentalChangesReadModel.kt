@@ -46,10 +46,13 @@ class EnvironmentalChangesReadModelEntity {
 
         @Column(name = "organization_id") var organizationId: UUID? = null
 
-        var title: String = ""
-        var detect: String = ""
-        var assess: String = ""
-        var respond: String = ""
+        @Column(columnDefinition = "TEXT") var title: String = ""
+
+        @Column(columnDefinition = "TEXT") var detect: String = ""
+
+        @Column(columnDefinition = "TEXT") var assess: String = ""
+
+        @Column(columnDefinition = "TEXT") var respond: String = ""
 
         @Enumerated(EnumType.STRING) var type: ChangeType = ChangeType.THREAT
 

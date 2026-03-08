@@ -4,11 +4,9 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import java.util.UUID
 import org.springframework.web.bind.annotation.*
+import stradar.support.metadata.*
 
-@CrossOrigin(
-        allowedHeaders =
-                ["organizationId", "X-Session-Id", "X-Correlation-Id", "Content-Type", "x-user-id"]
-)
+@CrossOrigin
 @RestController
 @RequestMapping("/initiative-links") // Renamed to reflect Initiative-to-Initiative
 @Tag(
@@ -25,7 +23,7 @@ class InitiativesLinkResource(private val repository: InitiativesLinkRepository)
         )
         fun updateLinks(
                 @PathVariable initiativeId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID,
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
                 @RequestBody linksDto: List<InitiativeLinkDto>
         ) {
                 // 1. Wipe old links to perform a clean "Sync"
@@ -51,7 +49,7 @@ class InitiativesLinkResource(private val repository: InitiativesLinkRepository)
         )
         fun getLinkedInitiatives(
                 @PathVariable initiativeId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID
         ): List<InitiativeLinkDto> {
                 return repository.findAllByInitiativeIdAndOrganizationId(
                                 initiativeId,

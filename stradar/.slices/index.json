@@ -179,7 +179,7 @@
     {
       "id": "3458764661099002342",
       "slice": "slice: Detect Radar Element",
-      "index": 27,
+      "index": 31,
       "context": "Stadar Organization View",
       "folder": "detectradarelement",
       "status": "Created"
@@ -195,7 +195,7 @@
     {
       "id": "3458764661100320100",
       "slice": "slice: Update Environmental Change",
-      "index": 31,
+      "index": 35,
       "context": "Stadar Organization View",
       "folder": "updateenvironmentalchange",
       "status": "Created"
@@ -203,7 +203,7 @@
     {
       "id": "3458764661101039959",
       "slice": "slice: Environmental Changes 2",
-      "index": 33,
+      "index": 37,
       "context": "Stadar Organization View",
       "folder": "environmentalchanges2",
       "status": "Created"
@@ -211,7 +211,7 @@
     {
       "id": "3458764661105229298",
       "slice": "slice: Delete Environmental Change",
-      "index": 35,
+      "index": 39,
       "context": "Stadar Organization View",
       "folder": "deleteenvironmentalchange",
       "status": "Created"
@@ -219,7 +219,7 @@
     {
       "id": "3458764661105229635",
       "slice": "slice: radar view 3",
-      "index": 37,
+      "index": 41,
       "context": "Stadar Organization View",
       "folder": "radarview3",
       "status": "Created"
@@ -227,7 +227,7 @@
     {
       "id": "3458764661146327818",
       "slice": "slice: environmental changes",
-      "index": 29,
+      "index": 33,
       "context": "Stadar Organization View",
       "folder": "environmentalchanges",
       "status": "Created"
@@ -251,7 +251,7 @@
     {
       "id": "3458764661631987971",
       "slice": "slice: Update Team",
-      "index": 39,
+      "index": 43,
       "context": "Stadar Organization View",
       "folder": "updateteam",
       "status": "Created"
@@ -259,7 +259,7 @@
     {
       "id": "3458764661631988306",
       "slice": "slice: Delete Team",
-      "index": 41,
+      "index": 45,
       "context": "Stadar Organization View",
       "folder": "deleteteam",
       "status": "Created"
@@ -302,6 +302,14 @@
       "index": 21,
       "context": "Stadar Organization View",
       "folder": "changeinitiative",
+      "status": "Created"
+    },
+    {
+      "id": "3458764662643764851",
+      "slice": "slice: Change Team",
+      "index": 27,
+      "context": "Stadar Organization View",
+      "folder": "changeteam",
       "status": "Created"
     }
   ]

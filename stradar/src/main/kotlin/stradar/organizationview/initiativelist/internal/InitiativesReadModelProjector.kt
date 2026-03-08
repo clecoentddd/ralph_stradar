@@ -3,8 +3,10 @@ package stradar.organizationview.initiativelist.internal
 import java.util.UUID
 import mu.KotlinLogging
 import org.axonframework.eventhandling.EventHandler
+import org.axonframework.messaging.MetaData
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
+import stradar.common.resolveOrganizationId
 import stradar.events.InitiativeCreatedEvent
 import stradar.events.InitiativeItemChangedEvent
 import stradar.organizationview.initiativelist.InitiativeItem
@@ -27,13 +29,14 @@ interface InitiativesReadModelRepository : JpaRepository<InitiativesReadModelEnt
 class InitiativesReadModelProjector(private val repository: InitiativesReadModelRepository) {
 
         @EventHandler
-        fun on(event: InitiativeCreatedEvent) {
+        fun on(event: InitiativeCreatedEvent, metaData: MetaData) {
                 logger.info { "Projecting new initiative: ${event.initiativeId}" }
+                val secureOrgId = metaData.resolveOrganizationId()
                 val entity =
                         InitiativesReadModelEntity().apply {
                                 initiativeId = event.initiativeId
                                 initiativeName = event.initiativeName
-                                organizationId = event.organizationId
+                                organizationId = secureOrgId
                                 strategyId = event.strategyId
                                 teamId = event.teamId
                         }
@@ -41,11 +44,18 @@ class InitiativesReadModelProjector(private val repository: InitiativesReadModel
         }
 
         @EventHandler
-        fun on(event: InitiativeItemChangedEvent) {
+        fun on(event: InitiativeItemChangedEvent, metaData: MetaData) {
+                val secureOrgId = metaData.resolveOrganizationId()
                 val initiative =
                         repository.findById(event.initiativeId).orElseThrow {
                                 IllegalStateException("Initiative ${event.initiativeId} not found")
                         }
+
+                if (initiative.organizationId != secureOrgId) {
+                        throw IllegalAccessException(
+                                "Security context mismatch for Initiative Projector"
+                        )
+                }
 
                 // 1. Remove the item if it exists (using standard Java/Kotlin removeIf)
                 initiative.allItems.removeIf { it.id == event.itemId }

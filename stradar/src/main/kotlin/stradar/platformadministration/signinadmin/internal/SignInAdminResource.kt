@@ -8,7 +8,7 @@ import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.common.CommandResult
 import stradar.platformadministration.domain.commands.signinadmin.SignInAdminCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 // Constant for the "Genesis" Super Admin Slot
 private val SUPER_ADMIN_ID = UUID.fromString("00000000-0000-0000-0000-000000000001")
@@ -32,7 +32,11 @@ class SignInAdminResource(private val commandGateway: CommandGateway) {
     val metadata =
             MetaData.with("X-Correlation-Id", correlationId ?: UUID.randomUUID().toString())
                     .and(SESSION_ID_HEADER, sessionId)
-                    .and("x-user-id", SUPER_ADMIN_ID.toString())
+                    .and(USER_ID_HEADER, SUPER_ADMIN_ID.toString())
+                    .and(
+                            ORGANIZATION_ID_HEADER,
+                            UUID.fromString("00000000-0000-0000-0000-000000000000")
+                    ) // System Org
 
     // 🚀 Command: Target the fixed slot with the provided username
     val command = SignInAdminCommand(adminAccountId = SUPER_ADMIN_ID, username = payload.username)

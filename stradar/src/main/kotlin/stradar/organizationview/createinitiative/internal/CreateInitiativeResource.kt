@@ -9,9 +9,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.domain.commands.createinitiative.CreateInitiativeCommand
-
-// Constant for your session header
-const val SESSION_ID_HEADER = "X-Session-Id"
+import stradar.support.metadata.*
 
 data class CreateInitiativePayload(
         @field:Schema(example = "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d") var initiativeId: UUID,
@@ -29,16 +27,16 @@ class CreateInitiativeResource(private var commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/createinitiative/{id}")
         fun processCommand(
                 @PathVariable("id") initiativeId: UUID,
-                @RequestHeader("x-user-id") userId: String,
+                @RequestHeader(USER_ID_HEADER) userId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(SESSION_ID_HEADER) sessionId: String,
                 @RequestBody payload: CreateInitiativePayload
@@ -46,13 +44,13 @@ class CreateInitiativeResource(private var commandGateway: CommandGateway) {
 
                 // ── YOUR EXACT METADATA CONTRACT ──
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("organizationId", payload.organizationId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
 
                 logger.info {
                         "Dispatching Initiative for $initiativeId [User: $userId, Session: $sessionId, Org: ${payload.organizationId}]"

@@ -6,7 +6,7 @@
   "sliceType": "STATE_CHANGE",
   "commands": [
     {
-      "id": "3458764661631612141",
+      "id": "3458764662643097323",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
@@ -29,23 +29,31 @@
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
+        },
+        {
+          "name": "reason",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
         }
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "team",
+      "aggregate": "organization admin",
       "aggregateDependencies": [
+        "organization admin",
         "team"
       ],
       "dependencies": [
         {
-          "id": "3458764661631102656",
+          "id": "3458764662643097322",
           "type": "OUTBOUND",
           "title": "Team Deleted",
           "elementType": "EVENT"
         },
         {
-          "id": "3458764661631612159",
+          "id": "3458764662643046431",
           "type": "INBOUND",
           "title": "Delete Team",
           "elementType": "SCREEN"
@@ -61,7 +69,7 @@
   ],
   "events": [
     {
-      "id": "3458764661631102656",
+      "id": "3458764662643097322",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
@@ -84,23 +92,40 @@
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
+        },
+        {
+          "name": "reason",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "status",
+          "example": "DELETED",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": false
         }
       ],
       "type": "EVENT",
       "description": "",
       "aggregate": "team",
       "aggregateDependencies": [
+        "organization admin",
         "team"
       ],
       "dependencies": [
         {
           "id": "3458764645849750300",
           "type": "OUTBOUND",
-          "title": "Company Team List 2",
+          "title": "Company Team List",
           "elementType": "READMODEL"
         },
         {
-          "id": "3458764661631612141",
+          "id": "3458764662643097323",
           "type": "INBOUND",
           "title": "Delete Team",
           "elementType": "COMMAND"
@@ -117,9 +142,9 @@
   "readmodels": [],
   "screens": [
     {
-      "id": "3458764661631612159",
+      "id": "3458764662643046431",
       "tags": [],
-      "groupId": "3458764661631612169",
+      "groupId": "3458764662643046446",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
@@ -128,14 +153,6 @@
       "title": "Delete Team",
       "fields": [
         {
-          "name": "teamId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": true
-        },
-        {
           "name": "organizationId",
           "type": "UUID",
           "subfields": [],
@@ -143,23 +160,32 @@
           "idAttribute": false
         },
         {
-          "name": "organizationName",
+          "name": "reason",
           "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "generated": true,
           "subfields": [],
           "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true
         }
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "team",
+      "aggregate": "organization admin",
       "aggregateDependencies": [
+        "organization admin",
         "team"
       ],
       "dependencies": [
         {
-          "id": "3458764661631612141",
+          "id": "3458764662643097323",
           "type": "OUTBOUND",
           "title": "Delete Team",
           "elementType": "COMMAND"
@@ -167,7 +193,7 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List 2",
+          "title": "Company Team List",
           "elementType": "READMODEL"
         }
       ],
@@ -209,13 +235,6 @@
               "example": "0x123"
             },
             {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            },
-            {
               "name": "Context",
               "type": "String",
               "generated": true,
@@ -240,12 +259,27 @@
               "example": "CTO"
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "0x456"
+            },
+            {
               "name": "Purpose",
               "type": "String",
               "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "example": "Purpose 1"
+            },
+            {
+              "name": "status",
+              "example": "ACTIVE",
+              "generated": true,
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
             }
           ],
           "linkedId": "3458764645830373813"
@@ -321,6 +355,7 @@
   ],
   "actors": [],
   "aggregates": [
+    "organization admin",
     "team"
   ]
 }

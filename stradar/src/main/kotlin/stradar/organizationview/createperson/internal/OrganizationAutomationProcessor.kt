@@ -10,12 +10,13 @@ import org.springframework.stereotype.Component
 import stradar.events.OrganizationDefinedEvent
 import stradar.organizationview.ProcessingGroups
 import stradar.organizationview.domain.commands.createperson.CreatePersonCommand
+import stradar.support.metadata.*
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661498263330
 */
 
-@ProcessingGroup(ProcessingGroups.COMPANY_VIEW)
+@ProcessingGroup(ProcessingGroups.ORGANIZATION_VIEW)
 @Component
 class OrganizationAutomationProcessor(private val commandGateway: CommandGateway) {
 
@@ -27,11 +28,11 @@ class OrganizationAutomationProcessor(private val commandGateway: CommandGateway
 
                 logger.info { "OrganizationDefinedEvent received: $event" }
                 logger.info { "Metadata received: $metadata" }
-                val actorId = metadata["x-user-id"] ?: "SYSTEM_AUTO"
+                val actorId = metadata[USER_ID_HEADER] ?: "SYSTEM_AUTO"
 
                 val nextMetadata =
-                        MetaData.with("x-user-id", actorId)
-                                .and("X-Correlation-Id", metadata["X-Correlation-Id"])
+                        metadata.and(USER_ID_HEADER, actorId)
+                                .and(ORGANIZATION_ID_HEADER, event.organizationId)
 
                 commandGateway.send<Any>(
                         CreatePersonCommand(

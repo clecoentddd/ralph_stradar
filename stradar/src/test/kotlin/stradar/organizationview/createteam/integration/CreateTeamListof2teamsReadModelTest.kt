@@ -14,6 +14,7 @@ import stradar.common.support.awaitUntilAssserted
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.teamlist.TeamListByOrganizationQuery
 import stradar.organizationview.teamlist.TeamListReadModel
+import stradar.support.metadata.*
 
 class CreateTeamListof2teamsReadModelTest : BaseIntegrationTest() {
 
@@ -28,10 +29,10 @@ class CreateTeamListof2teamsReadModelTest : BaseIntegrationTest() {
 
                 // 🛡️ 1. Prepare Metadata to satisfy the Interceptor/Header requirement
                 val testMeta =
-                        MetaData.with("X-Session-Id", "test-session-123")
-                                .and("x-user-id", "test-admin")
+                        MetaData.with(SESSION_ID_HEADER, "test-session-123")
+                                .and(USER_ID_HEADER, "test-admin")
                                 .and("X-Correlation-Id", UUID.randomUUID().toString())
-                                .and("organizationId", orgId)
+                                .and(ORGANIZATION_ID_HEADER, orgId)
 
                 // 🚀 2. Send First Command with Metadata
                 val createTeam1 =

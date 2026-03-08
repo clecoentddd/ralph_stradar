@@ -12,6 +12,7 @@ import stradar.domain.EnvironmentalChangeAggregate
 import stradar.events.EnvironmentalChangeDeletedEvent
 import stradar.events.EnvironmentalChangeDetectedEvent
 import stradar.organizationview.domain.commands.deleteenvironmentalchange.DeleteEnvironmentalChangeCommand
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 class DeleteEnvironmentalChangeTest {
 
@@ -61,7 +62,7 @@ class DeleteEnvironmentalChangeTest {
                         )
 
                 fixture.given(givenEvent)
-                        .`when`(command, MetaData.with("organizationId", organizationId))
+                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

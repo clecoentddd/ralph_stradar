@@ -3352,7 +3352,7 @@
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
           "slice": "slice: Create Team 2",
-          "title": "Create Team 2",
+          "title": "Create Team",
           "fields": [
             {
               "name": "teamId",
@@ -3361,13 +3361,6 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
             },
             {
               "name": "Context",
@@ -3394,6 +3387,13 @@
               "idAttribute": false
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
               "name": "Purpose",
               "type": "String",
               "generated": true,
@@ -3412,7 +3412,7 @@
             {
               "id": "3458764645830373813",
               "type": "OUTBOUND",
-              "title": "Team Created 2",
+              "title": "Team Created",
               "elementType": "EVENT"
             },
             {
@@ -3439,7 +3439,7 @@
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
           "slice": "slice: Create Team 2",
-          "title": "Team Created 2",
+          "title": "Team Created",
           "fields": [
             {
               "name": "teamId",
@@ -3448,13 +3448,6 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
             },
             {
               "name": "Context",
@@ -3481,11 +3474,27 @@
               "idAttribute": false
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
               "name": "Purpose",
               "type": "String",
               "generated": true,
               "subfields": [],
               "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "example": "ACTIVE",
+              "generated": true,
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
               "idAttribute": false
             }
           ],
@@ -3499,13 +3508,13 @@
             {
               "id": "3458764645849750300",
               "type": "OUTBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             },
             {
               "id": "3458764645830671029",
               "type": "INBOUND",
-              "title": "Create Team 2",
+              "title": "Create Team",
               "elementType": "COMMAND"
             }
           ],
@@ -3539,13 +3548,6 @@
               "idAttribute": true
             },
             {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": false
-            },
-            {
               "name": "Context",
               "type": "String",
               "generated": true,
@@ -3570,6 +3572,13 @@
               "idAttribute": false
             },
             {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
               "name": "Purpose",
               "type": "String",
               "generated": true,
@@ -3588,7 +3597,7 @@
             {
               "id": "3458764645830671029",
               "type": "OUTBOUND",
-              "title": "Create Team 2",
+              "title": "Create Team",
               "elementType": "COMMAND"
             }
           ],
@@ -3639,13 +3648,6 @@
                   "example": ""
                 },
                 {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -3670,12 +3672,27 @@
                   "example": ""
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": ""
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -3708,13 +3725,6 @@
                   "example": "0x123"
                 },
                 {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -3739,12 +3749,27 @@
                   "example": "CTO"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -3862,15 +3887,6 @@
               "type": "SPEC_EVENT",
               "fields": [
                 {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -3908,6 +3924,15 @@
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
                 }
               ],
               "linkedId": "3458764661631101975"
@@ -3957,13 +3982,6 @@
                   "example": "0x123"
                 },
                 {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -3988,12 +4006,27 @@
                   "example": "CTO"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -4131,15 +4164,6 @@
               "type": "SPEC_EVENT",
               "fields": [
                 {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -4177,6 +4201,15 @@
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
                 }
               ],
               "linkedId": "3458764661631101975"
@@ -4198,13 +4231,6 @@
                   "cardinality": "Single",
                   "idAttribute": true,
                   "example": "0x123"
-                },
-                {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
                 },
                 {
                   "name": "Context",
@@ -4231,12 +4257,27 @@
                   "example": "CTO"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -4341,7 +4382,7 @@
           "modelContext": "Stadar Organization View",
           "context": "INTERNAL",
           "slice": "slice: Team List",
-          "title": "Company Team List 2",
+          "title": "Company Team List",
           "fields": [
             {
               "name": "teamId",
@@ -4419,9 +4460,21 @@
               "elementType": "SCREEN"
             },
             {
+              "id": "3458764662642496219",
+              "type": "OUTBOUND",
+              "title": "Edit Team",
+              "elementType": "SCREEN"
+            },
+            {
               "id": "3458764645830373813",
               "type": "INBOUND",
-              "title": "Team Created 2",
+              "title": "Team Created",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764661631102656",
+              "type": "INBOUND",
+              "title": "Team Deleted",
               "elementType": "EVENT"
             }
           ],
@@ -4518,7 +4571,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             }
           ],
@@ -4651,7 +4704,101 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        },
+        {
+          "id": "3458764662642496219",
+          "tags": [],
+          "groupId": "3458764662642496241",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Team List",
+          "title": "Edit Team",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764662642496171",
+              "type": "OUTBOUND",
+              "title": "Change Team",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764645849750300",
+              "type": "INBOUND",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             }
           ],
@@ -4674,9 +4821,326 @@
       ]
     },
     {
-      "id": "3458764661099002342",
+      "id": "3458764662643764851",
       "status": "Created",
       "index": 27,
+      "title": "slice: Change Team",
+      "context": "Stadar Organization View",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764662642496171",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Change Team",
+          "title": "Change Team",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin",
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764662641964599",
+              "type": "OUTBOUND",
+              "title": "Team Changes",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764662642496219",
+              "type": "INBOUND",
+              "title": "Edit Team",
+              "elementType": "SCREEN"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764662641964599",
+          "tags": [],
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Change Team",
+          "title": "Team Changes",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "example": "ACTIVE",
+              "generated": true,
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "team",
+          "aggregateDependencies": [
+            "organization admin",
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764645849750300",
+              "type": "OUTBOUND",
+              "title": "Company Team List",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764662642496171",
+              "type": "INBOUND",
+              "title": "Change Team",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "3458764662642496219",
+          "tags": [],
+          "groupId": "3458764662642496241",
+          "domain": "stradar",
+          "elementContext": "INTERNAL",
+          "modelContext": "Stadar Organization View",
+          "context": "INTERNAL",
+          "slice": "slice: Change Team",
+          "title": "Edit Team",
+          "fields": [
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "Context",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Level",
+              "type": "Int",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Name",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "Purpose",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "organization admin",
+          "aggregateDependencies": [
+            "organization admin",
+            "team"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764662642496171",
+              "type": "OUTBOUND",
+              "title": "Change Team",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764645849750300",
+              "type": "INBOUND",
+              "title": "Company Team List",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "organization admin",
+        "team"
+      ]
+    },
+    {
+      "id": "3458764661099002342",
+      "status": "Created",
+      "index": 31,
       "title": "slice: Detect Radar Element",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -5070,7 +5534,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             }
           ],
@@ -5095,7 +5559,7 @@
     {
       "id": "3458764661146327818",
       "status": "Created",
-      "index": 29,
+      "index": 33,
       "title": "slice: environmental changes",
       "context": "Stadar Organization View",
       "sliceType": "STATE_VIEW",
@@ -5611,7 +6075,7 @@
     {
       "id": "3458764661100320100",
       "status": "Created",
-      "index": 31,
+      "index": 35,
       "title": "slice: Update Environmental Change",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -6396,7 +6860,7 @@
     {
       "id": "3458764661101039959",
       "status": "Created",
-      "index": 33,
+      "index": 37,
       "title": "slice: Environmental Changes 2",
       "context": "Stadar Organization View",
       "sliceType": "UNDEFINED",
@@ -6446,7 +6910,7 @@
     {
       "id": "3458764661105229298",
       "status": "Created",
-      "index": 35,
+      "index": 39,
       "title": "slice: Delete Environmental Change",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -6648,7 +7112,7 @@
     {
       "id": "3458764661105229635",
       "status": "Created",
-      "index": 37,
+      "index": 41,
       "title": "slice: radar view 3",
       "context": "Stadar Organization View",
       "sliceType": "UNDEFINED",
@@ -6773,7 +7237,7 @@
     {
       "id": "3458764661631987971",
       "status": "Created",
-      "index": 39,
+      "index": 43,
       "title": "slice: Update Team",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
@@ -6876,14 +7340,6 @@
           "title": "Team Updated",
           "fields": [
             {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
               "name": "Context",
               "type": "String",
               "generated": true,
@@ -6921,6 +7377,14 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
             }
           ],
           "type": "EVENT",
@@ -6933,7 +7397,7 @@
             {
               "id": "3458764645849750300",
               "type": "OUTBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             },
             {
@@ -7036,7 +7500,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             }
           ],
@@ -7115,13 +7579,6 @@
                   "example": ""
                 },
                 {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": ""
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7146,12 +7603,27 @@
                   "example": ""
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": ""
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -7248,15 +7720,6 @@
               "type": "SPEC_EVENT",
               "fields": [
                 {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": ""
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7293,6 +7756,15 @@
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
                   "example": ""
                 }
               ],
@@ -7331,13 +7803,6 @@
                   "example": "0x123"
                 },
                 {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7362,12 +7827,27 @@
                   "example": "Name 1"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -7446,15 +7926,6 @@
               "type": "SPEC_EVENT",
               "fields": [
                 {
-                  "name": "teamId",
-                  "type": "UUID",
-                  "generated": true,
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "idAttribute": true,
-                  "example": "0x123"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7492,6 +7963,15 @@
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 2"
+                },
+                {
+                  "name": "teamId",
+                  "type": "UUID",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": "0x123"
                 }
               ],
               "linkedId": "3458764661631101975"
@@ -7513,13 +7993,13 @@
     {
       "id": "3458764661631988306",
       "status": "Created",
-      "index": 41,
+      "index": 45,
       "title": "slice: Delete Team",
       "context": "Stadar Organization View",
       "sliceType": "STATE_CHANGE",
       "commands": [
         {
-          "id": "3458764661631612141",
+          "id": "3458764662643097323",
           "tags": [],
           "domain": "stradar",
           "elementContext": "INTERNAL",
@@ -7542,23 +8022,31 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
+            },
+            {
+              "name": "reason",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
             }
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "organization admin",
           "aggregateDependencies": [
+            "organization admin",
             "team"
           ],
           "dependencies": [
             {
-              "id": "3458764661631102656",
+              "id": "3458764662643097322",
               "type": "OUTBOUND",
               "title": "Team Deleted",
               "elementType": "EVENT"
             },
             {
-              "id": "3458764661631612159",
+              "id": "3458764662643046431",
               "type": "INBOUND",
               "title": "Delete Team",
               "elementType": "SCREEN"
@@ -7574,7 +8062,7 @@
       ],
       "events": [
         {
-          "id": "3458764661631102656",
+          "id": "3458764662643097322",
           "tags": [],
           "domain": "stradar",
           "elementContext": "INTERNAL",
@@ -7597,23 +8085,40 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
+            },
+            {
+              "name": "reason",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            },
+            {
+              "name": "status",
+              "example": "DELETED",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "generated": true,
+              "idAttribute": false
             }
           ],
           "type": "EVENT",
           "description": "",
           "aggregate": "team",
           "aggregateDependencies": [
+            "organization admin",
             "team"
           ],
           "dependencies": [
             {
               "id": "3458764645849750300",
               "type": "OUTBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             },
             {
-              "id": "3458764661631612141",
+              "id": "3458764662643097323",
               "type": "INBOUND",
               "title": "Delete Team",
               "elementType": "COMMAND"
@@ -7630,9 +8135,9 @@
       "readmodels": [],
       "screens": [
         {
-          "id": "3458764661631612159",
+          "id": "3458764662643046431",
           "tags": [],
-          "groupId": "3458764661631612169",
+          "groupId": "3458764662643046446",
           "domain": "stradar",
           "elementContext": "INTERNAL",
           "modelContext": "Stadar Organization View",
@@ -7641,14 +8146,6 @@
           "title": "Delete Team",
           "fields": [
             {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
-            {
               "name": "organizationId",
               "type": "UUID",
               "subfields": [],
@@ -7656,23 +8153,32 @@
               "idAttribute": false
             },
             {
-              "name": "organizationName",
+              "name": "reason",
               "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "generated": true,
+              "idAttribute": false
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
               "generated": true,
               "subfields": [],
               "cardinality": "Single",
-              "idAttribute": false
+              "idAttribute": true
             }
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "team",
+          "aggregate": "organization admin",
           "aggregateDependencies": [
+            "organization admin",
             "team"
           ],
           "dependencies": [
             {
-              "id": "3458764661631612141",
+              "id": "3458764662643097323",
               "type": "OUTBOUND",
               "title": "Delete Team",
               "elementType": "COMMAND"
@@ -7680,7 +8186,7 @@
             {
               "id": "3458764645849750300",
               "type": "INBOUND",
-              "title": "Company Team List 2",
+              "title": "Company Team List",
               "elementType": "READMODEL"
             }
           ],
@@ -7722,13 +8228,6 @@
                   "example": "0x123"
                 },
                 {
-                  "name": "organizationId",
-                  "type": "UUID",
-                  "subfields": [],
-                  "cardinality": "Single",
-                  "example": "0x456"
-                },
-                {
                   "name": "Context",
                   "type": "String",
                   "generated": true,
@@ -7753,12 +8252,27 @@
                   "example": "CTO"
                 },
                 {
+                  "name": "organizationId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": "0x456"
+                },
+                {
                   "name": "Purpose",
                   "type": "String",
                   "generated": true,
                   "subfields": [],
                   "cardinality": "Single",
                   "example": "Purpose 1"
+                },
+                {
+                  "name": "status",
+                  "example": "ACTIVE",
+                  "generated": true,
+                  "type": "String",
+                  "cardinality": "Single",
+                  "subfields": []
                 }
               ],
               "linkedId": "3458764645830373813"
@@ -7834,6 +8348,7 @@
       ],
       "actors": [],
       "aggregates": [
+        "organization admin",
         "team"
       ]
     }

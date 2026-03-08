@@ -13,7 +13,9 @@ import stradar.organizationview.domain.commands.changeinitiativeitem.ChangeIniti
 import stradar.organizationview.domain.commands.createinitiative.CreateInitiativeCommand
 import stradar.organizationview.initiativelist.InitiativesReadModel
 import stradar.organizationview.initiativelist.InitiativesReadModelQuery
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.USER_ID_HEADER
 
 /**
  *
@@ -35,10 +37,10 @@ class InitiativeListUpdateOfTwoItemsReadModelTest : BaseIntegrationTest() {
 
                 // 1. Prepare Metadata exactly like your example
                 val metadata =
-                        MetaData.with("x-user-id", "test-user")
+                        MetaData.with(USER_ID_HEADER, "test-user")
                                 .and("X-Correlation-Id", UUID.randomUUID().toString())
                                 .and(SESSION_ID_HEADER, "test-session")
-                                .and("organizationId", orgId)
+                                .and(ORGANIZATION_ID_HEADER, orgId)
 
                 // 2. Create Initiative
                 val createCommand =

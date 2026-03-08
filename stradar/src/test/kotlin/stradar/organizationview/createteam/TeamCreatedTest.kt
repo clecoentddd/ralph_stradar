@@ -15,6 +15,7 @@ import stradar.domain.TeamAggregate
 import stradar.events.TeamCreatedEvent
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.teamlist.TeamNameAlreadyExistsQuery
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 class TeamCreatedTest {
 
@@ -67,7 +68,7 @@ class TeamCreatedTest {
                         )
 
                 fixture.givenNoPriorActivity()
-                        .`when`(command, MetaData.with("organizationId", orgId))
+                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, orgId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

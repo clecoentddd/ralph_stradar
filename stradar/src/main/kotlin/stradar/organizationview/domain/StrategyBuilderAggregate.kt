@@ -3,11 +3,13 @@ package stradar.organizationview.domain
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
+import org.axonframework.messaging.MetaData
 import org.axonframework.modelling.command.AggregateCreationPolicy
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle.apply
 import org.axonframework.modelling.command.CreationPolicy
 import org.axonframework.spring.stereotype.Aggregate
+import stradar.common.resolveOrganizationId
 import stradar.events.StrategyDraftCreatedEvent
 import stradar.organizationview.domain.commands.createdraftstrategy.CreateDraftStrategyCommand
 
@@ -30,7 +32,8 @@ class StrategyBuilderAggregate() {
          */
         @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
         @CommandHandler
-        fun handle(cmd: CreateDraftStrategyCommand) {
+        fun handle(cmd: CreateDraftStrategyCommand, metaData: MetaData) {
+                val secureOrgId = metaData.resolveOrganizationId()
 
                 // Enforce invariant
                 if (draftStrategyId != null) {

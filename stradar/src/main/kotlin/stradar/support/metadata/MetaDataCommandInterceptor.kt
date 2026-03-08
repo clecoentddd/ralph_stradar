@@ -12,7 +12,7 @@ class MetaDataCommandInterceptor : MessageDispatchInterceptor<CommandMessage<Any
           messages: List<CommandMessage<Any>>
   ): BiFunction<Int, CommandMessage<Any>, CommandMessage<Any>> {
     return BiFunction { _, message ->
-      // Check if "x-user-id" metadata exists
+      // Check if SESSION_ID_HEADER metadata exists
       if (!message.metaData.containsKey(SESSION_ID_HEADER)) {
         throw kotlin.IllegalArgumentException("Missing required header: X-Session-Id")
       }

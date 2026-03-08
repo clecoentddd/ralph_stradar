@@ -4,10 +4,16 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import java.util.UUID
 import org.springframework.web.bind.annotation.*
+import stradar.support.metadata.*
 
 @CrossOrigin(
         allowedHeaders =
-                ["organizationId", "X-Session-Id", "X-Correlation-Id", "Content-Type", "x-user-id"]
+                [
+                        ORGANIZATION_ID_HEADER,
+                        SESSION_ID_HEADER,
+                        "X-Correlation-Id",
+                        "Content-Type",
+                        USER_ID_HEADER]
 )
 @RestController
 @RequestMapping("/env-links")
@@ -24,7 +30,7 @@ class InitiativeChangesLinkResource(private val repository: InitiativeChangesLin
         )
         fun updateLinks(
                 @PathVariable initiativeId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID,
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
                 @RequestBody linksDto: List<EnvLinkDto>
         ) {
                 repository.deleteByInitiativeIdAndOrganizationId(initiativeId, organizationId)
@@ -48,7 +54,7 @@ class InitiativeChangesLinkResource(private val repository: InitiativeChangesLin
         )
         fun getEnvChangesLinksToInitiative(
                 @PathVariable initiativeId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID
         ): List<EnvLinkDto> {
                 return repository.findAllByInitiativeIdAndOrganizationId(
                                 initiativeId,

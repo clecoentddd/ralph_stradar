@@ -15,7 +15,7 @@
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Team List",
-      "title": "Company Team List 2",
+      "title": "Company Team List",
       "fields": [
         {
           "name": "teamId",
@@ -93,9 +93,21 @@
           "elementType": "SCREEN"
         },
         {
+          "id": "3458764662642496219",
+          "type": "OUTBOUND",
+          "title": "Edit Team",
+          "elementType": "SCREEN"
+        },
+        {
           "id": "3458764645830373813",
           "type": "INBOUND",
-          "title": "Team Created 2",
+          "title": "Team Created",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764661631102656",
+          "type": "INBOUND",
+          "title": "Team Deleted",
           "elementType": "EVENT"
         }
       ],
@@ -192,7 +204,7 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List 2",
+          "title": "Company Team List",
           "elementType": "READMODEL"
         }
       ],
@@ -325,7 +337,101 @@
         {
           "id": "3458764645849750300",
           "type": "INBOUND",
-          "title": "Company Team List 2",
+          "title": "Company Team List",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
+    {
+      "id": "3458764662642496219",
+      "tags": [],
+      "groupId": "3458764662642496241",
+      "domain": "stradar",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stadar Organization View",
+      "context": "INTERNAL",
+      "slice": "slice: Team List",
+      "title": "Edit Team",
+      "fields": [
+        {
+          "name": "teamId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "Context",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Level",
+          "type": "Int",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Name",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "Purpose",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "team",
+      "aggregateDependencies": [
+        "team"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764662642496171",
+          "type": "OUTBOUND",
+          "title": "Change Team",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645849750300",
+          "type": "INBOUND",
+          "title": "Company Team List",
           "elementType": "READMODEL"
         }
       ],

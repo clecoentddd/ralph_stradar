@@ -11,6 +11,7 @@ import stradar.domain.TeamAggregate
 import stradar.events.TeamCreatedEvent
 import stradar.events.TeamDeletedEvent
 import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 /**
  * Publish Event Team Deleted
@@ -66,7 +67,7 @@ class DeleteTeamHappyFlowTest {
                 )
 
                 fixture.given(events)
-                        .`when`(command, MetaData.with("organizationId", organizationId))
+                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(*expectedEvents.toTypedArray())
         }

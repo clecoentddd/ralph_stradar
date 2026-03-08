@@ -15,7 +15,10 @@ interface StrategiesReadModelRepository : JpaRepository<StrategiesReadModelEntit
 
     fun findAllByOrganizationId(organizationId: UUID): List<StrategiesReadModelEntity>
 
-    fun findAllByTeamId(teamId: UUID): List<StrategiesReadModelEntity>
+    fun findAllByTeamIdAndOrganizationId(
+            teamId: UUID,
+            organizationId: UUID
+    ): List<StrategiesReadModelEntity>
 }
 
 /*

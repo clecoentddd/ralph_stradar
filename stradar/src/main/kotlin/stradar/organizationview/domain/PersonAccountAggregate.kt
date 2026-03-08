@@ -13,6 +13,7 @@ import stradar.events.PersonCreatedEvent
 import stradar.events.PersonSignedInEvent
 import stradar.organizationview.domain.commands.createperson.CreatePersonCommand
 import stradar.organizationview.domain.commands.signin.SignInCommand
+import stradar.support.metadata.*
 
 @Aggregate
 class PersonAccountAggregate {
@@ -29,7 +30,7 @@ class PersonAccountAggregate {
 
         @CommandHandler
         constructor(command: CreatePersonCommand, metadata: MetaData) : this() {
-                val creatorPersonId = metadata["x-user-id"]?.toString()
+                val creatorPersonId = metadata[USER_ID_HEADER]?.toString()
 
                 logger.info { "Creating Person: ${command.personId} (Creator: $creatorPersonId)" }
 
@@ -46,7 +47,7 @@ class PersonAccountAggregate {
 
         @CommandHandler
         fun handle(command: SignInCommand, metadata: MetaData) {
-                val sessionPersonId = metadata["x-user-id"]?.toString()
+                val sessionPersonId = metadata[USER_ID_HEADER]?.toString()
 
                 // 1. Validation
                 if (sessionPersonId != null && sessionPersonId != command.personId.toString()) {

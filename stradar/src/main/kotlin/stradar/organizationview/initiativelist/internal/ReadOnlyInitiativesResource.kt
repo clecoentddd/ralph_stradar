@@ -15,6 +15,7 @@ import stradar.organizationview.initiativelist.InitiativeListResponse
 import stradar.organizationview.initiativelist.InitiativesByStrategyQuery
 import stradar.organizationview.initiativelist.InitiativesReadModel
 import stradar.organizationview.initiativelist.InitiativesReadModelQuery
+import stradar.support.metadata.*
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645855652122
@@ -29,11 +30,11 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @GetMapping("/initiativelist/{id}")
         fun findReadModel(
@@ -43,8 +44,8 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                 )
                 @PathVariable("id")
                 initiativeId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
         ): CompletableFuture<InitiativesReadModel> {
                 logger.debug { "Querying single initiative: $initiativeId (org: $organizationId)" }
 
@@ -52,8 +53,8 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                 val queryMessage =
                         GenericQueryMessage(InitiativesReadModelQuery(initiativeId), responseType)
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)
@@ -64,11 +65,11 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @GetMapping("/initiativelist/by-strategy")
         fun findByStrategy(
@@ -78,8 +79,8 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                 @RequestParam
                 @Parameter(example = "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d")
                 teamId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
         ): CompletableFuture<InitiativeListResponse> {
                 logger.info {
                         "Querying initiatives for strategy $strategyId, team $teamId (org: $organizationId)"
@@ -96,8 +97,8 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                                         responseType
                                 )
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)

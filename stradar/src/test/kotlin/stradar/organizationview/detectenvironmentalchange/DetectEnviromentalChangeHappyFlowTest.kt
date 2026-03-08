@@ -10,6 +10,7 @@ import stradar.common.*
 import stradar.domain.EnvironmentalChangeAggregate
 import stradar.events.EnvironmentalChangeDetectedEvent
 import stradar.organizationview.domain.commands.detectenvironmentalchange.DetectEnvironmentalChangeCommand
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 /** Environmental Change is detected (Aggregate Creation) */
 class DetectEnvironmentalChangeHappyFlowTest {
@@ -67,7 +68,7 @@ class DetectEnvironmentalChangeHappyFlowTest {
                         )
 
                 fixture.givenNoPriorActivity()
-                        .`when`(command, MetaData.with("organizationId", orgId))
+                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, orgId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

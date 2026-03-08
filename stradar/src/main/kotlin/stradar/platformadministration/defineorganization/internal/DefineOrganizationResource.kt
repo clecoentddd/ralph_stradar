@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import stradar.common.CommandResult
 import stradar.platformadministration.domain.commands.defineorganization.DefineOrganizationCommand
+import stradar.support.metadata.*
 
 /**
  * Payload with internal validation logic to ensure no nulls or empty strings reach the command bus.
@@ -43,8 +44,8 @@ class DefineOrganizationResource(
         @CrossOrigin
         @PostMapping("/defineorganization")
         fun processCommand(
-                @RequestHeader("X-Session-Id") sessionId: String,
-                @RequestHeader("x-user-id", required = false, defaultValue = "\${user.name}")
+                @RequestHeader(SESSION_ID_HEADER) sessionId: String,
+                @RequestHeader(USER_ID_HEADER, required = false, defaultValue = "\${user.name}")
                 userId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
                 @RequestBody payload: DefineOrganizationPayload
@@ -57,12 +58,13 @@ class DefineOrganizationResource(
 
                 // 📦 3. Build Metadata Baton
                 val metadata =
-                        MetaData.with("X-Session-Id", sessionId)
-                                .and("x-user-id", userId)
+                        MetaData.with(SESSION_ID_HEADER, sessionId)
+                                .and(USER_ID_HEADER, userId)
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
 
                 // 🚀 4. Construct and Dispatch Command
                 val command =

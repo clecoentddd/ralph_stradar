@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RestController
 import stradar.organizationview.environmentalchanges.*
+import stradar.support.metadata.*
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661040894563
@@ -26,17 +27,17 @@ class EnvironmentalChangesResource(private var queryGateway: QueryGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @GetMapping("/environmentalchanges/{environmentalChangeId}")
         fun findReadModel(
                 @PathVariable("environmentalChangeId") environmentalChangeId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
         ): CompletableFuture<EnvironmentalChangesReadModel> {
                 logger.info {
                         "API Request: Fetching View for $environmentalChangeId (org: $organizationId)"
@@ -50,8 +51,8 @@ class EnvironmentalChangesResource(private var queryGateway: QueryGateway) {
                                         responseType
                                 )
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)
@@ -61,31 +62,29 @@ class EnvironmentalChangesResource(private var queryGateway: QueryGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @GetMapping("/environmentalchanges/team/{teamId}")
         fun findByTeam(
                 @PathVariable("teamId") teamId: UUID,
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
-        ): CompletableFuture<List<EnvironmentalChangesReadModelEntity>> {
-                logger.info {
-                        "API Request: Fetching all changes for Team: $teamId (org: $organizationId)"
-                }
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
+        ): CompletableFuture<EnvironmentalChangesReadModel> { // 👈 Change return type from List
 
                 val responseType =
-                        ResponseTypes.multipleInstancesOf(
-                                EnvironmentalChangesReadModelEntity::class.java
-                        )
+                        ResponseTypes.instanceOf(
+                                EnvironmentalChangesReadModel::class.java
+                        ) // 👈 Use instanceOf
+
                 val queryMessage =
                         GenericQueryMessage(EnvironmentalChangesTeamListQuery(teamId), responseType)
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)

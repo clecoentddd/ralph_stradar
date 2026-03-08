@@ -9,7 +9,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.domain.commands.changeinitiative.ChangeInitiativeCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 /** The Request Body structure */
 data class ChangeInitiativePayload(
@@ -33,19 +33,19 @@ class ChangeInitiativeResource(private val commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/changeinitiative/{initiativeId}")
         fun processCommand(
                 @PathVariable("initiativeId") initiativeId: UUID,
                 @RequestBody payload: ChangeInitiativePayload, // Uses the data class above
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String,
-                @RequestHeader("x-session-id") sessionId: String,
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String,
+                @RequestHeader(SESSION_ID_HEADER) sessionId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?
         ): CompletableFuture<Any> {
 
@@ -54,8 +54,8 @@ class ChangeInitiativeResource(private val commandGateway: CommandGateway) {
 
                 // 2. Build MetaData manually (Writing side)
                 val metadata =
-                        MetaData.with("organizationId", organizationId)
-                                .and("x-user-id", userId)
+                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                .and(USER_ID_HEADER, userId)
                                 .and(SESSION_ID_HEADER, sessionId)
                                 .and(
                                         "X-Correlation-Id",

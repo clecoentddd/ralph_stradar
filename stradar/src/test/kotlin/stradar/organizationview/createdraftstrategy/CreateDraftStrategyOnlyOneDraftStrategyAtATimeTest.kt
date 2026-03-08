@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import stradar.events.StrategyDraftCreatedEvent
 import stradar.organizationview.domain.StrategyBuilderAggregate
 import stradar.organizationview.domain.commands.createdraftstrategy.CreateDraftStrategyCommand
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 /** Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661685246929 */
 class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
@@ -53,7 +54,7 @@ class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
                         )
 
                 fixture.given(givenEvent)
-                        .`when`(command, MetaData.with("organizationId", orgId))
+                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, orgId))
                         .expectException(IllegalStateException::class.java)
                         .expectExceptionMessage("There is already a DRAFT strategy.")
         }

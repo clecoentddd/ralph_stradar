@@ -6,8 +6,8 @@ import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
-import stradar.organizationview.createinitiative.internal.SESSION_ID_HEADER
 import stradar.organizationview.domain.commands.createperson.CreatePersonCommand
+import stradar.support.metadata.*
 
 data class CreatePersonPayload(
         val personId: UUID,
@@ -25,16 +25,16 @@ class CreatePersonResource(private val commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/debug/createperson")
         fun processDebugCommand(
                 @RequestHeader(
-                        value = "x-user-id",
+                        value = USER_ID_HEADER,
                         required = false,
                         defaultValue = "\${user.name}"
                 )
@@ -46,9 +46,9 @@ class CreatePersonResource(private val commandGateway: CommandGateway) {
                 @RequestParam username: String
         ): CompletableFuture<Any> {
 
-                // 🛡️ Create the metadata baton
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
+                                .and(ORGANIZATION_ID_HEADER, organizationId)
                                 .and("X-Correlation-Id", UUID.randomUUID().toString())
 
                 return commandGateway.send(
@@ -67,7 +67,7 @@ class CreatePersonResource(private val commandGateway: CommandGateway) {
         @PostMapping("/createperson/{id}")
         fun processCommand(
                 @RequestHeader(
-                        value = "x-user-id",
+                        value = USER_ID_HEADER,
                         required = false,
                         defaultValue = "\${user.name}"
                 )
@@ -78,7 +78,8 @@ class CreatePersonResource(private val commandGateway: CommandGateway) {
 
                 // 🛡️ Ensure the 'who' is passed to the 'what'
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
                                 .and("X-Correlation-Id", UUID.randomUUID().toString())
 
                 return commandGateway.send(

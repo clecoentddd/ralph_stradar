@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import stradar.organizationview.domain.commands.updateteam.UpdateTeamCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 data class UpdateTeamPayload(
         var teamId: UUID,
@@ -35,14 +35,15 @@ class UpdateTeamResource(private var commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/debug/updateteam")
         fun processDebugCommand(
+                @RequestHeader(USER_ID_HEADER, required = false) userId: String?,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @RequestParam teamId: UUID,
@@ -58,7 +59,7 @@ class UpdateTeamResource(private var commandGateway: CommandGateway) {
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("organizationId", organizationId)
+                                .and(ORGANIZATION_ID_HEADER, organizationId)
 
                 return commandGateway.send(
                         UpdateTeamCommand(teamId, context, level, name, organizationId, purpose),
@@ -69,20 +70,20 @@ class UpdateTeamResource(private var commandGateway: CommandGateway) {
         @CrossOrigin
         @PostMapping("/updateteam/{id}")
         fun processCommand(
-                @RequestHeader("x-user-id") userId: String,
+                @RequestHeader(USER_ID_HEADER) userId: String,
                 @RequestHeader(SESSION_ID_HEADER) sessionId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
                 @PathVariable("id") teamId: UUID,
                 @RequestBody payload: UpdateTeamPayload
         ): CompletableFuture<Any> {
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
                                 .and(SESSION_ID_HEADER, sessionId)
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
-                                .and("organizationId", payload.organizationId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
 
                 return commandGateway.send(
                         UpdateTeamCommand(

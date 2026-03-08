@@ -12,6 +12,7 @@ import stradar.domain.EnvironmentalChangeAggregate
 import stradar.events.EnvironmentalChangeDetectedEvent
 import stradar.events.EnvironmentalChangeUpdatedEvent
 import stradar.organizationview.domain.commands.updateenvironmentalchange.UpdateEnvironmentalChangeCommand
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 class EnsureUpdatedTest {
 
@@ -84,7 +85,7 @@ class EnsureUpdatedTest {
                         )
 
                 fixture.given(events)
-                        .`when`(command, MetaData.with("organizationId", organizationId))
+                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
                         .expectSuccessfulHandlerExecution()
                         .expectEvents(expectedEvent)
         }

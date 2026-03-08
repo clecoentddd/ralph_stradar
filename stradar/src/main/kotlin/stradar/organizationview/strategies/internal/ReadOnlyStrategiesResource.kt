@@ -9,7 +9,9 @@ import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.strategies.GetStrategiesByOrganizationQuery
+import stradar.organizationview.strategies.GetStrategiesByTeamQuery
 import stradar.organizationview.strategies.StrategiesReadModel
+import stradar.support.metadata.*
 
 /*
 Boardlink:
@@ -30,16 +32,16 @@ class StrategiesResource(private val queryGateway: QueryGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @GetMapping
         fun findStrategies(
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
         ): CompletableFuture<StrategiesReadModel> {
                 logger.info { "Querying strategies for org: $organizationId" }
 
@@ -50,8 +52,31 @@ class StrategiesResource(private val queryGateway: QueryGateway) {
                                         responseType
                                 )
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
+                                )
+
+                return queryGateway.query(queryMessage, responseType)
+        }
+
+        /** GET /strategies/team/{teamId} */
+        @CrossOrigin // Uses same headers as the main GetMapping
+        @GetMapping("/team/{teamId}")
+        fun findStrategiesByTeam(
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String,
+                @PathVariable teamId: UUID
+        ): CompletableFuture<StrategiesReadModel> {
+                logger.info { "Querying strategies for team: $teamId within org: $organizationId" }
+
+                val responseType = ResponseTypes.instanceOf(StrategiesReadModel::class.java)
+
+                // Construct message with teamId in payload, but orgId in MetaData
+                val queryMessage =
+                        GenericQueryMessage(GetStrategiesByTeamQuery(teamId), responseType)
+                                .withMetaData(
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)

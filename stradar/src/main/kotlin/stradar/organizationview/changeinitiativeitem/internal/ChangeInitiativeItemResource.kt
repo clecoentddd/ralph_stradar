@@ -8,7 +8,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.domain.commands.changeinitiativeitem.ChangeInitiativeItemCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 data class ChangeInitiativeItemPayload(
         val initiativeId: UUID?,
@@ -25,20 +25,20 @@ class ChangeInitiativeItemResource(private val commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
-                                "X-Session-Id",
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
                                 "X-Correlation-Id",
                                 "Content-Type",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/changeinitiativeitem/{id}")
         fun processCommand(
                 @PathVariable("id") pathId: UUID, // This is the ID from the URL string
                 @RequestBody payload: ChangeInitiativeItemPayload,
                 @RequestHeader("x-user-id") userId: String,
-                @RequestHeader("x-session-id") sessionId: String,
+                @RequestHeader(SESSION_ID_HEADER) sessionId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
-                @RequestHeader("organizationId")
+                @RequestHeader(ORGANIZATION_ID_HEADER)
                 organizationId: UUID // Renamed for clarity with Aggregate guard
         ): CompletableFuture<Any> {
 
@@ -54,14 +54,14 @@ class ChangeInitiativeItemResource(private val commandGateway: CommandGateway) {
 
                 // 2. PREPARE METADATA (Including the mandatory organizationId for the Aggregate)
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
                                 .and(
-                                        "organizationId",
+                                        ORGANIZATION_ID_HEADER,
                                         organizationId
                                 ) // This satisfies the requireNotNull in your Aggregate
 

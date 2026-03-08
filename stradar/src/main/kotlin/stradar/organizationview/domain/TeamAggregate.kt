@@ -49,8 +49,7 @@ class TeamAggregate() {
                                 name = command.name,
                                 purpose = command.purpose,
                                 status = "ACTIVE"
-                        ),
-                        metaData
+                        )
                 )
 
                 return CommandResult(command.teamId, AggregateLifecycle.getVersion())

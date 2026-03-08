@@ -15,7 +15,7 @@ import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
 import stradar.organizationview.teamlist.TeamListByOrganizationQuery
 import stradar.organizationview.teamlist.TeamListReadModel
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 /**
  *
@@ -36,8 +36,8 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
 
                 val metadata =
                         MetaData.with(SESSION_ID_HEADER, UUID.randomUUID().toString())
-                                .and("organizationId", organizationId)
-                                .and("x-user-id", "test-user")
+                                .and(ORGANIZATION_ID_HEADER, organizationId)
+                                .and(USER_ID_HEADER, "test-user")
 
                 val createTeamCommand =
                         CreateTeamCommand(
@@ -73,7 +73,7 @@ class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
                                                         )
                                                         .withMetaData(
                                                                 MetaData.with(
-                                                                        "organizationId",
+                                                                        ORGANIZATION_ID_HEADER,
                                                                         organizationId
                                                                 )
                                                         ),

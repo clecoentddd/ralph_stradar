@@ -2,6 +2,7 @@ package stradar.common
 
 import java.util.UUID
 import org.axonframework.messaging.MetaData
+import stradar.support.metadata.*
 
 /**
  * Extension functions for Axon MetaData to consistently resolve security context. Standardizes how
@@ -9,9 +10,9 @@ import org.axonframework.messaging.MetaData
  */
 fun MetaData.resolveOrganizationId(): UUID {
         val value =
-                this["organizationId"]
+                this[ORGANIZATION_ID_HEADER]
                         ?: throw IllegalStateException(
-                                "Security context missing: organizationId required"
+                                "Security context missing: $ORGANIZATION_ID_HEADER required"
                         )
         return when (value) {
                 is UUID -> value
@@ -24,6 +25,6 @@ fun MetaData.resolveOrganizationId(): UUID {
 }
 
 fun MetaData.resolveUserId(): String {
-        return this["x-user-id"]?.toString()
-                ?: throw IllegalStateException("Security context missing: x-user-id required")
+        return this[USER_ID_HEADER]?.toString()
+                ?: throw IllegalStateException("Security context missing: $USER_ID_HEADER required")
 }

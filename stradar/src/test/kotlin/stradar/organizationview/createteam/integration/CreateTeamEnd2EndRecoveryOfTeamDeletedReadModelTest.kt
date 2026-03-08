@@ -17,6 +17,7 @@ import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
 import stradar.organizationview.domain.commands.updateteam.UpdateTeamCommand
 import stradar.organizationview.teamlist.TeamListByOrganizationQuery
 import stradar.organizationview.teamlist.TeamListReadModel
+import stradar.support.metadata.*
 
 class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest() {
 
@@ -32,9 +33,9 @@ class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest(
 
                 // 2. Prepare required MetaData
                 val meta =
-                        MetaData.with("X-Session-Id", "test-session")
-                                .and("x-user-id", "test-admin")
-                                .and("organizationId", organizationId)
+                        MetaData.with(SESSION_ID_HEADER, "test-session")
+                                .and(USER_ID_HEADER, "test-admin")
+                                .and(ORGANIZATION_ID_HEADER, organizationId)
 
                 // 3. Create the team
                 val createTeamCommand =
@@ -85,7 +86,7 @@ class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest(
                                                         )
                                                         .withMetaData(
                                                                 MetaData.with(
-                                                                        "organizationId",
+                                                                        ORGANIZATION_ID_HEADER,
                                                                         organizationId
                                                                 )
                                                         ),

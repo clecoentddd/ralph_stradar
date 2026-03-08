@@ -7,7 +7,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.domain.commands.signin.SignInCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 data class SignInPayload(val personId: UUID)
 
@@ -19,11 +19,11 @@ class SignInResource(private val commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping(value = ["/signin", "/signintoorganizationpersonaccount"])
         fun processCommand(
@@ -38,7 +38,7 @@ class SignInResource(private val commandGateway: CommandGateway) {
                 // We set 'x-user-id' to the personId.
                 // This ensures the person 'signs themselves in'.
                 val metadata =
-                        MetaData.with("x-user-id", payload.personId.toString())
+                        MetaData.with(USER_ID_HEADER, payload.personId.toString())
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()

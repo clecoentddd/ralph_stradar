@@ -7,7 +7,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.domain.commands.deleteenvironmentalchange.DeleteEnvironmentalChangeCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 data class DeleteEnvironmentalChangePayload(
         var environmentalChangeId: UUID,
@@ -26,11 +26,11 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/debug/deleteenvironmentalchange")
         fun processDebugCommand(
@@ -46,7 +46,7 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("organizationId", organizationId)
+                                .and(ORGANIZATION_ID_HEADER, organizationId)
                 return commandGateway.send(
                         DeleteEnvironmentalChangeCommand(
                                 environmentalChangeId,
@@ -60,15 +60,15 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/deleteenvironmentalchange/{id}")
         fun processCommand(
-                @RequestHeader(value = "x-user-id") userId: String,
+                @RequestHeader(USER_ID_HEADER) userId: String,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @PathVariable("id") environmentalChangeId: UUID,
@@ -80,8 +80,8 @@ class DeleteEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("x-user-id", userId)
-                                .and("organizationId", payload.organizationId)
+                                .and(USER_ID_HEADER, userId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
                 return commandGateway.send(
                         DeleteEnvironmentalChangeCommand(
                                 environmentalChangeId = environmentalChangeId,

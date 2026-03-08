@@ -24,7 +24,7 @@ class EnvironmentalChangesQueryHandler(
                 val organizationId = metaData.resolveOrganizationId()
 
                 logger.info {
-                        "Fetching elements for id: ${query.environmentalChangeId} (org: $organizationId)"
+                        "QUERY: Fetching Details for Change [${query.environmentalChangeId}] (Org: $organizationId)"
                 }
 
                 val entities =
@@ -33,52 +33,58 @@ class EnvironmentalChangesQueryHandler(
                                 organizationId
                         )
 
-                if (entities.isEmpty()) {
-                        return EnvironmentalChangesReadModel(
-                                environmentalChangeId = query.environmentalChangeId,
-                                teamId = UUID.randomUUID(),
-                                organizationId = organizationId,
-                                elements = emptyList()
-                        )
+                logger.info {
+                        "RESULT: Found ${entities.size} rows for Change ID [${query.environmentalChangeId}]"
                 }
-
-                val header = entities.first()
 
                 return EnvironmentalChangesReadModel(
                         environmentalChangeId = query.environmentalChangeId,
-                        teamId = header.teamId!!,
+                        teamId = entities.firstOrNull()?.teamId ?: UUID.randomUUID(),
                         organizationId = organizationId,
-                        elements =
-                                entities.map { entity ->
-                                        EnvironmentalChangeElementDTO(
-                                                environmentalChangeId =
-                                                        entity.environmentalChangeId!!,
-                                                title = entity.title,
-                                                detect = entity.detect,
-                                                assess = entity.assess,
-                                                respond = entity.respond,
-                                                type = entity.type,
-                                                category = entity.category,
-                                                distance = entity.distance,
-                                                impact = entity.impact,
-                                                risk = entity.risk
-                                        )
-                                }
+                        elements = entities.map { it.toDTO() }
                 )
         }
 
-        /** 2. Handles the team list view: scoped by teamId and organizationId */
+        /** 2. Handles the team list view: Returns the wrapper DTO with the list of elements */
         @QueryHandler
         fun handle(
                 query: EnvironmentalChangesTeamListQuery,
                 metaData: MetaData
-        ): List<EnvironmentalChangesReadModelEntity> {
+        ): EnvironmentalChangesReadModel {
                 val organizationId = metaData.resolveOrganizationId()
 
                 logger.info {
-                        "Fetching flat list for Team: ${query.teamId} (org: $organizationId)"
+                        "QUERY: Fetching Team List for Team [${query.teamId}] (Org: $organizationId)"
                 }
 
-                return repository.findByTeamIdAndOrganizationId(query.teamId, organizationId)
+                val entities =
+                        repository.findByTeamIdAndOrganizationId(query.teamId, organizationId)
+
+                // CRITICAL LOG: This tells us if the database query returned 0 rows
+                logger.info {
+                        "RESULT: Found ${entities.size} elements for Team [${query.teamId}] in Org [$organizationId]"
+                }
+
+                return EnvironmentalChangesReadModel(
+                        environmentalChangeId = entities.firstOrNull()?.environmentalChangeId
+                                        ?: UUID.randomUUID(),
+                        teamId = query.teamId,
+                        organizationId = organizationId,
+                        elements = entities.map { it.toDTO() }
+                )
         }
+
+        private fun EnvironmentalChangesReadModelEntity.toDTO() =
+                EnvironmentalChangeElementDTO(
+                        environmentalChangeId = this.environmentalChangeId!!,
+                        title = this.title,
+                        detect = this.detect,
+                        assess = this.assess,
+                        respond = this.respond,
+                        type = this.type,
+                        category = this.category,
+                        distance = this.distance,
+                        impact = this.impact,
+                        risk = this.risk
+                )
 }

@@ -7,7 +7,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.domain.commands.deleteteam.DeleteTeamCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 // 1. Update the payload to accept the reason from the frontend
 data class DeleteTeamPayload(
@@ -24,11 +24,11 @@ class DeleteTeamResource(private var commandGateway: CommandGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/debug/deleteteam")
         fun processDebugCommand(
@@ -44,7 +44,7 @@ class DeleteTeamResource(private var commandGateway: CommandGateway) {
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("organizationId", organizationId)
+                                .and(ORGANIZATION_ID_HEADER, organizationId)
 
                 return commandGateway.send(
                         DeleteTeamCommand(
@@ -59,20 +59,20 @@ class DeleteTeamResource(private var commandGateway: CommandGateway) {
         @CrossOrigin
         @PostMapping("/deleteteam/{id}")
         fun processCommand(
-                @RequestHeader("x-user-id") userId: String,
+                @RequestHeader(USER_ID_HEADER) userId: String,
                 @RequestHeader(SESSION_ID_HEADER) sessionId: String,
                 @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
                 @PathVariable("id") teamId: UUID,
                 @RequestBody payload: DeleteTeamPayload
         ): CompletableFuture<Any> {
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
                                 .and(SESSION_ID_HEADER, sessionId)
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
-                                .and("organizationId", payload.organizationId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
 
                 // 2. Pass the reason from the payload into the command
                 return commandGateway.send(

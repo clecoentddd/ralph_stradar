@@ -1,29 +1,30 @@
 {
-  "id": "3458764661099002342",
+  "id": "3458764662643764851",
   "status": "Created",
-  "title": "slice: Detect Radar Element",
+  "title": "slice: Change Team",
   "context": "Stadar Organization View",
   "sliceType": "STATE_CHANGE",
   "commands": [
     {
-      "id": "3458764661044303442",
+      "id": "3458764662642496171",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: Detect Radar Element",
-      "title": "Detect Environmental Change",
+      "slice": "slice: Change Team",
+      "title": "Change Team",
       "fields": [
         {
-          "name": "envChangeId",
+          "name": "teamId",
           "type": "UUID",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
         },
         {
-          "name": "assess",
+          "name": "Context",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -31,31 +32,15 @@
           "idAttribute": false
         },
         {
-          "name": "category",
-          "type": "String",
+          "name": "Level",
+          "type": "Int",
           "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "detect",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "distance",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "impact",
+          "name": "Name",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -70,7 +55,7 @@
           "idAttribute": false
         },
         {
-          "name": "respond",
+          "name": "organizationName",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -78,30 +63,7 @@
           "idAttribute": false
         },
         {
-          "name": "risk",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "title",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "type",
+          "name": "Purpose",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -111,21 +73,22 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "environmental change",
+      "aggregate": "organization admin",
       "aggregateDependencies": [
-        "environmental change"
+        "organization admin",
+        "team"
       ],
       "dependencies": [
         {
-          "id": "3458764661032650856",
+          "id": "3458764662641964599",
           "type": "OUTBOUND",
-          "title": "Environmental Change Detected",
+          "title": "Team Changes",
           "elementType": "EVENT"
         },
         {
-          "id": "3458764661044303447",
+          "id": "3458764662642496219",
           "type": "INBOUND",
-          "title": "Detect Environmental Change",
+          "title": "Edit Team",
           "elementType": "SCREEN"
         }
       ],
@@ -139,24 +102,25 @@
   ],
   "events": [
     {
-      "id": "3458764661032650856",
+      "id": "3458764662641964599",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: Detect Radar Element",
-      "title": "Environmental Change Detected",
+      "slice": "slice: Change Team",
+      "title": "Team Changes",
       "fields": [
         {
-          "name": "envChangeId",
+          "name": "teamId",
           "type": "UUID",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
         },
         {
-          "name": "assess",
+          "name": "Context",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -164,31 +128,15 @@
           "idAttribute": false
         },
         {
-          "name": "category",
-          "type": "String",
+          "name": "Level",
+          "type": "Int",
           "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "detect",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "distance",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "impact",
+          "name": "Name",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -203,7 +151,7 @@
           "idAttribute": false
         },
         {
-          "name": "respond",
+          "name": "organizationName",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -211,7 +159,7 @@
           "idAttribute": false
         },
         {
-          "name": "risk",
+          "name": "Purpose",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -219,46 +167,33 @@
           "idAttribute": false
         },
         {
-          "name": "teamId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "title",
-          "type": "String",
+          "name": "status",
+          "example": "ACTIVE",
           "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "type",
           "type": "String",
-          "generated": true,
-          "subfields": [],
           "cardinality": "Single",
+          "subfields": [],
           "idAttribute": false
         }
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "environmental change",
+      "aggregate": "team",
       "aggregateDependencies": [
-        "environmental change"
+        "organization admin",
+        "team"
       ],
       "dependencies": [
         {
-          "id": "3458764661040894563",
+          "id": "3458764645849750300",
           "type": "OUTBOUND",
-          "title": "Environmental Changes",
+          "title": "Company Team List",
           "elementType": "READMODEL"
         },
         {
-          "id": "3458764661044303442",
+          "id": "3458764662642496171",
           "type": "INBOUND",
-          "title": "Detect Environmental Change",
+          "title": "Change Team",
           "elementType": "COMMAND"
         }
       ],
@@ -273,18 +208,18 @@
   "readmodels": [],
   "screens": [
     {
-      "id": "3458764661044303447",
+      "id": "3458764662642496219",
       "tags": [],
-      "groupId": "3458764661044303451",
+      "groupId": "3458764662642496241",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: Detect Radar Element",
-      "title": "Detect Environmental Change",
+      "slice": "slice: Change Team",
+      "title": "Edit Team",
       "fields": [
         {
-          "name": "envChangeId",
+          "name": "teamId",
           "type": "UUID",
           "generated": true,
           "subfields": [],
@@ -292,7 +227,7 @@
           "idAttribute": true
         },
         {
-          "name": "assess",
+          "name": "Context",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -300,31 +235,15 @@
           "idAttribute": false
         },
         {
-          "name": "category",
-          "type": "String",
+          "name": "Level",
+          "type": "Int",
           "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "detect",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "distance",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "impact",
+          "name": "Name",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -339,7 +258,7 @@
           "idAttribute": false
         },
         {
-          "name": "respond",
+          "name": "organizationName",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -347,30 +266,7 @@
           "idAttribute": false
         },
         {
-          "name": "risk",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "title",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "type",
+          "name": "Purpose",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -380,15 +276,16 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "environmental change",
+      "aggregate": "organization admin",
       "aggregateDependencies": [
-        "environmental change"
+        "organization admin",
+        "team"
       ],
       "dependencies": [
         {
-          "id": "3458764661044303442",
+          "id": "3458764662642496171",
           "type": "OUTBOUND",
-          "title": "Detect Environmental Change",
+          "title": "Change Team",
           "elementType": "COMMAND"
         },
         {
@@ -413,6 +310,7 @@
   "specifications": [],
   "actors": [],
   "aggregates": [
-    "environmental change"
+    "organization admin",
+    "team"
   ]
 }

@@ -8,7 +8,7 @@ import org.axonframework.messaging.MetaData
 import org.springframework.web.bind.annotation.*
 import stradar.common.*
 import stradar.organizationview.domain.commands.updateenvironmentalchange.UpdateEnvironmentalChangeCommand
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 data class UpdateEnvironmentalChangePayload(
         var environmentalChangeId: UUID,
@@ -36,15 +36,15 @@ class UpdateEnvironmentalChangeResource(private var commandGateway: CommandGatew
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/updateenvironmentalchange/{id}")
         fun processCommand(
-                @RequestHeader(value = "x-user-id") userId: String,
+                @RequestHeader(USER_ID_HEADER) userId: String,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @PathVariable("id") environmentalChangeId: UUID, // This maps to the Aggregate
@@ -61,8 +61,8 @@ class UpdateEnvironmentalChangeResource(private var commandGateway: CommandGatew
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("x-user-id", userId)
-                                .and("organizationId", payload.organizationId)
+                                .and(USER_ID_HEADER, userId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
 
                 return commandGateway.send(
                         UpdateEnvironmentalChangeCommand(

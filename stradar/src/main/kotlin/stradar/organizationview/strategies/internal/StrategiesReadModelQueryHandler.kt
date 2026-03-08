@@ -5,6 +5,7 @@ import org.axonframework.queryhandling.QueryHandler
 import org.springframework.stereotype.Component
 import stradar.common.resolveOrganizationId
 import stradar.organizationview.strategies.GetStrategiesByOrganizationQuery
+import stradar.organizationview.strategies.GetStrategiesByTeamQuery
 import stradar.organizationview.strategies.StrategiesReadModel
 
 /*
@@ -20,5 +21,15 @@ class StrategiesReadModelQueryHandler(private val repository: StrategiesReadMode
   fun handle(query: GetStrategiesByOrganizationQuery, metaData: MetaData): StrategiesReadModel {
     val organizationId = metaData.resolveOrganizationId()
     return StrategiesReadModel(repository.findAllByOrganizationId(organizationId))
+  }
+
+  @QueryHandler
+  fun handle(query: GetStrategiesByTeamQuery, metaData: MetaData): StrategiesReadModel {
+    val organizationId = metaData.resolveOrganizationId()
+
+    // Scoped repository call ensures data isolation
+    val results = repository.findAllByTeamIdAndOrganizationId(query.teamId, organizationId)
+
+    return StrategiesReadModel(results)
   }
 }

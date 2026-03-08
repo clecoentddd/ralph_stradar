@@ -10,6 +10,7 @@ import stradar.domain.TeamAggregate
 import stradar.events.TeamCreatedEvent
 import stradar.events.TeamUpdatedEvent
 import stradar.organizationview.domain.commands.updateteam.UpdateTeamCommand
+import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 /** Happy Flow: Updating an existing team within the same organization. */
 class UpdateTeamHappyFlowTest {
@@ -64,7 +65,7 @@ class UpdateTeamHappyFlowTest {
             )
 
     fixture.given(initialEvent)
-            .`when`(command, MetaData.with("organizationId", organizationId))
+            .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
             .expectSuccessfulHandlerExecution()
             .expectEvents(expectedEvent)
   }

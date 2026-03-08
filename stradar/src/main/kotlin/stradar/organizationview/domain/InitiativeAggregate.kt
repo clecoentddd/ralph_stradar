@@ -11,6 +11,7 @@ import stradar.events.InitiativeCreatedEvent
 import stradar.events.InitiativeItemChangedEvent // You will need to create this event
 import stradar.organizationview.domain.commands.changeinitiativeitem.ChangeInitiativeItemCommand
 import stradar.organizationview.domain.commands.createinitiative.CreateInitiativeCommand
+import stradar.support.metadata.*
 
 @Aggregate
 class InitiativeAggregate() {
@@ -36,7 +37,7 @@ class InitiativeAggregate() {
         // --- NEW COMMAND HANDLER ---
         @CommandHandler
         fun handle(command: ChangeInitiativeItemCommand, metaData: MetaData) {
-                val userId = metaData["x-user-id"] as? String
+                val userId = metaData[USER_ID_HEADER] as? String
 
                 // Business Logic Example:
                 // if (command.content.isBlank()) throw IllegalArgumentException("Content cannot be

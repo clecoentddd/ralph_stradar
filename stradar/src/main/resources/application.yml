@@ -23,10 +23,17 @@ spring:
 
 axon:
   serializer:
-    ## xstream is not compatible anymore with jdk17+
     general: jackson
   axonserver:
     enabled: false
+  eventhandling:
+    processors:
+      ORGANIZATION_VIEW:
+        mode: tracking
+      ENVIRONMENTAL_CHANGES_VIEW:
+        mode: tracking
+      PLATFORM_ADMINISTRATION:
+        mode: tracking
 
 #axoniq:
 #  console:

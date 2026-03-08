@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*
 import stradar.common.queryWithMetaData
 import stradar.organizationview.domain.commands.createteam.CreateTeamCommand
 import stradar.organizationview.teamlist.TeamNameAlreadyExistsQuery
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 data class CreateTeamPayload(
         var organizationId: UUID,
@@ -35,15 +35,15 @@ class CreateTeamResource(
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @PostMapping("/createteam")
         fun processCommand(
-                @RequestHeader("x-user-id") userId: String,
+                @RequestHeader(USER_ID_HEADER) userId: String,
                 @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @RequestBody payload: CreateTeamPayload
@@ -52,13 +52,13 @@ class CreateTeamResource(
                 logger.info { "Create Team - payload: $payload" }
 
                 val metadata =
-                        MetaData.with("x-user-id", userId)
+                        MetaData.with(USER_ID_HEADER, userId)
                                 .and(
                                         "X-Correlation-Id",
                                         correlationId ?: UUID.randomUUID().toString()
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
-                                .and("organizationId", payload.organizationId)
+                                .and(ORGANIZATION_ID_HEADER, payload.organizationId)
 
                 if (payload.level < 0) {
                         throw IllegalArgumentException(

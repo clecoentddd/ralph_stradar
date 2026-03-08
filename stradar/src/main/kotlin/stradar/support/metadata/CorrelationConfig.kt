@@ -8,13 +8,15 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 const val SESSION_ID_HEADER = "X-Session-Id"
+const val ORGANIZATION_ID_HEADER = "organizationId"
+const val USER_ID_HEADER = "x-user-id"
 
 @Configuration
 class CorrelationConfig {
 
   @Bean
-  fun lawFirmCorrelationDataProvider(): SimpleCorrelationDataProvider {
-    return SimpleCorrelationDataProvider(SESSION_ID_HEADER, "organizationId", "x-user-id")
+  fun stradarCorrelationDataProvider(): SimpleCorrelationDataProvider {
+    return SimpleCorrelationDataProvider(SESSION_ID_HEADER, ORGANIZATION_ID_HEADER, USER_ID_HEADER)
   }
 
   @Bean
@@ -24,6 +26,6 @@ class CorrelationConfig {
 
   @Bean
   fun correlationDataInterceptor(): CorrelationDataInterceptor<CommandMessage<Any>> {
-    return CorrelationDataInterceptor(messageOriginProvider(), lawFirmCorrelationDataProvider())
+    return CorrelationDataInterceptor(messageOriginProvider(), stradarCorrelationDataProvider())
   }
 }

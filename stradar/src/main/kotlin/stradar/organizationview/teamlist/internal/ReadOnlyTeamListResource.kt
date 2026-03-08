@@ -9,7 +9,7 @@ import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.teamlist.*
-import stradar.support.metadata.SESSION_ID_HEADER
+import stradar.support.metadata.*
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645849750300
@@ -26,16 +26,16 @@ class TeamlistResource(private var queryGateway: QueryGateway) {
         @CrossOrigin(
                 allowedHeaders =
                         [
-                                "organizationId",
+                                ORGANIZATION_ID_HEADER,
                                 SESSION_ID_HEADER,
                                 "Content-Type",
                                 "X-Correlation-Id",
-                                "x-user-id"]
+                                USER_ID_HEADER]
         )
         @GetMapping("/teamlist")
         fun findByOrganization(
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
         ): CompletableFuture<TeamListReadModel> {
                 logger.info { "Fetching team list for org: $organizationId" }
 
@@ -46,8 +46,8 @@ class TeamlistResource(private var queryGateway: QueryGateway) {
                                         responseType
                                 )
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)
@@ -55,14 +55,19 @@ class TeamlistResource(private var queryGateway: QueryGateway) {
 
         @CrossOrigin(
                 allowedHeaders =
-                        ["organizationId", SESSION_ID_HEADER, "Content-Type", "X-Correlation-Id"]
+                        [
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
+                                "Content-Type",
+                                "X-Correlation-Id",
+                                USER_ID_HEADER]
         )
         @GetMapping("/teamlist/{teamId}/name")
         fun findTeamName(
                 @PathVariable("teamId") teamId: UUID,
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
-                @RequestHeader("organizationId") organizationId: UUID,
-                @RequestHeader("x-user-id") userId: String
+                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+                @RequestHeader(USER_ID_HEADER) userId: String
         ): CompletableFuture<TeamNameResponse> {
                 logger.info { "Fetching name for Team ID: $teamId (org: $organizationId)" }
 
@@ -70,8 +75,8 @@ class TeamlistResource(private var queryGateway: QueryGateway) {
                 val queryMessage =
                         GenericQueryMessage(TeamNameByTeamIdQuery(teamId), responseType)
                                 .withMetaData(
-                                        MetaData.with("organizationId", organizationId)
-                                                .and("x-user-id", userId)
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
                                 )
 
                 return queryGateway.query(queryMessage, responseType)

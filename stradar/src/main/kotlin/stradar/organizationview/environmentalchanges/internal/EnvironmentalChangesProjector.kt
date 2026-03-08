@@ -20,14 +20,13 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466104089
 
 interface EnvironmentalChangesReadModelRepository :
         JpaRepository<EnvironmentalChangesReadModelEntity, UUID> {
-        fun findByEnvironmentalChangeId(
-                environmentalChangeId: UUID
-        ): List<EnvironmentalChangesReadModelEntity>
         fun findByEnvironmentalChangeIdAndOrganizationId(
                 environmentalChangeId: UUID,
                 organizationId: UUID
         ): List<EnvironmentalChangesReadModelEntity>
+
         fun findByTeamId(teamId: UUID): List<EnvironmentalChangesReadModelEntity>
+
         fun findByTeamIdAndOrganizationId(
                 teamId: UUID,
                 organizationId: UUID
@@ -68,15 +67,21 @@ class EnvironmentalChangesReadModelProjector(
         }
 
         @EventHandler
-        fun on(event: EnvironmentalChangeUpdatedEvent) {
+        fun on(event: EnvironmentalChangeUpdatedEvent, metaData: MetaData) {
                 logger.info { "Updating Flat Element: ${event.environmentalChangeId}" }
 
+                val secureOrgId = metaData.resolveOrganizationId()
+
                 val entity =
-                        repository.findById(event.environmentalChangeId).orElseThrow {
-                                IllegalArgumentException(
-                                        "Environmental change not found for id: ${event.environmentalChangeId}"
+                        repository
+                                .findByEnvironmentalChangeIdAndOrganizationId(
+                                        event.environmentalChangeId,
+                                        secureOrgId
                                 )
-                        }
+                                .firstOrNull()
+                                ?: throw IllegalArgumentException(
+                                        "Environmental change not found for id: ${event.environmentalChangeId} (org: $secureOrgId)"
+                                )
 
                 entity.apply {
                         this.title = event.title
@@ -94,11 +99,18 @@ class EnvironmentalChangesReadModelProjector(
         }
 
         @EventHandler
-        fun on(event: EnvironmentalChangeDeletedEvent) {
+        fun on(event: EnvironmentalChangeDeletedEvent, metaData: MetaData) {
                 logger.info { "Deleting Flat Element: ${event.environmentalChangeId}" }
 
-                if (repository.existsById(event.environmentalChangeId)) {
-                        repository.deleteById(event.environmentalChangeId)
+                val secureOrgId = metaData.resolveOrganizationId()
+
+                val entities =
+                        repository.findByEnvironmentalChangeIdAndOrganizationId(
+                                event.environmentalChangeId,
+                                secureOrgId
+                        )
+                if (entities.isNotEmpty()) {
+                        repository.deleteAll(entities)
                 }
         }
 }
