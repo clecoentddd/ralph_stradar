@@ -6,13 +6,14 @@ import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import stradar.events.StrategyDraftCreatedEvent
+import stradar.common.StrategyStatus
+import stradar.events.StrategyCreatedEvent
 import stradar.organizationview.domain.StrategyBuilderAggregate
-import stradar.organizationview.domain.commands.createdraftstrategy.CreateDraftStrategyCommand
+import stradar.organizationview.domain.commands.createstrategy.CreateStrategyCommand
 import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 /** Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661685246929 */
-class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
+class CreateStrategyOnlyOneDraftStrategyAtATimeTest {
 
         private lateinit var fixture: FixtureConfiguration<StrategyBuilderAggregate>
 
@@ -28,29 +29,31 @@ class CreateDraftStrategyOnlyOneDraftStrategyAtATimeTest {
                         "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d-STRATEGY-BUILDER"
                 val teamId = UUID.fromString("18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d")
                 val orgId = UUID.fromString("474e4828-a953-4240-bb26-368bb332398e")
+                val strategyId = UUID.fromString("77777777-7777-7777-7777-777777777777")
 
                 // GIVEN: Created via constructor to respect 'val' immutability
                 val givenEvent =
-                        StrategyDraftCreatedEvent(
+                        StrategyCreatedEvent(
                                 strategyBuilderId = sharedStrategyBuilderId,
-                                strategyId =
-                                        UUID.fromString("77777777-7777-7777-7777-777777777777"),
+                                strategyId = strategyId,
                                 organizationId = orgId,
                                 teamId = teamId,
                                 strategyName = "Initial Plan",
-                                strategyTimeframe = "2026"
+                                strategyTimeframe = "2026",
+                                strategyStatus = StrategyStatus.DRAFT
                         )
 
                 // WHEN: Attempting to create a second draft
                 val command =
-                        CreateDraftStrategyCommand(
+                        CreateStrategyCommand(
                                 strategyBuilderId = sharedStrategyBuilderId,
                                 teamId = teamId,
                                 organizationId = orgId,
                                 strategyId =
                                         UUID.fromString("99999999-9999-9999-9999-999999999999"),
                                 strategyName = "A Different Strategy",
-                                strategyTimeframe = "2026-Q2"
+                                strategyTimeframe = "2026-Q2",
+                                strategyStatus = StrategyStatus.DRAFT
                         )
 
                 fixture.given(givenEvent)

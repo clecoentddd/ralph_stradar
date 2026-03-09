@@ -7,7 +7,7 @@ import org.axonframework.messaging.MetaData
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import stradar.common.resolveOrganizationId
-import stradar.events.StrategyDraftCreatedEvent
+import stradar.events.StrategyCreatedEvent
 import stradar.organizationview.strategies.StrategiesReadModelEntity
 
 /** Repository for the strategy projection */
@@ -37,7 +37,7 @@ class StrategiesReadModelProjector(private val repository: StrategiesReadModelRe
      * This projection is idempotent and safe for event replay.
      */
     @EventHandler
-    fun on(event: StrategyDraftCreatedEvent, metaData: MetaData) {
+    fun on(event: StrategyCreatedEvent, metaData: MetaData) {
         val secureOrgId = metaData.resolveOrganizationId()
 
         val entity = repository.findById(event.strategyId).orElse(StrategiesReadModelEntity())
@@ -49,7 +49,7 @@ class StrategiesReadModelProjector(private val repository: StrategiesReadModelRe
             teamId = event.teamId
             strategyName = event.strategyName
             strategyTimeframe = event.strategyTimeframe
-            status = "DRAFT"
+            status = event.strategyStatus
         }
 
         repository.save(entity)

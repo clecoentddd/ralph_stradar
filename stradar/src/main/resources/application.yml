@@ -22,6 +22,9 @@ spring:
     baseline-version: 20240101
 
 axon:
+  updates:
+    check:
+      enabled: false
   serializer:
     general: jackson
   axonserver:

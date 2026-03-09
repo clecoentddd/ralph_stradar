@@ -9,53 +9,86 @@ import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle.apply
 import org.axonframework.modelling.command.CreationPolicy
 import org.axonframework.spring.stereotype.Aggregate
+import stradar.common.StrategyStatus
 import stradar.common.resolveOrganizationId
-import stradar.events.StrategyDraftCreatedEvent
-import stradar.organizationview.domain.commands.createdraftstrategy.CreateDraftStrategyCommand
+import stradar.events.StrategyCreatedEvent
+import stradar.organizationview.domain.commands.createstrategy.CreateStrategyCommand
 
 @Aggregate
 class StrategyBuilderAggregate() {
 
-        @AggregateIdentifier
-        private lateinit var strategyBuilderId: String // teamId-STRATEGY-BUILDER
+        @AggregateIdentifier private lateinit var strategyBuilderId: String
 
         private lateinit var teamId: UUID
 
         private var activeStrategyId: UUID? = null
         private var draftStrategyId: UUID? = null
+
         private val history: MutableList<UUID> = mutableListOf()
 
         /**
-         * Handles:
-         * - First draft → creates aggregate
-         * - Subsequent draft → rejected if draft already exists
+         * Create strategy with requested status. Aggregate enforces:
+         * - max 1 ACTIVE
+         * - max 1 DRAFT
          */
         @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
         @CommandHandler
-        fun handle(cmd: CreateDraftStrategyCommand, metaData: MetaData) {
-                val secureOrgId = metaData.resolveOrganizationId()
+        fun handle(cmd: CreateStrategyCommand, metaData: MetaData) {
 
-                // Enforce invariant
-                if (draftStrategyId != null) {
-                        throw IllegalStateException("There is already a DRAFT strategy.")
+                metaData.resolveOrganizationId()
+
+                when (cmd.strategyStatus) {
+                        StrategyStatus.DRAFT -> {
+                                if (draftStrategyId != null) {
+                                        throw IllegalStateException(
+                                                "There is already a DRAFT strategy."
+                                        )
+                                }
+                        }
+                        StrategyStatus.ACTIVE -> {
+                                if (activeStrategyId != null) {
+                                        throw IllegalStateException(
+                                                "There is already an ACTIVE strategy."
+                                        )
+                                }
+                        }
+                        else -> {
+                                // COMPLETED / OBSOLETE / DELETED always allowed
+                        }
                 }
 
                 apply(
-                        StrategyDraftCreatedEvent(
+                        StrategyCreatedEvent(
                                 strategyBuilderId = cmd.strategyBuilderId,
                                 teamId = cmd.teamId,
                                 organizationId = cmd.organizationId,
                                 strategyId = cmd.strategyId,
                                 strategyName = cmd.strategyName,
-                                strategyTimeframe = cmd.strategyTimeframe
+                                strategyTimeframe = cmd.strategyTimeframe,
+                                strategyStatus = cmd.strategyStatus
                         )
                 )
         }
 
+        /** Event sourcing updates aggregate state */
         @EventSourcingHandler
-        fun on(event: StrategyDraftCreatedEvent) {
+        fun on(event: StrategyCreatedEvent) {
+
                 this.strategyBuilderId = event.strategyBuilderId
                 this.teamId = event.teamId
-                this.draftStrategyId = event.strategyId
+
+                when (event.strategyStatus) {
+                        StrategyStatus.DRAFT -> {
+                                draftStrategyId = event.strategyId
+                        }
+                        StrategyStatus.ACTIVE -> {
+                                activeStrategyId = event.strategyId
+                        }
+                        StrategyStatus.COMPLETED,
+                        StrategyStatus.OBSOLETE,
+                        StrategyStatus.DELETED -> {
+                                history.add(event.strategyId)
+                        }
+                }
         }
 }
