@@ -58,9 +58,17 @@ Remove-Item -Recurse temp-frontend
 
 docker-compose up -d
 
-docker exec -it socraftwebportal-postgres-1 psql -U postgres -d postgres-so -c "DROP TABLE system_status_read_model_entity;"
+docker exec -it stradar-postgres-1 psql -U postgres -d postgres-stradar -c "DROP TABLE system_status_read_model_entity;"
 
-docker exec -it socraftwebportal-postgres-1 psql -U postgres -d postgres-so -c "ALTER TABLE list_of_projects DROP COLUMN company_name;"
+COPY (
+    SELECT global_index, payload_type, CAST(payload AS TEXT) 
+    FROM domain_event_entry 
+    ORDER BY global_index ASC
+) 
+TO 'C:\Users\chris\events_dump.csv' 
+WITH (FORMAT CSV, HEADER);
+
+
 
 
 Use control-D to quit.

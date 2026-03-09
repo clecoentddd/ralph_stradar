@@ -23,6 +23,8 @@ interface InitiativesReadModelRepository : JpaRepository<InitiativesReadModelEnt
                 teamId: UUID,
                 organizationId: UUID
         ): List<InitiativesReadModelEntity>
+
+        fun findAllByOrganizationId(organizationId: UUID): List<InitiativesReadModelEntity>
 }
 
 @Component

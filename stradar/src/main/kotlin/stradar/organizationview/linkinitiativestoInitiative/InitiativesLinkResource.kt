@@ -3,6 +3,7 @@ package stradar.organizationview.linkinitiativestoinitiative
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import java.util.UUID
+import mu.KotlinLogging
 import org.springframework.web.bind.annotation.*
 import stradar.support.metadata.*
 
@@ -14,6 +15,8 @@ import stradar.support.metadata.*
         description = "Direct CRUD for linking Initiatives to other Initiatives"
 )
 class InitiativesLinkResource(private val repository: InitiativesLinkRepository) {
+
+        val logger = KotlinLogging.logger {}
 
         @PostMapping("/{initiativeId}")
         @Operation(
@@ -51,6 +54,9 @@ class InitiativesLinkResource(private val repository: InitiativesLinkRepository)
                 @PathVariable initiativeId: UUID,
                 @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID
         ): List<InitiativeLinkDto> {
+                logger.info {
+                        "Getting linked initiatives for initiative $initiativeId in organization $organizationId"
+                }
                 return repository.findAllByInitiativeIdAndOrganizationId(
                                 initiativeId,
                                 organizationId

@@ -13,12 +13,14 @@ import java.util.UUID
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645855652122
 */
 
+// ─── 1. DATABASE ENTITIES (The Storage) ──────────────────────────────────────
+
 @Embeddable
 data class InitiativeItem(
         var id: UUID? = null,
         var content: String? = null,
         var status: String? = null,
-        var step: String? = null
+        var step: String? = null // e.g., "DIAGNOSTIC", "COHERENTACTION"
 )
 
 @Entity
@@ -33,7 +35,7 @@ class InitiativesReadModelEntity {
 
         @Column(name = "teamId") var teamId: UUID? = null
 
-        @Column(name = "statut") var statut: String? = "Draft"
+        @Column(name = "statut") var statut: String? = "Draft" // Values: Draft, Active, Deleted
 
         @ElementCollection
         @CollectionTable(
@@ -43,21 +45,47 @@ class InitiativesReadModelEntity {
         var allItems: MutableList<InitiativeItem> = mutableListOf()
 }
 
-/** The "Answer" for the coherent list query */
-data class InitiativeListResponse(
-        val strategyId: UUID,
-        val items: List<InitiativesReadModelEntity>
-)
+// ─── 2. THE QUESTIONS (Queries) ──────────────────────────────────────────────
 
-/** The "Question" for the coherent list query */
+/**
+ * * Request all non-deleted initiatives for a specific organization. Used to populate the
+ * high-level organization dashboard.
+ */
+data class AllInitiativesForOrganizationQuery(val organizationId: UUID)
+
+/** Request initiatives filtered by strategy and team context */
 data class InitiativesByStrategyQuery(
         val strategyId: UUID,
         val teamId: UUID,
         val organizationId: UUID
 )
 
-/** The "Question" for a single initiative */
+/** Request details for a single specific initiative (e.g., clicking a radar dot) */
 data class InitiativesReadModelQuery(val initiativeId: UUID)
 
-/** Wrapper for a single result (matches your QueryHandler return type) */
+// ─── 3. THE ANSWERS (Responses / DTOs) ───────────────────────────────────────
+
+/**
+ * * The structured response for the Organization View. Groups data so the UI can easily render Team
+ * -> Level -> Items.
+ */
+data class OrganizationInitiativeListResponse(
+        val organizationId: UUID,
+        val items: List<InitiativesReadModelEntity>
+)
+
+data class TeamInitiativesDTO(
+        val teamId: UUID,
+        val teamName: String,
+        // Grouped by level (StepKey: DIAGNOSTIC, etc.)
+        val levels: Map<String, List<InitiativesReadModelEntity>>
+)
+
+/** Simple list wrapper for strategy-specific queries */
+data class InitiativeListResponse(
+        val strategyId: UUID,
+        val items: List<InitiativesReadModelEntity>
+)
+
+/** Wrapper for single entity results (QueryHandler return type) */
 data class InitiativesReadModel(val data: InitiativesReadModelEntity)

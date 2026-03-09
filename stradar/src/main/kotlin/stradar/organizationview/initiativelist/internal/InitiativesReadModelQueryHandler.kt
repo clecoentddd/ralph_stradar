@@ -2,10 +2,12 @@ package stradar.organizationview.initiativelist.internal
 
 import org.axonframework.queryhandling.QueryHandler
 import org.springframework.stereotype.Component
+import stradar.organizationview.initiativelist.AllInitiativesForOrganizationQuery
 import stradar.organizationview.initiativelist.InitiativeListResponse
 import stradar.organizationview.initiativelist.InitiativesByStrategyQuery
 import stradar.organizationview.initiativelist.InitiativesReadModel
 import stradar.organizationview.initiativelist.InitiativesReadModelQuery
+import stradar.organizationview.initiativelist.OrganizationInitiativeListResponse
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645855652122
@@ -13,33 +15,54 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464585565
 @Component
 class InitiativesReadModelQueryHandler(private val repository: InitiativesReadModelRepository) {
 
+        /**
+         * * Handles the high-level Organization Dashboard lookup. Groups initiatives by Team and
+         * then by Level (Step).
+         */
+        @QueryHandler
+        fun handle(query: AllInitiativesForOrganizationQuery): OrganizationInitiativeListResponse {
+                // 1. Fetch the data
+                val results =
+                        repository.findAllByOrganizationId(query.organizationId).filter {
+                                it.statut != "Deleted"
+                        }
+
+                // 2. Return the exact type the Controller is expecting
+                // We use a dummy UUID for strategyId because the Linker modal doesn't need it
+                return OrganizationInitiativeListResponse(
+                        organizationId = query.organizationId,
+                        items = results
+                )
+        }
         /** Handles the single initiative lookup by ID */
         @QueryHandler
         fun handle(query: InitiativesReadModelQuery): InitiativesReadModel {
-                val entity = repository.findById(query.initiativeId).get()
+                val entity =
+                        repository.findById(query.initiativeId).orElseThrow {
+                                NoSuchElementException(
+                                        "Initiative not found: ${query.initiativeId}"
+                                )
+                        }
 
-                // Accessing the fields here "touches" them, forcing a load
-                // while the QueryHandler's session is still active.
                 return InitiativesReadModel(
                         data =
                                 entity.apply {
-                                        allItems.size // Force load unified list
+                                        allItems.size // Force lazy-load the collection while
+                                        // session is active
                                 }
                 )
         }
 
-        /**
-         * Handles the coherent lookup by Strategy, Team, and Organization. This ensures users only
-         * see what they are authorized to see.
-         */
+        /** Handles lookup by Strategy/Team context (Traditional Strategy view) */
         @QueryHandler
         fun handle(query: InitiativesByStrategyQuery): InitiativeListResponse {
                 val results =
                         repository.findAllByStrategyIdAndTeamIdAndOrganizationId(
-                                query.strategyId,
-                                query.teamId,
-                                query.organizationId
-                        )
+                                        query.strategyId,
+                                        query.teamId,
+                                        query.organizationId
+                                )
+                                .filter { it.statut != "Deleted" }
 
                 return InitiativeListResponse(strategyId = query.strategyId, items = results)
         }

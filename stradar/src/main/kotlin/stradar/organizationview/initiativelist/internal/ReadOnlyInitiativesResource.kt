@@ -11,10 +11,12 @@ import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.web.bind.annotation.*
+import stradar.organizationview.initiativelist.AllInitiativesForOrganizationQuery
 import stradar.organizationview.initiativelist.InitiativeListResponse
 import stradar.organizationview.initiativelist.InitiativesByStrategyQuery
 import stradar.organizationview.initiativelist.InitiativesReadModel
 import stradar.organizationview.initiativelist.InitiativesReadModelQuery
+import stradar.organizationview.initiativelist.OrganizationInitiativeListResponse
 import stradar.support.metadata.*
 
 /*
@@ -57,7 +59,7 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                                                 .and(USER_ID_HEADER, userId)
                                 )
 
-                return queryGateway.query(queryMessage, responseType)
+                return queryGateway.query<InitiativesReadModel, Any>(queryMessage, responseType)
         }
 
         /** Coherent query: Finds all initiatives for a specific strategy, team, and organization */
@@ -86,7 +88,8 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                         "Querying initiatives for strategy $strategyId, team $teamId (org: $organizationId)"
                 }
 
-                val responseType = ResponseTypes.instanceOf(InitiativeListResponse::class.java)
+                val responseType =
+                        ResponseTypes.instanceOf(InitiativeListResponse::class.java)
                 val queryMessage =
                         GenericQueryMessage(
                                         InitiativesByStrategyQuery(
@@ -101,6 +104,47 @@ class InitiativelistResource(private val queryGateway: QueryGateway) {
                                                 .and(USER_ID_HEADER, userId)
                                 )
 
-                return queryGateway.query(queryMessage, responseType)
+                return queryGateway.query<InitiativeListResponse, Any>(queryMessage, responseType)
+        }
+
+        /** Finds all initiatives for the entire organization (for cross-strategy linking) */
+        @Operation(summary = "Get all initiatives for an organization")
+        @CrossOrigin(
+                allowedHeaders =
+                        [
+                                ORGANIZATION_ID_HEADER,
+                                SESSION_ID_HEADER,
+                                "X-Correlation-Id",
+                                "X-Correlation-ID", // Case sensitivity check
+                                "Content-Type",
+                                USER_ID_HEADER]
+        )
+        @GetMapping("/initiativelist/by-organization")
+        fun findByOrganization(
+                @RequestParam(required = false) organizationIdParam: UUID?,
+                @RequestHeader(value = ORGANIZATION_ID_HEADER, required = false) organizationIdHeader: UUID?,
+                @RequestHeader(USER_ID_HEADER) userId: String
+        ): CompletableFuture<OrganizationInitiativeListResponse> {
+                val organizationId = organizationIdParam ?: organizationIdHeader 
+                        ?: throw IllegalArgumentException("organizationId is required either as query param or header")
+                
+                logger.info { "Querying all initiatives for organization: $organizationId" }
+
+                val responseType =
+                        ResponseTypes.instanceOf(OrganizationInitiativeListResponse::class.java)
+
+                val queryMessage =
+                        GenericQueryMessage(
+                                        AllInitiativesForOrganizationQuery(
+                                                organizationId = organizationId
+                                        ),
+                                        responseType
+                                )
+                                .withMetaData(
+                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                                .and(USER_ID_HEADER, userId)
+                                )
+
+                return queryGateway.query<OrganizationInitiativeListResponse, Any>(queryMessage, responseType)
         }
 }
