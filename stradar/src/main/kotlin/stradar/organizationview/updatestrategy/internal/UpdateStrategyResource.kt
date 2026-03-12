@@ -3,11 +3,14 @@ package stradar.organizationview.updatestrategy.internal
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Schema
 import java.util.UUID
-import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ExecutionException
 import mu.KotlinLogging
+import org.axonframework.commandhandling.CommandExecutionException
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import stradar.common.CommandException
 import stradar.common.StrategyStatus
 import stradar.organizationview.domain.commands.updatestrategy.UpdateStrategyCommand
 import stradar.support.metadata.*
@@ -50,24 +53,10 @@ class UpdateStrategyResource(private val commandGateway: CommandGateway) {
                 @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
                 @RequestHeader(value = USER_ID_HEADER, required = true) userId: String,
                 @RequestBody payload: UpdateStrategyPayload
-        ): CompletableFuture<Any> {
+        ): ResponseEntity<Any> {
 
                 // ID Derivation: Resolving the aggregate "Slot" ID from the team
                 val strategyBuilderId = "${payload.teamId}-STRATEGY-BUILDER"
-
-                // Map status to enum
-                val strategyStatus =
-                        try {
-                                StrategyStatus.valueOf(payload.status.uppercase())
-                        } catch (ex: IllegalArgumentException) {
-                                throw IllegalArgumentException(
-                                        "Invalid strategy status: ${payload.status}"
-                                )
-                        }
-
-                logger.info {
-                        "Updating strategy $strategyId for builder $strategyBuilderId with status $strategyStatus"
-                }
 
                 // Map status to enum
                 val newStrategyStatus =
@@ -79,6 +68,10 @@ class UpdateStrategyResource(private val commandGateway: CommandGateway) {
                                 )
                         }
 
+                logger.info {
+                        "Updating strategy $strategyId for builder $strategyBuilderId with status $newStrategyStatus"
+                }
+
                 // Prepare metadata
                 val metadata =
                         MetaData.with(USER_ID_HEADER, userId)
@@ -88,6 +81,7 @@ class UpdateStrategyResource(private val commandGateway: CommandGateway) {
                                 )
                                 .and(SESSION_ID_HEADER, sessionId)
                                 .and(ORGANIZATION_ID_HEADER, payload.organizationId)
+
                 // Map payload to command
                 val command =
                         UpdateStrategyCommand(
@@ -100,6 +94,29 @@ class UpdateStrategyResource(private val commandGateway: CommandGateway) {
                                 strategyStatus = newStrategyStatus
                         )
 
-                return commandGateway.send(command, metadata)
+                // Resolve future synchronously so that @RestControllerAdvice can intercept
+                // exceptions.
+                // Axon wraps domain exceptions in CommandExecutionException inside the
+                // CompletableFuture;
+                // we unwrap here and rethrow the original cause so GlobalExceptionHandler sees it.
+                try {
+                        val result = commandGateway.send<Any>(command, metadata).get()
+                        return ResponseEntity.ok(result)
+                } catch (ex: ExecutionException) {
+                        val cause = ex.cause
+                        logger.warn { "UpdateStrategy failed: ${cause?.message ?: ex.message}" }
+                        when {
+                                cause is CommandExecutionException &&
+                                        cause.cause is CommandException ->
+                                        throw cause.cause as CommandException
+                                cause is CommandException -> throw cause
+                                cause is CommandExecutionException ->
+                                        throw CommandException(
+                                                cause.message ?: "Command execution failed"
+                                        )
+                                cause != null -> throw cause
+                                else -> throw ex
+                        }
+                }
         }
 }

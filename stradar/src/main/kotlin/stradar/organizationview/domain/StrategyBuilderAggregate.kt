@@ -9,6 +9,7 @@ import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle.apply
 import org.axonframework.modelling.command.CreationPolicy
 import org.axonframework.spring.stereotype.Aggregate
+import stradar.common.CommandException
 import stradar.common.StrategyStatus
 import stradar.common.resolveOrganizationId
 import stradar.events.StrategyCreatedEvent
@@ -44,14 +45,12 @@ class StrategyBuilderAggregate() {
                 when (cmd.strategyStatus) {
                         StrategyStatus.DRAFT -> {
                                 if (draftStrategyId != null) {
-                                        throw IllegalStateException(
-                                                "There is already a DRAFT strategy."
-                                        )
+                                        throw CommandException("There is already a DRAFT strategy.")
                                 }
                         }
                         StrategyStatus.ACTIVE -> {
                                 if (activeStrategyId != null) {
-                                        throw IllegalStateException(
+                                        throw CommandException(
                                                 "There is already an ACTIVE strategy."
                                         )
                                 }
@@ -102,7 +101,7 @@ class StrategyBuilderAggregate() {
 
                 // Guard: reject if this builder has never been initialised
                 if (!initialized) {
-                        throw IllegalStateException(
+                        throw CommandException(
                                 "Strategy builder '${cmd.strategyBuilderId}' does not exist. " +
                                         "Create a strategy first before updating it."
                         )
@@ -124,14 +123,14 @@ class StrategyBuilderAggregate() {
                         StrategyStatus.ACTIVE -> {
                                 if (activeStrategyId != null && activeStrategyId != cmd.strategyId
                                 ) {
-                                        throw IllegalStateException(
+                                        throw CommandException(
                                                 "There is already an ACTIVE strategy."
                                         )
                                 }
                         }
                         StrategyStatus.DRAFT -> {
                                 if (draftStrategyId != null && draftStrategyId != cmd.strategyId) {
-                                        throw IllegalStateException(
+                                        throw CommandException(
                                                 "There is already a DRAFT strategy. " +
                                                         "Promote or discard it before creating another draft."
                                         )
