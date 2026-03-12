@@ -39,28 +39,26 @@ module.exports = class extends Generator {
 
         const sliceChoices = config.slices.map(slice => ({ name: slice.title, value: slice.title }));
 
-        const sliceAnswer = await this.prompt([{
+        const answers = await this.prompt([{
             type: 'list',
             name: 'slice',
             message: 'Select Slice you want to generate the tests for',
             choices: sliceChoices
-        }]);
-
-        const selectedSlice = config.slices.find(s => s.title === sliceAnswer.slice);
-        const specChoices = (selectedSlice.specifications || []).map(spec => ({
-            name: spec.title,
-            value: spec.id
-        }));
-
-        const specAnswer = await this.prompt([{
+        }, {
             type: 'checkbox',
             name: 'specifications',
             message: 'Select tests to generate',
-            choices: specChoices
+            choices: (answers) => {
+                const selectedSlice = config.slices.find(s => s.title === answers.slice);
+                return (selectedSlice?.specifications || []).map(spec => ({
+                    name: spec.title,
+                    value: spec.id
+                }));
+            }
         }]);
 
-        this.givenAnswers.slice = sliceAnswer.slice;
-        this.selectedSpecIds = specAnswer.specifications;
+        this.givenAnswers.slice = answers.slice;
+        this.selectedSpecIds = answers.specifications;
     }
 
     writeSpecifications() {
@@ -447,22 +445,59 @@ function renderThen(whenList, thenList, defaults) {
 }
 
 
+/**
+ * Merge top-level examples[0] values into the fields array.
+ * Always applied — if examples exist for a field they are used,
+ * otherwise the field is left unchanged and RandomData is used.
+ */
+function applyExamples(specItem) {
+    const exampleValues = (specItem.examples && specItem.examples[0]) ? specItem.examples[0] : {};
+    return (specItem.fields || []).map(field => {
+        const exampleVal = exampleValues[field.name];
+        if (exampleVal !== undefined && exampleVal !== null && exampleVal !== '') {
+            return { ...field, example: String(exampleVal) };
+        }
+        return field;
+    });
+}
+
+/**
+ * Merge top-level examples[0] values into the fields array.
+ * Always applied — if examples exist for a field they are used,
+ * otherwise the field is left unchanged and RandomData is used.
+ */
+function applyExamples(specItem) {
+    const exampleValues = (specItem.examples && specItem.examples[0]) ? specItem.examples[0] : {};
+    return (specItem.fields || []).map(field => {
+        const exampleVal = exampleValues[field.name];
+        if (exampleVal !== undefined && exampleVal !== null && exampleVal !== '') {
+            return { ...field, example: String(exampleVal) };
+        }
+        return field;
+    });
+}
+
 function renderWhen(whenCommand, thenList, defaults) {
     const cmdTitle = _commandTitle(whenCommand.title);
+    const fields = applyExamples(whenCommand);
 
-    // Attempt to find the real command definition to check if all fields are specified
+    // Attempt to find the real command definition
     const realCommand = config.slices.flatMap(s => s.commands).find(c => _commandTitle(c.title).toLowerCase() === cmdTitle.toLowerCase());
 
     if (realCommand) {
-        const allFieldsSpecified = realCommand.fields.every(cf =>
-            whenCommand.fields.some(sf => sf.name.toLowerCase() === cf.name.toLowerCase() && sf.example !== undefined)
+        const mergedFields = realCommand.fields.map(cf => {
+            const sf = fields.find(s => s.name.toLowerCase() === cf.name.toLowerCase());
+            return sf || cf;
+        });
+
+        const allFieldsSpecified = mergedFields.every(cf =>
+            cf.example !== undefined && cf.example !== null && cf.example !== ''
         );
 
-        if (allFieldsSpecified && realCommand.fields.length > 0) {
-            const params = realCommand.fields.map(cf => {
-                const sf = whenCommand.fields.find(s => s.name.toLowerCase() === cf.name.toLowerCase());
-                return `\t${cf.name} = ${renderVariable(sf, defaults)}`
-            }).join(",\n");
+        if (allFieldsSpecified && mergedFields.length > 0) {
+            const params = mergedFields.map(cf => {
+                return `\t${cf.name} = ${renderVariable(cf, defaults)}`
+            }).join(',\n');
 
             return `val command = ${cmdTitle}(
 ${params}
@@ -470,9 +505,8 @@ ${params}
         }
     }
 
-    //only render when if no error occured
     return `val command = ${cmdTitle}(
- \t\t\t\t${randomizedInvocationParamterList(whenCommand.fields, defaults)}
+ \t\t\t\t${randomizedInvocationParamterList(fields, defaults)}
             )`
 
 }
@@ -480,12 +514,24 @@ ${params}
 function renderGiven(givenList, paramDefaults) {
     var givens = givenList.map((event) => {
         var idFieldValue = idField(event)
-
         var defaults = idFieldValue ? { ...paramDefaults, [idFieldValue]: idFieldValue } : paramDefaults
+        var fields = applyExamples(event);
 
-        return `events.add(RandomData.newInstance<${_eventTitle(event.title)}> {
-                        ${randomizedInvocationParamterList(event.fields, defaults, "\n", "this")}
-                    })`
+        // Always emit a direct constructor call.
+        // Fields with example values use the concrete value; others use RandomData.
+        const params = fields.map(f => {
+            if (f.example !== undefined && f.example !== null && f.example !== '') {
+                return `\t${f.name} = ${renderVariable(f, defaults)}`;
+            } else if (f.idAttribute && idFieldValue) {
+                return `\t${f.name} = ${idFieldValue}`;
+            } else {
+                return `\t${f.name} = RandomData.newInstance { }`;
+            }
+        }).join(',\n');
+
+        return `events.add(${_eventTitle(event.title)}(
+${params}
+                ))`;
     }).join("\n")
 
     var given = `
