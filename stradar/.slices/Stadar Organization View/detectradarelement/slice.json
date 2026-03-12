@@ -390,12 +390,6 @@
           "type": "OUTBOUND",
           "title": "Detect Environmental Change",
           "elementType": "COMMAND"
-        },
-        {
-          "id": "3458764645849750300",
-          "type": "INBOUND",
-          "title": "Company Team List",
-          "elementType": "READMODEL"
         }
       ],
       "createsAggregate": false,

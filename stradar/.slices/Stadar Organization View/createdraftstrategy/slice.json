@@ -13,7 +13,7 @@
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Create Draft Strategy",
-      "title": "Strategy Draft Created Event",
+      "title": "Strategy Created Event",
       "fields": [
         {
           "name": "strategyBuilderId",
@@ -33,20 +33,7 @@
         {
           "name": "strategyId",
           "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "strategyTimeframe",
-          "type": "String",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -54,6 +41,31 @@
         {
           "name": "strategyName",
           "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyTimeframe",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -69,7 +81,7 @@
         {
           "id": "3458764661671789872",
           "type": "OUTBOUND",
-          "title": "Strategy Draft Created Event",
+          "title": "Strategy Created Event",
           "elementType": "EVENT"
         },
         {
@@ -96,7 +108,7 @@
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: Create Draft Strategy",
-      "title": "Strategy Draft Created Event",
+      "title": "Strategy Created Event",
       "fields": [
         {
           "name": "strategyBuilderId",
@@ -116,6 +128,7 @@
         {
           "name": "strategyId",
           "type": "UUID",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -123,6 +136,16 @@
         {
           "name": "strategyName",
           "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -130,6 +153,7 @@
         {
           "name": "strategyTimeframe",
           "type": "String",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -158,7 +182,7 @@
         {
           "id": "3458764661671865425",
           "type": "INBOUND",
-          "title": "Strategy Draft Created Event",
+          "title": "Strategy Created Event",
           "elementType": "COMMAND"
         }
       ],
@@ -228,6 +252,15 @@
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
+        },
+        {
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
         }
       ],
       "type": "SCREEN",
@@ -240,7 +273,7 @@
         {
           "id": "3458764661671865425",
           "type": "OUTBOUND",
-          "title": "Strategy Draft Created Event",
+          "title": "Strategy Created Event",
           "elementType": "COMMAND"
         }
       ],
@@ -289,6 +322,7 @@
             {
               "name": "strategyId",
               "type": "UUID",
+              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "example": "11111111-1111-1111-1111-111111111111"
@@ -296,13 +330,23 @@
             {
               "name": "strategyName",
               "type": "String",
+              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "example": ""
             },
             {
+              "name": "strategyStatus",
+              "type": "String",
+              "example": "DRAFT (default)",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single"
+            },
+            {
               "name": "strategyTimeframe",
               "type": "String",
+              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "example": ""
@@ -346,9 +390,34 @@
             {
               "name": "strategyId",
               "type": "UUID",
+              "generated": true,
               "subfields": [],
               "cardinality": "Single",
               "example": "22222222-2222-2222-2222-222222222222"
+            },
+            {
+              "name": "strategyName",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "strategyStatus",
+              "type": "String",
+              "example": "DRAFT (default)",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single"
+            },
+            {
+              "name": "strategyTimeframe",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
             },
             {
               "name": "teamId",
@@ -356,20 +425,6 @@
               "subfields": [],
               "cardinality": "Single",
               "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d"
-            },
-            {
-              "name": "strategyTimeframe",
-              "type": "String",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "strategyName",
-              "type": "String",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
             }
           ],
           "linkedId": "3458764661671865425"

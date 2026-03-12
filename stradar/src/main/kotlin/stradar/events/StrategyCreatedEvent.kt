@@ -1,6 +1,7 @@
 package stradar.events
 
 import java.util.UUID
+import stradar.common.Event
 import stradar.common.StrategyStatus
 
 /*
@@ -14,4 +15,4 @@ data class StrategyCreatedEvent(
         var strategyName: String, // Flat
         var strategyTimeframe: String, // Flat
         var strategyStatus: StrategyStatus
-)
+) : Event

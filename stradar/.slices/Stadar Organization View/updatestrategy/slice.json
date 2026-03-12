@@ -1,51 +1,27 @@
 {
-  "id": "3458764662643764851",
-  "status": "Done",
-  "title": "slice: Change Team",
+  "id": "3458764662909262843",
+  "status": "Created",
+  "title": "slice: Update Strategy",
   "context": "Stadar Organization View",
   "sliceType": "STATE_CHANGE",
   "commands": [
     {
-      "id": "3458764662642496171",
+      "id": "3458764662905023711",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: Change Team",
-      "title": "Change Team",
+      "slice": "slice: Update Strategy",
+      "title": "Update Strategy",
       "fields": [
         {
-          "name": "teamId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": true
-        },
-        {
-          "name": "Context",
+          "name": "strategyBuilderId",
           "type": "String",
           "generated": true,
           "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Level",
-          "type": "Int",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Name",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true,
+          "cardinality": "Single"
         },
         {
           "name": "organizationId",
@@ -55,7 +31,15 @@
           "idAttribute": false
         },
         {
-          "name": "organizationName",
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -63,9 +47,25 @@
           "idAttribute": false
         },
         {
-          "name": "Purpose",
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "ACTIVE",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyTimeframe",
           "type": "String",
           "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -73,22 +73,21 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "organization admin",
+      "aggregate": "Strategy Builder",
       "aggregateDependencies": [
-        "organization admin",
-        "team"
+        "Strategy Builder"
       ],
       "dependencies": [
         {
-          "id": "3458764662641964599",
+          "id": "3458764662904816688",
           "type": "OUTBOUND",
-          "title": "Team Changes",
+          "title": "Strategy Updated",
           "elementType": "EVENT"
         },
         {
-          "id": "3458764662642496219",
+          "id": "3458764661684920689",
           "type": "INBOUND",
-          "title": "Edit Team",
+          "title": "Strategies",
           "elementType": "SCREEN"
         }
       ],
@@ -102,46 +101,22 @@
   ],
   "events": [
     {
-      "id": "3458764662641964599",
+      "id": "3458764662904816688",
       "tags": [],
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: Change Team",
-      "title": "Team Changes",
+      "slice": "slice: Update Strategy",
+      "title": "Strategy Updated",
       "fields": [
         {
-          "name": "teamId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": true
-        },
-        {
-          "name": "Context",
+          "name": "strategyBuilderId",
           "type": "String",
           "generated": true,
           "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Level",
-          "type": "Int",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Name",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true,
+          "cardinality": "Single"
         },
         {
           "name": "organizationId",
@@ -151,7 +126,15 @@
           "idAttribute": false
         },
         {
-          "name": "organizationName",
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -159,18 +142,25 @@
           "idAttribute": false
         },
         {
-          "name": "Purpose",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "status",
+          "name": "strategyStatus",
           "type": "String",
           "example": "ACTIVE",
           "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyTimeframe",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -178,22 +168,21 @@
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "team",
+      "aggregate": "Strategy Builder",
       "aggregateDependencies": [
-        "organization admin",
-        "team"
+        "Strategy Builder"
       ],
       "dependencies": [
         {
-          "id": "3458764645849750300",
+          "id": "3458764661684920684",
           "type": "OUTBOUND",
-          "title": "Company Team List",
+          "title": "strategies",
           "elementType": "READMODEL"
         },
         {
-          "id": "3458764662642496171",
+          "id": "3458764662905023711",
           "type": "INBOUND",
-          "title": "Change Team",
+          "title": "Update Strategy",
           "elementType": "COMMAND"
         }
       ],
@@ -208,47 +197,23 @@
   "readmodels": [],
   "screens": [
     {
-      "id": "3458764662642496219",
+      "id": "3458764661684920689",
       "tags": [],
-      "groupId": "3458764662642496241",
+      "groupId": "3458764661684920691",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
-      "slice": "slice: Change Team",
-      "title": "Edit Team",
+      "slice": "slice: Update Strategy",
+      "title": "Strategies",
       "fields": [
         {
-          "name": "teamId",
-          "type": "UUID",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": true
-        },
-        {
-          "name": "Context",
+          "name": "strategyBuilderId",
           "type": "String",
           "generated": true,
           "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Level",
-          "type": "Int",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "Name",
-          "type": "String",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true,
+          "cardinality": "Single"
         },
         {
           "name": "organizationId",
@@ -258,7 +223,15 @@
           "idAttribute": false
         },
         {
-          "name": "organizationName",
+          "name": "strategyId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyName",
           "type": "String",
           "generated": true,
           "subfields": [],
@@ -266,9 +239,25 @@
           "idAttribute": false
         },
         {
-          "name": "Purpose",
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyTimeframe",
           "type": "String",
           "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "teamId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -276,23 +265,16 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "organization admin",
+      "aggregate": "Strategy Builder",
       "aggregateDependencies": [
-        "organization admin",
-        "team"
+        "Strategy Builder"
       ],
       "dependencies": [
         {
-          "id": "3458764662642496171",
+          "id": "3458764662905023711",
           "type": "OUTBOUND",
-          "title": "Change Team",
+          "title": "Update Strategy",
           "elementType": "COMMAND"
-        },
-        {
-          "id": "3458764645849750300",
-          "type": "INBOUND",
-          "title": "Company Team List",
-          "elementType": "READMODEL"
         }
       ],
       "createsAggregate": false,
@@ -310,131 +292,130 @@
   "specifications": [
     {
       "vertical": false,
-      "id": "3458764662663958688",
-      "sliceName": "<p>slice: Change Team</p>",
-      "title": "spec: Change Team - Confirm Update On A Team",
+      "id": "3458764662910462484",
+      "sliceName": "slice: Update Strategy",
+      "title": "spec: Modify Strategy - Only One Active Strategy 2",
       "given": [
         {
-          "title": "Team Created",
+          "title": "Strategy Created Event",
           "tags": [],
-          "examples": [],
-          "id": "3458764662663958706",
+          "examples": [
+            {
+              "strategyBuilderId": "12ddd4cc-d8ae-4b70-b74e-de5541eb5671-STRATEGY-BUILDER",
+              "organizationId": "3d2730fc-26f8-4d22-a03e-655f31a0ad6c",
+              "strategyId": "38248734-48b7-4310-ad09-fc833834d5ab",
+              "strategyName": "Strategy 1",
+              "strategyStatus": "ACTIVE",
+              "teamId": "12ddd4cc-d8ae-4b70-b74e-de5541eb5671"
+            }
+          ],
+          "id": "3458764662910462489",
           "index": 0,
           "specRow": -1,
           "type": "SPEC_EVENT",
           "fields": [
             {
-              "name": "teamId",
-              "type": "UUID",
+              "name": "strategyBuilderId",
+              "type": "String",
               "generated": true,
               "subfields": [],
-              "cardinality": "Single",
               "idAttribute": true,
-              "example": "0x123"
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "Context 1"
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "3"
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "CTO"
+              "example": ""
             },
             {
               "name": "organizationId",
               "type": "UUID",
               "subfields": [],
               "cardinality": "Single",
-              "example": "0x456"
+              "example": ""
             },
             {
-              "name": "Purpose",
+              "name": "strategyId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "strategyName",
               "type": "String",
               "generated": true,
               "subfields": [],
               "cardinality": "Single",
-              "example": "Purpose 1"
+              "example": ""
             },
             {
-              "name": "status",
+              "name": "strategyStatus",
               "type": "String",
               "example": "",
               "generated": true,
               "subfields": [],
               "cardinality": "Single"
+            },
+            {
+              "name": "strategyTimeframe",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
             }
           ],
-          "linkedId": "3458764645830373813"
+          "linkedId": "3458764661671789872"
         }
       ],
       "when": [
         {
-          "title": "Change Team",
+          "title": "Modify Strategy",
           "tags": [],
-          "examples": [],
-          "id": "3458764662663958694",
+          "examples": [
+            {
+              "teamId": "12ddd4cc-d8ae-4b70-b74e-de5541eb5671",
+              "strategyId": "11111111-48b7-4310-ad09-fc8338111111",
+              "strategyName": "Strategy 2",
+              "organizationId": "3d2730fc-26f8-4d22-a03e-655f31a0ad6c",
+              "strategyStatus": "ACTIVE",
+              "strategyBuilderId": "12ddd4cc-d8ae-4b70-b74e-de5541eb5671-STRATEGY-BUILDER"
+            }
+          ],
+          "id": "3458764662910462485",
           "index": 0,
           "specRow": -1,
           "type": "SPEC_COMMAND",
           "fields": [
             {
-              "name": "teamId",
-              "type": "UUID",
+              "name": "strategyBuilderId",
+              "type": "String",
               "generated": true,
               "subfields": [],
-              "cardinality": "Single",
               "idAttribute": true,
-              "example": "0x123"
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "Context 2"
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "2"
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "CTO2"
+              "example": ""
             },
             {
               "name": "organizationId",
               "type": "UUID",
               "subfields": [],
               "cardinality": "Single",
-              "example": "0x456"
+              "example": ""
             },
             {
-              "name": "organizationName",
+              "name": "strategyId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "strategyName",
               "type": "String",
               "generated": true,
               "subfields": [],
@@ -442,102 +423,69 @@
               "example": ""
             },
             {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "Purpose 2"
-            }
-          ],
-          "linkedId": "3458764662642496171"
-        }
-      ],
-      "then": [
-        {
-          "title": "Team Changes",
-          "tags": [],
-          "examples": [],
-          "id": "3458764662663958701",
-          "index": 0,
-          "specRow": -1,
-          "type": "SPEC_EVENT",
-          "fields": [
-            {
-              "name": "teamId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true,
-              "example": "0x123"
-            },
-            {
-              "name": "Context",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "Context 2"
-            },
-            {
-              "name": "Level",
-              "type": "Int",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "2"
-            },
-            {
-              "name": "Name",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "CTO2"
-            },
-            {
-              "name": "organizationId",
-              "type": "UUID",
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "0x456"
-            },
-            {
-              "name": "organizationName",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": ""
-            },
-            {
-              "name": "Purpose",
-              "type": "String",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "example": "Purpose 2"
-            },
-            {
-              "name": "status",
+              "name": "strategyStatus",
               "type": "String",
               "example": "",
               "generated": true,
               "subfields": [],
               "cardinality": "Single"
+            },
+            {
+              "name": "strategyTimeframe",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "teamId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
             }
           ],
-          "linkedId": "3458764662641964599"
+          "linkedId": "3458764662905023711"
         }
       ],
-      "comments": [],
-      "linkedId": "3458764662643764851"
+      "then": [
+        {
+          "title": "Only one strategy can be active at a time",
+          "tags": [],
+          "examples": [
+            {
+              "message": "Only one draft strategy a time"
+            }
+          ],
+          "id": "3458764662910462487",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": [
+            {
+              "name": "exceptionType",
+              "type": "String",
+              "example": "java.lang.IllegalStateException"
+            },
+            {
+              "name": "message",
+              "type": "String",
+              "example": "Only one draft strategy a time"
+            }
+          ]
+        }
+      ],
+      "comments": [
+        {
+          "description": "Rule"
+        }
+      ],
+      "linkedId": "3458764662909262843"
     }
   ],
   "actors": [],
   "aggregates": [
-    "organization admin",
-    "team"
+    "Strategy Builder"
   ]
 }

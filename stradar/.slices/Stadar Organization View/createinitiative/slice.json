@@ -210,10 +210,16 @@
       "title": "Create an initiative",
       "fields": [
         {
-          "name": "initiativeId",
-          "type": "UUID",
-          "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
+          "name": "strategyBuilderId",
+          "type": "String",
           "generated": true,
+          "subfields": [],
+          "idAttribute": true,
+          "cardinality": "Single"
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -221,15 +227,32 @@
         {
           "name": "strategyId",
           "type": "UUID",
-          "example": "77777777-7777-7777-7777-777777777777",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
         },
         {
-          "name": "organizationId",
-          "type": "UUID",
-          "example": "474e4828-a953-4240-bb26-368bb332398e",
+          "name": "strategyName",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyTimeframe",
+          "type": "String",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -237,16 +260,6 @@
         {
           "name": "teamId",
           "type": "UUID",
-          "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "initiativeName",
-          "type": "String",
-          "example": "Modernize Legacy Infrastructure",
-          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false

@@ -11,7 +11,7 @@
     {
       "id": "3458764660825671418",
       "slice": "slice: organization person connected",
-      "index": 17,
+      "index": 15,
       "context": "Stadar Organization View",
       "folder": "organizationpersonconnected",
       "status": "Created"
@@ -51,7 +51,7 @@
     {
       "id": "3458764645855304955",
       "slice": "slice: Create Initiative",
-      "index": 5,
+      "index": 13,
       "context": "Stadar Organization View",
       "folder": "createinitiative",
       "status": "Created"
@@ -59,7 +59,7 @@
     {
       "id": "3458764645855652334",
       "slice": "slice: Initiative List",
-      "index": 11,
+      "index": 17,
       "context": "Stadar Organization View",
       "folder": "initiativelist",
       "status": "Created"
@@ -106,10 +106,10 @@
     },
     {
       "id": "3458764645831088163",
-      "slice": "slice: Create Team 2",
-      "index": 23,
+      "slice": "slice: Create Team",
+      "index": 21,
       "context": "Stadar Organization View",
-      "folder": "createteam2",
+      "folder": "createteam",
       "status": "Created"
     },
     {
@@ -147,7 +147,7 @@
     {
       "id": "3458764660937620380",
       "slice": "slice: Sign In To Company Admin Account",
-      "index": 13,
+      "index": 11,
       "context": "Stadar Organization View",
       "folder": "signintocompanyadminaccount",
       "status": "Created"
@@ -262,7 +262,7 @@
       "index": 45,
       "context": "Stadar Organization View",
       "folder": "deleteteam",
-      "status": "Created"
+      "status": "Done"
     },
     {
       "id": "3458764661685018093",
@@ -283,7 +283,7 @@
     {
       "id": "3458764661765881509",
       "slice": "slice: Change Initiative Item",
-      "index": 15,
+      "index": 19,
       "context": "Stadar Organization View",
       "folder": "changeinitiativeitem",
       "status": "Created"
@@ -291,7 +291,7 @@
     {
       "id": "3458764661766210431",
       "slice": "slice: Initiatives",
-      "index": 19,
+      "index": 23,
       "context": "Stadar Organization View",
       "folder": "initiatives",
       "status": "Created"
@@ -299,7 +299,7 @@
     {
       "id": "3458764661877939780",
       "slice": "slice: Change Initiative",
-      "index": 21,
+      "index": 29,
       "context": "Stadar Organization View",
       "folder": "changeinitiative",
       "status": "Created"
@@ -310,6 +310,30 @@
       "index": 27,
       "context": "Stadar Organization View",
       "folder": "changeteam",
+      "status": "Done"
+    },
+    {
+      "id": "3458764662909262843",
+      "slice": "slice: Update Strategy",
+      "index": 5,
+      "context": "Stadar Organization View",
+      "folder": "updatestrategy",
+      "status": "Created"
+    },
+    {
+      "id": "3458764663074139587",
+      "slice": "slice: Création Client",
+      "index": 1,
+      "context": "Compte Client",
+      "folder": "créationclient",
+      "status": "Created"
+    },
+    {
+      "id": "3458764663074139862",
+      "slice": "slice: Liste Clients",
+      "index": 3,
+      "context": "Compte Client",
+      "folder": "listeclients",
       "status": "Created"
     }
   ]

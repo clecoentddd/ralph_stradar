@@ -1,0 +1,142 @@
+{
+  "id": "3458764663074139862",
+  "status": "Created",
+  "title": "slice: Liste Clients",
+  "context": "Compte Client",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764663073012858",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Compte Client",
+      "context": "INTERNAL",
+      "slice": "slice: Liste Clients",
+      "title": "Liste Clients",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Email",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Nom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Prénom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764663073012866",
+          "type": "OUTBOUND",
+          "title": "Liste Clients",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764663071722128",
+          "type": "INBOUND",
+          "title": "Client Créé",
+          "elementType": "EVENT"
+        }
+      ],
+      "listElement": true,
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764663073012866",
+      "tags": [],
+      "groupId": "3458764663073012875",
+      "elementContext": "INTERNAL",
+      "modelContext": "Compte Client",
+      "context": "INTERNAL",
+      "slice": "slice: Liste Clients",
+      "title": "Liste Clients",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Nom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Prénom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Email",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764663073012858",
+          "type": "INBOUND",
+          "title": "Liste Clients",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

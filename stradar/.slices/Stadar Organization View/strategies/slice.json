@@ -35,6 +35,7 @@
         {
           "name": "strategyId",
           "type": "UUID",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -42,6 +43,16 @@
         {
           "name": "strategyName",
           "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -49,6 +60,7 @@
         {
           "name": "strategyTimeframe",
           "type": "String",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -69,12 +81,6 @@
       ],
       "dependencies": [
         {
-          "id": "3458764661684920689",
-          "type": "OUTBOUND",
-          "title": "Strategies",
-          "elementType": "SCREEN"
-        },
-        {
           "id": "3458764645854569102",
           "type": "OUTBOUND",
           "title": "Create an initiative",
@@ -83,7 +89,7 @@
         {
           "id": "3458764661671789872",
           "type": "INBOUND",
-          "title": "Strategy Draft Created Event",
+          "title": "Strategy Created Event",
           "elementType": "EVENT"
         }
       ],
@@ -98,15 +104,15 @@
   ],
   "screens": [
     {
-      "id": "3458764661684920689",
+      "id": "3458764645854569102",
       "tags": [],
-      "groupId": "3458764661684920691",
+      "groupId": "3458764645854569108",
       "domain": "stradar",
       "elementContext": "INTERNAL",
       "modelContext": "Stadar Organization View",
       "context": "INTERNAL",
       "slice": "slice: strategies",
-      "title": "Strategies",
+      "title": "Create an initiative",
       "fields": [
         {
           "name": "strategyBuilderId",
@@ -126,6 +132,7 @@
         {
           "name": "strategyId",
           "type": "UUID",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -133,6 +140,16 @@
         {
           "name": "strategyName",
           "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "strategyStatus",
+          "type": "String",
+          "example": "DRAFT (default)",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -140,6 +157,7 @@
         {
           "name": "strategyTimeframe",
           "type": "String",
+          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false
@@ -147,81 +165,6 @@
         {
           "name": "teamId",
           "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        }
-      ],
-      "type": "SCREEN",
-      "description": "",
-      "aggregate": "Strategy Builder",
-      "aggregateDependencies": [
-        "Strategy Builder"
-      ],
-      "dependencies": [
-        {
-          "id": "3458764661684920684",
-          "type": "INBOUND",
-          "title": "strategies",
-          "elementType": "READMODEL"
-        }
-      ],
-      "createsAggregate": false,
-      "triggers": [],
-      "sketched": false,
-      "prototype": {
-        "activeByDefault": false
-      }
-    },
-    {
-      "id": "3458764645854569102",
-      "tags": [],
-      "groupId": "3458764645854569108",
-      "domain": "stradar",
-      "elementContext": "INTERNAL",
-      "modelContext": "Stadar Organization View",
-      "context": "INTERNAL",
-      "slice": "slice: strategies",
-      "title": "Create an initiative",
-      "fields": [
-        {
-          "name": "initiativeId",
-          "type": "UUID",
-          "example": "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d",
-          "generated": true,
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "strategyId",
-          "type": "UUID",
-          "example": "77777777-7777-7777-7777-777777777777",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "organizationId",
-          "type": "UUID",
-          "example": "474e4828-a953-4240-bb26-368bb332398e",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "teamId",
-          "type": "UUID",
-          "example": "18ed5446-4fc6-4dd5-8e98-5b9c5cbf130d",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
-          "name": "initiativeName",
-          "type": "String",
-          "example": "Modernize Legacy Infrastructure",
-          "generated": true,
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": false

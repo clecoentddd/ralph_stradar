@@ -1,0 +1,205 @@
+{
+  "id": "3458764663074139587",
+  "status": "Created",
+  "title": "slice: Création Client",
+  "context": "Compte Client",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764663073012074",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Compte Client",
+      "context": "INTERNAL",
+      "slice": "slice: Création Client",
+      "title": "Créer Client",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Nom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Prénom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Email",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764663071722128",
+          "type": "OUTBOUND",
+          "title": "Client Créé",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764663071474826",
+          "type": "INBOUND",
+          "title": "Création du Client",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764663071722128",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Compte Client",
+      "context": "INTERNAL",
+      "slice": "slice: Création Client",
+      "title": "Client Créé",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Nom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Prénom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Email",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764663073012858",
+          "type": "OUTBOUND",
+          "title": "Liste Clients",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764663073012074",
+          "type": "INBOUND",
+          "title": "Créer Client",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764663071474826",
+      "tags": [],
+      "groupId": "3458764663071474842",
+      "elementContext": "INTERNAL",
+      "modelContext": "Compte Client",
+      "context": "INTERNAL",
+      "slice": "slice: Création Client",
+      "title": "Création du Client",
+      "fields": [
+        {
+          "name": "clientId",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Nom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Prénom",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "Email",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764663073012074",
+          "type": "OUTBOUND",
+          "title": "Créer Client",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}
