@@ -22,7 +22,7 @@ class SuperAdminAccountReadModelEntity {
   @Column(name = "admin_account_id")
   var adminAccountId: UUID? = null // 👈 Essential for JPA and for identification
 
-  @Column(name = "username", unique = true) var username: String? = null
+  @Column(name = "organization_use  _name", unique = true) var username: String? = null
 }
 
 data class SuperAdminAccountReadModel(val data: List<SuperAdminAccountReadModelEntity>)

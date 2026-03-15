@@ -23,20 +23,19 @@ class SignInAdminResource(private val commandGateway: CommandGateway) {
   @CrossOrigin
   @PostMapping("/signinsuperadmin")
   fun processCommand(
-          @RequestBody payload: SigninadminPayload,
-          @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
-          @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String
+      @RequestBody payload: SigninadminPayload,
+      @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
+      @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String
   ): CompletableFuture<CommandResult> {
 
     // 🛡️ Security: Pass the Fixed ID in metadata as the acting 'personId'
     val metadata =
-            MetaData.with("X-Correlation-Id", correlationId ?: UUID.randomUUID().toString())
-                    .and(SESSION_ID_HEADER, sessionId)
-                    .and(USER_ID_HEADER, SUPER_ADMIN_ID.toString())
-                    .and(
-                            ORGANIZATION_ID_HEADER,
-                            UUID.fromString("00000000-0000-0000-0000-000000000000")
-                    ) // System Org
+        MetaData.with("X-Correlation-Id", correlationId ?: UUID.randomUUID().toString())
+            .and(SESSION_ID_HEADER, sessionId)
+            .and(USER_ID_HEADER, SUPER_ADMIN_ID.toString())
+            .and(
+                ORGANIZATION_ID_HEADER,
+                UUID.fromString("00000000-0000-0000-0000-000000000000")) // System Org
 
     // 🚀 Command: Target the fixed slot with the provided username
     val command = SignInAdminCommand(adminAccountId = SUPER_ADMIN_ID, username = payload.username)

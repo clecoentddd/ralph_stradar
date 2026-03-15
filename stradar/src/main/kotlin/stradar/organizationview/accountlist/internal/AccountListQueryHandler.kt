@@ -10,16 +10,16 @@ import stradar.organizationview.accountlist.PersonAccountQuery
 @Component
 class AccountListQueryHandler(private val repository: AccountListReadModelRepository) {
 
-    /** 1. The "List" Query: Returns everything */
-    @QueryHandler
-    fun handleQuery(query: AccountListReadModelQuery): AccountListReadModel {
-        return AccountListReadModel(repository.findAll())
-    }
+  /** 1. The "List" Query: Returns everything */
+  @QueryHandler
+  fun handleQuery(query: AccountListReadModelQuery): AccountListReadModel {
+    return AccountListReadModel(repository.findAll())
+  }
 
-    /** 2. The "Point" Query: Returns one specific person's context */
-    @QueryHandler
-    fun handlePersonQuery(query: PersonAccountQuery): AccountListReadModelEntity? {
-        // We return the Entity directly (or null if not found)
-        return repository.findById(query.personId).orElse(null)
-    }
+  /** 2. The "Point" Query: Returns one specific person's context */
+  @QueryHandler
+  fun handlePersonQuery(query: PersonAccountQuery): AccountListReadModelEntity? {
+    // We return the Entity directly (or null if not found)
+    return repository.findById(query.personId).orElse(null)
+  }
 }

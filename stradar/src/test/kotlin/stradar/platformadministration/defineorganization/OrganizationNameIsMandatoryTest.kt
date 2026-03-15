@@ -11,7 +11,7 @@ import stradar.common.CommandException
 import stradar.domain.OrganizationAggregate
 import stradar.platformadministration.domain.commands.defineorganization.DefineOrganizationCommand
 
-class TitleismandatoryTest {
+class OrganizationNameIsMandatoryTest {
 
   private lateinit var fixture: FixtureConfiguration<OrganizationAggregate>
   private lateinit var queryGateway: QueryGateway
@@ -20,25 +20,29 @@ class TitleismandatoryTest {
   fun setUp() {
     fixture = AggregateTestFixture(OrganizationAggregate::class.java)
     queryGateway = mock(QueryGateway::class.java)
+
     fixture.registerInjectableResource(queryGateway)
+    fixture.setReportIllegalStateChange(false)
   }
 
   @Test
   fun `Titleismandatory Test`() {
+
     val organizationId = UUID.randomUUID()
-    val personId = UUID.randomUUID()
+    val organizationUserId = UUID.randomUUID()
 
     val command =
             DefineOrganizationCommand(
                     organizationId = organizationId,
-                    personId = personId,
+                    organizationUserId = organizationUserId,
                     organizationName = "",
-                    username = "admin"
+                    role = "ADMIN",
+                    organizationUserEmail = "admin"
             )
 
     fixture.givenNoPriorActivity()
             .`when`(command)
             .expectException(CommandException::class.java)
-            .expectExceptionMessage("organizationName is required and cannot be empty")
+            .expectExceptionMessage("organizationName is required")
   }
 }

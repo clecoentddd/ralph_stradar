@@ -94,3 +94,51 @@ TRUNCATE TABLE
     dead_letter_entry
 RESTART IDENTITY CASCADE;
 
+
+# Auth0 - Token For Yaml file
+
+curl --request POST   --url https://dev-ysdpxx7xb3nax6dp.us.auth0.com/oauth/token   --header 'content-type: application/json'   --data '{
+"client_id":"dYgjg3xRngb1k73LxEPAOkshYBZG6fuC",
+"client_secret":"wLC3c51RyExF850eFAQR18_eJ0V8Yuwy_MYD1HWWlxncqNM6OMl8gf4DeNISm1P4",
+"audience":"https://dev-ysdpxx7xb3nax6dp.us.auth0.com/api/v2/",
+"grant_type":"client_credentials"
+}'
+
+to create user:
+
+curl --request POST \
+  --url https://dev-kkivn4gfks0md7c0.us.auth0.com/api/v2/users \
+  --header "content-type: application/json" \
+  --header "authorization: Bearer YOUR_MANAGEMENT_API_TOKEN" \
+  --data '{
+    "email": "stradaradmin.stratflow@example.com",
+    "password": "TempPass123!",
+    "connection": "Username-Password-Authentication",
+    "email_verified": true
+}'
+
+
+# get app token:
+
+curl --request POST   --url https://dev-ysdpxx7xb3nax6dp.us.auth0.com/oauth/token   --header 'content-type: application/json'   --data '{"client_id":"dYgjg3xRngb1k73LxEPAOkshYBZG6fuC","client_secret":"wLC3c51RyExF850eFAQR18_eJ0V8Yuwy_MYD1HWWlxncqNM6OMl8gf4DeNISm1P4","audience":"https://dev-ysdpxx7xb3nax6dp.us.auth0.com/api/v2/","grant_type":"client_credentials"}'
+{"error":"unauthorized_client","error_description":"Grant type 'client_credentials' not allowed for the client.","error_uri":"https://auth0.com/docs/clients/client-grant-types"}
+
+auth0:
+  domain: dev-ysdpxx7xb3nax6dp.us.auth0.com
+  managementToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlB4cVpBMVBhT2g0S3piTjktWVVxNyJ9.eyJpc3MiOiJodHRwczovL2Rldi15c2RweHg3eGIzbmF4NmRwLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJkWWdqZzN4Um5nYjFrNzNMeEVQQU9rc2hZQlpHNmZ1Q0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYteXNkcHh4N3hiM25heDZkcC51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTc3MzQyNzU3MywiZXhwIjoxNzczNTEzOTczLCJzY29wZSI6InJlYWQ6dXNlcnMgdXBkYXRlOnVzZXJzIGRlbGV0ZTp1c2VycyBjcmVhdGU6dXNlcnMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJkWWdqZzN4Um5nYjFrNzNMeEVQQU9rc2hZQlpHNmZ1QyJ9.xJ-_IbjfFzuYFMF22Jd1OehX2yb_DVTw4VDxY4--C5r9Mh1uePI7tVr-KAakWJnTaq6r9bD7hOC5IW5rcMYDMdIfd1VfHxUtWMSfDs1lr6ZqqXa2cf8gS2dLSvUNsne6V7tZeuplgJUHrZR3K53RkFIv4ufGPRZbrfIo3At28JrIy9CxGSyTqrvZFdSOERDpozUsrymUZ6m3-5WnAMdofvmqqZs3dscHbrrud4iTkJ7XvT7QZ9cD5KvRTQ1OfUdo_1a5UBfvrKm_IQlne2ChqcMv-SJzI5wNm-wZ8AMNG0Q50UMshiJMX9zBeXD5JGAUFR6exD2ZETq4gzJN45cVuQ"
+
+# test token:
+
+curl "https://dev-ysdpxx7xb3nax6dp.us.auth0.com/api/v2/users" \
+  -H "Authorization: Bearer YOUR_MANAGEMENT_TOKEN"
+
+# test create user:
+
+curl -X POST "https://dev-ysdpxx7xb3nax6dp.us.auth0.com/api/v2/users" \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlB4cVpBMVBhT2g0S3piTjktWVVxNyJ9.eyJpc3MiOiJodHRwczovL2Rldi15c2RweHg3eGIzbmF4NmRwLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJkWWdqZzN4Um5nYjFrNzNMeEVQQU9rc2hZQlpHNmZ1Q0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYteXNkcHh4N3hiM25heDZkcC51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTc3MzQyNzU3MywiZXhwIjoxNzczNTEzOTczLCJzY29wZSI6InJlYWQ6dXNlcnMgdXBkYXRlOnVzZXJzIGRlbGV0ZTp1c2VycyBjcmVhdGU6dXNlcnMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJkWWdqZzN4Um5nYjFrNzNMeEVQQU9rc2hZQlpHNmZ1QyJ9.xJ-_IbjfFzuYFMF22Jd1OehX2yb_DVTw4VDxY4--C5r9Mh1uePI7tVr-KAakWJnTaq6r9bD7hOC5IW5rcMYDMdIfd1VfHxUtWMSfDs1lr6ZqqXa2cf8gS2dLSvUNsne6V7tZeuplgJUHrZR3K53RkFIv4ufGPRZbrfIo3At28JrIy9CxGSyTqrvZFdSOERDpozUsrymUZ6m3-5WnAMdofvmqqZs3dscHbrrud4iTkJ7XvT7QZ9cD5KvRTQ1OfUdo_1a5UBfvrKm_IQlne2ChqcMv-SJzI5wNm-wZ8AMNG0Q50UMshiJMX9zBeXD5JGAUFR6exD2ZETq4gzJN45cVuQ" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "test@example.com",
+    "connection": "Username-Password-Authentication",
+    "email_verified": false
+  }'

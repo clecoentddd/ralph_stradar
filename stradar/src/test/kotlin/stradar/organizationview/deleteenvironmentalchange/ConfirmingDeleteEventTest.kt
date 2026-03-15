@@ -16,54 +16,53 @@ import stradar.support.metadata.ORGANIZATION_ID_HEADER
 
 class DeleteEnvironmentalChangeTest {
 
-        private lateinit var fixture: FixtureConfiguration<EnvironmentalChangeAggregate>
+  private lateinit var fixture: FixtureConfiguration<EnvironmentalChangeAggregate>
 
-        @BeforeEach
-        fun setUp() {
-                // Now pointing to the new Aggregate
-                fixture = AggregateTestFixture(EnvironmentalChangeAggregate::class.java)
+  @BeforeEach
+  fun setUp() {
+    // Now pointing to the new Aggregate
+    fixture = AggregateTestFixture(EnvironmentalChangeAggregate::class.java)
+  }
+
+  @Test
+  fun `Delete Environmental Change Confirming Delete Event Test`() {
+
+    val organizationId = UUID.randomUUID()
+    val teamId = UUID.randomUUID()
+    val environmentalChangeId = UUID.randomUUID()
+
+    // 1. GIVEN: The change was already detected
+    val givenEvent =
+        RandomData.newInstance<EnvironmentalChangeDetectedEvent> {
+          this.environmentalChangeId = environmentalChangeId
+          this.teamId = teamId
+          this.organizationId = organizationId
+          this.category = ChangeCategory.CAPABILITIES
+          this.distance = ChangeDistance.DETECTED
+          this.impact = ChangeImpact.HIGH
+          this.risk = ChangeRisk.LOW
+          this.type = ChangeType.OPPORTUNITY
+          this.title = "Incoming Tech Shift"
         }
 
-        @Test
-        fun `Delete Environmental Change Confirming Delete Event Test`() {
+    // 2. WHEN: We delete the aggregate itself
+    val command =
+        DeleteEnvironmentalChangeCommand(
+            environmentalChangeId = environmentalChangeId,
+            teamId = teamId,
+            organizationId = organizationId)
 
-                val organizationId = UUID.randomUUID()
-                val teamId = UUID.randomUUID()
-                val environmentalChangeId = UUID.randomUUID()
+    // 3. EXPECT: The deleted event to be emitted
+    val expectedEvent =
+        EnvironmentalChangeDeletedEvent(
+            environmentalChangeId = environmentalChangeId,
+            organizationId = organizationId,
+            teamId = teamId)
 
-                // 1. GIVEN: The change was already detected
-                val givenEvent =
-                        RandomData.newInstance<EnvironmentalChangeDetectedEvent> {
-                                this.environmentalChangeId = environmentalChangeId
-                                this.teamId = teamId
-                                this.organizationId = organizationId
-                                this.category = ChangeCategory.CAPABILITIES
-                                this.distance = ChangeDistance.DETECTED
-                                this.impact = ChangeImpact.HIGH
-                                this.risk = ChangeRisk.LOW
-                                this.type = ChangeType.OPPORTUNITY
-                                this.title = "Incoming Tech Shift"
-                        }
-
-                // 2. WHEN: We delete the aggregate itself
-                val command =
-                        DeleteEnvironmentalChangeCommand(
-                                environmentalChangeId = environmentalChangeId,
-                                teamId = teamId,
-                                organizationId = organizationId
-                        )
-
-                // 3. EXPECT: The deleted event to be emitted
-                val expectedEvent =
-                        EnvironmentalChangeDeletedEvent(
-                                environmentalChangeId = environmentalChangeId,
-                                organizationId = organizationId,
-                                teamId = teamId
-                        )
-
-                fixture.given(givenEvent)
-                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
-                        .expectSuccessfulHandlerExecution()
-                        .expectEvents(expectedEvent)
-        }
+    fixture
+        .given(givenEvent)
+        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(expectedEvent)
+  }
 }

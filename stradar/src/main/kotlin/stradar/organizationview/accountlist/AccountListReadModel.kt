@@ -30,4 +30,5 @@ class AccountListReadModelEntity {
   @Column(name = "organizationName") var organizationName: String? = null
   @Column(name = "role") var role: String? = null
   @Column(name = "username") var username: String? = null
+  @Column(name = "auth0UserId") var auth0UserId: String? = null
 }

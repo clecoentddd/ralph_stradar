@@ -12,7 +12,7 @@ import stradar.platformadministration.organizationlist.OrganizationListReadModel
 
 interface OrganizationListReadModelRepository :
         JpaRepository<OrganizationListReadModelEntity, UUID> {
-  fun existsByUsername(username: String): Boolean
+  fun existsByorganizationUserEmail(organizationUserEmail: String): Boolean
 }
 
 @Component
@@ -34,8 +34,8 @@ class OrganizationListReadModelProjector(
             .apply {
               organizationId = event.organizationId
               organizationName = event.organizationName
-              personId = event.personId
-              username = event.username
+              organizationUserId = event.organizationUserId
+              organizationUserEmail = event.organizationUserEmail
               role = event.role
             }
             .also { repository.save(it) }

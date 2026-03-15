@@ -1,32 +1,32 @@
 package stradar.common
 
 enum class ChangeType {
-    THREAT,
-    OPPORTUNITY
+  THREAT,
+  OPPORTUNITY
 }
 
 enum class ChangeCategory {
-    BUSINESS,
-    OPERATING_MODEL,
-    CAPABILITIES,
-    PEOPLE_KNOWLEDGE
+  BUSINESS,
+  OPERATING_MODEL,
+  CAPABILITIES,
+  PEOPLE_KNOWLEDGE
 }
 
 enum class ChangeDistance {
-    DETECTED,
-    ASSESSING,
-    ASSESSED,
-    RESPONDING
+  DETECTED,
+  ASSESSING,
+  ASSESSED,
+  RESPONDING
 }
 
 enum class ChangeImpact {
-    LOW,
-    MEDIUM,
-    HIGH
+  LOW,
+  MEDIUM,
+  HIGH
 }
 
 enum class ChangeRisk {
-    HIGH,
-    MEDIUM,
-    LOW
+  HIGH,
+  MEDIUM,
+  LOW
 }

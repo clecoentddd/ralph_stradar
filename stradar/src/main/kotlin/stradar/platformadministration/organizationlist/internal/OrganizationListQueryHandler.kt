@@ -8,9 +8,9 @@ import stradar.platformadministration.organizationlist.OrganizationListReadModel
 @Component
 class OrganizationListQueryHandler(private val repository: OrganizationListReadModelRepository) {
 
-    @QueryHandler
-    fun handleQuery(query: OrganizationListReadModelQuery): OrganizationListReadModel {
-        // Returns the full list for the admin view
-        return OrganizationListReadModel(repository.findAll())
-    }
+  @QueryHandler
+  fun handleQuery(query: OrganizationListReadModelQuery): OrganizationListReadModel {
+    // Returns the full list for the admin view
+    return OrganizationListReadModel(repository.findAll())
+  }
 }

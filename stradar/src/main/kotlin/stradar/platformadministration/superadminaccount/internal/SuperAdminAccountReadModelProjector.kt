@@ -11,14 +11,14 @@ import stradar.platformadministration.ProcessingGroups
 import stradar.platformadministration.superadminaccount.SuperAdminAccountReadModelEntity
 
 interface SuperAdminAccountReadModelRepository :
-        JpaRepository<SuperAdminAccountReadModelEntity, UUID> {
+    JpaRepository<SuperAdminAccountReadModelEntity, UUID> {
   fun existsByUsername(username: String): Boolean
 }
 
 @Component
 @ProcessingGroup(ProcessingGroups.PLATFORM_ADMINISTRATION)
 class SuperAdminAccountListReadModelProjector(
-        private val repository: SuperAdminAccountReadModelRepository
+    private val repository: SuperAdminAccountReadModelRepository
 ) {
 
   private val logger = KotlinLogging.logger {}
@@ -29,9 +29,7 @@ class SuperAdminAccountListReadModelProjector(
 
     // Find existing by the Admin ID or create new
     val entity =
-            repository.findById(event.adminAccountId).orElseGet {
-              SuperAdminAccountReadModelEntity()
-            }
+        repository.findById(event.adminAccountId).orElseGet { SuperAdminAccountReadModelEntity() }
 
     entity.apply {
       this.adminAccountId = event.adminAccountId

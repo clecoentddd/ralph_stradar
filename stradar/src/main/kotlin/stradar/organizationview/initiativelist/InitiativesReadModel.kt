@@ -17,47 +17,44 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464585565
 
 @Embeddable
 data class InitiativeItem(
-        var id: UUID? = null,
-        var content: String? = null,
-        var status: String? = null,
-        var step: String? = null // e.g., "DIAGNOSTIC", "COHERENTACTION"
+    var id: UUID? = null,
+    var content: String? = null,
+    var status: String? = null,
+    var step: String? = null // e.g., "DIAGNOSTIC", "COHERENTACTION"
 )
 
 @Entity
 class InitiativesReadModelEntity {
-        @Id @Column(name = "initiativeId") var initiativeId: UUID? = null
+  @Id @Column(name = "initiativeId") var initiativeId: UUID? = null
 
-        @Column(name = "initiativeName") var initiativeName: String? = null
+  @Column(name = "initiativeName") var initiativeName: String? = null
 
-        @Column(name = "organizationId") var organizationId: UUID? = null
+  @Column(name = "organizationId") var organizationId: UUID? = null
 
-        @Column(name = "strategyId") var strategyId: UUID? = null
+  @Column(name = "strategyId") var strategyId: UUID? = null
 
-        @Column(name = "teamId") var teamId: UUID? = null
+  @Column(name = "teamId") var teamId: UUID? = null
 
-        @Column(name = "statut") var statut: String? = "Draft" // Values: Draft, Active, Deleted
+  @Column(name = "statut") var statut: String? = "Draft" // Values: Draft, Active, Deleted
 
-        @ElementCollection
-        @CollectionTable(
-                name = "initiative_items",
-                joinColumns = [JoinColumn(name = "initiative_id")]
-        )
-        var allItems: MutableList<InitiativeItem> = mutableListOf()
+  @ElementCollection
+  @CollectionTable(name = "initiative_items", joinColumns = [JoinColumn(name = "initiative_id")])
+  var allItems: MutableList<InitiativeItem> = mutableListOf()
 }
 
 // ─── 2. THE QUESTIONS (Queries) ──────────────────────────────────────────────
 
 /**
  * * Request all non-deleted initiatives for a specific organization. Used to populate the
- * high-level organization dashboard.
+ *   high-level organization dashboard.
  */
 data class AllInitiativesForOrganizationQuery(val organizationId: UUID)
 
 /** Request initiatives filtered by strategy and team context */
 data class InitiativesByStrategyQuery(
-        val strategyId: UUID,
-        val teamId: UUID,
-        val organizationId: UUID
+    val strategyId: UUID,
+    val teamId: UUID,
+    val organizationId: UUID
 )
 
 /** Request details for a single specific initiative (e.g., clicking a radar dot) */
@@ -67,24 +64,24 @@ data class InitiativesReadModelQuery(val initiativeId: UUID)
 
 /**
  * * The structured response for the Organization View. Groups data so the UI can easily render Team
- * -> Level -> Items.
+ *   -> Level -> Items.
  */
 data class OrganizationInitiativeListResponse(
-        val organizationId: UUID,
-        val items: List<InitiativesReadModelEntity>
+    val organizationId: UUID,
+    val items: List<InitiativesReadModelEntity>
 )
 
 data class TeamInitiativesDTO(
-        val teamId: UUID,
-        val teamName: String,
-        // Grouped by level (StepKey: DIAGNOSTIC, etc.)
-        val levels: Map<String, List<InitiativesReadModelEntity>>
+    val teamId: UUID,
+    val teamName: String,
+    // Grouped by level (StepKey: DIAGNOSTIC, etc.)
+    val levels: Map<String, List<InitiativesReadModelEntity>>
 )
 
 /** Simple list wrapper for strategy-specific queries */
 data class InitiativeListResponse(
-        val strategyId: UUID,
-        val items: List<InitiativesReadModelEntity>
+    val strategyId: UUID,
+    val items: List<InitiativesReadModelEntity>
 )
 
 /** Wrapper for single entity results (QueryHandler return type) */

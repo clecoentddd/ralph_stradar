@@ -7,7 +7,7 @@ import org.axonframework.eventhandling.DisallowReplay
 import org.axonframework.eventhandling.EventHandler
 import org.axonframework.messaging.MetaData
 import org.springframework.stereotype.Component
-import stradar.events.OrganizationDefinedEvent
+import stradar.events.OrganizationAdminUserCreatedEvent
 import stradar.organizationview.ProcessingGroups
 import stradar.organizationview.domain.commands.createperson.CreatePersonCommand
 import stradar.support.metadata.*
@@ -20,29 +20,29 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466149826
 @Component
 class OrganizationAutomationProcessor(private val commandGateway: CommandGateway) {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @DisallowReplay
-        @EventHandler
-        fun on(event: OrganizationDefinedEvent, metadata: MetaData) {
+  @DisallowReplay
+  @EventHandler
+  fun on(event: OrganizationAdminUserCreatedEvent, metadata: MetaData) {
 
-                logger.info { "OrganizationDefinedEvent received: $event" }
-                logger.info { "Metadata received: $metadata" }
-                val actorId = metadata[USER_ID_HEADER] ?: "SYSTEM_AUTO"
+    logger.info { "OrganizationAdminUserCreatedEvent received: $event" }
+    logger.info { "Metadata received: $metadata" }
+    val actorId = metadata[USER_ID_HEADER] ?: "SYSTEM_AUTO"
 
-                val nextMetadata =
-                        metadata.and(USER_ID_HEADER, actorId)
-                                .and(ORGANIZATION_ID_HEADER, event.organizationId)
+    val nextMetadata =
+            metadata.and(USER_ID_HEADER, actorId).and(ORGANIZATION_ID_HEADER, event.organizationId)
 
-                commandGateway.send<Any>(
-                        CreatePersonCommand(
-                                personId = event.personId,
-                                organizationId = event.organizationId,
-                                organizationName = event.organizationName,
-                                role = event.role,
-                                username = event.username
-                        ),
-                        nextMetadata
-                )
-        }
+    commandGateway.send<Any>(
+            CreatePersonCommand(
+                    personId = event.organizationUserId,
+                    auth0UserId = event.auth0UserId,
+                    organizationId = event.organizationId,
+                    organizationName = event.organizationName,
+                    role = event.role,
+                    username = event.organizationUserEmail
+            ),
+            nextMetadata
+    )
+  }
 }

@@ -1,0 +1,569 @@
+{
+  "id": "3458764645827750525",
+  "status": "Created",
+  "title": "slice: Define Organization",
+  "context": "Stradar Platform Administration",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764645827750140",
+      "tags": [],
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Define Organization",
+      "title": "Define Organization",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "organizationUserEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userAdminPassword",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "example": "admin",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645827622167",
+          "type": "OUTBOUND",
+          "title": "Organization Defined",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764645832707774",
+          "type": "INBOUND",
+          "title": "Welcome - Create An Organisation",
+          "elementType": "SCREEN"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764645827622167",
+      "tags": [],
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Define Organization",
+      "title": "Organization Defined",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "example": "admin",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationUserEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userAdminPassword",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645830935933",
+          "type": "OUTBOUND",
+          "title": "organization",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764645827750140",
+          "type": "INBOUND",
+          "title": "Define Organization",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [
+    {
+      "id": "3458764645832707774",
+      "tags": [],
+      "groupId": "3458764645832707779",
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Define Organization",
+      "title": "Welcome - Create An Organisation",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "example": "admin",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationUserEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userAdminPassword",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "Create an organization that will have teams",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764645827750140",
+          "type": "OUTBOUND",
+          "title": "Define Organization",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [
+    {
+      "vertical": false,
+      "id": "3458764660893743049",
+      "sliceName": "<p>slice: Define Organization</p>",
+      "title": "spec: Define Organization - company name must be unique",
+      "given": [
+        {
+          "title": "Organization Defined",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660893743198",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Duplicate SA"
+            },
+            {
+              "name": "role",
+              "example": "admin",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "organizationUserEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "userAdminPassword",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827622167"
+        }
+      ],
+      "when": [
+        {
+          "title": "Define Organization",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660893743176",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": ""
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "Duplicate SA"
+            },
+            {
+              "name": "organizationUserEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "userAdminPassword",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "role",
+              "example": "admin",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "linkedId": "3458764645827750140"
+        }
+      ],
+      "then": [
+        {
+          "title": "Company Name Must Be Unique",
+          "tags": [],
+          "examples": [],
+          "id": "3458764660893743188",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "Company Name Must Be Unique"
+        }
+      ],
+      "linkedId": "3458764645827750525"
+    },
+    {
+      "vertical": false,
+      "id": "3458764645828948084",
+      "sliceName": "<p>slice: Define Organization</p>",
+      "title": "spec: Title is mandatory",
+      "given": [],
+      "when": [
+        {
+          "title": "Define Organization",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645828948085",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "22218e00-f128-414a-bdb4-86734e6b3222"
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "organizationUserEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "userAdminPassword",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "role",
+              "example": "admin",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "linkedId": "3458764645827750140"
+        }
+      ],
+      "then": [
+        {
+          "title": "Error-Case",
+          "tags": [],
+          "examples": [
+            {
+              "Message": "Error: title is mandatory"
+            }
+          ],
+          "id": "3458764645828948086",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_ERROR",
+          "fields": []
+        }
+      ],
+      "comments": [
+        {
+          "description": "Title is mandatory"
+        }
+      ],
+      "linkedId": "3458764645827750525"
+    },
+    {
+      "vertical": false,
+      "id": "3458764645827937074",
+      "sliceName": "<p>slice: Define Organization</p>",
+      "title": "spec: Define Organization",
+      "given": [],
+      "when": [
+        {
+          "title": "Define Organization",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645827937075",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_COMMAND",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "22218e00-f128-414a-bdb4-86734e6b3222"
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "StratFlow SA"
+            },
+            {
+              "name": "organizationUserEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "userAdminPassword",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            },
+            {
+              "name": "role",
+              "example": "admin",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            }
+          ],
+          "linkedId": "3458764645827750140"
+        }
+      ],
+      "then": [
+        {
+          "title": "Organization Defined",
+          "tags": [],
+          "examples": [],
+          "id": "3458764645827937079",
+          "index": 0,
+          "specRow": -1,
+          "type": "SPEC_EVENT",
+          "fields": [
+            {
+              "name": "organizationId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true,
+              "example": "22218e00-f128-414a-bdb4-86734e6b3222"
+            },
+            {
+              "name": "organizationName",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "example": "StratFlow SA"
+            },
+            {
+              "name": "role",
+              "example": "admin",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
+              "name": "organizationUserEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "example": ""
+            },
+            {
+              "name": "userAdminPassword",
+              "type": "String",
+              "cardinality": "Single",
+              "subfields": [],
+              "example": ""
+            }
+          ],
+          "linkedId": "3458764645827622167"
+        }
+      ],
+      "comments": [],
+      "linkedId": "3458764645827750525"
+    }
+  ],
+  "actors": [],
+  "aggregates": [
+    "organization"
+  ]
+}

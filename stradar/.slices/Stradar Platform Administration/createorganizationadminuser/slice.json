@@ -1,0 +1,276 @@
+{
+  "id": "3458764663408532418",
+  "status": "Informational",
+  "title": "slice: Create Organization Admin User",
+  "context": "Stradar Platform Administration",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764663408532423",
+      "tags": [],
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Create Organization Admin User",
+      "title": "Mark Organization User Admin Created",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationUserId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "example": "admin",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationUserEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userAdminPassword",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764663408532420",
+          "type": "OUTBOUND",
+          "title": "Organization Admin User Created",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764663408532421",
+          "type": "INBOUND",
+          "title": "authentication user creation processor",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764663408532420",
+      "tags": [],
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Create Organization Admin User",
+      "title": "Organization Admin User Created",
+      "fields": [
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationUserId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": true
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "example": "admin",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationUserEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userAdminPassword",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764663408532423",
+          "type": "INBOUND",
+          "title": "Mark Organization User Admin Created",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764663408532421",
+      "tags": [],
+      "groupId": "3458764663408532429",
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Create Organization Admin User",
+      "title": "authentication user creation processor",
+      "fields": [
+        {
+          "name": "organizationUserId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": true
+        },
+        {
+          "name": "organizationId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "organizationUserEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "userAdminPassword",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        },
+        {
+          "name": "organizationName",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "role",
+          "example": "admin",
+          "type": "String",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "organization",
+      "aggregateDependencies": [
+        "organization"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764663408532423",
+          "type": "OUTBOUND",
+          "title": "Mark Organization User Admin Created",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764645830935933",
+          "type": "INBOUND",
+          "title": "organization",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764663430896009",
+          "type": "INBOUND",
+          "title": "Authentication Service",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "organization"
+  ]
+}

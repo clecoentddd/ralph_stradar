@@ -8,10 +8,8 @@
         <version>3.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>stradar
-    </groupId>
-    <artifactId>Stradar
-    </artifactId>
+    <groupId>stradar</groupId>
+    <artifactId>Stradar</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <java.version>21</java.version>
@@ -53,13 +51,6 @@
             <artifactId>axon-test</artifactId>
             <version>${axon.version}</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>io.axoniq.console</groupId>
-            <artifactId>console-framework-client-spring-boot-starter</artifactId>
-            <version>1.8.1</version>
-        </dependency>
-        -->
 
         <!-- Kotlin and Logging Dependencies -->
         <dependency>
@@ -105,6 +96,12 @@
             <artifactId>easy-random-bean-validation</artifactId>
             <version>5.0.0</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
@@ -192,12 +189,44 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.0.3</version>
+            <version>2.8.5</version>
         </dependency>
+        <!-- Spring Security Dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+
+        <!-- Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- WebClient (needed for Auth0 API call) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
+            <!-- Force snakeyaml 2.4 to override the android variant pulled in by javafaker -->
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>2.4</version>
+            </dependency>
             <!-- Spring Modulith BOM -->
             <dependency>
                 <groupId>org.springframework.modulith</groupId>
@@ -221,7 +250,7 @@
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
-                <version>2.43.0</version> <!-- Replace with the latest version -->
+                <version>2.43.0</version>
                 <executions>
                     <execution>
                         <id>spotless</id>
@@ -233,7 +262,6 @@
                 </executions>
                 <configuration>
                     <kotlin>
-                        <!-- These are the defaults, you can override if you want -->
                         <includes>
                             <include>src/main/kotlin/**/*.kt</include>
                             <include>src/test/kotlin/**/*.kt</include>
@@ -261,14 +289,11 @@
                         <plugin>no-arg</plugin>
                     </compilerPlugins>
                     <pluginOptions>
-                        <!-- Call instance initializers in the synthetic constructor -->
                         <option>no-arg:invokeInitializers=true</option>
-                        <option>no-arg:annotation=stradar.common.NoArg
-                        </option>
+                        <option>no-arg:annotation=stradar.common.NoArg</option>
                         <option>no-arg:annotation=org.axonframework.spring.stereotype.Saga</option>
                     </pluginOptions>
                 </configuration>
-
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
@@ -290,7 +315,6 @@
             <id>central</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
-        <!-- Confluent Maven Repository -->
         <repository>
             <id>confluent</id>
             <url>https://packages.confluent.io/maven/</url>
@@ -301,14 +325,12 @@
         <profile>
             <id>frontend</id>
             <build>
-                <!-- Frontend Maven Plugin -->
                 <plugins>
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
                         <version>1.12.0</version>
                         <executions>
-                            <!-- Install Node.js and npm -->
                             <execution>
                                 <id>install node and npm</id>
                                 <goals>
@@ -319,7 +341,6 @@
                                     <npmVersion>6.14.14</npmVersion>
                                 </configuration>
                             </execution>
-                            <!-- npm install -->
                             <execution>
                                 <id>npm install</id>
                                 <goals>
@@ -329,7 +350,6 @@
                                     <arguments>install</arguments>
                                 </configuration>
                             </execution>
-                            <!-- npm build -->
                             <execution>
                                 <id>npm build</id>
                                 <goals>

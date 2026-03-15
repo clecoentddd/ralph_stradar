@@ -17,68 +17,59 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464584975
 @RestController
 class TeamlistResource(private var queryGateway: QueryGateway) {
 
-        private var logger = KotlinLogging.logger {}
+  private var logger = KotlinLogging.logger {}
 
-        /**
-         * Fetches all teams for the organization. The organizationId is now sourced from a
-         * mandatory header for security.
-         */
-        @CrossOrigin(
-                allowedHeaders =
-                        [
-                                ORGANIZATION_ID_HEADER,
-                                SESSION_ID_HEADER,
-                                "Content-Type",
-                                "X-Correlation-Id",
-                                USER_ID_HEADER]
-        )
-        @GetMapping("/teamlist")
-        fun findByOrganization(
-                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-                @RequestHeader(USER_ID_HEADER) userId: String
-        ): CompletableFuture<TeamListReadModel> {
-                logger.info { "Fetching team list for org: $organizationId" }
+  /**
+   * Fetches all teams for the organization. The organizationId is now sourced from a mandatory
+   * header for security.
+   */
+  @CrossOrigin(
+      allowedHeaders =
+          [
+              ORGANIZATION_ID_HEADER,
+              SESSION_ID_HEADER,
+              "Content-Type",
+              "X-Correlation-Id",
+              USER_ID_HEADER])
+  @GetMapping("/teamlist")
+  fun findByOrganization(
+      @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+      @RequestHeader(USER_ID_HEADER) userId: String
+  ): CompletableFuture<TeamListReadModel> {
+    logger.info { "Fetching team list for org: $organizationId" }
 
-                val responseType = ResponseTypes.instanceOf(TeamListReadModel::class.java)
-                val queryMessage =
-                        GenericQueryMessage(
-                                        TeamListByOrganizationQuery(organizationId),
-                                        responseType
-                                )
-                                .withMetaData(
-                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
-                                                .and(USER_ID_HEADER, userId)
-                                )
+    val responseType = ResponseTypes.instanceOf(TeamListReadModel::class.java)
+    val queryMessage =
+        GenericQueryMessage(TeamListByOrganizationQuery(organizationId), responseType)
+            .withMetaData(
+                MetaData.with(ORGANIZATION_ID_HEADER, organizationId).and(USER_ID_HEADER, userId))
 
-                return queryGateway.query(queryMessage, responseType)
-        }
+    return queryGateway.query(queryMessage, responseType)
+  }
 
-        @CrossOrigin(
-                allowedHeaders =
-                        [
-                                ORGANIZATION_ID_HEADER,
-                                SESSION_ID_HEADER,
-                                "Content-Type",
-                                "X-Correlation-Id",
-                                USER_ID_HEADER]
-        )
-        @GetMapping("/teamlist/{teamId}/name")
-        fun findTeamName(
-                @PathVariable("teamId") teamId: UUID,
-                @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
-                @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-                @RequestHeader(USER_ID_HEADER) userId: String
-        ): CompletableFuture<TeamNameResponse> {
-                logger.info { "Fetching name for Team ID: $teamId (org: $organizationId)" }
+  @CrossOrigin(
+      allowedHeaders =
+          [
+              ORGANIZATION_ID_HEADER,
+              SESSION_ID_HEADER,
+              "Content-Type",
+              "X-Correlation-Id",
+              USER_ID_HEADER])
+  @GetMapping("/teamlist/{teamId}/name")
+  fun findTeamName(
+      @PathVariable("teamId") teamId: UUID,
+      @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
+      @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+      @RequestHeader(USER_ID_HEADER) userId: String
+  ): CompletableFuture<TeamNameResponse> {
+    logger.info { "Fetching name for Team ID: $teamId (org: $organizationId)" }
 
-                val responseType = ResponseTypes.instanceOf(TeamNameResponse::class.java)
-                val queryMessage =
-                        GenericQueryMessage(TeamNameByTeamIdQuery(teamId), responseType)
-                                .withMetaData(
-                                        MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
-                                                .and(USER_ID_HEADER, userId)
-                                )
+    val responseType = ResponseTypes.instanceOf(TeamNameResponse::class.java)
+    val queryMessage =
+        GenericQueryMessage(TeamNameByTeamIdQuery(teamId), responseType)
+            .withMetaData(
+                MetaData.with(ORGANIZATION_ID_HEADER, organizationId).and(USER_ID_HEADER, userId))
 
-                return queryGateway.query(queryMessage, responseType)
-        }
+    return queryGateway.query(queryMessage, responseType)
+  }
 }

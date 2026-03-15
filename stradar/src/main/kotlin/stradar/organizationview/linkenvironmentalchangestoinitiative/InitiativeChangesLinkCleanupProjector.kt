@@ -8,14 +8,14 @@ import stradar.events.EnvironmentalChangeDeletedEvent
 
 @Component
 class InitiativeChangesLinkCleanupProjector(
-        private val repository: InitiativeChangesLinkRepository
+    private val repository: InitiativeChangesLinkRepository
 ) {
 
-    @EventHandler
-    fun on(event: EnvironmentalChangeDeletedEvent, metaData: MetaData) {
-        val organizationId = metaData.resolveOrganizationId()
+  @EventHandler
+  fun on(event: EnvironmentalChangeDeletedEvent, metaData: MetaData) {
+    val organizationId = metaData.resolveOrganizationId()
 
-        // Securely scoped cleanup
-        repository.deleteByEnvChangeIdAndOrganizationId(event.environmentalChangeId, organizationId)
-    }
+    // Securely scoped cleanup
+    repository.deleteByEnvChangeIdAndOrganizationId(event.environmentalChangeId, organizationId)
+  }
 }

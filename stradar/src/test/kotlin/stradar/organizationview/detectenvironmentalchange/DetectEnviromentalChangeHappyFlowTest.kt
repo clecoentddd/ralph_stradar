@@ -15,61 +15,58 @@ import stradar.support.metadata.ORGANIZATION_ID_HEADER
 /** Environmental Change is detected (Aggregate Creation) */
 class DetectEnvironmentalChangeHappyFlowTest {
 
-        private lateinit var fixture: FixtureConfiguration<EnvironmentalChangeAggregate>
+  private lateinit var fixture: FixtureConfiguration<EnvironmentalChangeAggregate>
 
-        @BeforeEach
-        fun setUp() {
-                fixture = AggregateTestFixture(EnvironmentalChangeAggregate::class.java)
-        }
+  @BeforeEach
+  fun setUp() {
+    fixture = AggregateTestFixture(EnvironmentalChangeAggregate::class.java)
+  }
 
-        @Test
-        fun `Detect Environmental Change Happy Flow Test`() {
+  @Test
+  fun `Detect Environmental Change Happy Flow Test`() {
 
-                val orgId = UUID.randomUUID()
-                val teamId = UUID.randomUUID()
-                val environmentalChangeId =
-                        UUID.randomUUID() // The primary ID for the new aggregate
+    val orgId = UUID.randomUUID()
+    val teamId = UUID.randomUUID()
+    val environmentalChangeId = UUID.randomUUID() // The primary ID for the new aggregate
 
-                // GIVEN: Nothing (Aggregate is being created)
+    // GIVEN: Nothing (Aggregate is being created)
 
-                // WHEN: We send the command to detect a change
-                val command =
-                        DetectEnvironmentalChangeCommand(
-                                environmentalChangeId = environmentalChangeId,
-                                teamId = teamId,
-                                organizationId = orgId,
-                                assess = "Assess v1",
-                                category = ChangeCategory.CAPABILITIES,
-                                detect = "Initial Detection",
-                                distance = ChangeDistance.DETECTED,
-                                impact = ChangeImpact.LOW,
-                                respond = "respond v1",
-                                risk = ChangeRisk.LOW,
-                                title = "Tech Shift v1",
-                                type = ChangeType.OPPORTUNITY
-                        )
+    // WHEN: We send the command to detect a change
+    val command =
+        DetectEnvironmentalChangeCommand(
+            environmentalChangeId = environmentalChangeId,
+            teamId = teamId,
+            organizationId = orgId,
+            assess = "Assess v1",
+            category = ChangeCategory.CAPABILITIES,
+            detect = "Initial Detection",
+            distance = ChangeDistance.DETECTED,
+            impact = ChangeImpact.LOW,
+            respond = "respond v1",
+            risk = ChangeRisk.LOW,
+            title = "Tech Shift v1",
+            type = ChangeType.OPPORTUNITY)
 
-                // THEN: We expect the Detected event with the matching environmentalChangeId
-                val expectedEvent =
-                        EnvironmentalChangeDetectedEvent(
-                                environmentalChangeId =
-                                        environmentalChangeId, // Must match the command!
-                                teamId = teamId,
-                                organizationId = orgId,
-                                assess = "Assess v1",
-                                category = ChangeCategory.CAPABILITIES,
-                                detect = "Initial Detection",
-                                distance = ChangeDistance.DETECTED,
-                                impact = ChangeImpact.LOW,
-                                respond = "respond v1",
-                                risk = ChangeRisk.LOW,
-                                title = "Tech Shift v1",
-                                type = ChangeType.OPPORTUNITY
-                        )
+    // THEN: We expect the Detected event with the matching environmentalChangeId
+    val expectedEvent =
+        EnvironmentalChangeDetectedEvent(
+            environmentalChangeId = environmentalChangeId, // Must match the command!
+            teamId = teamId,
+            organizationId = orgId,
+            assess = "Assess v1",
+            category = ChangeCategory.CAPABILITIES,
+            detect = "Initial Detection",
+            distance = ChangeDistance.DETECTED,
+            impact = ChangeImpact.LOW,
+            respond = "respond v1",
+            risk = ChangeRisk.LOW,
+            title = "Tech Shift v1",
+            type = ChangeType.OPPORTUNITY)
 
-                fixture.givenNoPriorActivity()
-                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, orgId))
-                        .expectSuccessfulHandlerExecution()
-                        .expectEvents(expectedEvent)
-        }
+    fixture
+        .givenNoPriorActivity()
+        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, orgId))
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(expectedEvent)
+  }
 }

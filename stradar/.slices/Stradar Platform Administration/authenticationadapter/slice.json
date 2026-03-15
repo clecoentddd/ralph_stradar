@@ -1,0 +1,57 @@
+{
+  "id": "3458764663433518223",
+  "status": "Created",
+  "title": "slice: Authentication Adapter",
+  "context": "Stradar Platform Administration",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764663430896009",
+      "tags": [],
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: Authentication Adapter",
+      "title": "Authentication Service",
+      "fields": [
+        {
+          "name": "organizationUserId",
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "generated": true,
+          "idAttribute": true
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "default",
+      "aggregateDependencies": [],
+      "dependencies": [
+        {
+          "id": "3458764663408532421",
+          "type": "OUTBOUND",
+          "title": "authentication user creation processor",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": []
+}

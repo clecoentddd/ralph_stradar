@@ -17,74 +17,52 @@ import stradar.organizationview.teamlist.TeamListByOrganizationQuery
 import stradar.organizationview.teamlist.TeamListReadModel
 import stradar.support.metadata.*
 
-/**
- *
- * Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661632441150
- */
+/** Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661632441150 */
 class CreateTeamEnd2EndFlowProjectionReadModelTest : BaseIntegrationTest() {
 
-        @Autowired private lateinit var commandGateway: CommandGateway
+  @Autowired private lateinit var commandGateway: CommandGateway
 
-        @Autowired private lateinit var queryGateway: QueryGateway
+  @Autowired private lateinit var queryGateway: QueryGateway
 
-        @Test
-        fun `Create Team End2End Flow Projection Read Model Test`() {
+  @Test
+  fun `Create Team End2End Flow Projection Read Model Test`() {
 
-                val teamId = UUID.randomUUID()
-                val organizationId = UUID.randomUUID()
-                val deletedReason = "Reason ABC"
+    val teamId = UUID.randomUUID()
+    val organizationId = UUID.randomUUID()
+    val deletedReason = "Reason ABC"
 
-                val metadata =
-                        MetaData.with(SESSION_ID_HEADER, UUID.randomUUID().toString())
-                                .and(ORGANIZATION_ID_HEADER, organizationId)
-                                .and(USER_ID_HEADER, "test-user")
+    val metadata =
+        MetaData.with(SESSION_ID_HEADER, UUID.randomUUID().toString())
+            .and(ORGANIZATION_ID_HEADER, organizationId)
+            .and(USER_ID_HEADER, "test-user")
 
-                val createTeamCommand =
-                        CreateTeamCommand(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                context = "Context 1",
-                                level = 3,
-                                name = "CTO",
-                                purpose = "Purpose 1"
-                        )
-                commandGateway.sendAndWait<Any>(createTeamCommand, metadata)
+    val createTeamCommand =
+        CreateTeamCommand(
+            teamId = teamId,
+            organizationId = organizationId,
+            context = "Context 1",
+            level = 3,
+            name = "CTO",
+            purpose = "Purpose 1")
+    commandGateway.sendAndWait<Any>(createTeamCommand, metadata)
 
-                val deleteTeamCommand =
-                        DeleteTeamCommand(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                reason = deletedReason
-                        )
-                commandGateway.sendAndWait<Any>(deleteTeamCommand, metadata)
+    val deleteTeamCommand =
+        DeleteTeamCommand(teamId = teamId, organizationId = organizationId, reason = deletedReason)
+    commandGateway.sendAndWait<Any>(deleteTeamCommand, metadata)
 
-                awaitUntilAssserted {
-                        val result =
-                                queryGateway
-                                        .query(
-                                                GenericQueryMessage(
-                                                                TeamListByOrganizationQuery(
-                                                                        organizationId
-                                                                ),
-                                                                ResponseTypes.instanceOf(
-                                                                        TeamListReadModel::class
-                                                                                .java
-                                                                )
-                                                        )
-                                                        .withMetaData(
-                                                                MetaData.with(
-                                                                        ORGANIZATION_ID_HEADER,
-                                                                        organizationId
-                                                                )
-                                                        ),
-                                                ResponseTypes.instanceOf(
-                                                        TeamListReadModel::class.java
-                                                )
-                                        )
-                                        .get()
-                        assertThat(result).isNotNull
-                        assertThat(result.teams.none { it.teamId == teamId }).isTrue()
-                        assertThat(result.teams.none { it.reason == deletedReason }).isTrue()
-                }
-        }
+    awaitUntilAssserted {
+      val result =
+          queryGateway
+              .query(
+                  GenericQueryMessage(
+                          TeamListByOrganizationQuery(organizationId),
+                          ResponseTypes.instanceOf(TeamListReadModel::class.java))
+                      .withMetaData(MetaData.with(ORGANIZATION_ID_HEADER, organizationId)),
+                  ResponseTypes.instanceOf(TeamListReadModel::class.java))
+              .get()
+      assertThat(result).isNotNull
+      assertThat(result.teams.none { it.teamId == teamId }).isTrue()
+      assertThat(result.teams.none { it.reason == deletedReason }).isTrue()
+    }
+  }
 }

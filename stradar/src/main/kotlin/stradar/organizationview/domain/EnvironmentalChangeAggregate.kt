@@ -18,114 +18,108 @@ import stradar.organizationview.domain.commands.updateenvironmentalchange.Update
 @Aggregate
 class EnvironmentalChangeAggregate() {
 
-    private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-    @AggregateIdentifier private lateinit var environmentalChangeId: UUID
-    private lateinit var teamId: UUID
-    private lateinit var organizationId: UUID
+  @AggregateIdentifier private lateinit var environmentalChangeId: UUID
+  private lateinit var teamId: UUID
+  private lateinit var organizationId: UUID
 
-    // Internal state to track if it's already deleted
-    private var isDeleted: Boolean = false
+  // Internal state to track if it's already deleted
+  private var isDeleted: Boolean = false
 
-    /* ===================================================== */
-    /* ================ Detect (Creation) =================== */
-    /* ===================================================== */
+  /* ===================================================== */
+  /* ================ Detect (Creation) =================== */
+  /* ===================================================== */
 
-    @CommandHandler
-    constructor(command: DetectEnvironmentalChangeCommand, metaData: MetaData) : this() {
-        val organizationId = metaData.resolveOrganizationId()
-        logger.info { "🌱 Detecting Environmental Change: ${command.environmentalChangeId}" }
+  @CommandHandler
+  constructor(command: DetectEnvironmentalChangeCommand, metaData: MetaData) : this() {
+    val organizationId = metaData.resolveOrganizationId()
+    logger.info { "🌱 Detecting Environmental Change: ${command.environmentalChangeId}" }
 
-        AggregateLifecycle.apply(
-                EnvironmentalChangeDetectedEvent(
-                        environmentalChangeId = command.environmentalChangeId,
-                        teamId = command.teamId,
-                        organizationId = command.organizationId,
-                        title = command.title,
-                        detect = command.detect,
-                        assess = command.assess,
-                        respond = command.respond,
-                        type = command.type,
-                        category = command.category,
-                        distance = command.distance,
-                        impact = command.impact,
-                        risk = command.risk
-                )
-        )
-    }
+    AggregateLifecycle.apply(
+        EnvironmentalChangeDetectedEvent(
+            environmentalChangeId = command.environmentalChangeId,
+            teamId = command.teamId,
+            organizationId = command.organizationId,
+            title = command.title,
+            detect = command.detect,
+            assess = command.assess,
+            respond = command.respond,
+            type = command.type,
+            category = command.category,
+            distance = command.distance,
+            impact = command.impact,
+            risk = command.risk))
+  }
 
-    /* ===================================================== */
-    /* ================ Update Change ====================== */
-    /* ===================================================== */
+  /* ===================================================== */
+  /* ================ Update Change ====================== */
+  /* ===================================================== */
 
-    @CommandHandler
-    fun handle(command: UpdateEnvironmentalChangeCommand, metaData: MetaData) {
-        val secureOrgId = metaData.resolveOrganizationId()
-        if (isDeleted) throw IllegalStateException("Cannot update a deleted environmental change.")
+  @CommandHandler
+  fun handle(command: UpdateEnvironmentalChangeCommand, metaData: MetaData) {
+    val secureOrgId = metaData.resolveOrganizationId()
+    if (isDeleted) throw CommandException("Cannot update a deleted environmental change.")
 
-        logger.info { "🔄 Updating Environmental Change: $environmentalChangeId" }
+    logger.info { "🔄 Updating Environmental Change: $environmentalChangeId" }
 
-        AggregateLifecycle.apply(
-                EnvironmentalChangeUpdatedEvent(
-                        environmentalChangeId = this.environmentalChangeId,
-                        teamId = this.teamId,
-                        organizationId = this.organizationId,
-                        title = command.title,
-                        detect = command.detect,
-                        assess = command.assess,
-                        respond = command.respond,
-                        type = command.type,
-                        category = command.category,
-                        distance = command.distance,
-                        impact = command.impact,
-                        risk = command.risk
-                )
-        )
-    }
+    AggregateLifecycle.apply(
+        EnvironmentalChangeUpdatedEvent(
+            environmentalChangeId = this.environmentalChangeId,
+            teamId = this.teamId,
+            organizationId = this.organizationId,
+            title = command.title,
+            detect = command.detect,
+            assess = command.assess,
+            respond = command.respond,
+            type = command.type,
+            category = command.category,
+            distance = command.distance,
+            impact = command.impact,
+            risk = command.risk))
+  }
 
-    /* ===================================================== */
-    /* ================ Delete Change ====================== */
-    /* ===================================================== */
+  /* ===================================================== */
+  /* ================ Delete Change ====================== */
+  /* ===================================================== */
 
-    @CommandHandler
-    fun handle(command: DeleteEnvironmentalChangeCommand, metaData: MetaData): CommandResult {
-        val secureOrgId = metaData.resolveOrganizationId()
-        if (isDeleted) throw IllegalStateException("Change already deleted.")
+  @CommandHandler
+  fun handle(command: DeleteEnvironmentalChangeCommand, metaData: MetaData): CommandResult {
+    val secureOrgId = metaData.resolveOrganizationId()
+    if (isDeleted) throw CommandException("Change already deleted.")
 
-        logger.info { "🗑 Deleting Environmental Change: $environmentalChangeId" }
+    logger.info { "🗑 Deleting Environmental Change: $environmentalChangeId" }
 
-        AggregateLifecycle.apply(
-                EnvironmentalChangeDeletedEvent(
-                        environmentalChangeId = this.environmentalChangeId,
-                        teamId = this.teamId,
-                        organizationId = this.organizationId
-                )
-        )
+    AggregateLifecycle.apply(
+        EnvironmentalChangeDeletedEvent(
+            environmentalChangeId = this.environmentalChangeId,
+            teamId = this.teamId,
+            organizationId = this.organizationId))
 
-        return CommandResult(this.teamId, AggregateLifecycle.getVersion())
-    }
+    return CommandResult(this.teamId, AggregateLifecycle.getVersion())
+  }
 
-    /* ===================================================== */
-    /* ================ Event Sourcing Handlers ============ */
-    /* ===================================================== */
+  /* ===================================================== */
+  /* ================ Event Sourcing Handlers ============ */
+  /* ===================================================== */
 
-    @EventSourcingHandler
-    fun on(event: EnvironmentalChangeDetectedEvent) {
-        this.environmentalChangeId = event.environmentalChangeId
-        this.teamId = event.teamId
-        this.organizationId = event.organizationId
-        this.isDeleted = false
-    }
+  @EventSourcingHandler
+  fun on(event: EnvironmentalChangeDetectedEvent) {
+    this.environmentalChangeId = event.environmentalChangeId
+    this.teamId = event.teamId
+    this.organizationId = event.organizationId
+    this.isDeleted = false
+  }
 
-    @EventSourcingHandler
-    fun on(event: EnvironmentalChangeUpdatedEvent) {
-        // No state update needed unless we start tracking specific fields in the aggregate
-    }
+  @EventSourcingHandler
+  fun on(event: EnvironmentalChangeUpdatedEvent) {
+    // No state update needed unless we start tracking specific fields in the aggregate
+  }
 
-    @EventSourcingHandler
-    fun on(event: EnvironmentalChangeDeletedEvent) {
-        this.isDeleted = true
-        // Technically Axon can mark the aggregate as deleted:
-        // AggregateLifecycle.markDeleted()
-    }
+  @EventSourcingHandler
+  fun on(event: EnvironmentalChangeDeletedEvent) {
+    this.isDeleted = true
+    // Technically Axon can mark the aggregate as deleted:
+    // AggregateLifecycle.markDeleted()
+  }
 }

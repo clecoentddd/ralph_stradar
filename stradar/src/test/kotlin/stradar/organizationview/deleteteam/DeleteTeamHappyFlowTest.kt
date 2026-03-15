@@ -20,55 +20,48 @@ import stradar.support.metadata.ORGANIZATION_ID_HEADER
  */
 class DeleteTeamHappyFlowTest {
 
-        private lateinit var fixture: FixtureConfiguration<TeamAggregate>
+  private lateinit var fixture: FixtureConfiguration<TeamAggregate>
 
-        @BeforeEach
-        fun setUp() {
-                fixture = AggregateTestFixture(TeamAggregate::class.java)
-        }
+  @BeforeEach
+  fun setUp() {
+    fixture = AggregateTestFixture(TeamAggregate::class.java)
+  }
 
-        @Test
-        fun `Delete Team Happy Flow Test`() {
+  @Test
+  fun `Delete Team Happy Flow Test`() {
 
-                val teamId: UUID = UUID.fromString("00000000-0000-0000-0000-000000000123")
-                val organizationId: UUID = UUID.fromString("00000000-0000-0000-0000-000000000456")
-                val validReason: String = "Reason 1"
+    val teamId: UUID = UUID.fromString("00000000-0000-0000-0000-000000000123")
+    val organizationId: UUID = UUID.fromString("00000000-0000-0000-0000-000000000456")
+    val validReason: String = "Reason 1"
 
-                // GIVEN
-                val events = mutableListOf<Event>()
-                events.add(
-                        TeamCreatedEvent(
-                                teamId = teamId,
-                                context = "Context 1",
-                                level = 3,
-                                name = "CTO",
-                                organizationId = organizationId,
-                                purpose = "Purpose 1"
-                        )
-                )
+    // GIVEN
+    val events = mutableListOf<Event>()
+    events.add(
+        TeamCreatedEvent(
+            teamId = teamId,
+            context = "Context 1",
+            level = 3,
+            name = "CTO",
+            organizationId = organizationId,
+            purpose = "Purpose 1"))
 
-                // WHEN
-                val command =
-                        DeleteTeamCommand(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                reason = validReason
-                        )
+    // WHEN
+    val command =
+        DeleteTeamCommand(teamId = teamId, organizationId = organizationId, reason = validReason)
 
-                // THEN
-                val expectedEvents = mutableListOf<Event>()
-                expectedEvents.add(
-                        TeamDeletedEvent(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                status = "DELETED",
-                                reason = validReason
-                        )
-                )
+    // THEN
+    val expectedEvents = mutableListOf<Event>()
+    expectedEvents.add(
+        TeamDeletedEvent(
+            teamId = teamId,
+            organizationId = organizationId,
+            status = "DELETED",
+            reason = validReason))
 
-                fixture.given(events)
-                        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
-                        .expectSuccessfulHandlerExecution()
-                        .expectEvents(*expectedEvents.toTypedArray())
-        }
+    fixture
+        .given(events)
+        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(*expectedEvents.toTypedArray())
+  }
 }

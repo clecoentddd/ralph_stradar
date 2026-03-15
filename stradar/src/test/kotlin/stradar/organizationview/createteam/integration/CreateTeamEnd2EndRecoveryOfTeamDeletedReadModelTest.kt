@@ -21,90 +21,70 @@ import stradar.support.metadata.*
 
 class CreateTeamEnd2EndRecoveryOfTeamDeletedReadModelTest : BaseIntegrationTest() {
 
-        @Autowired private lateinit var commandGateway: CommandGateway
-        @Autowired private lateinit var queryGateway: QueryGateway
+  @Autowired private lateinit var commandGateway: CommandGateway
+  @Autowired private lateinit var queryGateway: QueryGateway
 
-        @Test
-        fun `Create Team End2End Recovery Of Team Deleted Read Model Test`() {
-                // 1. Generate valid random UUIDs for this specific test run
-                val teamId = RandomData.newInstance<UUID> {}
-                val organizationId = RandomData.newInstance<UUID> {}
-                val deletedReason = "Reason ABC"
+  @Test
+  fun `Create Team End2End Recovery Of Team Deleted Read Model Test`() {
+    // 1. Generate valid random UUIDs for this specific test run
+    val teamId = RandomData.newInstance<UUID> {}
+    val organizationId = RandomData.newInstance<UUID> {}
+    val deletedReason = "Reason ABC"
 
-                // 2. Prepare required MetaData
-                val meta =
-                        MetaData.with(SESSION_ID_HEADER, "test-session")
-                                .and(USER_ID_HEADER, "test-admin")
-                                .and(ORGANIZATION_ID_HEADER, organizationId)
+    // 2. Prepare required MetaData
+    val meta =
+        MetaData.with(SESSION_ID_HEADER, "test-session")
+            .and(USER_ID_HEADER, "test-admin")
+            .and(ORGANIZATION_ID_HEADER, organizationId)
 
-                // 3. Create the team
-                val createTeamCommand =
-                        CreateTeamCommand(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                context = "Context 1",
-                                level = 3,
-                                name = "CTO",
-                                purpose = "Purpose 1"
-                        )
-                commandGateway.sendAndWait<Any>(createTeamCommand, meta)
+    // 3. Create the team
+    val createTeamCommand =
+        CreateTeamCommand(
+            teamId = teamId,
+            organizationId = organizationId,
+            context = "Context 1",
+            level = 3,
+            name = "CTO",
+            purpose = "Purpose 1")
+    commandGateway.sendAndWait<Any>(createTeamCommand, meta)
 
-                // 4. Delete the team
-                val deleteTeamCommand =
-                        DeleteTeamCommand(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                reason = deletedReason
-                        )
-                commandGateway.sendAndWait<Any>(deleteTeamCommand, meta)
+    // 4. Delete the team
+    val deleteTeamCommand =
+        DeleteTeamCommand(teamId = teamId, organizationId = organizationId, reason = deletedReason)
+    commandGateway.sendAndWait<Any>(deleteTeamCommand, meta)
 
-                // 5. Update (Recover) the team
-                val updateTeamCommand =
-                        UpdateTeamCommand(
-                                teamId = teamId,
-                                organizationId = organizationId,
-                                context = "Context 1",
-                                level = 4,
-                                name = "CTO v2",
-                                purpose = "Purpose 1"
-                        )
-                commandGateway.sendAndWait<Any>(updateTeamCommand, meta)
+    // 5. Update (Recover) the team
+    val updateTeamCommand =
+        UpdateTeamCommand(
+            teamId = teamId,
+            organizationId = organizationId,
+            context = "Context 1",
+            level = 4,
+            name = "CTO v2",
+            purpose = "Purpose 1")
+    commandGateway.sendAndWait<Any>(updateTeamCommand, meta)
 
-                // 6. Wait for the Read Model to reflect the recovery
-                awaitUntilAssserted {
-                        val result =
-                                queryGateway
-                                        .query(
-                                                GenericQueryMessage(
-                                                                TeamListByOrganizationQuery(
-                                                                        organizationId
-                                                                ),
-                                                                ResponseTypes.instanceOf(
-                                                                        TeamListReadModel::class
-                                                                                .java
-                                                                )
-                                                        )
-                                                        .withMetaData(
-                                                                MetaData.with(
-                                                                        ORGANIZATION_ID_HEADER,
-                                                                        organizationId
-                                                                )
-                                                        ),
-                                                ResponseTypes.instanceOf(
-                                                        TeamListReadModel::class.java
-                                                )
-                                        )
-                                        .get()
+    // 6. Wait for the Read Model to reflect the recovery
+    awaitUntilAssserted {
+      val result =
+          queryGateway
+              .query(
+                  GenericQueryMessage(
+                          TeamListByOrganizationQuery(organizationId),
+                          ResponseTypes.instanceOf(TeamListReadModel::class.java))
+                      .withMetaData(MetaData.with(ORGANIZATION_ID_HEADER, organizationId)),
+                  ResponseTypes.instanceOf(TeamListReadModel::class.java))
+              .get()
 
-                        // result.teams is the List<TeamListReadModelEntity>
-                        val recoveredTeam = result.teams.find { it.teamId == teamId }
+      // result.teams is the List<TeamListReadModelEntity>
+      val recoveredTeam = result.teams.find { it.teamId == teamId }
 
-                        assertThat(recoveredTeam).isNotNull
-                        assertThat(recoveredTeam?.context).isEqualTo("Context 1")
-                        assertThat(recoveredTeam?.level).isEqualTo(4)
-                        assertThat(recoveredTeam?.name).isEqualTo("CTO v2")
-                        assertThat(recoveredTeam?.organizationId).isEqualTo(organizationId)
-                        assertThat(recoveredTeam?.purpose).isEqualTo("Purpose 1")
-                }
-        }
+      assertThat(recoveredTeam).isNotNull
+      assertThat(recoveredTeam?.context).isEqualTo("Context 1")
+      assertThat(recoveredTeam?.level).isEqualTo(4)
+      assertThat(recoveredTeam?.name).isEqualTo("CTO v2")
+      assertThat(recoveredTeam?.organizationId).isEqualTo(organizationId)
+      assertThat(recoveredTeam?.purpose).isEqualTo("Purpose 1")
+    }
+  }
 }

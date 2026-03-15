@@ -7,11 +7,11 @@ import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
 
 fun <R, Q> QueryGateway.queryWithMetaData(
-        query: Q,
-        metadata: MetaData,
-        responseType: ResponseType<R>
+    query: Q,
+    metadata: MetaData,
+    responseType: ResponseType<R>
 ): CompletableFuture<R> {
-    val queryName = query!!::class.java.name
-    val queryMessage = GenericQueryMessage(query, responseType).withMetaData(metadata)
-    return this.query(queryName, queryMessage, responseType)
+  val queryName = query!!::class.java.name
+  val queryMessage = GenericQueryMessage(query, responseType).withMetaData(metadata)
+  return this.query(queryName, queryMessage, responseType)
 }

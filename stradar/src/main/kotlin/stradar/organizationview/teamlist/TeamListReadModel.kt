@@ -26,16 +26,16 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464584975
 @Entity
 @Table(name = "team_read_model")
 class TeamListReadModelEntity {
-    @Id @Column(name = "team_id") var teamId: UUID? = null
-    @Column(name = "context", columnDefinition = "TEXT") var context: String? = null
-    @Column(name = "level") var level: Int? = null
-    @Column(name = "name") var name: String? = null
-    @Column(name = "organization_id") var organizationId: UUID? = null
-    @Column(name = "organization_name") var organizationName: String? = null
-    @Column(name = "admin_account_id") var adminAccountId: UUID? = null
-    @Column(name = "purpose", columnDefinition = "TEXT") var purpose: String? = null
-    @Column(name = "status") var status: String? = "ACTIVE"
-    @Column(name = "reason") var reason: String? = null
+  @Id @Column(name = "team_id") var teamId: UUID? = null
+  @Column(name = "context", columnDefinition = "TEXT") var context: String? = null
+  @Column(name = "level") var level: Int? = null
+  @Column(name = "name") var name: String? = null
+  @Column(name = "organization_id") var organizationId: UUID? = null
+  @Column(name = "organization_name") var organizationName: String? = null
+  @Column(name = "admin_account_id") var adminAccountId: UUID? = null
+  @Column(name = "purpose", columnDefinition = "TEXT") var purpose: String? = null
+  @Column(name = "status") var status: String? = "ACTIVE"
+  @Column(name = "reason") var reason: String? = null
 }
 
 data class TeamListReadModel(val teams: List<TeamListReadModelEntity>)

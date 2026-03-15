@@ -4,9 +4,9 @@
       "id": "3458764660825671360",
       "slice": "slice: signin_admin",
       "index": 1,
-      "context": "Stradar",
+      "context": "Stradar Platform Administration",
       "folder": "signin_admin",
-      "status": "Created"
+      "status": "Done"
     },
     {
       "id": "3458764660825671418",
@@ -75,8 +75,8 @@
     {
       "id": "3458764645827750525",
       "slice": "slice: Define Organization",
-      "index": 19,
-      "context": "Stradar",
+      "index": 5,
+      "context": "Stradar Platform Administration",
       "folder": "defineorganization",
       "status": "Created"
     },
@@ -91,8 +91,8 @@
     {
       "id": "3458764645830936253",
       "slice": "slice: Organization list",
-      "index": 23,
-      "context": "Stradar",
+      "index": 7,
+      "context": "Stradar Platform Administration",
       "folder": "organizationlist",
       "status": "Created"
     },
@@ -335,6 +335,30 @@
       "context": "Compte Client",
       "folder": "listeclients",
       "status": "Created"
+    },
+    {
+      "id": "3458764660938808824",
+      "slice": "slice: super admin account",
+      "index": 3,
+      "context": "Stradar Platform Administration",
+      "folder": "superadminaccount",
+      "status": "Done"
+    },
+    {
+      "id": "3458764663433518223",
+      "slice": "slice: Authentication Adapter",
+      "index": 9,
+      "context": "Stradar Platform Administration",
+      "folder": "authenticationadapter",
+      "status": "Created"
+    },
+    {
+      "id": "3458764663408532418",
+      "slice": "slice: Create Organization Admin User",
+      "index": 11,
+      "context": "Stradar Platform Administration",
+      "folder": "createorganizationadminuser",
+      "status": "Informational"
     }
   ]
 }

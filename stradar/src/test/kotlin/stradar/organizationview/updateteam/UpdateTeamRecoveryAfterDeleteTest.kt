@@ -39,51 +39,47 @@ class UpdateTeamRecoveryAfterDeleteTest {
     val events = mutableListOf<Event>()
 
     events.add(
-            RandomData.newInstance<TeamCreatedEvent> {
-              this.teamId = teamId
-              this.context = "Context 1"
-              this.level = 1
-              this.name = "Name 1"
-              this.organizationId = organizationId
-              this.purpose = "Purpose 1"
-            }
-    )
+        RandomData.newInstance<TeamCreatedEvent> {
+          this.teamId = teamId
+          this.context = "Context 1"
+          this.level = 1
+          this.name = "Name 1"
+          this.organizationId = organizationId
+          this.purpose = "Purpose 1"
+        })
 
     events.add(
-            TeamDeletedEvent(
-                    teamId = teamId,
-                    organizationId = organizationId,
-                    status = "DELETED",
-                    reason = "A very good reason"
-            )
-    )
+        TeamDeletedEvent(
+            teamId = teamId,
+            organizationId = organizationId,
+            status = "DELETED",
+            reason = "A very good reason"))
 
     // WHEN
     val command =
-            UpdateTeamCommand(
-                    teamId = teamId,
-                    context = "Context v2",
-                    level = 2,
-                    name = "Name 2",
-                    organizationId = organizationId,
-                    purpose = "Purpose 2"
-            )
+        UpdateTeamCommand(
+            teamId = teamId,
+            context = "Context v2",
+            level = 2,
+            name = "Name 2",
+            organizationId = organizationId,
+            purpose = "Purpose 2")
 
     // THEN
     val expectedEvent =
-            TeamUpdatedEvent(
-                    teamId = teamId,
-                    organizationId = organizationId,
-                    context = "Context v2",
-                    level = 2,
-                    name = "Name 2",
-                    purpose = "Purpose 2",
-                    status = "ACTIVE"
-            )
+        TeamUpdatedEvent(
+            teamId = teamId,
+            organizationId = organizationId,
+            context = "Context v2",
+            level = 2,
+            name = "Name 2",
+            purpose = "Purpose 2",
+            status = "ACTIVE")
 
-    fixture.given(events)
-            .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
-            .expectSuccessfulHandlerExecution()
-            .expectEvents(expectedEvent)
+    fixture
+        .given(events)
+        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(expectedEvent)
   }
 }

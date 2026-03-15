@@ -1,16 +1,16 @@
-# DataSource Configuration
 spring:
-
-  jpa:
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-
+  # DataSource Configuration
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres-stradar
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+
+  # JPA Configuration
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
 
   # Flyway Configuration
   flyway:
@@ -21,10 +21,23 @@ spring:
     baseline-on-migrate: true
     baseline-version: 20240101
 
+  # Security Configuration
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Make sure this domain matches your NEW tenant
+          issuer-uri: https://dev-ysdpxx7xb3nax6dp.us.auth0.com/
+
+auth0:
+  devPassword: "DevPassword123!"
+  domain: dev-ysdpxx7xb3nax6dp.us.auth0.com
+  clientId: dYgjg3xRngb1k73LxEPAOkshYBZG6fuC
+  clientSecret: wLC3c51RyExF850eFAQR18_eJ0V8Yuwy_MYD1HWWlxncqNM6OMl8gf4DeNISm1P4
+  managementToken: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlB4cVpBMVBhT2g0S3piTjktWVVxNyJ9.eyJpc3MiOiJodHRwczovL2Rldi15c2RweHg3eGIzbmF4NmRwLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJkWWdqZzN4Um5nYjFrNzNMeEVQQU9rc2hZQlpHNmZ1Q0BjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYteXNkcHh4N3hiM25heDZkcC51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTc3MzU2MzcxNCwiZXhwIjoxNzczNjUwMTE0LCJzY29wZSI6InJlYWQ6dXNlcnMgdXBkYXRlOnVzZXJzIGRlbGV0ZTp1c2VycyBjcmVhdGU6dXNlcnMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJkWWdqZzN4Um5nYjFrNzNMeEVQQU9rc2hZQlpHNmZ1QyJ9.JThcGL_tiUUOMKA8XqgFwghJEv9hrPPCZHDFWVo-yh0x4h3foqdxMO4o60tUpqbOn5lkwD7jV5y1Ccgo3odVBlHoQTIVUqMJOveXCNPaZMEhaRk9nhIdrHdcxb0FKDy7VL6YHx2H6melyvidh247QL80Le3CboiAKFrxZL_x_0csOVHm43UI4oY9sMOuLQx_75edLT9i4z1YGbDWKlmiJxLnDhaqx1J3NZTYWIkVT9urNce3s-4mCVs7mUMGu8j308PIT4g6NtfiQK4qD-mr6deV-zKGzLjgfImS3K28d26uSiCSppG0B8qhUSy8i0CJS474B_nr5CQfeJoFIFiXBw"
 axon:
   updates:
-    check:
-      enabled: false
+    enabled: false # Corrected path for disabling updates
   serializer:
     general: jackson
   axonserver:
@@ -37,12 +50,6 @@ axon:
         mode: tracking
       PLATFORM_ADMINISTRATION:
         mode: tracking
-
-#axoniq:
-#  console:
-#    application-name: Awesome-Microservice
-#    credentials: <token> #https://console.axoniq.io/
-#    dlq-mode: NONE
 
 application:
   debug:

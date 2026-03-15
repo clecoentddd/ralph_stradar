@@ -8,88 +8,81 @@ import org.axonframework.messaging.MetaData
 import org.axonframework.modelling.command.AggregateIdentifier
 import org.axonframework.modelling.command.AggregateLifecycle
 import org.axonframework.spring.stereotype.Aggregate
-import stradar.events.OrganizationDefinedEvent
 import stradar.events.PersonCreatedEvent
 import stradar.events.PersonSignedInEvent
 import stradar.organizationview.domain.commands.createperson.CreatePersonCommand
 import stradar.organizationview.domain.commands.signin.SignInCommand
-import stradar.support.metadata.*
+import stradar.support.metadata.USER_ID_HEADER
 
 @Aggregate
 class PersonAccountAggregate {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @AggregateIdentifier private var personId: UUID? = null
-        private var organizationId: UUID? = null
-        private var organizationName: String? = null // 🛡️ Added missing field
-        private var role: String? = null
-        private var username: String? = null
+  @AggregateIdentifier private var personId: UUID? = null
 
-        constructor()
+  private var auth0UserId: String? = null
+  private var organizationId: UUID? = null
+  private var organizationName: String? = null
+  private var role: String? = null
+  private var username: String? = null
 
-        @CommandHandler
-        constructor(command: CreatePersonCommand, metadata: MetaData) : this() {
-                val creatorPersonId = metadata[USER_ID_HEADER]?.toString()
+  constructor()
 
-                logger.info { "Creating Person: ${command.personId} (Creator: $creatorPersonId)" }
+  // ------------------------------------------------------------
+  // CREATE PERSON
+  // ------------------------------------------------------------
+  @CommandHandler
+  constructor(command: CreatePersonCommand, metadata: MetaData) : this() {
+    val creatorPersonId = metadata[USER_ID_HEADER]?.toString()
 
-                AggregateLifecycle.apply(
-                        PersonCreatedEvent(
-                                personId = command.personId,
-                                organizationId = command.organizationId,
-                                username = command.username,
-                                organizationName = command.organizationName,
-                                role = command.role
-                        )
-                )
-        }
+    logger.info { "Creating Person: ${command.personId} (Creator: $creatorPersonId)" }
 
-        @CommandHandler
-        fun handle(command: SignInCommand, metadata: MetaData) {
-                val sessionPersonId = metadata[USER_ID_HEADER]?.toString()
+    AggregateLifecycle.apply(
+        PersonCreatedEvent(
+            personId = command.personId,
+            auth0UserId = command.auth0UserId,
+            organizationId = command.organizationId,
+            organizationName = command.organizationName,
+            role = command.role,
+            username = command.username))
+  }
 
-                // 1. Validation
-                if (sessionPersonId != null && sessionPersonId != command.personId.toString()) {
-                        throw IllegalAccessException("Security Error: Identity mismatch.")
-                }
+  // ------------------------------------------------------------
+  // SIGN IN
+  // ------------------------------------------------------------
+  @CommandHandler
+  fun handle(command: SignInCommand, metadata: MetaData) {
+    val sessionPersonId = metadata[USER_ID_HEADER]?.toString()
 
-                // 2. Fetch current state for the event
-                val currentOrgId =
-                        this.organizationId
-                                ?: throw IllegalStateException("No Organization assigned.")
-                val currentRole = this.role ?: throw IllegalStateException("No Role assigned.")
+    if (sessionPersonId != null && sessionPersonId != command.personId.toString()) {
+      throw IllegalAccessException("Security Error: Identity mismatch.")
+    }
 
-                // 3. Emit sign-in (Using existing state)
-                AggregateLifecycle.apply(
-                        PersonSignedInEvent(
-                                personId = command.personId,
-                                organizationId = currentOrgId,
-                                role = currentRole
-                        )
-                )
-        }
+    val currentOrgId = organizationId ?: throw IllegalStateException("No Organization assigned.")
 
-        @EventSourcingHandler
-        fun on(event: PersonCreatedEvent) {
-                this.personId = event.personId
-                this.organizationId = event.organizationId
-                this.organizationName = event.organizationName
-                this.role = event.role
-                this.username = event.username
-        }
+    val currentRole = role ?: throw IllegalStateException("No Role assigned.")
 
-        @EventSourcingHandler
-        fun on(event: PersonSignedInEvent) {
-                // No state update needed here usually, but we keep the personId sync for safety
-                this.personId = event.personId
-        }
+    AggregateLifecycle.apply(
+        PersonSignedInEvent(
+            personId = command.personId, organizationId = currentOrgId, role = currentRole))
+  }
 
-        @EventSourcingHandler
-        fun on(event: OrganizationDefinedEvent) {
-                this.personId = event.personId
-                this.organizationId = event.organizationId
-                this.role = "ADMIN" // Assuming organization definer is an Admin
-                this.username = event.username
-        }
+  // ------------------------------------------------------------
+  // EVENT SOURCING
+  // ------------------------------------------------------------
+  @EventSourcingHandler
+  fun on(event: PersonCreatedEvent) {
+    personId = event.personId
+    auth0UserId = event.auth0UserId
+    organizationId = event.organizationId
+    organizationName = event.organizationName
+    role = event.role
+    username = event.username
+  }
+
+  @EventSourcingHandler
+  fun on(event: PersonSignedInEvent) {
+    personId = event.personId
+  }
 }

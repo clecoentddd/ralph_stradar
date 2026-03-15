@@ -1,0 +1,125 @@
+{
+  "id": "3458764660938808824",
+  "status": "Done",
+  "title": "slice: super admin account",
+  "context": "Stradar Platform Administration",
+  "sliceType": "STATE_VIEW",
+  "commands": [],
+  "events": [],
+  "readmodels": [
+    {
+      "id": "3458764660816044921",
+      "tags": [],
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: super admin account",
+      "title": "admin",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "READMODEL",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660816044927",
+          "type": "OUTBOUND",
+          "title": "Admin Connected Status",
+          "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764660815509287",
+          "type": "INBOUND",
+          "title": "Admin Signed In",
+          "elementType": "EVENT"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screens": [
+    {
+      "id": "3458764660816044927",
+      "tags": [],
+      "groupId": "3458764660816179934",
+      "domain": "saas",
+      "elementContext": "INTERNAL",
+      "modelContext": "Stradar Platform Administration",
+      "context": "INTERNAL",
+      "slice": "slice: super admin account",
+      "title": "Admin Connected Status",
+      "fields": [
+        {
+          "name": "adminAccountId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "email",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "admin",
+      "aggregateDependencies": [
+        "admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764660816044921",
+          "type": "INBOUND",
+          "title": "admin",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "admin"
+  ]
+}

@@ -22,10 +22,8 @@ class OrganizationListResource(private val queryGateway: QueryGateway) {
   @GetMapping("/organizationlist")
   fun findReadModel(): CompletableFuture<ResponseEntity<OrganizationListReadModel>> {
     logger.info { "Fetching organization list" }
-    return queryGateway.query(
-                    OrganizationListReadModelQuery(),
-                    OrganizationListReadModel::class.java
-            )
-            .thenApply { result -> ResponseEntity.ok(result) }
+    return queryGateway
+        .query(OrganizationListReadModelQuery(), OrganizationListReadModel::class.java)
+        .thenApply { result -> ResponseEntity.ok(result) }
   }
 }

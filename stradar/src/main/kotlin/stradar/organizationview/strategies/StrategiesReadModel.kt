@@ -18,19 +18,19 @@ https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764661684920684
 @Table(name = "strategies_view")
 class StrategiesReadModelEntity {
 
-    @Id @Column(name = "strategyId") var strategyId: UUID? = null
+  @Id @Column(name = "strategyId") var strategyId: UUID? = null
 
-    @Column(name = "strategyBuilderId") var strategyBuilderId: String? = null
+  @Column(name = "strategyBuilderId") var strategyBuilderId: String? = null
 
-    @Column(name = "organizationId", nullable = false) var organizationId: UUID? = null
+  @Column(name = "organizationId", nullable = false) var organizationId: UUID? = null
 
-    @Column(name = "teamId", nullable = false) var teamId: UUID? = null
+  @Column(name = "teamId", nullable = false) var teamId: UUID? = null
 
-    @Column(name = "strategyName") var strategyName: String? = null
+  @Column(name = "strategyName") var strategyName: String? = null
 
-    @Column(name = "strategyTimeframe") var strategyTimeframe: String? = null
+  @Column(name = "strategyTimeframe") var strategyTimeframe: String? = null
 
-    @Enumerated(EnumType.STRING) @Column(name = "status") var status: StrategyStatus? = null
+  @Enumerated(EnumType.STRING) @Column(name = "status") var status: StrategyStatus? = null
 }
 
 data class StrategiesReadModel(val strategies: List<StrategiesReadModelEntity>)

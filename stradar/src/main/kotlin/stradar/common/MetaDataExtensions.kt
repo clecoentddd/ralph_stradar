@@ -9,22 +9,20 @@ import stradar.support.metadata.*
  * organizationId and x-user-id are extracted throughout the organizationview package.
  */
 fun MetaData.resolveOrganizationId(): UUID {
-        val value =
-                this[ORGANIZATION_ID_HEADER]
-                        ?: throw IllegalStateException(
-                                "Security context missing: $ORGANIZATION_ID_HEADER required"
-                        )
-        return when (value) {
-                is UUID -> value
-                is String -> UUID.fromString(value)
-                else ->
-                        throw IllegalStateException(
-                                "Unsupported type for organizationId: ${value::class.java.name}"
-                        )
-        }
+  val value =
+      this[ORGANIZATION_ID_HEADER]
+          ?: throw IllegalStateException(
+              "Security context missing: $ORGANIZATION_ID_HEADER required")
+  return when (value) {
+    is UUID -> value
+    is String -> UUID.fromString(value)
+    else ->
+        throw IllegalStateException(
+            "Unsupported type for organizationId: ${value::class.java.name}")
+  }
 }
 
 fun MetaData.resolveUserId(): String {
-        return this[USER_ID_HEADER]?.toString()
-                ?: throw IllegalStateException("Security context missing: $USER_ID_HEADER required")
+  return this[USER_ID_HEADER]?.toString()
+      ?: throw IllegalStateException("Security context missing: $USER_ID_HEADER required")
 }

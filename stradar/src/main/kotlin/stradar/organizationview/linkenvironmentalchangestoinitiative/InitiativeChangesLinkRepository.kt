@@ -7,16 +7,16 @@ import org.springframework.transaction.annotation.Transactional
 
 interface InitiativeChangesLinkRepository : JpaRepository<InitiativeChangesLinkReadModel, UUID> {
 
-    fun findAllByInitiativeIdAndOrganizationId(
-            initiativeId: UUID,
-            organizationId: UUID
-    ): List<InitiativeChangesLinkReadModel>
+  fun findAllByInitiativeIdAndOrganizationId(
+      initiativeId: UUID,
+      organizationId: UUID
+  ): List<InitiativeChangesLinkReadModel>
 
-    @Transactional
-    @Modifying
-    fun deleteByInitiativeIdAndOrganizationId(initiativeId: UUID, organizationId: UUID)
+  @Transactional
+  @Modifying
+  fun deleteByInitiativeIdAndOrganizationId(initiativeId: UUID, organizationId: UUID)
 
-    @Transactional
-    @Modifying
-    fun deleteByEnvChangeIdAndOrganizationId(envChangeId: UUID, organizationId: UUID)
+  @Transactional
+  @Modifying
+  fun deleteByEnvChangeIdAndOrganizationId(envChangeId: UUID, organizationId: UUID)
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class MetaDataCommandInterceptor : MessageDispatchInterceptor<CommandMessage<Any>> {
   override fun handle(
-          messages: List<CommandMessage<Any>>
+      messages: List<CommandMessage<Any>>
   ): BiFunction<Int, CommandMessage<Any>, CommandMessage<Any>> {
     return BiFunction { _, message ->
       // Check if SESSION_ID_HEADER metadata exists

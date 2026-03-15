@@ -21,16 +21,14 @@ class SuperAdminAccountResource(private val queryGateway: QueryGateway) {
 
     // Signature: query(Payload, ResponseClass)
     // This is the cleanest, most reliable way in Kotlin/Axon
-    return queryGateway.query(
-                    SuperAdminAccountReadModelQuery(),
-                    SuperAdminAccountReadModel::class.java
-            )
-            .thenApply { result ->
-              if (result != null) {
-                ResponseEntity.ok(result)
-              } else {
-                ResponseEntity.notFound().build()
-              }
-            }
+    return queryGateway
+        .query(SuperAdminAccountReadModelQuery(), SuperAdminAccountReadModel::class.java)
+        .thenApply { result ->
+          if (result != null) {
+            ResponseEntity.ok(result)
+          } else {
+            ResponseEntity.notFound().build()
+          }
+        }
   }
 }

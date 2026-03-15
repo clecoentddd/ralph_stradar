@@ -29,44 +29,41 @@ class UpdateTeamHappyFlowTest {
 
     // GIVEN: The team was already created in the past
     val initialEvent =
-            TeamCreatedEvent(
-                    teamId = teamId,
-                    organizationId = organizationId,
-                    context = "Context v1",
-                    level = 1,
-                    name = "Name 1",
-                    purpose = "Purpose 1",
-                    status = "ACTIVE"
-            )
+        TeamCreatedEvent(
+            teamId = teamId,
+            organizationId = organizationId,
+            context = "Context v1",
+            level = 1,
+            name = "Name 1",
+            purpose = "Purpose 1",
+            status = "ACTIVE")
 
     // WHEN: We issue an update command with the correct organizationId in MetaData
     val command =
-            UpdateTeamCommand(
-                    teamId = teamId,
-                    organizationId =
-                            organizationId, // Included in command for clarity, but MetaData is the
-                    // guard
-                    context = "Context v2",
-                    level = 2,
-                    name = "Name 2",
-                    purpose = "Purpose 2"
-            )
+        UpdateTeamCommand(
+            teamId = teamId,
+            organizationId = organizationId, // Included in command for clarity, but MetaData is the
+            // guard
+            context = "Context v2",
+            level = 2,
+            name = "Name 2",
+            purpose = "Purpose 2")
 
     // THEN: We expect a TeamUpdatedEvent with the new values and 'ACTIVE' status
     val expectedEvent =
-            TeamUpdatedEvent(
-                    teamId = teamId,
-                    organizationId = organizationId,
-                    context = "Context v2",
-                    level = 2,
-                    name = "Name 2",
-                    purpose = "Purpose 2",
-                    status = "ACTIVE"
-            )
+        TeamUpdatedEvent(
+            teamId = teamId,
+            organizationId = organizationId,
+            context = "Context v2",
+            level = 2,
+            name = "Name 2",
+            purpose = "Purpose 2",
+            status = "ACTIVE")
 
-    fixture.given(initialEvent)
-            .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
-            .expectSuccessfulHandlerExecution()
-            .expectEvents(expectedEvent)
+    fixture
+        .given(initialEvent)
+        .`when`(command, MetaData.with(ORGANIZATION_ID_HEADER, organizationId))
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(expectedEvent)
   }
 }

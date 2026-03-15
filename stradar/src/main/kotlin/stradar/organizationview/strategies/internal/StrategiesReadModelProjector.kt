@@ -13,12 +13,12 @@ import stradar.organizationview.strategies.StrategiesReadModelEntity
 /** Repository for the strategy projection */
 interface StrategiesReadModelRepository : JpaRepository<StrategiesReadModelEntity, UUID> {
 
-    fun findAllByOrganizationId(organizationId: UUID): List<StrategiesReadModelEntity>
+  fun findAllByOrganizationId(organizationId: UUID): List<StrategiesReadModelEntity>
 
-    fun findAllByTeamIdAndOrganizationId(
-            teamId: UUID,
-            organizationId: UUID
-    ): List<StrategiesReadModelEntity>
+  fun findAllByTeamIdAndOrganizationId(
+      teamId: UUID,
+      organizationId: UUID
+  ): List<StrategiesReadModelEntity>
 }
 
 /*
@@ -31,27 +31,27 @@ private val logger = KotlinLogging.logger {}
 @Component
 class StrategiesReadModelProjector(private val repository: StrategiesReadModelRepository) {
 
-    /**
-     * When a strategy draft is created → we insert or update the strategy row.
-     *
-     * This projection is idempotent and safe for event replay.
-     */
-    @EventHandler
-    fun on(event: StrategyCreatedEvent, metaData: MetaData) {
-        val secureOrgId = metaData.resolveOrganizationId()
+  /**
+   * When a strategy draft is created → we insert or update the strategy row.
+   *
+   * This projection is idempotent and safe for event replay.
+   */
+  @EventHandler
+  fun on(event: StrategyCreatedEvent, metaData: MetaData) {
+    val secureOrgId = metaData.resolveOrganizationId()
 
-        val entity = repository.findById(event.strategyId).orElse(StrategiesReadModelEntity())
+    val entity = repository.findById(event.strategyId).orElse(StrategiesReadModelEntity())
 
-        entity.apply {
-            strategyId = event.strategyId
-            strategyBuilderId = event.strategyBuilderId
-            organizationId = secureOrgId
-            teamId = event.teamId
-            strategyName = event.strategyName
-            strategyTimeframe = event.strategyTimeframe
-            status = event.strategyStatus
-        }
-
-        repository.save(entity)
+    entity.apply {
+      strategyId = event.strategyId
+      strategyBuilderId = event.strategyBuilderId
+      organizationId = secureOrgId
+      teamId = event.teamId
+      strategyName = event.strategyName
+      strategyTimeframe = event.strategyTimeframe
+      status = event.strategyStatus
     }
+
+    repository.save(entity)
+  }
 }

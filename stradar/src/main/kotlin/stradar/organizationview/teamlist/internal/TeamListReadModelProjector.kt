@@ -14,67 +14,67 @@ import stradar.organizationview.ProcessingGroups
 import stradar.organizationview.teamlist.TeamListReadModelEntity
 
 interface TeamListReadModelRepository : JpaRepository<TeamListReadModelEntity, UUID> {
-    // Used for the Multi-Tenant API: Only return teams for the user's tenant
-    fun findByOrganizationIdAndStatus(
-            organizationId: UUID,
-            status: String = "ACTIVE"
-    ): List<TeamListReadModelEntity>
+  // Used for the Multi-Tenant API: Only return teams for the user's tenant
+  fun findByOrganizationIdAndStatus(
+      organizationId: UUID,
+      status: String = "ACTIVE"
+  ): List<TeamListReadModelEntity>
 
-    fun existsByNameAndOrganizationId(name: String, organizationId: UUID): Boolean
+  fun existsByNameAndOrganizationId(name: String, organizationId: UUID): Boolean
 }
 
 @Component
 @ProcessingGroup(ProcessingGroups.ORGANIZATION_VIEW)
 class TeamListReadModelProjector(var repository: TeamListReadModelRepository) {
 
-    @EventHandler
-    fun on(event: TeamCreatedEvent, metaData: MetaData) {
-        // Create the entry for the specific tenant
-        val secureOrgId = metaData.resolveOrganizationId()
-        val entity =
-                TeamListReadModelEntity().apply {
-                    this.teamId = event.teamId
-                    this.organizationId = secureOrgId // Permanent Tenant ID
-                    this.context = event.context
-                    this.level = event.level
-                    this.name = event.name
-                    this.purpose = event.purpose
-                    this.status = "ACTIVE"
-                }
-        repository.save(entity)
-    }
-
-    @EventHandler
-    fun on(event: TeamUpdatedEvent, metaData: MetaData) {
-        val secureOrgId = metaData.resolveOrganizationId()
-        // Find the team within the projection
-        repository.findById(event.teamId).ifPresent { entity ->
-            if (entity.organizationId != secureOrgId) {
-                throw IllegalAccessException("Security mismatch for Team Projector (Update)")
-            }
-            entity.apply {
-                // We update the data, but we NEVER change the organizationId (Tenant ID)
-                this.context = event.context
-                this.level = event.level
-                this.name = event.name
-                this.purpose = event.purpose
-                this.status = event.status ?: "ACTIVE"
-            }
-            repository.save(entity)
+  @EventHandler
+  fun on(event: TeamCreatedEvent, metaData: MetaData) {
+    // Create the entry for the specific tenant
+    val secureOrgId = metaData.resolveOrganizationId()
+    val entity =
+        TeamListReadModelEntity().apply {
+          this.teamId = event.teamId
+          this.organizationId = secureOrgId // Permanent Tenant ID
+          this.context = event.context
+          this.level = event.level
+          this.name = event.name
+          this.purpose = event.purpose
+          this.status = "ACTIVE"
         }
-    }
+    repository.save(entity)
+  }
 
-    @EventHandler
-    fun on(event: TeamDeletedEvent, metaData: MetaData) {
-        val secureOrgId = metaData.resolveOrganizationId()
-        // Soft-delete the team so it disappears from the "Active" tenant view
-        repository.findById(event.teamId).ifPresent { entity ->
-            if (entity.organizationId != secureOrgId) {
-                throw IllegalAccessException("Security mismatch for Team Projector (Delete)")
-            }
-            entity.status = "DELETED"
-            entity.reason = event.reason
-            repository.save(entity)
-        }
+  @EventHandler
+  fun on(event: TeamUpdatedEvent, metaData: MetaData) {
+    val secureOrgId = metaData.resolveOrganizationId()
+    // Find the team within the projection
+    repository.findById(event.teamId).ifPresent { entity ->
+      if (entity.organizationId != secureOrgId) {
+        throw IllegalAccessException("Security mismatch for Team Projector (Update)")
+      }
+      entity.apply {
+        // We update the data, but we NEVER change the organizationId (Tenant ID)
+        this.context = event.context
+        this.level = event.level
+        this.name = event.name
+        this.purpose = event.purpose
+        this.status = event.status ?: "ACTIVE"
+      }
+      repository.save(entity)
     }
+  }
+
+  @EventHandler
+  fun on(event: TeamDeletedEvent, metaData: MetaData) {
+    val secureOrgId = metaData.resolveOrganizationId()
+    // Soft-delete the team so it disappears from the "Active" tenant view
+    repository.findById(event.teamId).ifPresent { entity ->
+      if (entity.organizationId != secureOrgId) {
+        throw IllegalAccessException("Security mismatch for Team Projector (Delete)")
+      }
+      entity.status = "DELETED"
+      entity.reason = event.reason
+      repository.save(entity)
+    }
+  }
 }

@@ -19,98 +19,92 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876466104089
 */
 
 interface EnvironmentalChangesReadModelRepository :
-        JpaRepository<EnvironmentalChangesReadModelEntity, UUID> {
-        fun findByEnvironmentalChangeIdAndOrganizationId(
-                environmentalChangeId: UUID,
-                organizationId: UUID
-        ): List<EnvironmentalChangesReadModelEntity>
+    JpaRepository<EnvironmentalChangesReadModelEntity, UUID> {
+  fun findByEnvironmentalChangeIdAndOrganizationId(
+      environmentalChangeId: UUID,
+      organizationId: UUID
+  ): List<EnvironmentalChangesReadModelEntity>
 
-        fun findByTeamId(teamId: UUID): List<EnvironmentalChangesReadModelEntity>
+  fun findByTeamId(teamId: UUID): List<EnvironmentalChangesReadModelEntity>
 
-        fun findByTeamIdAndOrganizationId(
-                teamId: UUID,
-                organizationId: UUID
-        ): List<EnvironmentalChangesReadModelEntity>
+  fun findByTeamIdAndOrganizationId(
+      teamId: UUID,
+      organizationId: UUID
+  ): List<EnvironmentalChangesReadModelEntity>
 }
 
 @ProcessingGroup(ProcessingGroups.ENVIRONMENTAL_CHANGES_VIEW)
 @Component
 class EnvironmentalChangesReadModelProjector(
-        var repository: EnvironmentalChangesReadModelRepository
+    var repository: EnvironmentalChangesReadModelRepository
 ) {
 
-        private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-        @EventHandler
-        fun on(event: EnvironmentalChangeDetectedEvent, metaData: MetaData) {
-                logger.info { "Projecting New Flat Element: ${event.environmentalChangeId}" }
+  @EventHandler
+  fun on(event: EnvironmentalChangeDetectedEvent, metaData: MetaData) {
+    logger.info { "Projecting New Flat Element: ${event.environmentalChangeId}" }
 
-                val secureOrgId = metaData.resolveOrganizationId()
+    val secureOrgId = metaData.resolveOrganizationId()
 
-                val entity =
-                        EnvironmentalChangesReadModelEntity().apply {
-                                this.environmentalChangeId = event.environmentalChangeId
-                                this.teamId = event.teamId
-                                this.organizationId = secureOrgId
-                                this.title = event.title
-                                this.detect = event.detect
-                                this.assess = event.assess
-                                this.respond = event.respond
-                                this.type = event.type
-                                this.category = event.category
-                                this.distance = event.distance
-                                this.impact = event.impact
-                                this.risk = event.risk
-                        }
-
-                repository.save(entity)
+    val entity =
+        EnvironmentalChangesReadModelEntity().apply {
+          this.environmentalChangeId = event.environmentalChangeId
+          this.teamId = event.teamId
+          this.organizationId = secureOrgId
+          this.title = event.title
+          this.detect = event.detect
+          this.assess = event.assess
+          this.respond = event.respond
+          this.type = event.type
+          this.category = event.category
+          this.distance = event.distance
+          this.impact = event.impact
+          this.risk = event.risk
         }
 
-        @EventHandler
-        fun on(event: EnvironmentalChangeUpdatedEvent, metaData: MetaData) {
-                logger.info { "Updating Flat Element: ${event.environmentalChangeId}" }
+    repository.save(entity)
+  }
 
-                val secureOrgId = metaData.resolveOrganizationId()
+  @EventHandler
+  fun on(event: EnvironmentalChangeUpdatedEvent, metaData: MetaData) {
+    logger.info { "Updating Flat Element: ${event.environmentalChangeId}" }
 
-                val entity =
-                        repository
-                                .findByEnvironmentalChangeIdAndOrganizationId(
-                                        event.environmentalChangeId,
-                                        secureOrgId
-                                )
-                                .firstOrNull()
-                                ?: throw IllegalArgumentException(
-                                        "Environmental change not found for id: ${event.environmentalChangeId} (org: $secureOrgId)"
-                                )
+    val secureOrgId = metaData.resolveOrganizationId()
 
-                entity.apply {
-                        this.title = event.title
-                        this.detect = event.detect
-                        this.assess = event.assess
-                        this.respond = event.respond
-                        this.type = event.type
-                        this.category = event.category
-                        this.distance = event.distance
-                        this.impact = event.impact
-                        this.risk = event.risk
-                }
+    val entity =
+        repository
+            .findByEnvironmentalChangeIdAndOrganizationId(event.environmentalChangeId, secureOrgId)
+            .firstOrNull()
+            ?: throw IllegalArgumentException(
+                "Environmental change not found for id: ${event.environmentalChangeId} (org: $secureOrgId)")
 
-                repository.save(entity)
-        }
+    entity.apply {
+      this.title = event.title
+      this.detect = event.detect
+      this.assess = event.assess
+      this.respond = event.respond
+      this.type = event.type
+      this.category = event.category
+      this.distance = event.distance
+      this.impact = event.impact
+      this.risk = event.risk
+    }
 
-        @EventHandler
-        fun on(event: EnvironmentalChangeDeletedEvent, metaData: MetaData) {
-                logger.info { "Deleting Flat Element: ${event.environmentalChangeId}" }
+    repository.save(entity)
+  }
 
-                val secureOrgId = metaData.resolveOrganizationId()
+  @EventHandler
+  fun on(event: EnvironmentalChangeDeletedEvent, metaData: MetaData) {
+    logger.info { "Deleting Flat Element: ${event.environmentalChangeId}" }
 
-                val entities =
-                        repository.findByEnvironmentalChangeIdAndOrganizationId(
-                                event.environmentalChangeId,
-                                secureOrgId
-                        )
-                if (entities.isNotEmpty()) {
-                        repository.deleteAll(entities)
-                }
-        }
+    val secureOrgId = metaData.resolveOrganizationId()
+
+    val entities =
+        repository.findByEnvironmentalChangeIdAndOrganizationId(
+            event.environmentalChangeId, secureOrgId)
+    if (entities.isNotEmpty()) {
+      repository.deleteAll(entities)
+    }
+  }
 }

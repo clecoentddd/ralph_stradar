@@ -11,7 +11,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876464582775
 @NoArg
 data class DefineOrganizationCommand(
         @TargetAggregateIdentifier var organizationId: UUID,
-        var personId: UUID,
-        var username: String,
-        var organizationName: String
+        var organizationUserId: UUID,
+        var organizationUserEmail: String,
+        var organizationName: String,
+        var role: String
 ) : Command

@@ -8,12 +8,12 @@ import stradar.platformadministration.superadminaccount.internal.SuperAdminAccou
 
 @Component
 class SuperAdminAccountListQueryHandler(
-        private val repository: SuperAdminAccountReadModelRepository
+    private val repository: SuperAdminAccountReadModelRepository
 ) {
 
-    @QueryHandler
-    fun handleQuery(query: SuperAdminAccountReadModelQuery): SuperAdminAccountReadModel {
-        // Returns the full list for the admin view
-        return SuperAdminAccountReadModel(repository.findAll())
-    }
+  @QueryHandler
+  fun handleQuery(query: SuperAdminAccountReadModelQuery): SuperAdminAccountReadModel {
+    // Returns the full list for the admin view
+    return SuperAdminAccountReadModel(repository.findAll())
+  }
 }
