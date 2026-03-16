@@ -7,69 +7,93 @@ import org.axonframework.messaging.MetaData
 import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.GenericQueryMessage
 import org.axonframework.queryhandling.QueryGateway
+import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.teamlist.*
+import stradar.security.SecurityHelper
 import stradar.support.metadata.*
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764645849750300
 */
 @RestController
-class TeamlistResource(private var queryGateway: QueryGateway) {
+class TeamlistResource(
+        private var queryGateway: QueryGateway,
+        private val securityHelper: SecurityHelper
+) {
 
-  private var logger = KotlinLogging.logger {}
+    private var logger = KotlinLogging.logger {}
 
-  /**
-   * Fetches all teams for the organization. The organizationId is now sourced from a mandatory
-   * header for security.
-   */
-  @CrossOrigin(
-      allowedHeaders =
-          [
-              ORGANIZATION_ID_HEADER,
-              SESSION_ID_HEADER,
-              "Content-Type",
-              "X-Correlation-Id",
-              USER_ID_HEADER])
-  @GetMapping("/teamlist")
-  fun findByOrganization(
-      @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-      @RequestHeader(USER_ID_HEADER) userId: String
-  ): CompletableFuture<TeamListReadModel> {
-    logger.info { "Fetching team list for org: $organizationId" }
+    @CrossOrigin(
+            allowedHeaders =
+                    [
+                            "Authorization",
+                            ORGANIZATION_ID_HEADER,
+                            SESSION_ID_HEADER,
+                            "Content-Type",
+                            "X-Correlation-Id",
+                            USER_ID_HEADER]
+    )
+    @GetMapping("/teamlist")
+    fun findByOrganization(
+            @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+            @RequestHeader(USER_ID_HEADER) userId: String,
+            authentication: Authentication
+    ): CompletableFuture<ResponseEntity<TeamListReadModel>> {
+        logger.info { "Fetching team list for org: $organizationId" }
 
-    val responseType = ResponseTypes.instanceOf(TeamListReadModel::class.java)
-    val queryMessage =
-        GenericQueryMessage(TeamListByOrganizationQuery(organizationId), responseType)
-            .withMetaData(
-                MetaData.with(ORGANIZATION_ID_HEADER, organizationId).and(USER_ID_HEADER, userId))
+        // 🔒 Verify user belongs to the requested organization
+        val user = securityHelper.extractUser(authentication)
+        securityHelper.checkOrganization<TeamListReadModel>(user, organizationId)?.let {
+            return CompletableFuture.completedFuture(it)
+        }
 
-    return queryGateway.query(queryMessage, responseType)
-  }
+        val responseType = ResponseTypes.instanceOf(TeamListReadModel::class.java)
+        val queryMessage =
+                GenericQueryMessage(TeamListByOrganizationQuery(organizationId), responseType)
+                        .withMetaData(
+                                MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                        .and(USER_ID_HEADER, userId)
+                        )
 
-  @CrossOrigin(
-      allowedHeaders =
-          [
-              ORGANIZATION_ID_HEADER,
-              SESSION_ID_HEADER,
-              "Content-Type",
-              "X-Correlation-Id",
-              USER_ID_HEADER])
-  @GetMapping("/teamlist/{teamId}/name")
-  fun findTeamName(
-      @PathVariable("teamId") teamId: UUID,
-      @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
-      @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-      @RequestHeader(USER_ID_HEADER) userId: String
-  ): CompletableFuture<TeamNameResponse> {
-    logger.info { "Fetching name for Team ID: $teamId (org: $organizationId)" }
+        return queryGateway.query(queryMessage, responseType).thenApply { ResponseEntity.ok(it) }
+    }
 
-    val responseType = ResponseTypes.instanceOf(TeamNameResponse::class.java)
-    val queryMessage =
-        GenericQueryMessage(TeamNameByTeamIdQuery(teamId), responseType)
-            .withMetaData(
-                MetaData.with(ORGANIZATION_ID_HEADER, organizationId).and(USER_ID_HEADER, userId))
+    @CrossOrigin(
+            allowedHeaders =
+                    [
+                            "Authorization",
+                            ORGANIZATION_ID_HEADER,
+                            SESSION_ID_HEADER,
+                            "Content-Type",
+                            "X-Correlation-Id",
+                            USER_ID_HEADER]
+    )
+    @GetMapping("/teamlist/{teamId}/name")
+    fun findTeamName(
+            @PathVariable("teamId") teamId: UUID,
+            @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
+            @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
+            @RequestHeader(USER_ID_HEADER) userId: String,
+            authentication: Authentication
+    ): CompletableFuture<ResponseEntity<TeamNameResponse>> {
+        logger.info { "Fetching name for Team ID: $teamId (org: $organizationId)" }
 
-    return queryGateway.query(queryMessage, responseType)
-  }
+        // 🔒 Verify user belongs to the requested organization
+        val user = securityHelper.extractUser(authentication)
+        securityHelper.checkOrganization<TeamNameResponse>(user, organizationId)?.let {
+            return CompletableFuture.completedFuture(it)
+        }
+
+        val responseType = ResponseTypes.instanceOf(TeamNameResponse::class.java)
+        val queryMessage =
+                GenericQueryMessage(TeamNameByTeamIdQuery(teamId), responseType)
+                        .withMetaData(
+                                MetaData.with(ORGANIZATION_ID_HEADER, organizationId)
+                                        .and(USER_ID_HEADER, userId)
+                        )
+
+        return queryGateway.query(queryMessage, responseType).thenApply { ResponseEntity.ok(it) }
+    }
 }

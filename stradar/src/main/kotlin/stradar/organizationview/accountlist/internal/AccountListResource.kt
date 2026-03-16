@@ -7,16 +7,19 @@ import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
-import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.web.bind.annotation.*
 import stradar.organizationview.accountlist.AccountListReadModel
 import stradar.organizationview.accountlist.AccountListReadModelEntity
 import stradar.organizationview.accountlist.AccountListReadModelQuery
 import stradar.organizationview.accountlist.PersonAccountQuery
+import stradar.security.SecurityHelper
 import stradar.support.metadata.*
 
 @RestController
-class AccountListResource(private val queryGateway: QueryGateway) {
+class AccountListResource(
+        private val queryGateway: QueryGateway,
+        private val securityHelper: SecurityHelper
+) {
 
   private val logger = KotlinLogging.logger {}
   private val COMPANY_ID_CLAIM = "https://stradar.com/companyId"
@@ -56,12 +59,9 @@ class AccountListResource(private val queryGateway: QueryGateway) {
           authentication: Authentication
   ): CompletableFuture<ResponseEntity<AccountListReadModelEntity>> {
 
-    val jwt = authentication.principal as Jwt
-    val auth0UserId = jwt.subject
-    val jwtCompanyId = jwt.getClaimAsString(COMPANY_ID_CLAIM)
-
+    val user = securityHelper.extractUser(authentication)
     logger.info {
-      "Fetching account for personId=$personId by auth0User=$auth0UserId companyId=$jwtCompanyId"
+      "Fetching account for personId=$personId by auth0User=${user.auth0UserId} companyId=${user.companyId}"
     }
 
     return queryGateway.query(
@@ -73,20 +73,19 @@ class AccountListResource(private val queryGateway: QueryGateway) {
                       return@thenApply ResponseEntity.notFound().build<AccountListReadModelEntity>()
 
               // Verify the requesting user owns this account
-              if (result.auth0UserId != auth0UserId) {
-                logger.warn {
-                  "Auth0 userId mismatch: token=$auth0UserId entity=${result.auth0UserId}"
-                }
-                return@thenApply ResponseEntity.status(403).build<AccountListReadModelEntity>()
-              }
+              securityHelper.checkSameUser<AccountListReadModelEntity>(user, result.auth0UserId)
+                      ?.let {
+                        return@thenApply it
+                      }
 
               // Verify the account belongs to the correct organization
-              if (jwtCompanyId != null && result.organizationId?.toString() != jwtCompanyId) {
-                logger.warn {
-                  "OrganizationId mismatch: token=$jwtCompanyId entity=${result.organizationId}"
-                }
-                return@thenApply ResponseEntity.status(403).build<AccountListReadModelEntity>()
-              }
+              securityHelper.checkOrganization<AccountListReadModelEntity>(
+                              user,
+                              result.organizationId
+                      )
+                      ?.let {
+                        return@thenApply it
+                      }
 
               ResponseEntity.ok(result)
             }
