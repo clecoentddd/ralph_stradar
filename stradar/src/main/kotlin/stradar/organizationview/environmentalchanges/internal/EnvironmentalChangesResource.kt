@@ -82,7 +82,6 @@ class EnvironmentalChangesResource(
     fun findByTeam(
             @PathVariable("teamId") teamId: UUID,
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-            @RequestHeader(USER_ID_HEADER) userId: String,
             authentication: Authentication
     ): CompletableFuture<ResponseEntity<EnvironmentalChangesReadModel>> {
         logger.info {
@@ -91,6 +90,7 @@ class EnvironmentalChangesResource(
 
         // 🔒 Verify user belongs to the requested organization
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<EnvironmentalChangesReadModel>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }

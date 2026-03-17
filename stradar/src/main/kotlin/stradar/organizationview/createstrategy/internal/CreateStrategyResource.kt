@@ -56,13 +56,13 @@ class CreateStrategyResource(
   fun createStrategy(
           @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
           @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
-          @RequestHeader(value = USER_ID_HEADER, required = true) userId: String,
           @RequestBody payload: CreateStrategyPayload,
           authentication: Authentication
   ): ResponseEntity<Any> {
 
     // 🔒 Verify user belongs to the organization in the payload
     val user = securityHelper.extractUser(authentication)
+    val userId = user.auth0UserId
     securityHelper.checkOrganization<Any>(user, payload.organizationId)?.let {
       return it
     }

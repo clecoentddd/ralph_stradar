@@ -38,13 +38,13 @@ class TeamlistResource(
     @GetMapping("/teamlist")
     fun findByOrganization(
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-            @RequestHeader(USER_ID_HEADER) userId: String,
             authentication: Authentication
     ): CompletableFuture<ResponseEntity<TeamListReadModel>> {
         logger.info { "Fetching team list for org: $organizationId" }
 
         // 🔒 Verify user belongs to the requested organization
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<TeamListReadModel>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }
@@ -75,13 +75,13 @@ class TeamlistResource(
             @PathVariable("teamId") teamId: UUID,
             @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-            @RequestHeader(USER_ID_HEADER) userId: String,
             authentication: Authentication
     ): CompletableFuture<ResponseEntity<TeamNameResponse>> {
         logger.info { "Fetching name for Team ID: $teamId (org: $organizationId)" }
 
         // 🔒 Verify user belongs to the requested organization
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<TeamNameResponse>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }

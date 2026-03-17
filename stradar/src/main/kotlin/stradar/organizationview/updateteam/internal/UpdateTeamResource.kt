@@ -65,7 +65,6 @@ class UpdateTeamResource(
   )
   @PostMapping("/updateteam/{id}")
   fun processCommand(
-          @RequestHeader(USER_ID_HEADER) userId: String,
           @RequestHeader(SESSION_ID_HEADER) sessionId: String,
           @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
           @PathVariable("id") teamId: UUID,
@@ -75,6 +74,7 @@ class UpdateTeamResource(
 
     // 🔒 Verify user belongs to the organization in the payload
     val user = securityHelper.extractUser(authentication)
+    val userId = user.auth0UserId
     securityHelper.checkOrganization<Any>(user, payload.organizationId)?.let {
       return it
     }

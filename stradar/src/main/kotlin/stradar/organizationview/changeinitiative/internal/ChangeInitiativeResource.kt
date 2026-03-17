@@ -50,7 +50,6 @@ class ChangeInitiativeResource(
             @PathVariable("initiativeId") initiativeId: UUID,
             @RequestBody payload: ChangeInitiativePayload,
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-            @RequestHeader(USER_ID_HEADER) userId: String,
             @RequestHeader(SESSION_ID_HEADER) sessionId: String,
             @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
             authentication: Authentication
@@ -58,6 +57,7 @@ class ChangeInitiativeResource(
 
         // 🔒 Verify user belongs to the organization in the payload
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<Any>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }

@@ -41,7 +41,6 @@ class ChangeInitiativeItemResource(
     fun processCommand(
             @PathVariable("id") pathId: UUID,
             @RequestBody payload: ChangeInitiativeItemPayload,
-            @RequestHeader("x-user-id") userId: String,
             @RequestHeader(SESSION_ID_HEADER) sessionId: String,
             @RequestHeader("X-Correlation-Id", required = false) correlationId: String?,
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
@@ -50,6 +49,7 @@ class ChangeInitiativeItemResource(
 
         // 🔒 Verify user belongs to the organization in the header
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<Any>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }

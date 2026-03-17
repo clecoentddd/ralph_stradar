@@ -47,7 +47,6 @@ class CreateTeamResource(
     )
     @PostMapping("/createteam")
     fun processCommand(
-            @RequestHeader(USER_ID_HEADER) userId: String,
             @RequestHeader(value = "X-Correlation-Id", required = false) correlationId: String?,
             @RequestHeader(value = SESSION_ID_HEADER, required = true) sessionId: String,
             @RequestBody payload: CreateTeamPayload,
@@ -58,6 +57,7 @@ class CreateTeamResource(
 
         // 🔒 Verify user belongs to the organization in the payload
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<Any>(user, payload.organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }

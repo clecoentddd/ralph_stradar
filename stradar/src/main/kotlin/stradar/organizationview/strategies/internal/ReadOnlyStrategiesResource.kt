@@ -43,13 +43,13 @@ class StrategiesResource(
     @GetMapping
     fun findStrategies(
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-            @RequestHeader(USER_ID_HEADER) userId: String,
             authentication: Authentication
     ): CompletableFuture<ResponseEntity<StrategiesReadModel>> {
         logger.info { "Querying strategies for org: $organizationId" }
 
         // 🔒 Verify user belongs to the requested organization
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<StrategiesReadModel>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }
@@ -78,7 +78,6 @@ class StrategiesResource(
     @GetMapping("/team/{teamId}")
     fun findStrategiesByTeam(
             @RequestHeader(ORGANIZATION_ID_HEADER) organizationId: UUID,
-            @RequestHeader(USER_ID_HEADER) userId: String,
             @PathVariable teamId: UUID,
             authentication: Authentication
     ): CompletableFuture<ResponseEntity<StrategiesReadModel>> {
@@ -86,6 +85,7 @@ class StrategiesResource(
 
         // 🔒 Verify user belongs to the requested organization
         val user = securityHelper.extractUser(authentication)
+        val userId = user.auth0UserId
         securityHelper.checkOrganization<StrategiesReadModel>(user, organizationId)?.let {
             return CompletableFuture.completedFuture(it)
         }
