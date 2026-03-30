@@ -34,3 +34,7 @@ build/
 node_modules
 .next
 node
+
+# secrets
+.env
+.env.*
