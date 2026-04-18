@@ -13,16 +13,20 @@ class SecurityConfig {
 
   @Bean
   fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+
     http
             .cors { it.configurationSource(corsConfigurationSource()) }
             .csrf { it.disable() }
             .authorizeHttpRequests {
               it.requestMatchers(
                               "/signin",
+                              "/signinsuperadmin",
                               "/signintoorganizationpersonaccount",
-                              "/signinsuperadmin"
+                              "/swagger-ui/**",
+                              "/v3/api-docs/**"
                       )
                       .permitAll()
+
               it.anyRequest().authenticated()
             }
             .oauth2ResourceServer { it.jwt {} }
