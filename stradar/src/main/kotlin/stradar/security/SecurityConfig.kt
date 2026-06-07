@@ -22,6 +22,9 @@ class SecurityConfig {
                               "/signin",
                               "/signinsuperadmin",
                               "/signintoorganizationpersonaccount",
+                              "/superadminaccount",
+                              "/organizationlist",
+                              "/defineorganization",
                               "/swagger-ui/**",
                               "/v3/api-docs/**"
                       )

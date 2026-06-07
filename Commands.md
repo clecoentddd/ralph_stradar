@@ -73,26 +73,25 @@ WITH (FORMAT CSV, HEADER);
 
 Use control-D to quit.
 
-TRUNCATE TABLE
-    admin_connected_read_model_entity,
-    company_invoice_list_items,
-    company_list_lookup,
-    company_order_list_projections,
-    company_project_list_read_model_entity,
-    companyorderlist_order_items,
-    customer_account_list_read_model_entity,
-    customer_sessions_read_model_entity,
-    invoice_list_read_model_entity,
-    projection_session_projects,
-    invoice_state_mapping,
-    token_entry,
-    domain_event_entry,
+TRUNCATE TABLE 
     association_value_entry,
     saga_entry,
-    snapshot_event_entry,
     event_publication,
-    dead_letter_entry
-RESTART IDENTITY CASCADE;
+    team_read_model,
+    strategies_view,
+    super_account_list_read_model,
+    initiative_items,
+    dead_letter_entry,
+    environmental_change_view_read_model,
+    initiative_env_links,
+    initiative_to_initiative_links,
+    organization_list_read_model,
+    person_list_read_model,
+    initiatives_read_model_entity,
+    domain_event_entry,
+    snapshot_event_entry,
+    token_entry
+RESTART IDENTITY CASCADE;;
 
 
 # Auth0 - Token For Yaml file

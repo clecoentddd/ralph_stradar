@@ -31,5 +31,3 @@ class MetaDataCommandInterceptor : MessageDispatchInterceptor<CommandMessage<Any
     }
   }
 }
-
-y
