@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 import stradar.common.resolveOrganizationId
 import stradar.events.StrategyCreatedEvent
+import stradar.events.StrategyUpdatedEvent
 import stradar.organizationview.strategies.StrategiesReadModelEntity
 
 /** Repository for the strategy projection */
@@ -47,6 +48,19 @@ class StrategiesReadModelProjector(private val repository: StrategiesReadModelRe
       strategyBuilderId = event.strategyBuilderId
       organizationId = secureOrgId
       teamId = event.teamId
+      strategyName = event.strategyName
+      strategyTimeframe = event.strategyTimeframe
+      status = event.strategyStatus
+    }
+
+    repository.save(entity)
+  }
+
+  @EventHandler
+  fun on(event: StrategyUpdatedEvent, metaData: MetaData) {
+    val entity = repository.findById(event.strategyId).orElse(null) ?: return
+
+    entity.apply {
       strategyName = event.strategyName
       strategyTimeframe = event.strategyTimeframe
       status = event.strategyStatus
