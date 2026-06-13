@@ -3,6 +3,7 @@ import { toast } from 'sonner';
 import { Users, Plus, ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
+import OrgSidebar from '@/components/OrgSidebar';
 import PageHeader from '@/components/PageHeader';
 import EmptyState from '@/components/EmptyState';
 import Modal from '@/components/Modal';
@@ -109,24 +110,11 @@ export default function OrganizationDashboardPage() {
   }, [teams]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Navbar variant="organization" />
-      <div className="flex-1 grid grid-cols-[240px_1fr] min-h-0">
-        <aside className="border-r border-border bg-card sticky top-[49px] h-[calc(100vh-49px)] overflow-y-auto p-5">
-          <div className="text-[10px] font-semibold text-muted-foreground tracking-wide uppercase px-2 mb-2">Organization</div>
-          <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-primary/5 border border-primary/10 text-sm font-semibold text-primary cursor-pointer">
-            <Users className="w-4 h-4" /> Teams & Radar
-          </div>
-          <div className="mt-6">
-            <div className="text-[10px] font-semibold text-muted-foreground tracking-wide uppercase px-2 mb-2">Session</div>
-            <div className="px-2 text-[12px] text-muted-foreground leading-relaxed">
-              Role: <span className="text-foreground font-medium">{organization.role || '—'}</span><br />
-              Org: <span className="text-foreground font-medium">{organization.orgName || '—'}</span>
-            </div>
-          </div>
-        </aside>
-
-        <main className="p-7 overflow-y-auto">
+    <div className="flex h-dvh overflow-hidden bg-background">
+      <OrgSidebar activePage="overview" />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Navbar variant="organization" />
+        <main className="flex-1 overflow-y-auto p-7">
           <PageHeader
             title="Organization Hierarchy"
             subtitle="Teams organized by level"

@@ -110,15 +110,17 @@ export default function RadarDashboardPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Navbar variant="organization" />
-      <div className="flex-1 flex min-h-0">
-        <OrgSidebar activeTeamId={teamId} activePage="radar" />
-        <main className="flex-1 px-7 pt-4 pb-7 max-w-7xl mx-auto w-full overflow-y-auto">
+    <div className="flex h-dvh overflow-hidden bg-background">
+      <OrgSidebar activeTeamId={teamId} activePage="radar" />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Navbar variant="organization" />
+        <main className="flex-1 overflow-y-auto px-6 py-5 max-w-7xl mx-auto w-full">
           <div className="flex items-center justify-between mb-3">
 
-            <h1 className="text-xl font-bold tracking-tight">
-              {teamName} — Radar
+            <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+              <span className="text-primary">{teamName}</span>
+              <span className="mx-2 text-muted-foreground font-light">·</span>
+              Radar
             </h1>
 
             <div className="flex items-center gap-2">

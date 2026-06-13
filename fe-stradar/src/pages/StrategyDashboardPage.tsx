@@ -667,10 +667,13 @@ export default function StrategyDashboardPage() {
   // ── Guard
   if (!teamId) {
     return (
-      <div className="min-h-screen flex flex-col bg-background">
-        <Navbar variant="organization" />
-        <div className="flex-1 flex items-center justify-center">
-          <EmptyState icon={<TrendingUp className="w-8 h-8 opacity-20" />} message="No team selected. Open Strategy from within a team panel." />
+      <div className="flex h-dvh overflow-hidden bg-background">
+        <OrgSidebar activePage="strategy" />
+        <div className="flex flex-col flex-1 overflow-hidden">
+          <Navbar variant="organization" />
+          <div className="flex-1 flex items-center justify-center">
+            <EmptyState icon={<TrendingUp className="w-8 h-8 opacity-20" />} message="No team selected. Open Strategy from within a team panel." />
+          </div>
         </div>
       </div>
     );
@@ -708,11 +711,11 @@ export default function StrategyDashboardPage() {
 
   // ── Render
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <Navbar variant="organization" />
-      <div className="flex-1 flex min-h-0">
-        <OrgSidebar activeTeamId={teamId} activePage="strategy" />
-        <div className="flex-1 flex flex-col min-w-0">
+    <div className="flex h-dvh overflow-hidden bg-background">
+      <OrgSidebar activeTeamId={teamId} activePage="strategy" />
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <Navbar variant="organization" />
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
           {/* ── Top bar ── */}
           <div className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
@@ -769,10 +772,11 @@ export default function StrategyDashboardPage() {
               {view === 'list' && (
                 <>
                   <div className="mb-8">
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground">Strategies</h1>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {teamName} · {strategies.length} strateg{strategies.length === 1 ? 'y' : 'ies'}
-                    </p>
+                    <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+                      <span className="text-primary">{teamName}</span>
+                      <span className="mx-2 text-muted-foreground font-light">·</span>
+                      Strategies
+                    </h1>
                   </div>
 
                   {strategiesLoading ? (

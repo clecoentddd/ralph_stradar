@@ -29,7 +29,7 @@ export const STEPS: StepConfig[] = [
   {
     key: 'COHERENTACTION',
     label: 'Coherent Actions',
-    subtitle: 'What combined actions can we take?',
+    subtitle: 'What set of actions can we take?',
     icon: '3',
     accentClass: 'border-t-primary/60',
   },

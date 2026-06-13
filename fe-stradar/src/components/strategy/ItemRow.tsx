@@ -16,6 +16,7 @@ interface ItemRowProps {
 
 export default function ItemRow({ item, saving, onSave, onDelete }: ItemRowProps) {
   const [draft, setDraft] = useState(item.content);
+  const [isFocused, setIsFocused] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const prevContent = useRef(item.content);
 
@@ -48,7 +49,16 @@ export default function ItemRow({ item, saving, onSave, onDelete }: ItemRowProps
   };
 
   return (
-    <div className="group flex items-start gap-2 rounded-md border border-transparent hover:border-border/50 hover:bg-primary/5 px-2 py-1.5 transition-all">
+    <div
+      className="group flex items-start gap-2 rounded-md border px-2 py-1.5 transition-all"
+      style={isFocused ? {
+        borderColor: 'color-mix(in oklab, var(--primary) 40%, transparent)',
+        backgroundColor: 'color-mix(in oklab, var(--primary) 8%, transparent)',
+      } : {
+        borderColor: 'transparent',
+        backgroundColor: 'transparent',
+      }}
+    >
       {/* Minimalist dot indicator */}
       <div className="mt-2 flex-shrink-0">
         <Circle className={`w-2 h-2 ${saving ? 'animate-pulse text-primary' : 'text-primary/30'}`} fill="currentColor" />
@@ -63,7 +73,8 @@ export default function ItemRow({ item, saving, onSave, onDelete }: ItemRowProps
           setDraft(e.target.value);
           adjustHeight();
         }}
-        onBlur={handleBlur}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => { setIsFocused(false); handleBlur(); }}
         onKeyDown={e => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();

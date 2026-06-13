@@ -41,7 +41,7 @@ export const RINGS: Record<string, number> = {
  */
 const RING_LABELS: { label: string; r: number }[] = [
   { label: 'DETECT', r: RINGS.DETECTED },
-  { label: 'ASSESS', r: RINGS.ASSESSING },
+  { label: 'ASSESING', r: RINGS.ASSESSING },
   { label: 'ASSESSED', r: RINGS.ASSESSED },
   { label: 'RESPONDING', r: RINGS.RESPONDING },
 ];
@@ -165,7 +165,7 @@ export default function RadarSVG({ elements, activeQ, selectedEl, onSelectEl, on
   const hoveredDot = hoveredId ? visible.find(d => d.environmentalChangeId === hoveredId) ?? null : null;
 
   // Quadrant label positions: 45° midpoint of each arc, just outside the circle
-  const LABEL_R = R + PAD * 0.55;
+  const LABEL_R = R + PAD * 0.88;
   const quadrantLabels = Object.entries(QUADRANTS)
     .sort((a, b) => a[1].geom - b[1].geom)
     .map(([key, q]) => {
