@@ -90,7 +90,7 @@ export default function RadarPanel({ elements, onEdit }: Props) {
     const SITE_PRIMARY_FG = 'oklch(0.205 0.065 248)';
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 p-3 w-full transition-colors duration-300" style={themeStyle}>
+        <div className="flex flex-row gap-4 p-3 w-full transition-colors duration-300" style={themeStyle}>
 
             {/* ── RADAR VISUALIZATION ────────────────────────────────────────── */}
             <div className="flex-1 min-w-0 flex items-start justify-center pt-2 bg-background/30 rounded">
