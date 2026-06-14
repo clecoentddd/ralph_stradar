@@ -114,8 +114,8 @@ export default function RadarDashboardPage() {
       <OrgSidebar activeTeamId={teamId} activePage="radar" />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Navbar variant="organization" />
-        <main className="flex-1 overflow-y-auto px-6 py-5 max-w-7xl mx-auto w-full">
-          <div className="flex items-center justify-between mb-3">
+        <main className="flex-1 overflow-hidden flex flex-col px-6 py-5 max-w-7xl mx-auto w-full">
+          <div className="flex items-center justify-between mb-3 flex-shrink-0">
 
             <h1 className="font-display text-2xl font-semibold tracking-tight text-foreground">
               <span className="text-primary">{teamName}</span>
@@ -156,7 +156,9 @@ export default function RadarDashboardPage() {
 
           </div>
 
-          {renderContent()}
+          <div className={`flex-1 min-h-0 ${view === 'radar' ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+            {renderContent()}
+          </div>
 
           <DetectElementModal open={detectOpen} onClose={() => setDetectOpen(false)} teamId={teamId} teamName={teamName} onSuccess={loadRadar} />
           {updateEl && <UpdateElementModal open={!!updateEl} onClose={() => setUpdateEl(null)} element={updateEl} teamId={teamId} onSuccess={loadRadar} />}

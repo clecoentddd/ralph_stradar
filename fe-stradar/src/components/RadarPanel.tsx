@@ -45,19 +45,19 @@ const THEMES: Record<string, Theme> = {
     },
     business: {
         label: 'Business',
-        preview: ['hsl(25 95% 58%)', 'hsl(223 44% 7%)', 'hsl(25 95% 58%)'],
+        preview: ['hsl(188 42% 52%)', 'hsl(235 22% 14%)', 'hsl(188 42% 52%)'],
         vars: {
-            '--background': '223 44% 7%',
-            '--foreground': '210 20% 92%',
-            '--card': '223 44% 11%',
-            '--border': '223 20% 22%',
-            '--muted-foreground': '223 20% 68%',
-            '--primary': '25 95% 58%',
-            '--primary-foreground': '223 44% 7%',
-            '--radar-line': '220 28% 52%',
-            '--radar-high': '4 90% 64%',
-            '--radar-medium': '38 90% 55%',
-            '--radar-low': '142 58% 54%',
+            '--background': '220 38% 22%',
+            '--foreground': '200 5% 95%',
+            '--card': '234 18% 19%',
+            '--border': '225 18% 28%',
+            '--muted-foreground': '215 10% 62%',
+            '--primary': '188 42% 52%',
+            '--primary-foreground': '235 22% 14%',
+            '--radar-line': '205 22% 50%',
+            '--radar-high': '18 68% 55%',
+            '--radar-medium': '50 65% 62%',
+            '--radar-low': '152 42% 52%',
         },
     },
 };
@@ -71,7 +71,7 @@ interface Props {
 
 export default function RadarPanel({ elements, onEdit }: Props) {
     const [activeQ, setActiveQ] = useState<number | null>(null);
-    const [themeKey, setThemeKey] = useState<ThemeKey>('light');
+    const [themeKey, setThemeKey] = useState<ThemeKey>('business');
 
     const R = 280;
     const PAD = 90;
@@ -81,6 +81,8 @@ export default function RadarPanel({ elements, onEdit }: Props) {
         ...(theme.vars as React.CSSProperties),
         backgroundColor: `hsl(${theme.vars['--background']})`,
         color: `hsl(${theme.vars['--foreground']})`,
+        border: '1px solid #1d51647a',
+        borderRadius: '0.75rem',
     };
 
     // Site primary color — hardcoded so buttons match Detect regardless of radar theme
@@ -88,7 +90,7 @@ export default function RadarPanel({ elements, onEdit }: Props) {
     const SITE_PRIMARY_FG = 'oklch(0.205 0.065 248)';
 
     return (
-        <div className="flex flex-col lg:flex-row gap-4 p-3 rounded-lg w-full transition-colors duration-300" style={themeStyle}>
+        <div className="flex flex-col lg:flex-row gap-4 p-3 w-full transition-colors duration-300" style={themeStyle}>
 
             {/* ── RADAR VISUALIZATION ────────────────────────────────────────── */}
             <div className="flex-1 min-w-0 flex items-start justify-center pt-2 bg-background/30 rounded">
@@ -158,14 +160,30 @@ export default function RadarPanel({ elements, onEdit }: Props) {
 
                 {/* Legend */}
                 <section className="p-2 rounded">
-                    <header className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest mb-2">Legend</header>
-                    <div className="flex flex-wrap gap-x-3 gap-y-2">
-                        {(['HIGH', 'MEDIUM', 'LOW'] as const).map(level => (
-                            <div key={level} className="flex items-center gap-1.5 text-[10px] font-mono uppercase">
-                                <div className="w-2 h-2 rounded-full" style={{ background: `hsl(var(--radar-${level.toLowerCase()}))` }} />
-                                {level}
-                            </div>
-                        ))}
+                    <header className="text-[9px] font-mono font-bold text-muted-foreground uppercase tracking-widest mb-1.5">LEGEND</header>
+                    <div className="flex flex-col gap-1">
+                        {/* Risk = color */}
+                        <div className="flex items-center gap-2">
+                            <span className="text-[9px] font-mono uppercase text-foreground/70 w-10 flex-shrink-0">RISK</span>
+                            {(['HIGH', 'MEDIUM', 'LOW'] as const).map(level => (
+                                <div key={level} className="flex items-center gap-1 text-[9px] font-mono uppercase text-foreground/70">
+                                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: `hsl(var(--radar-${level.toLowerCase()}))` }} />
+                                    {level}
+                                </div>
+                            ))}
+                        </div>
+                        {/* Impact = size */}
+                        <div className="flex items-center gap-2">
+                            <span className="text-[9px] font-mono uppercase text-foreground/70 w-10 flex-shrink-0">IMPACT</span>
+                            {([3, 5, 7] as const).map((r, i) => (
+                                <div key={r} className="flex items-center gap-1 text-[9px] font-mono uppercase text-foreground/70">
+                                    <svg width={16} height={16} viewBox="0 0 16 16" style={{ flexShrink: 0 }}>
+                                        <circle cx="8" cy="8" r={r} fill="currentColor" opacity="0.55" />
+                                    </svg>
+                                    {(['LOW', 'MED', 'HIGH'] as const)[i]}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </section>
             </div>

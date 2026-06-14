@@ -40,7 +40,7 @@ export const RINGS: Record<string, number> = {
  * References RINGS values directly so labels always align with dashed circles.
  */
 const RING_LABELS: { label: string; r: number }[] = [
-  { label: 'DETECT', r: RINGS.DETECTED },
+  { label: 'DETECTED', r: RINGS.DETECTED },
   { label: 'ASSESING', r: RINGS.ASSESSING },
   { label: 'ASSESSED', r: RINGS.ASSESSED },
   { label: 'RESPONDING', r: RINGS.RESPONDING },
@@ -80,9 +80,12 @@ function cartesian(
 }
 
 /** SVG path for a diamond shape (used for THREAT elements) */
-function diamondPath(cx: number, cy: number, size: number): string {
-  const s = size * 1.2;
-  return `M${cx},${cy - s} L${cx + s},${cy} L${cx},${cy + s} L${cx - s},${cy} Z`;
+function trianglePath(cx: number, cy: number, size: number): string {
+  const halfW = size * 0.99;
+  const h = size * 2.34;
+  const top = cy - (h * 2) / 3;
+  const bot = cy + h / 3;
+  return `M${cx},${top} L${cx + halfW},${bot} L${cx - halfW},${bot} Z`;
 }
 
 /**
@@ -297,15 +300,23 @@ export default function RadarSVG({ elements, activeQ, selectedEl, onSelectEl, on
             filter={isSelected ? glowFilter : undefined}
           >
             {isThreat ? (
-              <path d={diamondPath(dot.x, dot.y, dot.size)} fill={fill} opacity={0.85}
-                stroke={isSelected ? fill : 'none'} strokeWidth={isSelected ? 2 : 0} />
+              <>
+                <path d={trianglePath(dot.x, dot.y, dot.size)} fill={fill} opacity={0.85}
+                  stroke={isSelected ? fill : 'none'} strokeWidth={isSelected ? 2 : 0} />
+                <text x={dot.x} y={dot.y + dot.size * 0.2}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fontSize={dot.size * 0.95} fontWeight={900} fontFamily="'IBM Plex Mono', monospace"
+                  fill="white" fillOpacity={0.95}
+                  style={{ pointerEvents: 'none', userSelect: 'none' }}
+                >!</text>
+              </>
             ) : (
               <circle cx={dot.x} cy={dot.y} r={dot.size} fill={fill} opacity={0.85}
                 stroke={isSelected ? fill : 'none'} strokeWidth={isSelected ? 2 : 0} />
             )}
 
             {isSelected && (isThreat ? (
-              <path d={diamondPath(dot.x, dot.y, dot.size + 5)} fill="none" stroke={fill}
+              <path d={trianglePath(dot.x, dot.y, dot.size + 5)} fill="none" stroke={fill}
                 strokeWidth={1.5} opacity={0.5} strokeDasharray="3 3">
                 <animate attributeName="stroke-dashoffset" from="0" to="12" dur="1.5s" repeatCount="indefinite" />
               </path>
@@ -340,7 +351,7 @@ export default function RadarSVG({ elements, activeQ, selectedEl, onSelectEl, on
         // Build wrapped sections (no truncation)
         const sections = (
           [
-            { key: 'DETECT',  val: hoveredDot.detect },
+            { key: 'DETECTED',  val: hoveredDot.detect },
             { key: 'ASSESS',  val: hoveredDot.assess },
             { key: 'RESPOND', val: hoveredDot.respond },
           ] as { key: string; val: string | undefined }[]
